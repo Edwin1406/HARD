@@ -4,7 +4,7 @@
         <div class="col-lg-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="index.html"><img src="" alt="">EN DESARROLLO.............................</a>
+                    <a href="index.html"><img src="" alt="">EN DESARROLLO 😶‍🌫️</a>
                 </div>
                 <h1 class="auth-title">Acceso.</h1>
                 <p class="auth-subtitle mb-5">Inicie sesión con los datos que ingresó durante el registro.</p>
