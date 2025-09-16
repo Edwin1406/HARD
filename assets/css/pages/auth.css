@@ -2,7 +2,7 @@ body {
   background-color: #fff;
 }
 #auth {
-  height: 100vh;
+  height: 200vh;
   overflow-x: hidden;
 }
 #auth #auth-right {
