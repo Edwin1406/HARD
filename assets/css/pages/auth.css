@@ -1,111 +1,71 @@
+/* Fondo centrado */
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #279ec2, #d09a4f);
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-/* Contenedor principal del login */
+/* Contenedor principal */
 #auth {
-  width: 100%;
-  max-width: 420px;
+  height: 100vh;
+}
+
+/* Card del login */
+#auth-card {
   background: #fff;
+  padding: 3rem 2.5rem;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  padding: 3rem 2.5rem;
-  text-align: center;
+  width: 100%;
+  max-width: 420px;
 }
 
-/* Logo */
-#auth .auth-logo {
-  margin-bottom: 2rem;
-}
-
-#auth .auth-logo img {
-  height: 50px;
-}
-
-/* Título */
-#auth .auth-title {
+/* Títulos */
+.auth-title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: #333;
 }
 
-/* Subtítulo */
-#auth .auth-subtitle {
-  font-size: 1.1rem;
+.auth-subtitle {
+  font-size: 1rem;
   color: #666;
-  margin-bottom: 2rem;
-}
-
-/* Labels */
-#auth label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.4rem;
-  text-align: left;
-  color: #444;
 }
 
 /* Inputs */
-#auth input[type="email"],
-#auth input[type="password"] {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1.2rem;
+.input-group-text {
+  background: #f1f1f1;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  border-right: none;
 }
 
-#auth input:focus {
+.input-group .form-control {
+  border-left: none;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 6px rgba(39, 158, 194, 0.4);
   border-color: #279ec2;
-  outline: none;
-  box-shadow: 0 0 5px rgba(39, 158, 194, 0.3);
-}
-
-/* Checkbox */
-#auth .form-options {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 1.5rem;
-}
-
-#auth .form-options input[type="checkbox"] {
-  margin-right: 0.5rem;
 }
 
 /* Botón */
-#auth button {
-  width: 100%;
+button {
   padding: 0.9rem;
-  border: none;
-  border-radius: 8px;
-  background: #3b5bcc;
-  color: #fff;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  border-radius: 8px;
+  transition: background 0.3s;
 }
 
-#auth button:hover {
+button:hover {
   background: #2f4bb5;
 }
 
 /* Responsive */
 @media screen and (max-width: 480px) {
-  #auth {
+  #auth-card {
     padding: 2rem 1.5rem;
     max-width: 90%;
   }
