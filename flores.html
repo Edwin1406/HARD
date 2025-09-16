@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Para Ti 💖</title>
+
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --c1:#ffd1dc; --c2:#fff3d6; --c3:#d9f6ff;
+      --glass: rgba(255,255,255,.18); --glass-brd: rgba(255,255,255,.5);
+    }
+    *{scroll-behavior:smooth}
+    body{
+      font-family:'Poppins',system-ui,Segoe UI,Roboto,sans-serif;
+      color:#273036;
+      background: linear-gradient(120deg,var(--c1),var(--c2),var(--c3));
+      background-size:180% 180%;
+      animation: bg 12s ease-in-out infinite;
+      min-height:100vh;
+    }
+    @keyframes bg{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .glass{
+      background:var(--glass);
+      border:1px solid var(--glass-brd);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius:22px;
+      box-shadow:0 18px 40px rgba(0,0,0,.08);
+    }
+    .display-love{
+      font-weight:800;
+      letter-spacing:.3px;
+    }
+    /* Typewriter */
+    .typewriter{display:inline-block;border-right: .12em solid rgba(0,0,0,.45);white-space:nowrap;overflow:hidden;animation:caret 1s step-end infinite}
+    @keyframes caret{50%{border-color:transparent}}
+
+    /* Video card */
+    .video-wrap{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+    .video-overlay{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      background: radial-gradient( circle at center, rgba(0,0,0,.35), rgba(0,0,0,.55) );
+      opacity:0; transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .video-wrap.paused .video-overlay{opacity:1;pointer-events:auto}
+    .big-play{
+      background:#fff;border:none;border-radius:999px;padding:16px 22px;
+      display:flex;align-items:center;gap:10px;font-weight:700;
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+    }
+
+    /* Chips recuerdos */
+    .chip{
+      background:#fff;border:1px solid rgba(0,0,0,.06);
+      border-radius:999px;padding:.5rem .9rem;box-shadow:0 6px 14px rgba(0,0,0,.06);
+      white-space:nowrap;margin:.25rem;
+    }
+
+    /* Corazones */
+    .hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+    .heart{position:absolute;font-size:18px;animation:float 4.5s ease-in forwards;
+           filter: drop-shadow(0 6px 12px rgba(0,0,0,.25))}
+    @keyframes float{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-140vh) scale(1.6);opacity:0}}
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <nav class="navbar bg-transparent">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#"><i class="bi bi-heart-fill text-danger"></i> Para Ti</a>
+      <div class="ms-auto d-flex gap-2">
+        <a href="#frases" class="btn btn-outline-danger btn-sm rounded-pill">Frases</a>
+        <a href="#video" class="btn btn-danger btn-sm rounded-pill">Ir al video</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="container text-center pt-1 pt-md-3">
+    <div class="glass p-4 p-md-5">
+      <h1 class="display-5 display-love text-danger mb-2">Para mi amorcito 💕</h1>
+      <p id="tw" class="typewriter fs-4 fw-semibold"></p>
+      <div class="mt-3">
+        <button id="btnHearts" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold">
+          <i class="bi bi-heart-pulse-fill me-1"></i> Toca para una lluvia de corazones
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- FRASES -->
+  <section id="frases" class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="glass p-4 p-md-5">
+          <div id="carFrases" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active text-center">
+                <blockquote class="blockquote"><p class="fs-4">“Eres mi razón favorita para sonreír cada día.”</p></blockquote>
+              </div>
+              <div class="carousel-item text-center">
+                <blockquote class="blockquote"><p class="fs-4">“Contigo, cada momento se vuelve un recuerdo hermoso.”</p></blockquote>
+              </div>
+              <div class="carousel-item text-center">
+                <blockquote class="blockquote"><p class="fs-4">“Lo mejor de mi vida lleva tu nombre.”</p></blockquote>
+              </div>
+              <div class="carousel-item text-center">
+                <blockquote class="blockquote"><p class="fs-4">“Si me dieran a elegir, te elegiría a ti una y mil veces.”</p></blockquote>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carFrases" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carFrases" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+          <div class="text-center mt-3">
+            <span class="chip"><i class="bi bi-stars me-1"></i> Contigo todo es mejor</span>
+            <!-- <span class="chip"><i class="bi bi-flower1 me-1"></i> Mi lugar seguro</span>
+            <span class="chip"><i class="bi bi-music-note-beamed me-1"></i> Nuestra canción</span>
+            <span class="chip"><i class="bi bi-sunrise me-1"></i> Buenos días, amor</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LOCAL -->
+  <section id="video" class="container pb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="glass p-3 p-md-4">
+          <div class="video-wrap paused" id="videoWrap">
+            <video id="miVideo" class="w-100 d-block" playsinline preload="metadata" controlslist="nodownload noplaybackrate">
+              <!-- coloca el mp4 junto al html -->
+              <source src="/amores.mp4" type="video/mp4">
+              Tu navegador no soporta video HTML5.
+            </video>
+            <div class="video-overlay d-flex">
+              <button class="big-play" id="playBtn"><i class="bi bi-play-fill fs-3"></i> Reproducir</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <button id="muteBtn" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-volume-mute"></i> Silenciar</button>
+            <!-- <button id="fsBtn" class="btn btn-dark btn-sm rounded-pill"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</button> -->
+            <a class="btn btn-outline-danger btn-sm rounded-pill" href="/amores.mp4" download>💾 Guardar video</a>
+          </div>
+          <p class="text-center mt-3 mb-0">Hecho con todo mi amor para ti. 💗</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center pb-4">
+    <small class="text-muted">Con amor, <strong>la persona más especial de mi vida</strong> <i class="bi bi-heart-fill text-danger"></i></small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Typewriter rotatorio
+    const frasesTW = ["Gracias por existir.","Eres mi lugar favorito.","Hoy, mañana y siempre: tú.","Mi mejor historia eres tú."];
+    const tw = document.getElementById('tw'); let i=0,c=0,typing=true;
+    (function loop(){
+      const t=frasesTW[i];
+      if(typing){ tw.textContent=t.slice(0,++c); if(c===t.length){typing=false;return setTimeout(loop,1300);} }
+      else{ tw.textContent=t.slice(0,--c); if(c===0){typing=true;i=(i+1)%frasesTW.length;} }
+      setTimeout(loop, typing?55:28);
+    })();
+
+    // Lluvia de corazones
+    const hearts = document.getElementById('hearts');
+    function heart(x,y){
+      const h=document.createElement('div');
+      h.className='heart';
+      h.style.left=(x-8)+'px'; h.style.top=(y-8)+'px';
+      h.style.animationDuration=(3+Math.random()*2).toFixed(2)+'s';
+      h.innerHTML=Math.random()>.5?'💖':'💘';
+      hearts.appendChild(h); setTimeout(()=>h.remove(),5000);
+    }
+    document.getElementById('btnHearts').addEventListener('click',()=>{
+      const {innerWidth:w,innerHeight:h}=window;
+      for(let k=0;k<26;k++) heart(Math.random()*w,h-Math.random()*140);
+    });
+    document.addEventListener('click',e=>{
+      if(!e.target.closest('#btnHearts') && !e.target.closest('video')) heart(e.clientX,e.clientY);
+    });
+
+    // Video mejorado
+    const video = document.getElementById('miVideo');
+    const wrap  = document.getElementById('videoWrap');
+    const playB = document.getElementById('playBtn');
+    const muteB = document.getElementById('muteBtn');
+    const fsB   = document.getElementById('fsBtn');
+
+    function setPausedUI(){ wrap.classList.toggle('paused', video.paused); }
+    playB.addEventListener('click',()=>{ video.play(); });
+    video.addEventListener('play', setPausedUI);
+    video.addEventListener('pause', setPausedUI);
+    video.addEventListener('ended', setPausedUI);
+    muteB.addEventListener('click',()=>{
+      video.muted = !video.muted;
+      muteB.innerHTML = video.muted ? '<i class="bi bi-volume-mute"></i> Silenciado' : '<i class="bi bi-volume-up"></i> Sonido';
+    });
+    fsB.addEventListener('click',()=>{
+      const el = wrap; if(el.requestFullscreen) el.requestFullscreen();
+      else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    });
+    // Inicial
+    video.controls = true; // controles nativos
+    setPausedUI();
+  </script>
+</body>
+</html>
