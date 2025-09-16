@@ -26,6 +26,7 @@
             console.log(e);
                 
         }
+        
     } 
     async function ApiPedido2(){
         const {pedido2_id} = test;
