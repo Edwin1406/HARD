@@ -1,35 +1,98 @@
 body {
-  background-color: #fff;
-}
-#auth {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #279ec2, #d09a4f);
   height: 100vh;
-  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#auth #auth-right {
-  height: 100%;
-  /* background: url(/src/img/bg_2.png), linear-gradient(90deg, #d49650, #d09a4f); */
-  background: linear-gradient(90deg, #279ec2, #d09a4f);
+
+#auth {
+  width: 100%;
+  max-width: 400px; /* ancho del formulario */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 3rem 2.5rem;
 }
-#auth #auth-left {
-  padding: 5rem 8rem;
+
+#auth .auth-logo {
+  text-align: center;
+  margin-bottom: 2rem;
 }
-#auth #auth-left .auth-title {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+
+#auth .auth-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
-#auth #auth-left .auth-subtitle {
-  font-size: 1.7rem;
-  line-height: 2.5rem;
-  color: #a8aebb;
+
+#auth .auth-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #666;
 }
-#auth #auth-left .auth-logo {
-  margin-bottom: 7rem;
+
+#auth label {
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 0.3rem;
+  display: block;
 }
-#auth #auth-left .auth-logo img {
-  height: 2rem;
+
+#auth input[type="email"],
+#auth input[type="password"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
 }
-@media screen and (max-width: 767px) {
-  #auth #auth-left {
-    padding: 5rem;
+
+#auth input:focus {
+  border-color: #279ec2;
+  outline: none;
+}
+
+#auth button {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #3b5bcc;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#auth button:hover {
+  background: #2f4bb5;
+}
+
+#auth .form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  color: #555;
+}
+
+#auth .form-options input[type="checkbox"] {
+  margin-right: 0.3rem;
+}
+
+@media screen and (max-width: 480px) {
+  #auth {
+    padding: 2rem 1.5rem;
+    max-width: 90%;
   }
 }
