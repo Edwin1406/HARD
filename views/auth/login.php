@@ -6,7 +6,7 @@
                 <div class="auth-logo">
                     <a href="index.html"><img src="" alt="">EN DESARROLLO 😶‍🌫️</a>
                 </div>
-                <h1 class="auth-title">Acceso.</h1>
+                <h1 class="auth-title">Login.</h1>
                 <p class="auth-subtitle mb-5">Inicie sesión con los datos que ingresó durante el registro.</p>
 
                 <form action="/" method="POST">
@@ -42,11 +42,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Iniciar Sesión</button>
                 </form>
-                <div class="text-center mt-5 text-lg fs-4">
+                <!-- <div class="text-center mt-5 text-lg fs-4">
                     <p class="text-gray-600">¿No tienes una cuenta? <a href="#"
                             class="font-bold">Regístrate</a>.</p>
                     <p><a class="font-bold" href="#">¿Olvidaste tu contraseña?</a>.</p>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-lg-7 d-none d-lg-block">
