@@ -9,30 +9,16 @@
     <link rel="shortcut icon" href="/src/img/logo2.png" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/app.css">
-    <link rel="stylesheet" href="/assets/css/pages/error.css">
 </head>
 
 <body>
-    <div id="error">
-
-
-        <div class="error-page container">
-            <div class="col-md-8 col-12 offset-md-2">
-                <img class="img-error" src="/assets/images/samples/error-404.png" alt="Not Found">
-                <div class="text-center">
-                    <h1 class="error-title">EXTRAVIADO</h1>
-                    <p class='fs-5 text-gray-600'>La página que estás buscando no se encontró.</p>
-                    <a href="/admin/index" class="btn btn-lg btn-outline-primary mt-3">Volver al inicio</a>
-                </div>
-                <br>
-                <br>
-                <br>
-                <br>
-            </div>
+    <div id="error" class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="text-center">
+            <img class="img-fluid mb-4" src="/assets/images/samples/error-404.png" alt="Not Found" style="max-width: 100%; height: auto;">
+            <h1 class="error-title display-1 mb-3">EXTRAVIADO</h1>
+            <p class='fs-5 text-muted mb-4'>La página que estás buscando no se encontró.</p>
+            <a href="/admin/index" class="btn btn-lg btn-outline-primary">Volver al inicio</a>
         </div>
-
-
     </div>
 </body>
 
