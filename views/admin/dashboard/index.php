@@ -6,18 +6,34 @@
             </header> -->
 <?php if ($email === 'control@megaecuador.com' || $email === 'produccion@megaecuador.com' || $email === 'pruebas@megaecuador.com') { ?>
     <div class="page-heading">
-        <h3>INICIO</h3>
 
-        <!-- CERRAR SESSION  -->
+        <div class="page-title">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-1 order-last">
+                    <h3> INICIO</h3>
+                    <p class="text-subtitle text-muted">PRUEBAS</p>
+                </div>
+                <div class="col-12 col-md-6 order-md-2 order-first">
+                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a><?php echo $nombre; ?></a></li>
+                            <!--  cerrar sesión -->
+                            <li class="breadcrumb-item"><a href="/cerrarSesion">Cerrar Sesión</a></li>
 
-        <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-danger" onclick="location.href='/cerrarSesion'">Cerrar Sesión</button>
-            <br>
-            <!-- <p class="text-subtitle text-muted"><?php echo $email; ?></p> -->
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         </div>
+
+
+
+
+
+        
     </div>
 
-  
+
 
 <?php } else { ?>
     <div class="page-heading">
