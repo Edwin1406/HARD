@@ -2,11 +2,11 @@
     <div class="container-fluid  text-black py-4">
         <div class="row">
             <div class="col-12 col-md-6">
-                <p class="mb-0 fs-5">2025 &copy; <strong>Proyecto en Desarrollo</strong></p>
+                <p class="mb-0 fs-5">Actualmente <span class="text-warning">en construcción</span>. 
             </div>
             <div class="col-12 col-md-6 text-md-end">
-                <p class="mb-0 fs-5">Actualmente <span class="text-warning">en construcción</span>. 
-                    <a href="#" class="text-black text-decoration-none fw-bold">Más detalles</a>
+                <p class="mb-0 fs-5">Proyecto en Desarrollo &copy; <strong>2025</strong></p>
+                    <!-- <a href="#" class="text-black text-decoration-none fw-bold">Más detalles</a> -->
                 </p>
             </div>
         </div>
