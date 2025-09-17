@@ -6,7 +6,7 @@
             </header> -->
 <?php if ($email === 'control@megaecuador.com' || $email === 'produccion@megaecuador.com' || $email === 'pruebas@megaecuador.com') { ?>
     <div class="page-heading">
-        <h3>GRAFICAS CONSUMO GENERAL DESPERDICIO</h3>
+        <h3>INICIO</h3>
 
         <!-- CERRAR SESSION  -->
 
