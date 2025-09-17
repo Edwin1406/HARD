@@ -1,16 +1,18 @@
-
 <footer>
-    <div class="footer d-flex justify-content-between align-items-center mb-0 text-muted">
-        <div>
-            <p class="mb-0">2025 &copy; DESARROLLO</p>
-        </div>
-        <div class="text-end">
-            <p class="mb-0">EN <span class="text-danger">PROCESO</span> 
-                <a href="#" class="text-decoration-none">Más info</a>
-            </p>
+    <div class="container-fluid bg-dark text-white py-4">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p class="mb-0 fs-5">2025 &copy; <strong>Proyecto en Desarrollo</strong></p>
+            </div>
+            <div class="col-12 col-md-6 text-md-end">
+                <p class="mb-0 fs-5">Actualmente <span class="text-warning">en construcción</span>. 
+                    <a href="#" class="text-white text-decoration-none fw-bold">Más detalles</a>
+                </p>
+            </div>
         </div>
     </div>
 </footer>
+
 
 
 
