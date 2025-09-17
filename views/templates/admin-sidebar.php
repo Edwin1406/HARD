@@ -2,10 +2,10 @@
 <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
-            <p>2025 &copy; EDWIN DIAZ</p>
+            <p>2025 &copy; DESARROLLO</p>
         </div>
         <div class="float-end">
-            <p>En <span class="text-danger"></span> Desarrollo <a
+            <p>EN <span class="text-danger"></span> PROCESO <a
                     href="">MEGASTOCK</a></p>
         </div>
     </div>
