@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NUEVA VERSION</title>
+    <title>DESARROLLO</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- ICONOS -->
-    <link rel="icon" type="image/x-icon" href="/src/img/logo2.png">
+    <link rel="icon" type="image/x-icon" href="/src/img/bg_1.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
