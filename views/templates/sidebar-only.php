@@ -38,7 +38,7 @@
                  <li class="sidebar-item  has-sub">
                      <a href="#" class='sidebar-link'>
                          <i class="bi bi-stack"></i>
-                         <span>Producción</span>
+                         <span>Administracion</span>
                      </a>
                      <?php if ($userEmail === 'control@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'planta@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
                          <ul class="submenu ">
@@ -46,91 +46,27 @@
 
                              <?php if ($email !== 'planta@megaecuador.com') { ?>
                                  <li class="submenu-item ">
-                                     <a href="/admin/consumo"><i class="bi bi-arrow-right"> </i>Registro Empaque</a>
+                                     <a href="/admin/consumo"><i class="bi bi-arrow-right"> </i>Bodega</a>
                                  </li>
                              <?php }  ?>
 
                              <!-- icono de flecha -->
                              <li class="submenu-item ">
-                                 <a href="/admin/consumo_general"><i class="bi bi-arrow-right"> </i>Registro Consumo General</a>
+                                 <a href="/admin/consumo_general"><i class="bi bi-arrow-right"> </i>Ciudades</a>
                              </li>
                              <?php if ($email !== 'planta@megaecuador.com') { ?>
                                  <li class="submenu-item ">
-                                     <a href="/admin/control/convertidor/consumo_convertidor"><i class="bi bi-arrow-right"> </i>Registro Convertidor</a>
+                                     <a href="/admin/control/convertidor/consumo_convertidor"><i class="bi bi-arrow-right"> </i>Paises</a>
                                  </li>
                              <?php }  ?>
 
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/doblado/consumo_doblado"><i class="bi bi-arrow-right"> </i>Registro Consumo Doblado</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/guillotina/consumo_guillotina_papel"><i class="bi bi-arrow-right"> </i>Registro Consumo Guillotina</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control_troquel"><i class="bi bi-arrow-right"> </i>Registro Troquel</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <li class="sidebar-title"><b><i class="bi bi-table"></i> Tablas</b></li>
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/tablaConsumo"><i class="bi bi-arrow-right"> </i>Tabla Consumo Empaque</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/convertidor/tablaConsumoConvertidor"><i class="bi bi-arrow-right"> </i>Tabla Consumo Convertidor</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <li class="submenu-item ">
-                                 <a href="/admin/tablaConsumoGeneral"><i class="bi bi-arrow-right"> </i>Tabla Consumo General</a>
-                             </li>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/doblado/tablaConsumoDoblado"><i class="bi bi-arrow-right"> </i>Tabla Consumo Doblado</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/tablaConsumoTroquel"><i class="bi bi-arrow-right"> </i>Tabla Consumo Troquel</a>
-                                 </li>
-                             <?php }  ?>
-
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/guillotina/tablaConsumoGuillotinaPapel"><i class="bi bi-arrow-right"> </i>Tabla Consumo Guillotina Papel</a>
-                                 </li>
-                             <?php }  ?>
+                           
 
                          </ul>
                      <?php }  ?>
 
                  </li>
-                 <?php if ($userEmail === 'control@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
-                     <li class="sidebar-item  has-sub">
-                         <a href="#" class='sidebar-link'>
-                             <i class="bi bi-collection-fill"></i>
-                             <span>Administrativo</span>
-                         </a>
-                         <ul class="submenu ">
-                             <li class="submenu-item ">
-                                 <a href="/admin/tablaAdminConsumoGeneral"><i class="bi bi-arrow-right"> </i>Habilitar Consumo General</a>
-                             </li>
-
-                         </ul>
-                     </li>
-                 <?php } ?>
+           
 
                  <?php if ($userEmail === 'artes@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
                      <li class="sidebar-item  has-sub">
