@@ -6,7 +6,7 @@
         </div>
         <div class="float-end">
             <p>EN <span class="text-danger"></span> PROCESO <a
-                    href="">DESARROLLO</a></p>
+                    href="">.</a></p>
         </div>
     </div>
 </footer>
