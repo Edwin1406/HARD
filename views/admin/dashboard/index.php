@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <div class="page-content">
         <section class="row">
             <div class="col-md-12">
@@ -269,7 +269,7 @@
 
 
         </section>
-    </div>
+    <!-- </div> -->
 
 <?php } else { ?>
     <div class="page-heading">
