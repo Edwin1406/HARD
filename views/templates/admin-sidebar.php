@@ -1,15 +1,17 @@
 
 <footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2025 &copy; DESARROLLO</p>
+    <div class="footer d-flex justify-content-between align-items-center mb-0 text-muted">
+        <div>
+            <p class="mb-0">2025 &copy; DESARROLLO</p>
         </div>
-        <div class="float-end">
-            <p>EN <span class="text-danger"></span> PROCESO <a
-                    href="">.</a></p>
+        <div class="text-end">
+            <p class="mb-0">EN <span class="text-danger">PROCESO</span> 
+                <a href="#" class="text-decoration-none">Más info</a>
+            </p>
         </div>
     </div>
 </footer>
+
 
 
 <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
