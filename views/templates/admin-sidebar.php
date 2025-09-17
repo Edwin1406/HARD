@@ -1,5 +1,5 @@
 <footer>
-    <div class="container-fluid bg-dark text-white py-4">
+    <div class="container-fluid  text-white py-4">
         <div class="row">
             <div class="col-12 col-md-6">
                 <p class="mb-0 fs-5">2025 &copy; <strong>Proyecto en Desarrollo</strong></p>
