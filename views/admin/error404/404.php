@@ -13,10 +13,10 @@
 
 <body>
     <div id="error" class="d-flex justify-content-center align-items-center min-vh-100">
-        <div class="text-center">
-            <img class="img-fluid mb-4" src="/assets/images/samples/error-404.png" alt="Not Found" style="max-width: 100%; height: auto;">
-            <h1 class="error-title display-1 mb-3">EXTRAVIADO</h1>
-            <p class='fs-5 text-muted mb-4'>La página que estás buscando no se encontró.</p>
+        <div class="text-center p-3">
+            <img class="img-fluid mb-4" src="/assets/images/samples/error-404.png" alt="Not Found" style="max-width: 80%; height: auto;">
+            <h1 class="error-title display-4 mb-3">EXTRAVIADO</h1>
+            <p class='fs-6 text-muted mb-4'>La página que estás buscando no se encontró.</p>
             <a href="/admin/index" class="btn btn-lg btn-outline-primary">Volver al inicio</a>
         </div>
     </div>
