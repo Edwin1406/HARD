@@ -68,50 +68,8 @@
                  </li>
            
 
-                 <?php if ($userEmail === 'artes@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
-                     <li class="sidebar-item  has-sub">
-                         <a href="#" class='sidebar-link'>
-                             <i class="bi bi-rulers"></i>
-                             <span>Diseño</span>
-                         </a>
-                         <ul class="submenu ">
-                             <li class="submenu-item ">
-                                 <a href="/admin/diseno/crearDiseno"><i class="bi bi-arrow-right"> </i>Crear Diseño</a>
-                                 <a href="/admin/diseno/tablaDiseno"><i class="bi bi-arrow-right"> </i>Tabla Diseño</a>
-                                 <a href="/admin/turnoDiseno/generarTurno"><i class="bi bi-arrow-right"> </i>Generar Turno</a>
-                                 <a href="/admin/turnoDiseno/turnotablaDiseno"><i class="bi bi-arrow-right"> </i>Tabla Turno Diseño</a>
-                             </li>
+             
 
-                         </ul>
-                     </li>
-                 <?php } ?>
-
-                 <?php if (
-                        $userEmail === 'ventas@megaecuador.com' ||
-                        $userEmail === 'produccion@megaecuador.com' ||
-                        $userEmail === 'pruebas@megaecuador.com'
-                    ) { ?>
-                     <li class="sidebar-item has-sub">
-                         <a href="#" class="sidebar-link">
-                             <i class="bi bi-bag-fill"></i>
-                             <span>Ventas</span>
-                         </a>
-
-                         <ul class="submenu">
-                             <li class="submenu-item">
-                                 <a href="/admin/diseno/tablaDiseno">
-                                     <i class="bi bi-arrow-right"></i> Tabla Diseño
-                                 </a>
-                                 <a href="/admin/turnoDiseno/turnotablaDiseno"><i class="bi bi-arrow-right"> </i>Tabla Turno Diseño</a>
-                             </li>
-                             <li class="submenu-item">
-                                 <a href="/admin/turnoDiseno/generarTurno">
-                                     <i class="bi bi-arrow-right"></i> Generar turno
-                                 </a>
-                             </li>
-                         </ul>
-                     </li>
-                 <?php } ?>
                  <!-- pruebas-->
                  <?php if ($userEmail === 'pruebas@megaecuador.com' || $userEmail === 'produccion@megaecuador.com'|| $userEmail === 'corrugador@megaecuador.com'|| $userEmail === 'flexo@megaecuador.com') { ?>
                      <li class="sidebar-item  has-sub">
@@ -133,23 +91,7 @@
                          </ul>
                      </li>
                  <?php } ?>
-                 <!-- pruebas-->
-                 <?php if ($userEmail === 'pruebas@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'mantenimiento@megaecuador.com') { ?>
-                     <li class="sidebar-item  has-sub">
-                         <a href="#" class='sidebar-link'>
-                             <i class="bi bi-tools"></i>
-                             <span>Mantenimiento</span>
-                         </a>
-                         <ul class="submenu ">
-                             <li class="submenu-item ">
-                                 <a href="/admin/pruebas/tablaPruebas"><i class="bi bi-arrow-right"> </i>Tabla Pruebas</a>
-                             </li>
-                             <li class="submenu-item ">
-                                 <a href="/admin/mantenimiento/registroMantenimiento"><i class="bi bi-arrow-right"> </i>Registro Mantenimiento</a>
-                             </li>
-                         </ul>
-                     </li>
-                 <?php } ?>
+              
          </div>
          <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
      </div>
