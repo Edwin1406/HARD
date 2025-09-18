@@ -12,7 +12,7 @@ class BodegaController
 
         $alertas = [];
 
-         session_start();
+        session_start();
         if (!isset($_SESSION['email'])) {
             header('Location: /');
         }
@@ -36,21 +36,14 @@ class BodegaController
                     header('Location: /admin/tablaBodega');
                 }
             }
+        }
 
-          // Render a la vista
+        // Render a la vista
         $router->render('admin/bodega/crearBodega', [
-            'titulo' => 'Crea una Bodega', 
+            'titulo' => 'Crea una Bodega',
             'alertas' => $alertas,
             'nombre' => $nombre,
             'email' => $email
         ]);
-
-
-
-    }
-
     }
 }
-
-
-
