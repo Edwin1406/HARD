@@ -16,11 +16,11 @@
 
 
 
-<!-- <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
-<!-- <script src="/assets/js/bootstrap.bundle.min.js"></script> -->
-<!-- <script src="/assets/vendors/simple-datatables/simple-datatables.js"></script> -->
+<script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendors/simple-datatables/simple-datatables.js"></script>
 <!-- SweetAlert2 CDN -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <?php
