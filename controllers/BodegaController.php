@@ -86,7 +86,7 @@ class BodegaController
                 $bodega = Bodega::find($id);
                 if ($bodega) {
                     $bodega->eliminar();
-                    header('Location: /admin/bodega/tablaBodega');
+                    header('Location: /admin/bodega/tablaBodega?eliminado=3');
                 }
             }
         }
@@ -114,5 +114,5 @@ class BodegaController
 
 
 
-    
+
 }
