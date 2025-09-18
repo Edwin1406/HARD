@@ -94,6 +94,63 @@ class BodegaController
 
 
 
+    public static function editarBodega(Router $router): void
+    {
+
+        $alertas = [];
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        // Validar el ID
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/bodega/tablaBodega');
+        }
+
+        // Obtener los datos de la bodega a editar
+        $bodega = Bodega::find($id);
+
+        if (!$bodega) {
+            header('Location: /admin/bodega/tablaBodega');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $bodega->sincronizar($_POST);
+
+            // debuguear($bodega);
+            $alertas = $bodega->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $bodega->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/bodega/tablaBodega?editado=2');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/bodega/editarBodega', [
+            'titulo' => 'Editar Bodega',
+            'alertas' => $alertas,
+            'bodega' => $bodega,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
 
 
 
