@@ -26,15 +26,13 @@ class BodegaController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $bodega->sincronizar($_POST);
+
+            debuguear($bodega);
             $alertas = $bodega->validar();
 
             if (empty($alertas)) {
                 // Guardar el registro
                 $resultado = $bodega->guardar();
-
-                // 
-                Bodega::setAlerta('exito', 'Bodega registrada correctamente');
-                $alertas = Bodega::getAlertas();
 
                 if ($resultado) {
                     header('Location: /admin/bodega/crearBodega?exito=1');

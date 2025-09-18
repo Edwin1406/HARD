@@ -24,6 +24,7 @@ class Bodega extends ActiveRecord {
 
         if(!$this->Nombre_Bodega) {
             self::$alertas['error'][] = 'El Campo Nombre Bodega es Obligatorio';
+            
         }
 
         if(!$this->Sigla_Bodega) {
@@ -33,7 +34,7 @@ class Bodega extends ActiveRecord {
         return self::$alertas;
     }
 
-    
+
 
 
 
