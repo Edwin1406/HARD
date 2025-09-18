@@ -73,6 +73,9 @@ $router->post('/admin/bodega/editarBodega', [BodegaController::class, 'editarBod
 $router->get('/admin/ciudad/crearCiudad', [BodegaController::class, 'crearCiudad']);
 $router->post('/admin/ciudad/crearCiudad', [BodegaController::class, 'crearCiudad']);
 
+// tabla de ciudad
+$router->get('/admin/ciudad/tablaCiudad', [BodegaController::class, 'tablaCiudad']);
+
 
 
 

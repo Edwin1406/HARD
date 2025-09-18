@@ -197,6 +197,33 @@ class BodegaController
 
 
 
+    // tabla de ciudad
+    public static function tablaCiudad(Router $router): void
+    {
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $ciudad =  Ciudad::all();
+
+        // Render a la vista
+        $router->render('admin/ciudad/tablaCiudad', [
+            'titulo' => 'Tabla de Ciudades',
+            'ciudad' => $ciudad,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+    
+
+
+
 
 
 
