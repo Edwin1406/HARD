@@ -181,13 +181,13 @@ class BodegaController
                 $resultado = $ciudad->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/ciudades/tablaCiudad?exito=1');
+                    header('Location: /admin/ciudad/tablaCiudad?exito=1');
                 }
             }
         }
 
         // Render a la vista
-        $router->render('admin/ciudades/crearCiudad', [
+        $router->render('admin/ciudad/crearCiudad', [
             'titulo' => 'Crea una Ciudad',
             'alertas' => $alertas,
             'nombre' => $nombre,
