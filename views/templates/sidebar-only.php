@@ -40,38 +40,38 @@
                          <i class="bi bi-stack"></i>
                          <span>Administracion</span>
                      </a>
-                     <?php if ($userEmail === 'control@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'planta@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
+                     <?php if ($userEmail === 'invitado@pruebas.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
                          <ul class="submenu ">
                              <li class="sidebar-title"><b><i class="bi bi-archive"></i> Registros</b></li>
 
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i>Bodega</a>
-                                 </li>
-                             <?php }  ?>
+
+                             <li class="submenu-item ">
+                                 <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i>Bodega</a>
+                             </li>
+
 
                              <!-- icono de flecha -->
                              <li class="submenu-item ">
                                  <a href="/admin/consumo_general"><i class="bi bi-arrow-right"> </i>Ciudades</a>
                              </li>
-                             <?php if ($email !== 'planta@megaecuador.com') { ?>
-                                 <li class="submenu-item ">
-                                     <a href="/admin/control/convertidor/consumo_convertidor"><i class="bi bi-arrow-right"> </i>Paises</a>
-                                 </li>
-                             <?php }  ?>
 
-                           
+                             <li class="submenu-item ">
+                                 <a href="/admin/control/convertidor/consumo_convertidor"><i class="bi bi-arrow-right"> </i>Paises</a>
+                             </li>
+
+
+
 
                          </ul>
                      <?php }  ?>
 
                  </li>
-           
 
-             
+
+
 
                  <!-- pruebas-->
-                 <?php if ($userEmail === 'pruebas@megaecuador.com' || $userEmail === 'produccion@megaecuador.com'|| $userEmail === 'corrugador@megaecuador.com'|| $userEmail === 'flexo@megaecuador.com') { ?>
+                 <?php if ($userEmail === 'pruebas@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'corrugador@megaecuador.com' || $userEmail === 'flexo@megaecuador.com') { ?>
                      <li class="sidebar-item  has-sub">
                          <a href="#" class='sidebar-link'>
                              <!-- <i class="bi bi-collection-fill"></i> -->
@@ -91,16 +91,8 @@
                          </ul>
                      </li>
                  <?php } ?>
-              
+
          </div>
          <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
      </div>
  </div>
-
-
-
-
-
-
-
-
