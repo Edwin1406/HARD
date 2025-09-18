@@ -70,8 +70,8 @@ $router->post('/admin/bodega/editarBodega', [BodegaController::class, 'editarBod
 
 
 // crearCiudad
-$router->get('/admin/ciudades/crearCiudad', [BodegaController::class, 'ciudad']);
-$router->post('/admin/ciudades/crearCiudad', [BodegaController::class, 'ciudad']);
+$router->get('/admin/ciudad/crearCiudad', [BodegaController::class, 'ciudad']);
+$router->post('/admin/ciudad/crearCiudad', [BodegaController::class, 'ciudad']);
 
 
 

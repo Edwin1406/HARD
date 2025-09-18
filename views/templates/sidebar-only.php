@@ -52,7 +52,7 @@
 
                              <!-- icono de flecha -->
                              <li class="submenu-item ">
-                                 <a href="/admin/bodega/crearCiudad"><i class="bi bi-arrow-right"> </i>Ciudades</a>
+                                 <a href="/admin/ciudad/crearCiudad"><i class="bi bi-arrow-right"> </i>Ciudades</a>
                              </li>
 
                              <li class="submenu-item ">
