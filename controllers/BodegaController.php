@@ -33,7 +33,7 @@ class BodegaController
                 $resultado = $bodega->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/tablaBodega');
+                    header('Location: /admin/bodega/crearBodega?exito=1');
                 }
             }
         }
