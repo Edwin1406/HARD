@@ -32,6 +32,10 @@ class BodegaController
                 // Guardar el registro
                 $resultado = $bodega->guardar();
 
+                // 
+                Bodega::setAlerta('exito', 'Bodega registrada correctamente');
+                $alertas = Bodega::getAlertas();
+
                 if ($resultado) {
                     header('Location: /admin/bodega/crearBodega?exito=1');
                 }
