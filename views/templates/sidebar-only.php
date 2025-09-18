@@ -52,11 +52,11 @@
 
                              <!-- icono de flecha -->
                              <li class="submenu-item ">
-                                 <a href="/admin/consumo_general"><i class="bi bi-arrow-right"> </i>Ciudades</a>
+                                 <a href="/admin/ciudades/crearCiudad"><i class="bi bi-arrow-right"> </i>Ciudades</a>
                              </li>
 
                              <li class="submenu-item ">
-                                 <a href="/admin/control/convertidor/consumo_convertidor"><i class="bi bi-arrow-right"> </i>Paises</a>
+                                 <a href="/admin/paises/crearPais"><i class="bi bi-arrow-right"> </i>Paises</a>
                              </li>
 
 
