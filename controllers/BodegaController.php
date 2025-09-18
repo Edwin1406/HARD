@@ -48,4 +48,55 @@ class BodegaController
             'email' => $email
         ]);
     }
+
+    // tabla de bodega
+
+
+    public static function tablaBodega(Router $router): void
+    {
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $bodega =  Bodega::all();
+
+        // Render a la vista
+        $router->render('admin/bodega/tablaBodega', [
+            'titulo' => 'Tabla de Bodegas',
+            'bodega' => $bodega,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }

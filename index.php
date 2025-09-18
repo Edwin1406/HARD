@@ -58,6 +58,9 @@ $router->get('/admin/index', [AdminController::class, 'index']);
 $router->get('/admin/bodega/crearBodega', [BodegaController::class, 'crearBodega']);
 $router->post('/admin/bodega/crearBodega', [BodegaController::class, 'crearBodega']);
 
+// tabla de bodega
+$router->get('/admin/bodega/tablaBodega', [BodegaController::class, 'tablaBodega']);
+
 $router->post('/admin/ciudad', [BodegaController::class, 'ciudad']);
 
 
