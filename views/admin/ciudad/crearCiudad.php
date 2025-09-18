@@ -48,7 +48,7 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Tabla de registros de Bodegas</a>
+                    <a class="nav-link active" href="/admin/ciudad/tablaCiudad">Tabla de registros de Ciudades</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +61,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">REGISTRAR NUEVA BODEGA</h4>
+                        <h4 class="card-title">REGISTRAR NUEVA CIUDAD</h4>
                         <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     </div>
                     <div class="card-content">
