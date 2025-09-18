@@ -82,11 +82,11 @@
         <div class="card">
             <ul class="nav nav-tabs">
 
-                <?php if ($email !== 'ventas@megaecuador.com') { ?>
+              
                     <li class="nav-item">
                         <a class="nav-link active" href="/admin/bodega/crearBodega">Registro Bodega</a>
                     </li>
-                <?php } ?>
+           
             </ul>
         </div>
     </section>

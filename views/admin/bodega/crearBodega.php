@@ -48,7 +48,7 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/tablaBodega">Tabla de registros de Bodegas</a>
+                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Tabla de registros de Bodegas</a>
                 </li>
             </ul>
         </div>
