@@ -35,7 +35,7 @@ class BodegaController
                 $resultado = $bodega->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/bodega/crearBodega?exito=1');
+                    header('Location: /admin/bodega/tablaBodega?exito=1');
                 }
             }
         }
@@ -98,5 +98,5 @@ class BodegaController
 
 
 
-    
+
 }
