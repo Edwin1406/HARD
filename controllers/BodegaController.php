@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Bodega;
 use MVC\Router;
 
 class BodegaController
@@ -20,12 +21,15 @@ class BodegaController
         $email = $_SESSION['email'];
 
 
+        $bodega =  Bodega::all();
+
           // Render a la vista
         $router->render('admin/bodega/crearBodega', [
             'titulo' => 'Crea una Bodega', 
             'alertas' => $alertas,
             'nombre' => $nombre,
-            'email' => $email
+            'email' => $email,
+            'bodega' => $bodega
         ]);
 
 

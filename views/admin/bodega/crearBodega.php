@@ -69,52 +69,21 @@
                             <form class="form" method="POST" action="/admin/consumo_general" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
-                                  <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="created_at">Fecha</label>
-                                            <input type="date" id="created_at" class="form-control"
-                                                placeholder="Fecha" name="created_at" >
-                                        </div>
-                                    </div>
 
-                                    <!-- operador SELECCIONAR NO MULTIPLE -->
                                     <div class="col-md-6 col-12">
-                                        <label for="tipo_maquina">Escoja tipo_maquina</label>
-                                        <div class="form-group"> 
-                                            <select class="form-select" name="tipo_maquina" id="tipo_maquina">
-                                                <option value="" disabled selected>Seleccione tipo de máquina</option>
-                                                <option value="CORRUGADOR">CORRUGADOR</option>
-                                                <option value="MICRO">MICRO</option>
-                                                <option value="TROQUEL">TROQUEL</option>
-                                                <option value="FLEXOGRAFICA">FLEXOGRAFICA</option>
-                                                <option value="PRE-PRINTER">PRE-PRINTER</option>
-                                                <option value="DOBLADO">DOBLADO</option>
-                                                <option value="CORTE CEJA">CORTE CEJA</option>
-                                                <option value="CONVERTIDOR">CONVERTIDOR</option>
-                                                <option value="GUILLOTINA LAMINA">GUILLOTINA LAMINA</option>
-                                                <option value="GUILLOTINA PAPEL">GUILLOTINA PAPEL</option>
-                                                <option value="EMPAQUE">EMPAQUE</option>
-                                                <option value="BODEGA">BODEGA</option>
-                                                <option value="DESHOJE-MICRO">DESHOJE-MICRO</option>
-                                                <option value="DESHOJE-CORRGADOR">DESHOJE-CORRGADOR</option>
-                                                <option value="DESHOJE-PRE-PRINTER">DESHOJE-PRE-PRINTER</option>
-                                                <option value="DESHOJE-CONVERTIDOR">DESHOJE-CONVERTIDOR</option>
-                                                <option value="CANUTOS">CANUTOS</option>
-                                                <option value="MATERIA-DE-BAJA">MATERIA-DE-BAJA</option>
-                                                <option value="RETAZOS-BOBINA">RETAZOS-BOBINA</option>
-                                                <option value="PACAS">PACAS</option>
-
-
-                                            </select>
+                                        <div class="form-group">
+                                            <label for="Nombre_Bodega">Nombre Bodega</label>
+                                            <input type="text" id="Nombre_Bodega" class="form-control"
+                                                placeholder="Nombre Bodega" name="Nombre_Bodega">
                                         </div>
-                                    </div>
+                                    </div>                                  
 
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="total_general">TOTAL GENERAL</label>
-                                            <input type="text" id="total_general" class="form-control"
-                                                placeholder="Total General" step="0.01" name="total_general">
+                                            <label for="Sigla_Bodega">Siglas Bodega</label>
+                                            <input type="text" id="Sigla_Bodega" class="form-control"
+                                                placeholder="Siglas Bodega" name="Sigla_Bodega">
                                         </div>
                                     </div>
 
