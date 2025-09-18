@@ -6,7 +6,7 @@ use MVC\Router;
 
 class BodegaController
 {
-    public static function bodega(Router $router): void
+    public static function crearBodega(Router $router): void
     {
 
         $alertas = [];
