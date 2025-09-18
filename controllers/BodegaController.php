@@ -220,7 +220,28 @@ class BodegaController
         ]);
     }
 
+
+
+    public static function eliminarCiudad(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar el ID
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if ($id) {
+                $ciudad = Ciudad::find($id);
+                if ($ciudad) {
+                    $ciudad->eliminar();
+                    header('Location: /admin/ciudad/tablaCiudad?eliminado=3');
+                }
+            }
+        }
+    }
+
+
     
+
 
 
 

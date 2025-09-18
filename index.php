@@ -76,7 +76,8 @@ $router->post('/admin/ciudad/crearCiudad', [BodegaController::class, 'crearCiuda
 // tabla de ciudad
 $router->get('/admin/ciudad/tablaCiudad', [BodegaController::class, 'tablaCiudad']);
 
-
+// eliminar 
+$router->post('/admin/eliminarCiudad', [BodegaController::class, 'eliminarCiudad']);
 
 
 
