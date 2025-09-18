@@ -61,22 +61,26 @@ $router->post('/admin/bodega/crearBodega', [BodegaController::class, 'crearBodeg
 // tabla de bodega
 $router->get('/admin/bodega/tablaBodega', [BodegaController::class, 'tablaBodega']);
 
-
 // eliminar bodega
 $router->post('/admin/eliminarBodega', [BodegaController::class, 'eliminarBodega']);
-
 
 // editar bodega
 $router->get('/admin/bodega/editarBodega', [BodegaController::class, 'editarBodega']);
 $router->post('/admin/bodega/editarBodega', [BodegaController::class, 'editarBodega']);
 
 
+// crearCiudad
+$router->get('/admin/ciudades/crearCiudad', [BodegaController::class, 'ciudad']);
+$router->post('/admin/ciudades/crearCiudad', [BodegaController::class, 'ciudad']);
 
 
 
 
 
-$router->post('/admin/ciudad', [BodegaController::class, 'ciudad']);
+
+
+
+
 
 
 

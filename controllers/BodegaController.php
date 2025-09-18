@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Bodega;
+use Model\Ciudad;
 use MVC\Router;
 
 class BodegaController
@@ -98,7 +99,6 @@ class BodegaController
     {
 
         $alertas = [];
-
         session_start();
         if (!isset($_SESSION['email'])) {
             header('Location: /');
@@ -144,6 +144,52 @@ class BodegaController
             'titulo' => 'Editar Bodega',
             'alertas' => $alertas,
             'bodega' => $bodega,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
+
+    // crear ciudad
+ public static function crearCiudad(Router $router): void
+    {
+
+        $alertas = [];
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $ciudad = new Ciudad;
+
+        // $bodega =  Bodega::all();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $ciudad->sincronizar($_POST);
+
+            // debuguear($ciudad);
+            $alertas = $ciudad->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $ciudad->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/ciudades/tablaCiudad?exito=1');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/ciudades/crearCiudad', [
+            'titulo' => 'Crea una Ciudad',
+            'alertas' => $alertas,
             'nombre' => $nombre,
             'email' => $email
         ]);
