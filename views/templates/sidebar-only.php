@@ -46,7 +46,7 @@
 
                              <?php if ($email !== 'planta@megaecuador.com') { ?>
                                  <li class="submenu-item ">
-                                     <a href="/admin/consumo"><i class="bi bi-arrow-right"> </i>Bodega</a>
+                                     <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i>Bodega</a>
                                  </li>
                              <?php }  ?>
 
