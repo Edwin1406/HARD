@@ -35,9 +35,9 @@
                 var toast = new bootstrap.Toast(toastEl);
                 toast.show();
 
-                // Quitar el parámetro ?exito=1 de la URL sin recargar
+                // Quitar el parámetro ?editado=2 de la URL sin recargar
                 const url = new URL(window.location);
-                url.searchParams.delete('exito');
+                url.searchParams.delete('editado');
                 window.history.replaceState({}, document.title, url.toString());
             });
         </script>
