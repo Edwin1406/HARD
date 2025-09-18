@@ -66,6 +66,11 @@ $router->get('/admin/bodega/tablaBodega', [BodegaController::class, 'tablaBodega
 $router->post('/admin/eliminarBodega', [BodegaController::class, 'eliminarBodega']);
 
 
+// editar bodega
+$router->get('/admin/bodega/editarBodega', [BodegaController::class, 'editarBodega']);
+$router->post('/admin/bodega/editarBodega', [BodegaController::class, 'editarBodega']);
+
+
 
 
 
