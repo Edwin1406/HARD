@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/bodega/editarBodega?id=<?php echo $bodega->id; ?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/bodega/editarBodega?id=<?php echo $bodega->id;?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
@@ -89,7 +89,7 @@
 
 
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
+                                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Actualizar</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
                                     </div>
                                 </div>
