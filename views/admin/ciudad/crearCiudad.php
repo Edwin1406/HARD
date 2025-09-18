@@ -66,24 +66,24 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/bodega/crearBodega" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/ciudad/crearCiudad" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="Nombre_Bodega">Nombre Bodega</label>
-                                            <input type="text" id="Nombre_Bodega" class="form-control"
-                                                placeholder="Nombre Bodega" name="Nombre_Bodega">
+                                            <label for="Nombre_Ciudad">Nombre Ciudad</label>
+                                            <input type="text" id="Nombre_Ciudad" class="form-control"
+                                                placeholder="Nombre Ciudad" name="Nombre_Ciudad">
                                         </div>
                                     </div>                                  
 
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="Sigla_Bodega">Siglas Bodega</label>
-                                            <input type="text" id="Sigla_Bodega" class="form-control"
-                                                placeholder="Siglas Bodega" name="Sigla_Bodega">
+                                            <label for="Sigla_Ciudad">Siglas Ciudad</label>
+                                            <input type="text" id="Sigla_Ciudad" class="form-control"
+                                                placeholder="Siglas Ciudad" name="Sigla_Ciudad">
                                         </div>
                                     </div>
 
