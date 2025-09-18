@@ -75,6 +75,22 @@ class BodegaController
     }
 
 
+    public static function eliminarBodega(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar el ID
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if ($id) {
+                $bodega = Bodega::find($id);
+                if ($bodega) {
+                    $bodega->eliminar();
+                    header('Location: /admin/bodega/tablaBodega');
+                }
+            }
+        }
+    }
 
 
 
@@ -98,5 +114,5 @@ class BodegaController
 
 
 
-
+    
 }
