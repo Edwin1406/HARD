@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/bodega" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/bodega/crearBodega" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
