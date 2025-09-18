@@ -84,7 +84,7 @@
 
               
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin/bodega/crearBodega">Registro Bodega</a>
+                        <a class="nav-link active" href="/admin/ciudad/crearCiudad">Registro Ciudad</a>
                     </li>
            
             </ul>
