@@ -27,7 +27,7 @@ class BodegaController
 
             $bodega->sincronizar($_POST);
 
-            debuguear($bodega);
+            // debuguear($bodega);
             $alertas = $bodega->validar();
 
             if (empty($alertas)) {
