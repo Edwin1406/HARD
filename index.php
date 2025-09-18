@@ -2,8 +2,8 @@
     
 
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 
 
@@ -13,14 +13,9 @@ use MVC\Router;
 
 use Controllers\AuthController;
 use Controllers\AdminController;
-use Controllers\Apicontroller;
 use Controllers\BodegaController;
-use Controllers\ControlController;
-use Controllers\DiseñoController;
-use Controllers\GraficasController;
 use Controllers\PruebasController;
-use Controllers\LocalizarController;
-use Controllers\MantenimientoController;
+
 
 $router = new Router();
 
