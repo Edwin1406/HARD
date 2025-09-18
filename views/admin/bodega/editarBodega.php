@@ -17,7 +17,6 @@
             </div>
         </div>
     </div>
-
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="toastExito" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -28,7 +27,7 @@
             </div>
         </div>
     </div>
-    <?php if (isset($_GET['exito']) && $_GET['exito'] == '1') : ?>
+    <?php if (isset($_GET['editado']) && $_GET['editado'] == '2') : ?>
         <script>
             window.addEventListener('DOMContentLoaded', function() {
                 // Mostrar el toast
