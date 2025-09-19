@@ -747,7 +747,7 @@
   margin-left: 0;
 }
 .sidebar-wrapper {
-  width: 200px;
+  width: 180px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -786,7 +786,7 @@
 }
 .sidebar-wrapper .menu .sidebar-link {
   display: block;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 3rem;
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -803,11 +803,12 @@
 .sidebar-wrapper .menu .sidebar-link i,
 .sidebar-wrapper .menu .sidebar-link svg {
   color: #7c8db5;
-   font-size: 1.5rem;
+   /* font-size: 1.5rem; // puse recien */
+   font-size: 1.5rem; 
 }
 .sidebar-wrapper .menu .sidebar-link span {
   margin-left: 1rem;
-  display: none;
+  display: none; /* puse recien */
 }
 .sidebar-wrapper .menu .sidebar-link:hover {
   background-color: #f0f1f5;
