@@ -51,7 +51,7 @@
                     <a class="nav-link active" href="/admin/paises/CrearPais">Crear Origen</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin/paises/tablaOrigen">Origen</a>
+                    <a class="nav-link " href="/admin/paises/tablaPais">Origen</a>
                 </li>
             </ul>
         </div>
