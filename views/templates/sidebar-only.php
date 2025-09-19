@@ -88,30 +88,60 @@
 
 <style>
 
-/* Ocultar texto en pantallas pequeñas */
+/* Ocultar el texto en dispositivos móviles y mostrar solo los íconos */
 .d-none.d-xl-inline {
-    display: none !important;
+    display: none;
 }
 
-/* Mostrar texto solo en pantallas grandes */
+/* En dispositivos de tamaño mayor (pantallas grandes), mostrar el texto junto a los íconos */
 @media (min-width: 1200px) {
     .d-none.d-xl-inline {
-        display: inline !important;
+        display: inline;
     }
 }
 
-/* Mostrar los íconos siempre */
-.sidebar-link i {
-    display: inline-block !important;
+/* En dispositivos pequeños, el contenedor lateral debe ser más pequeño y solo mostrar los íconos */
+@media (max-width: 1199px) {
+    .sidebar-wrapper {
+        width: 60px; /* Ajusta este valor para que se adapte a tus necesidades */
+    }
+    
+    /* Solo mostrar los iconos en las secciones del menú */
+    .sidebar-item .sidebar-link span {
+        display: none;
+    }
+
+    .sidebar-item .sidebar-link i {
+        font-size: 1.5rem; /* Ajusta el tamaño del icono */
+        padding: 10px; /* Espaciado alrededor de los iconos */
+    }
+
+    /* Reducir el tamaño de la barra lateral cuando está colapsada */
+    #sidebar {
+        width: 60px; /* Ajusta el ancho del sidebar */
+    }
+    
+    /* Si el sidebar está colapsado y los íconos están solo visibles */
+    #sidebar.active .sidebar-wrapper {
+        width: 60px;
+    }
 }
 
-/* Mostrar solo los iconos en el menú hamburguesa */
-.sidebar-wrapper .menu .sidebar-item.has-sub .sidebar-link i {
-    font-size: 1.2rem !important;
-}
+/* En el caso de que el menú hamburguesa se abra, el texto aparece junto a los íconos */
+@media (max-width: 1199px) {
+    .sidebar-wrapper .sidebar-item {
+        display: flex;
+        align-items: center;
+    }
 
-.sidebar-wrapper .menu .sidebar-item .sidebar-link span {
-    display: none !important;
+    .sidebar-wrapper .menu .sidebar-item.active .sidebar-link span {
+        display: inline-block;
+    }
+
+    .sidebar-wrapper .menu .sidebar-item .sidebar-link span {
+        display: inline-block;
+        padding-left: 10px;
+    }
 }
 
 
