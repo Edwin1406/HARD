@@ -99,11 +99,9 @@
                              <span>Nota Pedido</span>
                          </a>
                          <ul class="submenu ">
+                            
                              <li class="submenu-item ">
-                                 <a href="/admin/pruebas/tablaPruebas"><i class="bi bi-arrow-right"> </i>Tabla Pruebas</a>
-                             </li>
-                             <li class="submenu-item ">
-                                 <a href="/admin/pruebas/crearPruebas"><i class="bi bi-arrow-right"> </i>Crear Pruebas</a>
+                                 <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear #Nota</a>
                              </li>
                            
                          </ul>
