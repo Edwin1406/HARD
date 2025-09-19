@@ -115,7 +115,7 @@
                         <?php foreach ($pais as $paisItem): ?>
                             <tr>
                                 <td><?= $paisItem->id ?></td>
-                                <td><?= $paisItem->Nombre_Pais ?></td>
+                                <td><?= $paisItem->Nombre_Origen ?></td>
                                 <td>
 
                                     <div class="d-flex gap-1">
