@@ -103,6 +103,14 @@ $router->post('/admin/marca/editarMarca', [BodegaController::class, 'editarMarca
 
 
 
+// crearPais
+$router->get('/admin/paises/crearPais', [BodegaController::class, 'crearPais']);
+$router->post('/admin/paises/crearPais', [BodegaController::class, 'crearPais']);
+
+
+
+
+
 
 
 
