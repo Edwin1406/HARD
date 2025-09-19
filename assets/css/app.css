@@ -747,7 +747,7 @@
   margin-left: 0;
 }
 .sidebar-wrapper {
-  width: 100px;
+  width: 150px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -786,7 +786,7 @@
 }
 .sidebar-wrapper .menu .sidebar-link {
   display: block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.7rem 3rem;
   font-size: 1rem;
   display: flex;
   align-items: center;
