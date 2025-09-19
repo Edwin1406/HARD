@@ -5,24 +5,24 @@ namespace Model;
 class Pais extends ActiveRecord {
 
     protected static $tabla = 'ORIGEN';
-    protected static $columnasDB = ['id', 'Nombre_Pais'];
+    protected static $columnasDB = ['id', 'Nombre_Origen'];
 
     public $id;
-    public $Nombre_Pais;
+    public $Nombre_Origen;
 
 
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
-        $this->Nombre_Pais = $args['Nombre_Pais'] ?? '';
+        $this->Nombre_Origen = $args['Nombre_Origen'] ?? '';
    
     }
 
 
     public function validar() {
 
-        if(!$this->Nombre_Pais) {
-            self::$alertas['error'][] = 'El Campo Nombre Pais es Obligatorio';
+        if(!$this->Nombre_Origen) {
+            self::$alertas['error'][] = 'El Campo Nombre Origen es Obligatorio';
 
         }
        

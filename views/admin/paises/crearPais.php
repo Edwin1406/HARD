@@ -75,9 +75,9 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="Nombre_Marca">Nombre Marca</label>
-                                            <input type="text" id="Nombre_Marca" class="form-control"
-                                                placeholder="Nombre Marca" name="Nombre_Marca">
+                                            <label for="Nombre_Origen">Nombre Origen</label>
+                                            <input type="text" id="Nombre_Origen" class="form-control"
+                                                placeholder="Nombre Origen" name="Nombre_Origen">
                                         </div>
                                     </div>                                  
 
