@@ -196,7 +196,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-12">
-                                                    <div class="card" style="background-color: #a39d9dff;">
+                                                    <div class="card" style="background-color: #dacdcdff;">
 
                                                         <div class="card-content">
                                                             <div class="card-body">
@@ -268,7 +268,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-12">
-                                                    <div class="card" style="background-color: #a39d9dff;">
+                                                    <div class="card" style="background-color: #dacdcdff;">
 
                                                         <div class="card-content">
                                                             <div class="card-body">
