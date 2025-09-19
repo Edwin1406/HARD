@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
                 <h3><?php echo $titulo ?> </h3>
-                <p class="text-subtitle text-muted">Ingrese los datos de la Bodega</p>
+                <p class="text-subtitle text-muted">Ingrese los datos de la Marca</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -48,7 +48,7 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Tabla de registros de Bodegas</a>
+                    <a class="nav-link active" href="/admin/marca/tablaMarca">Tabla de registros de Marcas</a>
                 </li>
             </ul>
         </div>
@@ -61,31 +61,25 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">REGISTRAR NUEVA BODEGA</h4>
+                        <h4 class="card-title">REGISTRAR NUEVA MARCA</h4>
                         <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/bodega/crearBodega" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/marca/crearMarca" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="Nombre_Bodega">Nombre Bodega</label>
-                                            <input type="text" id="Nombre_Bodega" class="form-control"
-                                                placeholder="Nombre Bodega" name="Nombre_Bodega">
+                                            <label for="Nombre_Marca">Nombre Marca</label>
+                                            <input type="text" id="Nombre_Marca" class="form-control"
+                                                placeholder="Nombre Marca" name="Nombre_Marca">
                                         </div>
                                     </div>                                  
 
 
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="Sigla_Bodega">Siglas Bodega</label>
-                                            <input type="text" id="Sigla_Bodega" class="form-control"
-                                                placeholder="Siglas Bodega" name="Sigla_Bodega">
-                                        </div>
-                                    </div>
+                                 
 
 
                                     <div class="col-12 d-flex justify-content-end">
