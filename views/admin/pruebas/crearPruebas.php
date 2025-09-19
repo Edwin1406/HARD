@@ -5,24 +5,7 @@
 </header> -->
 
 <div class="page-heading">
-    <div class="page-title">
-        <div class="row">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3><?php echo $titulo ?> </h3>
-                <p class="text-subtitle text-muted">Ingrese los datos de prueba</p>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a><?php echo $nombre; ?></a></li>
-                        <!--  cerrar sesión -->
-                        <li class="breadcrumb-item"><a href="/cerrarSesion">Cerrar Sesión</a></li>
-
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="toastExito" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
