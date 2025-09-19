@@ -106,22 +106,22 @@
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Nombre Marca</th>
+                            <th class="fs-6" style="min-width: 93px;">Nombre Pais</th>
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <?php foreach ($marca as $marcaItem): ?>
+                        <?php foreach ($pais as $paisItem): ?>
                             <tr>
-                                <td><?= $marcaItem->id ?></td>
-                                <td><?= $marcaItem->Nombre_Marca ?></td>
+                                <td><?= $paisItem->id ?></td>
+                                <td><?= $paisItem->Nombre_Pais ?></td>
                                 <td>
 
                                     <div class="d-flex gap-1">
-                                        <a href="/admin/marca/editarMarca?id=<?= $marcaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
-                                        <form action="/admin/eliminarMarca" method="POST">
-                                            <input type="hidden" name="id" value="<?= $marcaItem->id ?>">
+                                        <a href="/admin/paises/editarPais?id=<?= $paisItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                        <form action="/admin/eliminarPais" method="POST">
+                                            <input type="hidden" name="id" value="<?= $paisItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     </div>
