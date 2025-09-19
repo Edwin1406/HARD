@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/marca/crearMarca?id=<?php echo $bodega->id;?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/marca/editarMarca?id=<?php echo $marca->id;?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
