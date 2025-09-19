@@ -520,6 +520,7 @@ class BodegaController
         // Render a la vista
         $router->render('admin/paises/tablaPais', [
             'titulo' => 'Tabla de Paises',
+            'subtitulo' => 'Listado de Paises',
             'pais' => $pais,
             'nombre' => $nombre,
             'email' => $email
