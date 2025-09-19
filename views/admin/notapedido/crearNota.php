@@ -221,7 +221,7 @@
                                                                             </div>
 
 
-                                                                            <div class="col-12">
+                                                                            <!-- <div class="col-12">
 
                                                                                 <div class="form-group has-icon-left">
                                                                                     <label for="email-id-icon">Email</label>
@@ -257,7 +257,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div> -->
 
 
                                                                         </div>
@@ -277,7 +277,7 @@
                                                                         <div class="row">
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="first-name-icon">First Name</label>
+                                                                                    <label for="first-name-icon">Remitir Doc a</label>
                                                                                     <div class="position-relative">
                                                                                         <input type="text" class="form-control"
                                                                                             placeholder="Input with icon left"
@@ -291,13 +291,17 @@
                                                                             <div class="col-12">
 
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="email-id-icon">Email</label>
+                                                                                    <label for="email-id-icon">Pais/origen</label>
                                                                                     <div class="position-relative">
-                                                                                        <input type="text" class="form-control"
-                                                                                            placeholder="Email" id="email-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-envelope"></i>
-                                                                                        </div>
+
+                                                                                        <select id="pais_origen" class="choices form-control" name="pais_origen">
+                                                                                            <option value="" disabled selected>Seleccione un país</option>
+                                                                                            <?php foreach ($pais as $paises): ?>
+                                                                                                <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
+                                                                                            <?php endforeach; ?>
+                                                                                        </select>
+
+
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
