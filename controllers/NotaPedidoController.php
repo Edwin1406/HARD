@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Exportadores;
 use Model\Importadores;
 use MVC\Router;
 
@@ -22,6 +23,7 @@ class NotaPedidoController
 
 
         $importadores = Importadores::all();
+        $exportadores = Exportadores::all();
 
 
 
@@ -35,7 +37,8 @@ class NotaPedidoController
             'nombre' => $nombre,
             'email' => $email,
             'alertas' => $alertas,
-            'importadores' => $importadores
+            'importadores' => $importadores,
+            'exportadores' => $exportadores
         ]);
     }
 }
