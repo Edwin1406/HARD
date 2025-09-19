@@ -5,6 +5,7 @@ namespace Controllers;
 use Model\Bodega;
 use Model\Ciudad;
 use Model\Marca;
+use Model\Pais;
 use MVC\Router;
 
 class BodegaController
