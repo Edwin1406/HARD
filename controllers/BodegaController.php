@@ -458,6 +458,50 @@ class BodegaController
 
 
 
+// crear origen
+ public static function crearPais(Router $router): void
+    {
+
+        $alertas = [];
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $pais = new Pais;
+
+        // $bodega =  Bodega::all();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $pais->sincronizar($_POST);
+
+            // debuguear($pais);
+            $alertas = $pais->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $pais->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/paises/tablaPais?exito=1');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/paises/crearPais', [
+            'titulo' => 'Crea un Pais',
+            'alertas' => $alertas,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
 
 
 
