@@ -596,7 +596,7 @@ class BodegaController
         }
 
         // Render a la vista
-        $router->render('admin/origen/editarOrigen', [
+        $router->render('admin/paises/editarPais', [
             'titulo' => 'Editar Pais',
             'alertas' => $alertas,
             'pais' => $pais,
