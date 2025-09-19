@@ -24,14 +24,14 @@
                 <li class="sidebar-item active">
                     <a href="/admin/index" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
+                        <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-stack"></i>
-                        <span>Administracion</span>
+                        <span class="menu-text">Administracion</span>
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item">
@@ -52,7 +52,7 @@
                 <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-code-slash"></i>
-                        <span>Pruebas</span>
+                        <span class="menu-text">Pruebas</span>
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item">
@@ -73,13 +73,11 @@
     </div>
 </div>
 
-
-
 <style>
 
 /* Sidebar container */
 #sidebar {
-    width: 250px;
+    width: 60px;
     background-color: #2c3e50;
     position: fixed;
     top: 0;
@@ -105,17 +103,25 @@
 .sidebar-item {
     padding: 15px;
     color: #fff;
+    text-align: center;
 }
 
 .sidebar-link {
     text-decoration: none;
     color: #fff;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 .sidebar-link i {
-    margin-right: 10px;
+    margin-right: 0;
+}
+
+/* Ocultar texto por defecto */
+.menu-text {
+    display: none;
+    margin-left: 10px;
 }
 
 /* Expandable submenu */
@@ -136,10 +142,16 @@
     color: #fff;
 }
 
+/* Sidebar header */
 .sidebar-header {
     padding: 10px 20px;
     background-color: #34495e;
     color: #fff;
+}
+
+/* Mostrar texto cuando el menú hamburguesa se activa */
+#sidebar.active .menu-text {
+    display: inline-block;
 }
 
 /* Mobile hamburger menu (for responsive) */
@@ -150,28 +162,28 @@
 }
 
 
-</style>
 
+</style>
 
 
 <script>
 
 
-// JavaScript for toggling the sidebar
+    // JavaScript para toggle en el menú hamburguesa
 const burgerBtn = document.querySelector('.burger-btn');
 const sidebar = document.getElementById('sidebar');
 const sidebarItems = document.querySelectorAll('.sidebar-item.has-sub');
 
+// Mostrar/ocultar el sidebar
 burgerBtn.addEventListener('click', () => {
     sidebar.classList.toggle('active');
 });
 
-// Toggle submenu visibility on click
+// Toggle submenús
 sidebarItems.forEach(item => {
     item.addEventListener('click', () => {
         item.classList.toggle('active');
     });
 });
-
 
 </script>
