@@ -59,6 +59,10 @@
                                  <a href="/admin/paises/crearPais"><i class="bi bi-arrow-right"> </i>Paises</a>
                              </li>
 
+                             <li class="submenu-item ">
+                                 <a href="/admin/marca/crearMarca"><i class="bi bi-arrow-right"> </i>Marcas</a>
+                             </li>
+
 
 
 

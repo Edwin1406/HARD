@@ -80,6 +80,13 @@ $router->get('/admin/ciudad/tablaCiudad', [BodegaController::class, 'tablaCiudad
 $router->post('/admin/eliminarCiudad', [BodegaController::class, 'eliminarCiudad']);
 
 
+//crearMarca
+$router->get('/admin/marca/crearMarca', [BodegaController::class, 'crearMarca']);
+$router->post('/admin/marca/crearMarca', [BodegaController::class, 'crearMarca']);
+
+
+
+
 
 //tabla de marca
 $router->get('/admin/marca/tablaMarca', [BodegaController::class, 'tablaMarca']);
