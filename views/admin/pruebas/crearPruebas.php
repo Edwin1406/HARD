@@ -79,7 +79,7 @@
 
 
 
-                                    <!-- 
+                                    
                                     <div class="col-md-6 col-12">
                                         <label for="tipo_clasificacion">Escoja la clasificación</label>
                                         <div class="form-group">
@@ -88,7 +88,7 @@
                                                 <option value="NO_CONTROLABLE">NO CONTROLABLE</option>
                                             </select>
                                         </div>
-                                    </div> -->
+                                    </div>
 
 
                                     <!-- quiero tomar el nombre del usuario y si es corruugador solo me parezcan del corrgador-->
