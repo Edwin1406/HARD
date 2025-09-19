@@ -8,7 +8,7 @@ class NotaPedidoController
 {
     public static function crearNota(Router $router): void
     {
- $alertas = [];
+        $alertas = [];
 
         session_start();
         if (!isset($_SESSION['email'])) {
@@ -35,11 +35,5 @@ class NotaPedidoController
             'alertas' => $alertas
 
         ]);
-
-
-
-
-
-
     }
-    }
+}
