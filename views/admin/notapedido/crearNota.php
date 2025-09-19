@@ -136,30 +136,30 @@
                                         </div>
 
 
-    <section id="basic-vertical-layouts">
-        <div class="row match-height">
-            <div class="col-md-4 col-12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form class="form form-vertical">
-                                <div class="form-body">
-                                    <div class="row">
+                                        <section id="basic-vertical-layouts">
+                                            <div class="row match-height">
+                                                <div class="col-md-4 col-12">
+                                                    <div class="card">
+                                                        <div class="card-content">
+                                                            <div class="card-body">
+                                                                <form class="form form-vertical">
+                                                                    <div class="form-body">
+                                                                        <div class="row">
 
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="first-name-vertical">Importador</label>
-                                               <select id="importador" class="choices form-control" name="importador">
-                                                    <option value="" disabled selected>Seleccione un importador</option>
-                                                    <?php foreach ($importadores as $importador): ?>
-                                                        <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="first-name-vertical">Importador</label>
+                                                                                    <select id="importador" class="choices form-control" name="importador">
+                                                                                        <option value="" disabled selected>Seleccione un importador</option>
+                                                                                        <?php foreach ($importadores as $importador): ?>
+                                                                                            <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                        <?php endforeach; ?>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
 
 
-                                        <!-- <div class="col-12">
+                                                                            <!-- <div class="col-12">
                                             <div class="form-group">
                                                 <label for="email-id-vertical">Email</label>
                                                 <input type="email" id="email-id-vertical"
@@ -184,149 +184,154 @@
                                             </div>
                                         </div> -->
 
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="card">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-12">
+                                                    <div class="card">
 
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form class="form form-vertical">
-                                <div class="form-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="first-name-icon">First Name</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Input with icon left"
-                                                        id="first-name-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-person"></i>
+                                                        <div class="card-content">
+                                                            <div class="card-body">
+                                                                <form class="form form-vertical">
+                                                                    <div class="form-body">
+                                                                        <div class="row">
+
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="first-name-icon">Exportador</label>
+                                                                                    <div class="position-relative">
+
+                                                                                        <select id="exportador" class="choices form-control" name="exportador">
+                                                                                            <option value="" disabled selected>Seleccione un exportador</option>
+                                                                                            <?php foreach ($exportadores as $exportador): ?>
+                                                                                                <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
+                                                                                            <?php endforeach; ?>
+                                                                                        </select>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div class="col-12">
+
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="email-id-icon">Email</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control"
+                                                                                            placeholder="Email" id="email-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-envelope"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="mobile-id-icon">Mobile</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control"
+                                                                                            placeholder="Mobile" id="mobile-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-phone"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="password-id-icon">Password</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="password" class="form-control"
+                                                                                            placeholder="Password" id="password-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-lock"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-12">
+                                                    <div class="card">
+
+                                                        <div class="card-content">
+                                                            <div class="card-body">
+                                                                <form class="form form-vertical">
+                                                                    <div class="form-body">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="first-name-icon">First Name</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control"
+                                                                                            placeholder="Input with icon left"
+                                                                                            id="first-name-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-person"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="email-id-icon">Email</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control"
+                                                                                            placeholder="Email" id="email-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-envelope"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="mobile-id-icon">Mobile</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control"
+                                                                                            placeholder="Mobile" id="mobile-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-phone"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group has-icon-left">
+                                                                                    <label for="password-id-icon">Password</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input type="password" class="form-control"
+                                                                                            placeholder="Password" id="password-id-icon">
+                                                                                        <div class="form-control-icon">
+                                                                                            <i class="bi bi-lock"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
-
-                                            <div class="form-group has-icon-left">
-                                                <label for="email-id-icon">Email</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Email" id="email-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-envelope"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="mobile-id-icon">Mobile</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Mobile" id="mobile-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-phone"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="password-id-icon">Password</label>
-                                                <div class="position-relative">
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Password" id="password-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-lock"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="card">
-
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form class="form form-vertical">
-                                <div class="form-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="first-name-icon">First Name</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Input with icon left"
-                                                        id="first-name-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-person"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-
-                                            <div class="form-group has-icon-left">
-                                                <label for="email-id-icon">Email</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Email" id="email-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-envelope"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="mobile-id-icon">Mobile</label>
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Mobile" id="mobile-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-phone"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group has-icon-left">
-                                                <label for="password-id-icon">Password</label>
-                                                <div class="position-relative">
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Password" id="password-id-icon">
-                                                    <div class="form-control-icon">
-                                                        <i class="bi bi-lock"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                                        </section>
 
 
 
