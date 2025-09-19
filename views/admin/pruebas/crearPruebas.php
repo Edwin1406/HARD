@@ -129,6 +129,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-3 col-12">
+                                            <div class="form-group">
+                                                <label for="exportador">Exportador</label>
+                                                <select id="exportador" class="choices form-control" name="exportador">
+                                                    <option value="" disabled selected>Seleccione un exportador</option>
+                                                    <option value="INDUSTRIAS CARTONAJES S.A">INDUSTRIAS CARTONAJES S.A</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DEL PERU S.A.C">INDUSTRIAS CARTONAJES DEL PERU S.A.C</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S">INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE CHILE LTDA">INDUSTRIAS CARTONAJES DE CHILE LTDA</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.">INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE ECUADOR S.A.">INDUSTRIAS CARTONAJES DE ECUADOR S.A.</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
 
 
