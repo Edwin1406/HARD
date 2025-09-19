@@ -280,11 +280,9 @@
                                                                                     <label for="first-name-icon">Remitir Doc a</label>
                                                                                     <div class="position-relative">
                                                                                         <input type="text" class="form-control"
-                                                                                            placeholder="Input with icon left"
+                                                                                            placeholder="Remitir Doc a"
                                                                                             id="first-name-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-person"></i>
-                                                                                        </div>
+                                                                                       
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
