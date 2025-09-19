@@ -44,24 +44,7 @@
         </script>
     <?php endif; ?>
 
-    <section class="section">
-        <div class="card">
-            <ul class="nav nav-tabs">
-
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="/admin/marca/crearMarca">Crear Marcas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="/admin/marca/tablaMarca">Marcas</a>
-                </li>
-
-
-
-
-            </ul>
-        </div>
-    </section>
+ 
 
 
 
@@ -69,10 +52,7 @@
         <div class="row match-height">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">REGISTRAR NUEVA MARCA</h4>
-                        <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
-                    </div>
+                    
                     <div class="card-content">
                         <div class="card-body">
                             <form class="form" method="POST" action="/admin/marca/crearMarca" onsubmit="return bloquearBoton(this)">
