@@ -795,12 +795,19 @@
   text-decoration: none;
   color: #25396f;
 }
+
+
+
+
+
 .sidebar-wrapper .menu .sidebar-link i,
 .sidebar-wrapper .menu .sidebar-link svg {
   color: #7c8db5;
+   font-size: 1.5rem;
 }
 .sidebar-wrapper .menu .sidebar-link span {
   margin-left: 1rem;
+  display: none;
 }
 .sidebar-wrapper .menu .sidebar-link:hover {
   background-color: #f0f1f5;
