@@ -159,7 +159,7 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="form-group">
                                                 <label for="email-id-vertical">Email</label>
                                                 <input type="email" id="email-id-vertical"
@@ -182,7 +182,7 @@
                                                     class="form-control" name="contact"
                                                     placeholder="Password">
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
