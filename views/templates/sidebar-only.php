@@ -1,10 +1,4 @@
- <?php
-
-    $userEmail = $_SESSION['email'] ?? 'No disponible'; // Asignar
-    ?>
-
-
- <header class="py-3">
+<header class="py-3">
     <a href="#" class="burger-btn d-block d-xl-none">
         <i class="bi bi-justify fs-3"></i>
     </a>
@@ -23,128 +17,161 @@
             </div>
         </div>
 
-        <!-- Sidebar Menu -->
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <?php if ($userEmail === 'control@megaecuador.com' || $userEmail === 'produccion@megaecuador.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
-                    <li class="sidebar-item active ">
-                        <a href="/admin/index" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span class="d-none d-xl-inline">Dashboard</span>
-                        </a>
-                    </li>
-                <?php } ?>
-
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span class="d-none d-xl-inline">Administracion</span>
+                <li class="sidebar-item active">
+                    <a href="/admin/index" class="sidebar-link">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
                     </a>
-                    <?php if ($userEmail === 'invitado@pruebas.com' || $userEmail === 'pruebas@megaecuador.com') { ?>
-                        <ul class="submenu">
-                            <li class="submenu-item">
-                                <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Bodega</span></a>
-                            </li>
-                            <li class="submenu-item">
-                                <a href="/admin/ciudad/crearCiudad"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Ciudades</span></a>
-                            </li>
-                            <li class="submenu-item">
-                                <a href="/admin/paises/crearPais"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Paises</span></a>
-                            </li>
-                            <li class="submenu-item">
-                                <a href="/admin/marca/crearMarca"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Marcas</span></a>
-                            </li>
-                        </ul>
-                    <?php } ?>
                 </li>
 
-                <!-- pruebas -->
-                <?php if ($userEmail === 'pruebas@megaecuador.com' || $userEmail === 'produccion@megaecuador.com') { ?>
-                    <li class="sidebar-item has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-code-slash"></i>
-                            <span class="d-none d-xl-inline">Pruebas</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="submenu-item">
-                                <a href="/admin/pruebas/tablaPruebas"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Tabla Pruebas</span></a>
-                            </li>
-                            <li class="submenu-item">
-                                <a href="/admin/pruebas/crearPruebas"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Crear Pruebas</span></a>
-                            </li>
-                            <li class="submenu-item">
-                                <a href="/admin/vehiculos/registroVehiculos"><i class="bi bi-arrow-right"> </i><span class="d-none d-xl-inline">Registro de Vehículos</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                <?php } ?>
+                <li class="sidebar-item has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>Administracion</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i>Bodega</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/admin/ciudad/crearCiudad"><i class="bi bi-arrow-right"> </i>Ciudades</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/admin/paises/crearPais"><i class="bi bi-arrow-right"> </i>Paises</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/admin/marca/crearMarca"><i class="bi bi-arrow-right"> </i>Marcas</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-code-slash"></i>
+                        <span>Pruebas</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="/admin/pruebas/tablaPruebas"><i class="bi bi-arrow-right"> </i>Tabla Pruebas</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/admin/pruebas/crearPruebas"><i class="bi bi-arrow-right"> </i>Crear Pruebas</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/admin/vehiculos/registroVehiculos"><i class="bi bi-arrow-right"> </i>Registro localizacion de Vehículos</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
+
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
 </div>
 
 
+
 <style>
 
-/* Ocultar el texto en dispositivos móviles y mostrar solo los íconos */
-.d-none.d-xl-inline {
+/* Sidebar container */
+#sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Sidebar active state */
+#sidebar.active {
+    display: block;
+    transform: translateX(0);
+}
+
+/* Menu styling */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-item {
+    padding: 15px;
+    color: #fff;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link i {
+    margin-right: 10px;
+}
+
+/* Expandable submenu */
+.submenu {
+    list-style: none;
+    padding-left: 20px;
     display: none;
 }
 
-/* En dispositivos de tamaño mayor (pantallas grandes), mostrar el texto junto a los íconos */
-@media (min-width: 1200px) {
-    .d-none.d-xl-inline {
-        display: inline;
-    }
+.sidebar-item.has-sub.active > .submenu {
+    display: block;
 }
 
-/* En dispositivos pequeños, el contenedor lateral debe ser más pequeño y solo mostrar los íconos */
-@media (max-width: 1199px) {
-    .sidebar-wrapper {
-        width: 60px; /* Ajusta este valor para que se adapte a tus necesidades */
-    }
-    
-    /* Solo mostrar los iconos en las secciones del menú */
-    .sidebar-item .sidebar-link span {
-        display: none;
-    }
+/* Sidebar toggle button */
+.burger-btn {
+    display: block;
+    font-size: 30px;
+    color: #fff;
+}
 
-    .sidebar-item .sidebar-link i {
-        font-size: 1.5rem; /* Ajusta el tamaño del icono */
-        padding: 10px; /* Espaciado alrededor de los iconos */
-    }
+.sidebar-header {
+    padding: 10px 20px;
+    background-color: #34495e;
+    color: #fff;
+}
 
-    /* Reducir el tamaño de la barra lateral cuando está colapsada */
+/* Mobile hamburger menu (for responsive) */
+@media (max-width: 768px) {
     #sidebar {
-        width: 60px; /* Ajusta el ancho del sidebar */
-    }
-    
-    /* Si el sidebar está colapsado y los íconos están solo visibles */
-    #sidebar.active .sidebar-wrapper {
-        width: 60px;
+        width: 100%;
     }
 }
-
-/* En el caso de que el menú hamburguesa se abra, el texto aparece junto a los íconos */
-@media (max-width: 1199px) {
-    .sidebar-wrapper .sidebar-item {
-        display: flex;
-        align-items: center;
-    }
-
-    .sidebar-wrapper .menu .sidebar-item.active .sidebar-link span {
-        display: inline-block;
-    }
-
-    .sidebar-wrapper .menu .sidebar-item .sidebar-link span {
-        display: inline-block;
-        padding-left: 10px;
-    }
-}
-
-
 
 
 </style>
+
+
+
+<script>
+
+
+// JavaScript for toggling the sidebar
+const burgerBtn = document.querySelector('.burger-btn');
+const sidebar = document.getElementById('sidebar');
+const sidebarItems = document.querySelectorAll('.sidebar-item.has-sub');
+
+burgerBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+});
+
+// Toggle submenu visibility on click
+sidebarItems.forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('active');
+    });
+});
+
+
+</script>
