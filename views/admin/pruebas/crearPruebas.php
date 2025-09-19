@@ -145,6 +145,15 @@
                                         </div>
 
 
+                                        <style>
+
+.card .card-header {
+    border: none;
+    display: none;
+}
+
+
+                                        </style>
 
 
 
