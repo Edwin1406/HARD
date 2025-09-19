@@ -61,12 +61,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">REGISTRAR NUEVA CIUDAD</h4>
+                        <h4 class="card-title">EDITAR CIUDAD</h4>
                         <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/ciudad/crearCiudad" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/ciudad/editarCiudad?id=<?php echo s($ciudad->id); ?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
