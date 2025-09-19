@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label for="Nombre_Ciudad">Nombre Ciudad</label>
                                             <input type="text" id="Nombre_Ciudad" class="form-control"
-                                                placeholder="Nombre Ciudad" name="Nombre_Ciudad">
+                                                placeholder="Nombre Ciudad" name="Nombre_Ciudad" value="<?php echo s($ciudad->Nombre_Ciudad); ?>">
                                         </div>
                                     </div>                                  
 
@@ -83,13 +83,13 @@
                                         <div class="form-group">
                                             <label for="Sigla_Ciudad">Siglas Ciudad</label>
                                             <input type="text" id="Sigla_Ciudad" class="form-control"
-                                                placeholder="Siglas Ciudad" name="Sigla_Ciudad">
+                                                placeholder="Siglas Ciudad" name="Sigla_Ciudad" value="<?php echo s($ciudad->Sigla_Ciudad); ?>">
                                         </div>
                                     </div>
 
 
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
+                                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Actualizar</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
                                     </div>
                                 </div>
