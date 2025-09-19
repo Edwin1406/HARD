@@ -48,10 +48,10 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/origen/CrearPais">Origen</a>
+                    <a class="nav-link active" href="/admin/origen/CrearPais">Crear Origen</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/origen/tablaOrigen">Origen</a>
+                    <a class="nav-link " href="/admin/origen/tablaOrigen">Origen</a>
                 </li>
             </ul>
         </div>
