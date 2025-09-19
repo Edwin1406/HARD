@@ -108,6 +108,10 @@
                                             </div>
                                         </div> -->
 
+<!-- Incluye la librería de Choices.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 <div class="col-md-5 col-12">
     <div class="form-group">
         <label for="importador">Importador</label>
@@ -133,8 +137,15 @@
 
 <!-- Agregar jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 $(document).ready(function() {
+    // Inicializa Choices.js en el select
+    var importadorChoices = new Choices('#importador', {
+        removeItemButton: true,
+        searchEnabled: true
+    });
+
     // Cuando se seleccione un importador
     $('#importador').change(function() {
         var selectedOption = $(this).find('option:selected');
@@ -156,6 +167,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
 
 
 
