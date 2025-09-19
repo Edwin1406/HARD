@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/paises/crearPais?id=<?php echo $pais->id; ?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/paises/editarPais?id=<?php echo $pais->id; ?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
