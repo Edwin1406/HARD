@@ -503,6 +503,104 @@ class BodegaController
     }
 
 
+    // tabla de pais
+    public static function tablaPais(Router $router): void
+    {
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $pais =  Pais::all();
+
+        // Render a la vista
+        $router->render('admin/origen/tablaOrigen', [
+            'titulo' => 'Tabla de Paises',
+            'pais' => $pais,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+    // eliminar pais
+    public static function eliminarPais(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar el ID
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if ($id) {
+                $pais = Pais::find($id);
+                if ($pais) {
+                    $pais->eliminar();
+                    header('Location: /admin/paises/tablaPais?eliminado=3');
+                }
+            }
+        }
+    }
+
+
+    // editar pais
+    public static function editarPais(Router $router): void
+    {
+
+        $alertas = [];
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        // Validar el ID
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/paises/tablaPais');
+        }
+
+        // Obtener los datos de la pais a editar
+        $pais = Pais::find($id);
+
+        if (!$pais) {
+            header('Location: /admin/paises/tablaPais');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $pais->sincronizar($_POST);
+
+            // debuguear($pais);
+            $alertas = $pais->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $pais->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/paises/tablaPais?editado=2');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/origen/editarOrigen', [
+            'titulo' => 'Editar Pais',
+            'alertas' => $alertas,
+            'pais' => $pais,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
 
 
 

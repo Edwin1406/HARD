@@ -107,9 +107,15 @@ $router->post('/admin/marca/editarMarca', [BodegaController::class, 'editarMarca
 $router->get('/admin/paises/crearPais', [BodegaController::class, 'crearPais']);
 $router->post('/admin/paises/crearPais', [BodegaController::class, 'crearPais']);
 
+// tabla de paises
+$router->get('/admin/paises/tablaPais', [BodegaController::class, 'tablaPais']);
 
+// eliminar pais
+$router->post('/admin/eliminarPais', [BodegaController::class, 'eliminarPais']);
 
-
+// editar pais
+$router->get('/admin/paises/editarPais', [BodegaController::class, 'editarPais']);
+$router->post('/admin/paises/editarPais', [BodegaController::class, 'editarPais']);
 
 
 
