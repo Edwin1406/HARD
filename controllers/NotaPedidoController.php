@@ -28,12 +28,12 @@ class NotaPedidoController
 
 
 
-        $router->render('admin/notaPedido/crearNota', [
+        $router->render('admin/notapedido/crearNota', [
             'titulo' => 'Crear Nota Pedido',
             'nombre' => $nombre,
             'email' => $email,
             'alertas' => $alertas
-            
+
         ]);
 
 
