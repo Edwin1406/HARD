@@ -90,28 +90,28 @@
 
 /* Ocultar texto en pantallas pequeñas */
 .d-none.d-xl-inline {
-    display: none;
+    display: none !important;
 }
 
 /* Mostrar texto solo en pantallas grandes */
 @media (min-width: 1200px) {
     .d-none.d-xl-inline {
-        display: inline;
+        display: inline !important;
     }
 }
 
 /* Mostrar los íconos siempre */
 .sidebar-link i {
-    display: inline-block;
+    display: inline-block !important;
 }
 
 /* Mostrar solo los iconos en el menú hamburguesa */
 .sidebar-wrapper .menu .sidebar-item.has-sub .sidebar-link i {
-    font-size: 1.2rem;
+    font-size: 1.2rem !important;
 }
 
 .sidebar-wrapper .menu .sidebar-item .sidebar-link span {
-    display: none;
+    display: none !important;
 }
 
 
