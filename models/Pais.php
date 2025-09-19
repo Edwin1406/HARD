@@ -4,7 +4,7 @@ namespace Model;
 
 class Pais extends ActiveRecord {
 
-    protected static $tabla = 'PAIS';
+    protected static $tabla = 'ORIGEN';
     protected static $columnasDB = ['id', 'Nombre_Pais'];
 
     public $id;
