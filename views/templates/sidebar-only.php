@@ -95,7 +95,7 @@
                      <li class="sidebar-item  has-sub">
                          <a href="#" class='sidebar-link'>
                              <!-- <i class="bi bi-collection-fill"></i> -->
-                             <i class="bi bi-code-slash"></i>
+                             <i class="bi bi-file-earmark-text"></i>
                              <span>Nota Pedido</span>
                          </a>
                          <ul class="submenu ">
