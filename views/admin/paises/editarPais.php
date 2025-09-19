@@ -77,7 +77,7 @@
                                         <div class="form-group">
                                             <label for="Pais_Origen">Nombre Origen</label>
                                             <input type="text" id="Pais_Origen" class="form-control"
-                                                placeholder="Nombre Origen" name="Pais_Origen">
+                                                placeholder="Nombre Origen" name="Pais_Origen" value="<?php echo s($pais->Pais_Origen); ?>">
                                         </div>
                                     </div>                                  
 
