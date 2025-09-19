@@ -148,42 +148,7 @@
 
 
 
-
-                                        <div class="col-md-2 col-12">
-                                            <div class="form-group">
-                                                <label for="nota_pedido">Nota de pedido N°</label>
-                                                <input type="number" id="nota_pedido" class="form-control"
-                                                    placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-md-2 col-12">
-                                            <div class="form-group">
-                                                <label for="num_pedido"></label>
-                                                <input type="number" id="num_pedido" class="form-control"
-                                                    placeholder="# Pedido" name="num_pedido" step="0.01">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 col-12">
-                                            <div class="form-group">
-                                                <label for="num_importacion"></label>
-                                                <input type="number" id="num_importacion" class="form-control"
-                                                    placeholder="# Importación" name="num_importacion" step="0.01">
-                                            </div>
-                                        </div>
-
-                                        <!-- fecha -->
-                                        <div class="col-md-2 col-12">
-                                            <div class="form-group">
-                                                <label for="fecha">Fecha</label>
-                                                <input type="date" id="fecha" class="form-control"
-                                                    name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                        
 
 
                                     <div class="col-12 d-flex justify-content-end">
