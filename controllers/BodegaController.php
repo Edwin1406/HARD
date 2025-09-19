@@ -241,6 +241,76 @@ class BodegaController
     }
 
 
+    // editar ciudad
+    public static function editarCiudad(Router $router): void
+    {
+
+        $alertas = [];
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        // Validar el ID
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/ciudad/tablaCiudad');
+        }
+
+        // Obtener los datos de la ciudad a editar
+        $ciudad = Ciudad::find($id);
+
+        if (!$ciudad) {
+            header('Location: /admin/ciudad/tablaCiudad');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $ciudad->sincronizar($_POST);
+
+            // debuguear($ciudad);
+            $alertas = $ciudad->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $ciudad->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/ciudad/tablaCiudad?editado=2');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/ciudad/editarCiudad', [
+            'titulo' => 'Editar Ciudad',
+            'alertas' => $alertas,
+            'ciudad' => $ciudad,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // crear marca
