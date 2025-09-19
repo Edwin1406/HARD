@@ -84,3 +84,37 @@
         </div>
     </div>
 </div>
+
+
+<style>
+
+/* Ocultar texto en pantallas pequeñas */
+.d-none.d-xl-inline {
+    display: none;
+}
+
+/* Mostrar texto solo en pantallas grandes */
+@media (min-width: 1200px) {
+    .d-none.d-xl-inline {
+        display: inline;
+    }
+}
+
+/* Mostrar los íconos siempre */
+.sidebar-link i {
+    display: inline-block;
+}
+
+/* Mostrar solo los iconos en el menú hamburguesa */
+.sidebar-wrapper .menu .sidebar-item.has-sub .sidebar-link i {
+    font-size: 1.2rem;
+}
+
+.sidebar-wrapper .menu .sidebar-item .sidebar-link span {
+    display: none;
+}
+
+
+
+
+</style>
