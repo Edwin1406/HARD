@@ -81,6 +81,12 @@ $router->post('/admin/eliminarCiudad', [BodegaController::class, 'eliminarCiudad
 
 
 
+//tabla de marca
+$router->get('/admin/marca/tablaMarca', [BodegaController::class, 'tablaMarca']);
+
+
+
+
 
 
 

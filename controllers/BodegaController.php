@@ -240,6 +240,29 @@ class BodegaController
     }
 
 
+    // tabla de marca
+    public static function tablaMarca(Router $router): void
+    {
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $marca =  Bodega::all();
+
+        // Render a la vista
+        $router->render('admin/marca/tablaMarca', [
+            'titulo' => 'Tabla de Marcas',
+            'marca' => $marca,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }   
+
     
 
 
