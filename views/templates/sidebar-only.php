@@ -96,7 +96,7 @@
                          <a href="#" class='sidebar-link'>
                              <!-- <i class="bi bi-collection-fill"></i> -->
                              <i class="bi bi-code-slash"></i>
-                             <span>Pruebas</span>
+                             <span>Nota Pedido</span>
                          </a>
                          <ul class="submenu ">
                              <li class="submenu-item ">
