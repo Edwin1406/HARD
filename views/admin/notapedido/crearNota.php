@@ -310,7 +310,7 @@
                                                                                     <label for="mobile-id-icon">Forma de pago</label>
                                                                                     <div class="position-relative">
 
-                                                                                        </select>
+                                                                                        <select class="form-select" id="forma_pago" name="forma_pago">
                                                                                             <option value="" disabled selected>Seleccione una forma de pago</option>
                                                                                             <option value="Contado">Contado</option>
                                                                                             <option value="Crédito">Crédito</option>
