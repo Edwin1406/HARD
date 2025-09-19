@@ -115,6 +115,25 @@
 
                                     <div class="row">
 
+                                        <!-- importador select -->
+                                        <div class="col-md-3 col-12">
+                                            <div class="form-group">
+                                                <label for="importador">Importador</label>
+                                                <select id="importador" class="choices form-control" name="importador">
+                                                    <option value="" disabled selected>Seleccione un importador</option>
+                                                    <option value="IMPORTADORA MEGA ECUADOR S.A">IMPORTADORA MEGA ECUADOR S.A</option>
+                                                    <option value="IMPORTADORA MEGA DEL PERU S.A.C">IMPORTADORA MEGA DEL PERU S.A.C</option>
+                                                    <option value="IMPORTADORA MEGA DE COLOMBIA S.A.S">IMPORTADORA MEGA DE COLOMBIA S.A.S</option>
+                                                    <option value="IMPORTADORA MEGA DE CHILE LTDA">IMPORTADORA MEGA DE CHILE LTDA</option>
+                                                    <option value="IMPORTADORA MEGA DE MEXICO S.A. DE C.V.">IMPORTADORA MEGA DE MEXICO S.A. DE C.V.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+
 
                                         <div class="col-md-2 col-12">
                                             <div class="form-group">
