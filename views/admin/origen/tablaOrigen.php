@@ -83,10 +83,10 @@
             <ul class="nav nav-tabs">
 
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin/origen/CrearPais">Crear Origen</a>
+                    <a class="nav-link " href="/admin/paises/CrearPais">Crear Origen</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/origen/tablaOrigen">Origen</a>
+                    <a class="nav-link active" href="/admin/paises/tablaOrigen">Origen</a>
                 </li>
 
             </ul>
@@ -99,7 +99,7 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                Tabla de registros de Bodegas
+                Tabla de registros de Origen
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
