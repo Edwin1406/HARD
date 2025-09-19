@@ -786,7 +786,7 @@
 }
 .sidebar-wrapper .menu .sidebar-link {
   display: block;
-  padding: 0.7rem 3rem;
+  padding: 0.7rem 1rem;
   font-size: 1rem;
   display: flex;
   align-items: center;
