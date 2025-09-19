@@ -8,7 +8,15 @@ class NotaPedidoController
 {
     public static function crearNota(Router $router): void
     {
+ $alertas = [];
 
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
 
 
 
@@ -21,7 +29,11 @@ class NotaPedidoController
 
 
         $router->render('admin/notaPedido/crearNota', [
-            'titulo' => 'Crear Nota Pedido'
+            'titulo' => 'Crear Nota Pedido',
+            'nombre' => $nombre,
+            'email' => $email,
+            'alertas' => $alertas
+            
         ]);
 
 
