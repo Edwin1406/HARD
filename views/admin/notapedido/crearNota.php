@@ -138,7 +138,7 @@
 
     <section id="basic-vertical-layouts">
         <div class="row match-height">
-            <div class="col-md-3 col-12">
+            <div class="col-md-4 col-12">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
@@ -185,7 +185,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-12">
+            <div class="col-md-4 col-12">
                 <div class="card">
 
                     <div class="card-content">
@@ -252,7 +252,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-12">
+            <div class="col-md-4 col-12">
                 <div class="card">
 
                     <div class="card-content">
