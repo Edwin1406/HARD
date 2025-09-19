@@ -120,16 +120,17 @@
             <?php endforeach; ?>
         </select>
     </div>
-</div>
-
-<!-- Campos para mostrar la información del importador -->
-<div id="importador-info">
+    div id="importador-info">
     <p><strong>Dirección:</strong> <span id="direccion"></span></p>
     <p><strong>Ciudad:</strong> <span id="ciudad"></span></p>
     <p><strong>RUC:</strong> <span id="ruc"></span></p>
     <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
     <p><strong>País:</strong> <span id="pais"></span></p>
 </div>
+</div>
+
+<!-- Campos para mostrar la información del importador -->
+<
 
 <!-- Agregar jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
