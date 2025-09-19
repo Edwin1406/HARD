@@ -394,7 +394,7 @@
 .divider .divider-text:after {
   left: 100%;
 } */
-.divider.divider-left .divider-text {
+/* .divider.divider-left .divider-text {
   left: 0;
   float: left;
   padding-left: 0;
@@ -671,7 +671,7 @@
 .form-check.form-check-dark .form-check-input {
   background-color: #212529;
   border-color: #212529;
-}
+} */
 .dataTable-input {
   min-height: calc(1.5em + 0.934rem + 2px);
   padding: 0.467rem 0.6rem;
