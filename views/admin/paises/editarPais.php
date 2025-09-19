@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/paises/crearPais?id=<?php echo s($pais->id); ?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/paises/crearPais?id=<?php echo $pais->id; ?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
@@ -104,7 +104,7 @@
 function bloquearBoton(form) {
   const btn = form.querySelector('#btnRegistrar');
   btn.disabled = true; // Deshabilita el botón
-  btn.innerText = "Registrando..."; // Cambia el texto (opcional)
+  btn.innerText = "Editando..."; // Cambia el texto (opcional)
   return true; // Permite que el formulario se envíe
 }
 </script>
