@@ -95,45 +95,10 @@
 
                                     <div class="row">
 
-                                        <!-- importador select -->
-                                        <div class="col-md-5 col-12">
-                                            <div class="form-group">
-                                                <label for="importador">Importador</label>
-                                                <select id="importador" class="choices form-control" name="importador">
-                                                    <option value="" disabled selected>Seleccione un importador</option>
-                                                    <?php foreach ($importadores as $importador): ?>
-                                                        <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
+                                   
 
 
-                                        <div class="col-md-5 col-12">
-                                            <div class="form-group">
-                                                <label for="exportador">Exportador</label>
-                                                <select id="exportador" class="choices form-control" name="exportador">
-                                                    <option value="" disabled selected>Seleccione un exportador</option>
-                                                    <?php foreach ($exportadores as $exportador): ?>
-                                                        <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                        <!-- crear n form pequeño  -->
-                                        <div class="col-md-5 col-12">
-                                            <div class="form-group">
-                                                <label for="pais_origen">País Origen</label>
-                                                <select id="pais_origen" class="choices form-control" name="pais_origen">
-                                                    <option value="" disabled selected>Seleccione un país</option>
-                                                    <?php foreach ($pais as $paises): ?>
-                                                        <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
+                                 
 
 
                                         <section id="basic-vertical-layouts">
