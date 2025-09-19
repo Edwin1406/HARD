@@ -240,6 +240,53 @@ class BodegaController
     }
 
 
+
+
+// crear marca
+ public static function crearMarca(Router $router): void
+    {
+
+        $alertas = [];
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $marca = new Bodega($_POST);
+
+        // $bodega =  Bodega::all();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $marca->sincronizar($_POST);
+
+            // debuguear($marca);
+            $alertas = $marca->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $marca->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/marca/tablaMarca?exito=1');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/marca/crearMarca', [
+            'titulo' => 'Crea una Marca',
+            'alertas' => $alertas,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
     // tabla de marca
     public static function tablaMarca(Router $router): void
     {
