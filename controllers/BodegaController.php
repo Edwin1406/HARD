@@ -330,6 +330,61 @@ class BodegaController
         }
     }
 
+    // editar marca
+    public static function editarMarca(Router $router): void
+    {
+
+        $alertas = [];
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        // Validar el ID
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/marca/tablaMarca');
+        }
+
+        // Obtener los datos de la marca a editar
+        $marca = Marca::find($id);
+
+        if (!$marca) {
+            header('Location: /admin/marca/tablaMarca');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $marca->sincronizar($_POST);
+
+            // debuguear($marca);
+            $alertas = $marca->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $marca->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/marca/tablaMarca?editado=2');
+                }
+            }
+        }
+
+        // Render a la vista
+        $router->render('admin/marca/editarBodega', [
+            'titulo' => 'Editar Marca',
+            'alertas' => $alertas,
+            'marca' => $marca,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
 
 
 
