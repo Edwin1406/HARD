@@ -494,7 +494,7 @@ class BodegaController
         }
 
         // Render a la vista
-        $router->render('admin/origen/crearPais', [
+        $router->render('admin/origen/crearOrigen', [
             'titulo' => 'Crea un Pais',
             'alertas' => $alertas,
             'nombre' => $nombre,
