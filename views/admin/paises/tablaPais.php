@@ -83,7 +83,7 @@
             <ul class="nav nav-tabs">
 
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin/paises/CrearPais">Crear Origen</a>
+                    <a class="nav-link " href="/admin/paises/crearPais">Crear Origen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="/admin/paises/tablaPais">Origen</a>
