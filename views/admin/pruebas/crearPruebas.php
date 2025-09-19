@@ -78,17 +78,23 @@
                                 <div class="row">
 
 
-
-                                    
-                                    <div class="col-md-6 col-12">
-                                        <label for="tipo_clasificacion">Escoja la clasificación</label>
+                                    <div class="col-md-4 col-12">
                                         <div class="form-group">
-                                            <select class="form-select" name="tipo_clasificacion" id="tipo_clasificacion">
-                                                <option value="CONTROLABLE">CONTROLABLE</option>
-                                                <option value="NO_CONTROLABLE">NO CONTROLABLE</option>
-                                            </select>
+                                            <label for="nota_pedido">Nota de pedido N°</label>
+                                            <input type="number" id="nota_pedido" class="form-control"
+                                                placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
                                         </div>
                                     </div>
+                                
+
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <!-- <label for="num_pedido"># Pedido</label> -->
+                                            <input type="number" id="num_pedido" class="form-control"
+                                                placeholder="# Pedido" name="num_pedido" step="0.01">
+                                        </div>
+                                    </div>
+                                
 
 
                                     <!-- quiero tomar el nombre del usuario y si es corruugador solo me parezcan del corrgador-->
@@ -417,21 +423,17 @@
 
 
 
-<script>
-function bloquearBoton(form) {
-  const btn = form.querySelector('#btnRegistrar');
-  btn.disabled = true; // Deshabilita el botón
-  btn.innerText = "Registrando..."; // Cambia el texto (opcional)
-  return true; // Permite que el formulario se envíe
-}
-</script>
+    <script>
+        function bloquearBoton(form) {
+            const btn = form.querySelector('#btnRegistrar');
+            btn.disabled = true; // Deshabilita el botón
+            btn.innerText = "Registrando..."; // Cambia el texto (opcional)
+            return true; // Permite que el formulario se envíe
+        }
+    </script>
 
 
 
 
 
 </div>
-
-
-
-
