@@ -518,7 +518,7 @@ class BodegaController
         $pais =  Pais::all();
 
 
-        debuguear($pais);
+        // debuguear($pais);
 
         // Render a la vista
         $router->render('admin/paises/tablaPais', [
