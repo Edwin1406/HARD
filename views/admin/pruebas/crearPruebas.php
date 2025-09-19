@@ -89,7 +89,7 @@
 
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
-                                            <!-- <label for="num_pedido"># Pedido</label> -->
+                                            <label for="num_pedido"></label>
                                             <input type="number" id="num_pedido" class="form-control"
                                                 placeholder="# Pedido" name="num_pedido" step="0.01">
                                         </div>
@@ -97,7 +97,7 @@
 
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
-                                            <!-- <label for="num_pedido"># Pedido</label> -->
+                                            <label for="num_importacion"></label>
                                             <input type="number" id="num_importacion" class="form-control"
                                                 placeholder="# Importación" name="num_importacion" step="0.01">
                                         </div>
