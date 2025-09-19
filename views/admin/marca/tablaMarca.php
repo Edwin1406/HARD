@@ -82,11 +82,15 @@
         <div class="card">
             <ul class="nav nav-tabs">
 
-              
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/admin/marca/crearMarca">Registro Marca</a>
-                    </li>
-           
+
+
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin/marca/crearMarca">Crear Marcas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/marca/tablaMarca">Marcas</a>
+                </li>
+
             </ul>
         </div>
     </section>
