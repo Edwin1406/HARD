@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Bodega;
 use Model\Ciudad;
+use Model\Marca;
 use MVC\Router;
 
 class BodegaController
@@ -256,7 +257,7 @@ class BodegaController
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
-        $marca = new Bodega($_POST);
+        $marca = new Marca($_POST);
 
         // $bodega =  Bodega::all();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -299,7 +300,7 @@ class BodegaController
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
-        $marca =  Bodega::all();
+        $marca =  Marca::all();
 
         // Render a la vista
         $router->render('admin/marca/tablaMarca', [
