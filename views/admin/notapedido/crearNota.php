@@ -128,30 +128,30 @@
                                                                             </div>
 
 
-                                                                            <!-- <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="email-id-vertical">Email</label>
-                                                <input type="email" id="email-id-vertical"
-                                                    class="form-control" name="email-id"
-                                                    placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="contact-info-vertical">Mobile</label>
-                                                <input type="number" id="contact-info-vertical"
-                                                    class="form-control" name="contact"
-                                                    placeholder="Mobile">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="password-vertical">Password</label>
-                                                <input type="password" id="password-vertical"
-                                                    class="form-control" name="contact"
-                                                    placeholder="Password">
-                                            </div>
-                                        </div> -->
+                                                                                                                <!-- <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="email-id-vertical">Email</label>
+                                                                                    <input type="email" id="email-id-vertical"
+                                                                                        class="form-control" name="email-id"
+                                                                                        placeholder="Email">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="contact-info-vertical">Mobile</label>
+                                                                                    <input type="number" id="contact-info-vertical"
+                                                                                        class="form-control" name="contact"
+                                                                                        placeholder="Mobile">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="password-vertical">Password</label>
+                                                                                    <input type="password" id="password-vertical"
+                                                                                        class="form-control" name="contact"
+                                                                                        placeholder="Password">
+                                                                                </div>
+                                                                            </div> -->
 
                                                                         </div>
                                                                     </div>
