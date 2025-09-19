@@ -47,15 +47,24 @@
     <section class="section">
         <div class="card">
             <ul class="nav nav-tabs">
+
+
+
+
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/marca/tablaMarca">Tabla de registros de Marcas</a>
+                    <a class="nav-link " href="/admin/marca/crearMarca">Crear Marcas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/marca/tablaMarca">Marcas</a>
+                </li>
+
+
             </ul>
         </div>
     </section>
 
 
-    
+
     <section id="multiple-column-form">
         <div class="row match-height">
             <div class="col-12">
@@ -66,7 +75,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/marca/editarMarca?id=<?php echo $marca->id;?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/marca/editarMarca?id=<?php echo $marca->id; ?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
@@ -76,7 +85,7 @@
                                             <input type="text" id="Nombre_Marca" class="form-control"
                                                 placeholder="Nombre Marca" name="Nombre_Marca" value="<?php echo s($marca->Nombre_Marca); ?>">
                                         </div>
-                                    </div>                                  
+                                    </div>
 
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Actualizar</button>
@@ -98,11 +107,10 @@
 
 
 <script>
-function bloquearBoton(form) {
-  const btn = form.querySelector('#btnRegistrar');
-  btn.disabled = true; // Deshabilita el botón
-  btn.innerText = "Registrando..."; // Cambia el texto (opcional)
-  return true; // Permite que el formulario se envíe
-}
+    function bloquearBoton(form) {
+        const btn = form.querySelector('#btnRegistrar');
+        btn.disabled = true; // Deshabilita el botón
+        btn.innerText = "Registrando..."; // Cambia el texto (opcional)
+        return true; // Permite que el formulario se envíe
+    }
 </script>
-
