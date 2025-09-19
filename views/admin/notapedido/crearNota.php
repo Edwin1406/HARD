@@ -108,14 +108,10 @@
                                             </div>
                                         </div> -->
 
-<!-- Incluye la librería de Choices.js -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
 <div class="col-md-5 col-12">
     <div class="form-group">
         <label for="importador">Importador</label>
-        <select id="importador" class=" form-control" name="importador">
+        <select id="importador" class="form-control" name="importador">
             <option value="" disabled selected>Seleccione un importador</option>
             <?php foreach($importadores as $importador): ?>
                 <option value="<?php echo s($importador->id); ?>" data-nombre="<?php echo s($importador->Nombre_Importador); ?>" data-direccion="<?php echo s($importador->Direccion_Inv); ?>" data-ciudad="<?php echo s($importador->Ciudad_Imp); ?>" data-ruc="<?php echo s($importador->Ruc_Import); ?>" data-telefono="<?php echo s($importador->Telefono_Inv); ?>" data-pais="<?php echo s($importador->Pais_Import); ?>">
@@ -140,12 +136,6 @@
 
 <script>
 $(document).ready(function() {
-    // Inicializa Choices.js en el select
-    var importadorChoices = new Choices('#importador', {
-        removeItemButton: true,
-        searchEnabled: true
-    });
-
     // Cuando se seleccione un importador
     $('#importador').change(function() {
         var selectedOption = $(this).find('option:selected');
