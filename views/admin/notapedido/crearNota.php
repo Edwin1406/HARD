@@ -149,12 +149,16 @@
                                                                             <div class="col-12">
                                                                                 <div class="form-group">
                                                                                     <label for="first-name-vertical">Importador</label>
-                                                                                    <select id="importador" class="choices form-control" name="importador">
-                                                                                        <option value="" disabled selected>Seleccione un importador</option>
-                                                                                        <?php foreach ($importadores as $importador): ?>
-                                                                                            <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
-                                                                                        <?php endforeach; ?>
-                                                                                    </select>
+                                                                                    <div class="position-relative">
+
+                                                                                        <select id="importador" class="choices form-control" name="importador">
+                                                                                            <option value="" disabled selected>Seleccione un importador</option>
+                                                                                            <?php foreach ($importadores as $importador): ?>
+                                                                                                <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                            <?php endforeach; ?>
+                                                                                        </select>
+
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
 
