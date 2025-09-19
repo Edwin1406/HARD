@@ -51,7 +51,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
+                    <a class="nav-link" href="/admin/bodega/tablaBodega">Bodegas</a>
                 </li>
             </ul>
         </div>
