@@ -75,9 +75,9 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="Nombre_Origen">Nombre Origen</label>
-                                            <input type="text" id="Nombre_Origen" class="form-control"
-                                                placeholder="Nombre Origen" name="Nombre_Origen">
+                                            <label for="Pais_Origen">Nombre Origen</label>
+                                            <input type="text" id="Pais_Origen" class="form-control"
+                                                placeholder="Nombre Origen" name="Pais_Origen">
                                         </div>
                                     </div>                                  
 
