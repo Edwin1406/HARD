@@ -307,25 +307,30 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="mobile-id-icon">Mobile</label>
+                                                                                    <label for="mobile-id-icon">Forma de pago</label>
                                                                                     <div class="position-relative">
-                                                                                        <input type="text" class="form-control"
-                                                                                            placeholder="Mobile" id="mobile-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-phone"></i>
-                                                                                        </div>
+
+                                                                                        </select>
+                                                                                            <option value="" disabled selected>Seleccione una forma de pago</option>
+                                                                                            <option value="Contado">Contado</option>
+                                                                                            <option value="Crédito">Crédito</option>
+                                                                                            <option value="Transferencia">Transferencia</option>
+                                                                                        </select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="password-id-icon">Password</label>
+                                                                                    <label for="password-id-icon">Moneda</label>
                                                                                     <div class="position-relative">
-                                                                                        <input type="password" class="form-control"
-                                                                                            placeholder="Password" id="password-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-lock"></i>
-                                                                                        </div>
+                                                                                      
+                                                                                            <select class="form-select" id="currency-id-icon">
+                                                                                                <option value="">Seleccionar moneda</option>
+                                                                                                <option value="USD">USD</option>
+                                                                                                <option value="EUR">EUR</option>
+                                                                                                <option value="GBP">GBP</option>
+                                                                                            </select>
+                                                                                        
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
