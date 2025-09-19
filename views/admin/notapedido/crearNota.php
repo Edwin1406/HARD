@@ -96,7 +96,7 @@
                                     <div class="row">
 
                                         <!-- importador select -->
-                                        <div class="col-md-5 col-12">
+                                        <!-- <div class="col-md-5 col-12">
                                             <div class="form-group">
                                                 <label for="importador">Importador</label>
                                                 <select id="importador" class="choices form-control" name="importador">
@@ -106,9 +106,61 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        
+<div class="col-md-5 col-12">
+    <div class="form-group">
+        <label for="importador">Importador</label>
+        <select id="importador" class="choices form-control" name="importador">
+            <option value="" disabled selected>Seleccione un importador</option>
+            <?php foreach($importadores as $importador): ?>
+                <option value="<?php echo s($importador->id); ?>" data-nombre="<?php echo s($importador->Nombre_Importador); ?>" data-direccion="<?php echo s($importador->Direccion_Inv); ?>" data-ciudad="<?php echo s($importador->Ciudad_Imp); ?>" data-ruc="<?php echo s($importador->Ruc_Import); ?>" data-telefono="<?php echo s($importador->Telefono_Inv); ?>" data-pais="<?php echo s($importador->Pais_Import); ?>">
+                    <?php echo s($importador->Nombre_Importador); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+
+<!-- Campos para mostrar la información del importador -->
+<div id="importador-info">
+    <p><strong>Dirección:</strong> <span id="direccion"></span></p>
+    <p><strong>Ciudad:</strong> <span id="ciudad"></span></p>
+    <p><strong>RUC:</strong> <span id="ruc"></span></p>
+    <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+    <p><strong>País:</strong> <span id="pais"></span></p>
+</div>
+
+<!-- Agregar jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Cuando se seleccione un importador
+    $('#importador').change(function() {
+        var selectedOption = $(this).find('option:selected');
+        
+        // Obtener los datos del importador seleccionado
+        var nombre = selectedOption.data('nombre');
+        var direccion = selectedOption.data('direccion');
+        var ciudad = selectedOption.data('ciudad');
+        var ruc = selectedOption.data('ruc');
+        var telefono = selectedOption.data('telefono');
+        var pais = selectedOption.data('pais');
+        
+        // Mostrar la información en los campos correspondientes
+        $('#direccion').text(direccion);
+        $('#ciudad').text(ciudad);
+        $('#ruc').text(ruc);
+        $('#telefono').text(telefono);
+        $('#pais').text(pais);
+    });
+});
+</script>
+
+
+
+
+
                                         <div class="col-md-5 col-12">
                                             <div class="form-group">
                                                 <label for="exportador">Exportador</label>
