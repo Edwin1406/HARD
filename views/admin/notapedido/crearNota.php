@@ -145,14 +145,20 @@
                             <form class="form form-vertical">
                                 <div class="form-body">
                                     <div class="row">
+
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label for="first-name-vertical">First Name</label>
-                                                <input type="text" id="first-name-vertical"
-                                                    class="form-control" name="fname"
-                                                    placeholder="First Name">
+                                                <label for="first-name-vertical">Importador</label>
+                                               <select id="importador" class="choices form-control" name="importador">
+                                                    <option value="" disabled selected>Seleccione un importador</option>
+                                                    <?php foreach ($importadores as $importador): ?>
+                                                        <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </div>
                                         </div>
+
+
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="email-id-vertical">Email</label>
