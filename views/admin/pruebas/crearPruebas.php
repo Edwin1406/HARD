@@ -66,12 +66,8 @@
         <div class="row match-height">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">REGISTRO DE PRUEBAS</h4>
-                        <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
-
-
-                    </div>
+                   
+                    <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     <div class="card-content">
                         <div class="card-body">
                             <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
@@ -147,10 +143,10 @@
 
                                         <style>
 
-.card .card-header {
+/* .card .card-header {
     border: none;
     display: none;
-}
+} */
 
 
                                         </style>
