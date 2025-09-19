@@ -50,7 +50,7 @@
         </script>
     <?php endif; ?>
 
-    <section class="section">
+    <!-- <section class="section">
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -58,7 +58,7 @@
                 </li>
             </ul>
         </div>
-    </section>
+    </section> -->
 
 
     <!-- // Basic multiple Column Form section start -->
