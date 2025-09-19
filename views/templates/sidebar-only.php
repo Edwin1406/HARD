@@ -45,7 +45,7 @@
                              <li class="sidebar-title"><b><i class="bi bi-archive"></i> Registros</b></li>
 
 
-                             <li class="submenu-item active  ">
+                             <li class="submenu-item active accessibility-issue--success  ">
                                  <a href="/admin/bodega/crearBodega"><i class="bi bi-arrow-right"> </i>Bodega</a>
                              </li>
 
