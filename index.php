@@ -123,6 +123,10 @@ $router->post('/admin/paises/editarPais', [BodegaController::class, 'editarPais'
 
 
 
+// CRUD DE NOTA PEDIDO
+// Crear nota
+$router->get('/admin/notaPedido/crearNota', [NotaPedidoController::class, 'crearNota']);
+$router->post('/admin/notaPedido/crearNota', [NotaPedidoController::class, 'crearNota']);
 
 
 
