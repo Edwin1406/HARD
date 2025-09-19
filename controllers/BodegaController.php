@@ -257,7 +257,7 @@ class BodegaController
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
-        $marca = new Marca($_POST);
+        $marca = new Marca;
 
         // $bodega =  Bodega::all();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
