@@ -14,6 +14,7 @@ use MVC\Router;
 use Controllers\AuthController;
 use Controllers\AdminController;
 use Controllers\BodegaController;
+use Controllers\NotaPedidoController;
 use Controllers\PruebasController;
 
 

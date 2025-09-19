@@ -4,7 +4,7 @@ namespace Controllers;
 
 use MVC\Router;
 
-class BodegaController
+class NotaPedidoController
 {
     public static function crearNota(Router $router): void
     {
@@ -18,7 +18,7 @@ class BodegaController
 
 
 
-        
+
 
         $router->render('admin/notaPedido/crearNota', [
             'titulo' => 'Crear Nota Pedido'
