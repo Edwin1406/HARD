@@ -85,13 +85,12 @@ $router->get('/admin/marca/crearMarca', [BodegaController::class, 'crearMarca'])
 $router->post('/admin/marca/crearMarca', [BodegaController::class, 'crearMarca']);
 
 
-
-
-
 //tabla de marca
 $router->get('/admin/marca/tablaMarca', [BodegaController::class, 'tablaMarca']);
 
 
+// eliminar marca
+$router->post('/admin/eliminarMarca', [BodegaController::class, 'eliminarMarca']);
 
 
 

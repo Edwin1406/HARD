@@ -312,6 +312,23 @@ class BodegaController
     }   
 
     
+    // eliminar marca
+    public static function eliminarMarca(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar el ID
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if ($id) {
+                $marca = Marca::find($id);
+                if ($marca) {
+                    $marca->eliminar();
+                    header('Location: /admin/marca/tablaMarca?eliminado=3');
+                }
+            }
+        }
+    }
 
 
 
