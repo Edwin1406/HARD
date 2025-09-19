@@ -92,6 +92,22 @@
                            
                          </ul>
                      </li>
+                     <li class="sidebar-item  has-sub">
+                         <a href="#" class='sidebar-link'>
+                             <!-- <i class="bi bi-collection-fill"></i> -->
+                             <i class="bi bi-code-slash"></i>
+                             <span>Pruebas</span>
+                         </a>
+                         <ul class="submenu ">
+                             <li class="submenu-item ">
+                                 <a href="/admin/pruebas/tablaPruebas"><i class="bi bi-arrow-right"> </i>Tabla Pruebas</a>
+                             </li>
+                             <li class="submenu-item ">
+                                 <a href="/admin/pruebas/crearPruebas"><i class="bi bi-arrow-right"> </i>Crear Pruebas</a>
+                             </li>
+                           
+                         </ul>
+                     </li>
                  <?php } ?>
 
          </div>
