@@ -48,10 +48,7 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/ciudad/tablaCiudad">Tabla de registros de Ciudades</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/ciudad/crearCiudad">Crear Ciudad</a>
+                    <a class="nav-link active" href="/admin/ciudad/tablaCiudad">Ciudades</a>
                 </li>
             </ul>
         </div>

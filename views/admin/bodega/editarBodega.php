@@ -47,7 +47,10 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Tabla de registros de Bodegas</a>
+                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
+                </li>
+                <li class="nav-item"></li>
+                <a class="nav-link" href="/admin/bodega/crearBodega">Crear Bodega</a>
                 </li>
             </ul>
         </div>
@@ -65,7 +68,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/bodega/editarBodega?id=<?php echo $bodega->id;?>" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/bodega/editarBodega?id=<?php echo $bodega->id; ?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
@@ -75,7 +78,7 @@
                                             <input type="text" id="Nombre_Bodega" class="form-control"
                                                 placeholder="Nombre Bodega" name="Nombre_Bodega" value="<?php echo $bodega->Nombre_Bodega; ?>">
                                         </div>
-                                    </div>                                  
+                                    </div>
 
 
                                     <div class="col-md-6 col-12">
@@ -107,11 +110,10 @@
 
 
 <script>
-function bloquearBoton(form) {
-  const btn = form.querySelector('#btnRegistrar');
-  btn.disabled = true; // Deshabilita el botón
-  btn.innerText = "Registrando..."; // Cambia el texto (opcional)
-  return true; // Permite que el formulario se envíe
-}
+    function bloquearBoton(form) {
+        const btn = form.querySelector('#btnRegistrar');
+        btn.disabled = true; // Deshabilita el botón
+        btn.innerText = "Registrando..."; // Cambia el texto (opcional)
+        return true; // Permite que el formulario se envíe
+    }
 </script>
-
