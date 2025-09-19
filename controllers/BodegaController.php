@@ -376,7 +376,7 @@ class BodegaController
         }
 
         // Render a la vista
-        $router->render('admin/marca/editarBodega', [
+        $router->render('admin/marca/editarMarca', [
             'titulo' => 'Editar Marca',
             'alertas' => $alertas,
             'marca' => $marca,
