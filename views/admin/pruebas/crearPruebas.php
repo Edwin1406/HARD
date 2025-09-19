@@ -102,7 +102,15 @@
                                                 placeholder="# Importación" name="num_importacion" step="0.01">
                                         </div>
                                     </div>
-                                
+
+                                    <!-- fecha -->
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="fecha">Fecha</label>
+                                            <input type="date" id="fecha" class="form-control"
+                                                name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                                        </div>
+                                    </div>
 
 
                                     <!-- quiero tomar el nombre del usuario y si es corruugador solo me parezcan del corrgador-->
