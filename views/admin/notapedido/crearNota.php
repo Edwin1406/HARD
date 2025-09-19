@@ -128,8 +128,8 @@
                                                                 <label for="pais_origen">País Origen</label>
                                                                 <select id="pais_origen" class="choices form-control" name="pais_origen">
                                                                     <option value="" disabled selected>Seleccione un país</option>
-                                                                    <?php foreach($paises as $pais): ?>
-                                                                        <option value="<?php echo s($pais->Pais_Origen); ?>"><?php echo s($pais->Pais_Origen); ?></option>
+                                                                    <?php foreach($pais as $paises): ?>
+                                                                        <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
                                                                     <?php endforeach; ?>
                                                                 </select>
                                                             </div>
