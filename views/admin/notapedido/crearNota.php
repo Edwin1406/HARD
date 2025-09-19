@@ -139,7 +139,7 @@
                                         <section id="basic-vertical-layouts">
                                             <div class="row match-height">
                                                 <div class="col-md-4 col-12">
-                                                    <div class="card">
+                                                    <div class="card" style="background-color: #a39d9dff;">
                                                         <div class="card-content">
                                                             <div class="card-body">
                                                                 <form class="form form-vertical">
@@ -196,7 +196,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-12">
-                                                    <div class="card">
+                                                    <div class="card" style="background-color: #a39d9dff;">
 
                                                         <div class="card-content">
                                                             <div class="card-body">
@@ -268,7 +268,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-12">
-                                                    <div class="card" style="background-color: gray;">
+                                                    <div class="card" style="background-color: #a39d9dff;">
 
                                                         <div class="card-content">
                                                             <div class="card-body">
