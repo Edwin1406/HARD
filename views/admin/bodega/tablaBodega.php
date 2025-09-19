@@ -82,13 +82,14 @@
         <div class="card">
             <ul class="nav nav-tabs">
 
+                <li class="nav-item"></li>
+                <a class="nav-link" href="/admin/bodega/crearBodega">Crear Bodega</a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
                 </li>
-                <li class="nav-item"></li>
-                <a class="nav-link" href="/admin/bodega/crearBodega">Crear Bodega</a>
-                </li>
+
 
             </ul>
         </div>
