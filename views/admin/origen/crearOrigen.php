@@ -48,7 +48,7 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/marca/tablaMarca">Tabla de registros de Marcas</a>
+                    <a class="nav-link active" href="/admin/origen/tablaOrigen">Origen</a>
                 </li>
             </ul>
         </div>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/marca/crearMarca" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/origen/crearOrigen" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
