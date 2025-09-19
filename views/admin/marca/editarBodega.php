@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/marca/crearMarca" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/marca/crearMarca?id=<?php echo $bodega->id;?>" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
 
@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label for="Nombre_Marca">Nombre Marca</label>
                                             <input type="text" id="Nombre_Marca" class="form-control"
-                                                placeholder="Nombre Marca" name="Nombre_Marca">
+                                                placeholder="Nombre Marca" name="Nombre_Marca" value="<?php echo s($marca->Nombre_Marca); ?>">
                                         </div>
                                     </div>                                  
 

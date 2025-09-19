@@ -92,6 +92,9 @@ $router->get('/admin/marca/tablaMarca', [BodegaController::class, 'tablaMarca'])
 // eliminar marca
 $router->post('/admin/eliminarMarca', [BodegaController::class, 'eliminarMarca']);
 
+// editar marca
+$router->get('/admin/marca/editarMarca', [BodegaController::class, 'editarMarca']);
+$router->post('/admin/marca/editarMarca', [BodegaController::class, 'editarMarca']);
 
 
 
