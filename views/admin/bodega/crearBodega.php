@@ -47,11 +47,12 @@
     <section class="section">
         <div class="card">
             <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
-                </li>
                 <li class="nav-item"></li>
                     <a class="nav-link" href="/admin/bodega/crearBodega">Crear Bodega</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
                 </li>
             </ul>
         </div>
@@ -79,7 +80,7 @@
                                             <input type="text" id="Nombre_Bodega" class="form-control"
                                                 placeholder="Nombre Bodega" name="Nombre_Bodega">
                                         </div>
-                                    </div>                                  
+                                    </div>
 
 
                                     <div class="col-md-6 col-12">
@@ -111,11 +112,10 @@
 
 
 <script>
-function bloquearBoton(form) {
-  const btn = form.querySelector('#btnRegistrar');
-  btn.disabled = true; // Deshabilita el botón
-  btn.innerText = "Registrando..."; // Cambia el texto (opcional)
-  return true; // Permite que el formulario se envíe
-}
+    function bloquearBoton(form) {
+        const btn = form.querySelector('#btnRegistrar');
+        btn.disabled = true; // Deshabilita el botón
+        btn.innerText = "Registrando..."; // Cambia el texto (opcional)
+        return true; // Permite que el formulario se envíe
+    }
 </script>
-
