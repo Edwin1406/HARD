@@ -50,6 +50,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/admin/ciudad/tablaCiudad">Tabla de registros de Ciudades</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/ciudad/crearCiudad">Crear Ciudad</a>
+                </li>
             </ul>
         </div>
     </section>
