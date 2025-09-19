@@ -94,6 +94,14 @@
                                                 placeholder="# Pedido" name="num_pedido" step="0.01">
                                         </div>
                                     </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <!-- <label for="num_pedido"># Pedido</label> -->
+                                            <input type="number" id="num_importacion" class="form-control"
+                                                placeholder="# Importación" name="num_importacion" step="0.01">
+                                        </div>
+                                    </div>
                                 
 
 
