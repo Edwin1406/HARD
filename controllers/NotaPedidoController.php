@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Exportadores;
 use Model\Importadores;
+use Model\Pais;
 use MVC\Router;
 
 class NotaPedidoController
@@ -25,6 +26,8 @@ class NotaPedidoController
         $importadores = Importadores::all();
         $exportadores = Exportadores::all();
 
+        $pais = Pais::all();
+
 
 
 
@@ -38,7 +41,8 @@ class NotaPedidoController
             'email' => $email,
             'alertas' => $alertas,
             'importadores' => $importadores,
-            'exportadores' => $exportadores
+            'exportadores' => $exportadores,
+            'pais' => $pais
         ]);
     }
 }

@@ -122,6 +122,21 @@
                                         </div>
 
 
+                                                        <!-- crear n form pequeño  -->
+                                                        <div class="col-md-5 col-12">
+                                                            <div class="form-group">
+                                                                <label for="pais_origen">País Origen</label>
+                                                                <select id="pais_origen" class="choices form-control" name="pais_origen">
+                                                                    <option value="" disabled selected>Seleccione un país</option>
+                                                                    <?php foreach($paises as $pais): ?>
+                                                                        <option value="<?php echo s($pais->Pais_Origen); ?>"><?php echo s($pais->Pais_Origen); ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
                                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
