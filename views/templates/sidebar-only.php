@@ -67,9 +67,34 @@
 
 
                          </ul>
+
+
+
+
+
                      <?php }  ?>
 
                  </li>
+
+
+                 <li class="sidebar-item  has-sub">
+                     <a href="#" class='sidebar-link'>
+                         <!-- <i class="bi bi-collection-fill"></i> -->
+                         <i class="bi bi-file-earmark-text"></i>
+                         <span>Nota Pedido</span>
+                     </a>
+                     <ul class="submenu ">
+
+                         <li class="submenu-item ">
+                             <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear #Nota</a>
+                         </li>
+
+                     </ul>
+                 </li>
+
+
+
+
 
 
 
@@ -89,23 +114,10 @@
                              <li class="submenu-item ">
                                  <a href="/admin/pruebas/crearPruebas"><i class="bi bi-arrow-right"> </i>Crear Pruebas</a>
                              </li>
-                           
+
                          </ul>
                      </li>
-                     <li class="sidebar-item  has-sub">
-                         <a href="#" class='sidebar-link'>
-                             <!-- <i class="bi bi-collection-fill"></i> -->
-                             <i class="bi bi-file-earmark-text"></i>
-                             <span>Nota Pedido</span>
-                         </a>
-                         <ul class="submenu ">
-                            
-                             <li class="submenu-item ">
-                                 <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear #Nota</a>
-                             </li>
-                           
-                         </ul>
-                     </li>
+
                  <?php } ?>
 
          </div>
