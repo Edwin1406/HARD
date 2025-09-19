@@ -85,7 +85,7 @@
                                                 placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
                                         </div>
                                     </div>
-                                
+
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
@@ -113,93 +113,41 @@
                                     </div>
 
 
-                                    <!-- quiero tomar el nombre del usuario y si es corruugador solo me parezcan del corrgador-->
+                                    <div class="row">
 
 
-                                    <div class="col-md-4 col-12">
-                                        <div class="form-group">
-                                            <label for="casos">CASOS</label>
-                                            <select id="casos" class="choices form-control" name="casos">
-                                                <option value="" disabled <?php echo !isset($turno) ? 'selected' : ''; ?>>Seleccione un caso</option>
-
-                                                <!-- CONTROLABLES -->
-                                                <option value="APROBACION DE COLOR">APROBACION DE COLOR</option>
-                                                <option value="CAMBIO DE MEDIDA">CAMBIO DE MEDIDA</option>
-                                                <option value="COMBADO">COMBADO</option>
-                                                <option value="CUADRE">CUADRE</option>
-                                                <option value="CUADRE SIERRA">CUADRE SIERRA</option>
-                                                <option value="DAÑO CLICHE">DAÑO CLICHE</option>
-                                                <option value="DERRAME DE TINTA">DERRAME DE TINTA</option>
-                                                <option value="DESPEGADO">DESPEGADO</option>
-                                                <option value="DISEÑO MAQUINA">DISEÑO MAQUINA</option>
-                                                <option value="EMPALME">EMPALME</option>
-                                                <option value="ERROR MEDIDA">ERROR MEDIDA</option>
-                                                <option value="EXCESO DE GOMA">EXCESO DE GOMA</option>
-                                                <option value="FALTA DE TINTA">FALTA DE TINTA</option>
-                                                <option value="FRENO">FRENO</option>
-                                                <option value="GALLETEADO">GALLETEADO</option>
-                                                <option value="HUMEDO">HUMEDO</option>
-                                                <option value="MAL DOBLADO CEJA">MAL DOBLADO CEJA</option>
-                                                <option value="MALTRATO OPERADOR MONTACARGAS">MALTRATO OPERADOR MONTACARGAS</option>
-                                                <option value="MALTRATO TRANSPORTACIÓN">MALTRATO TRANSPORTACIÓN</option>
-                                                <option value="PH">PH</option>
-                                                <option value="PRESION">PRESION</option>
-                                                <option value="PRE PRINTER">PRE PRINTER</option>
-                                                <option value="RECUBRIMIENTO">RECUBRIMIENTO</option>
-                                                <option value="SF">SF</option>
-                                                <option value="TONALIDAD TINTAS">TONALIDAD TINTAS</option>
-                                                <option value="VISCOSIDAD">VISCOSIDAD</option>
-
-                                                <!-- NO CONTROLABLES -->
-                                                <option value="CAMBIO DE GRAMAJE">CAMBIO DE GRAMAJE</option>
-                                                <option value="CAMBIO PEDIDO">CAMBIO PEDIDO</option>
-                                                <option value="CIREL CORTADO">CIREL CORTADO</option>
-                                                <option value="COMBADA">COMBADA</option>
-                                                <option value="DESCUADRE DE DOBLADO">DESCUADRE DE DOBLADO</option>
-                                                <option value="DESHOJE">DESHOJE</option>
-                                                <option value="DIFERENCIA DE PESO">DIFERENCIA DE PESO</option>
-                                                <option value="DIFERENTES ANCHOS">DIFERENTES ANCHOS</option>
-                                                <option value="ELECTRICO">ELECTRICO</option>
-                                                <option value="ERROR MEDIDA CORRUGADOR">ERROR MEDIDA CORRUGADOR</option>
-                                                <option value="EXCEDENTES DE PLANCHA">EXCEDENTES DE PLANCHA</option>
-                                                <option value="EXTRA TRIM">EXTRA TRIM</option>
-                                                <option value="FILOS ROTOS">FILOS ROTOS</option>
-                                                <option value="INICIO DE CORRIDA">INICIO DE CORRIDA</option>
-                                                <option value="LAMINA HUMEDA">LAMINA HUMEDA</option>
-                                                <option value="MECANICO">MECANICO</option>
-                                                <option value="MERMA">MERMA</option>
-                                                <option value="MONTAJE CLICHE PROVEEDOR">MONTAJE CLICHE PROVEEDOR</option>
-                                                <option value="PEDIDOS CORTOS">PEDIDOS CORTOS</option>
-                                                <option value="REFILE PEQUEÑO">REFILE PEQUEÑO</option>
-                                                <option value="REFILES">REFILES</option>
-                                                <option value="REGISTRO TROQUEL">REGISTRO TROQUEL</option>
-                                                <option value="SUSTRATO">SUSTRATO</option>
-                                                <option value="TROQUEL">TROQUEL</option>
-                                                <option value="SOPLADO">SOPLADO</option>
-                                                <option value="CALDERO">CALDERO</option>
-                                                <option value="COMPRESOR">COMPRESOR</option>
-
-                                            </select>
-
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-group">
+                                                <label for="nota_pedido">Nota de pedido N°</label>
+                                                <input type="number" id="nota_pedido" class="form-control"
+                                                    placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- cantidad cajas deciamles soporte  -->
-                                    <div class="col-md-4 col-12">
-                                        <div class="form-group">
-                                            <label for="cantidad">Cantidad (Kg)</label>
-                                            <input type="number" id="cantidad" class="form-control"
-                                                placeholder="Cantidad" name="cantidad" step="0.01">
+
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-group">
+                                                <label for="num_pedido"></label>
+                                                <input type="number" id="num_pedido" class="form-control"
+                                                    placeholder="# Pedido" name="num_pedido" step="0.01">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- observaciones -->
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-group">
+                                                <label for="num_importacion"></label>
+                                                <input type="number" id="num_importacion" class="form-control"
+                                                    placeholder="# Importación" name="num_importacion" step="0.01">
+                                            </div>
+                                        </div>
 
-                                    <div class="col-md-4 col-12">
-                                        <div class="form-group">
-                                            <label for="observaciones">Observaciones</label>
-                                            <input type="text" id="observaciones" class="form-control"
-                                                placeholder="Observaciones" name="observaciones">
+                                        <!-- fecha -->
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-group">
+                                                <label for="fecha">Fecha</label>
+                                                <input type="date" id="fecha" class="form-control"
+                                                    name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                                            </div>
                                         </div>
                                     </div>
 
