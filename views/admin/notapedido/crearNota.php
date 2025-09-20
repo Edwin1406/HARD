@@ -131,11 +131,13 @@
         if (importador.value) {
             const selectedOption = importador.options[importador.selectedIndex];
             remitente.value = selectedOption.getAttribute('data-nombre'); 
+            console.log("Importador inicial:", remitente.value);
         }
 
         importador.addEventListener("change", function() {
             const selectedOption = importador.options[importador.selectedIndex];
             remitente.value = selectedOption.getAttribute('data-nombre');
+            console.log("Importador cambiado:", remitente.value);
         });
     });
 </script>
