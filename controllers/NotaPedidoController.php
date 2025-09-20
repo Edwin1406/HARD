@@ -52,9 +52,9 @@ class NotaPedidoController
 
             // Sincronizar objeto con los datos del formulario
             
+            debuguear($Codigo_Exportador);
             $notaPedido->sincronizar($_POST);
 
-            debuguear($Codigo_Exportador);
 
             // debuguear($notaPedido);
 
