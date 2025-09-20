@@ -69,7 +69,6 @@
             <?php endforeach; ?>
         <?php endforeach; ?>
 
-        <!-- Otros campos de formulario -->
         <div class="col-md-3 col-12">
             <div class="form-group">
                 <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
@@ -77,71 +76,94 @@
             </div>
         </div>
 
+        <div class="col-md-3 col-12">
+            <div class="form-group">
+                <label for="Numero_Nota_Pedido"></label>
+                <input type="number" id="Numero_Nota_Pedido" class="form-control" placeholder="# Pedido" name="Numero_Nota_Pedido">
+            </div>
+        </div>
+
+        <div class="col-md-3 col-12">
+            <div class="form-group">
+                <label for="Codigo_Importacion"></label>
+                <input type="text" id="Codigo_Importacion" class="form-control" placeholder="# Importación" name="Codigo_Importacion">
+            </div>
+        </div>
+
+        <div class="col-md-3 col-12">
+            <div class="form-group">
+                <label for="Fecha_Nota_Pedido">Fecha</label>
+                <input type="date" id="Fecha_Nota_Pedido" class="form-control" name="Fecha_Nota_Pedido" value="<?php echo date('Y-m-d'); ?>" required>
+            </div>
+        </div>
+
         <!-- Campos Importador, Exportador, Remitir, Pais, Forma de pago, y Moneda -->
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Codigo_Importador">Importador</label>
-                <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
-                    <option value="" disabled selected>Seleccione un importador</option>
-                    <?php foreach ($importadores as $importador): ?>
-                        <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
-                    <?php endforeach; ?>
-                </select>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Codigo_Importador">Importador</label>
+                    <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
+                        <option value="" disabled selected>Seleccione un importador</option>
+                        <?php foreach ($importadores as $importador): ?>
+                            <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Codigo_Exportador">Exportador</label>
-                <select id="Codigo_Exportador" class="choices form-control" name="Codigo_Exportador">
-                    <option value="" disabled selected>Seleccione un exportador</option>
-                    <?php foreach ($exportadores as $exportador): ?>
-                        <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Codigo_Exportador">Exportador</label>
+                    <select id="Codigo_Exportador" class="choices form-control" name="Codigo_Exportador">
+                        <option value="" disabled selected>Seleccione un exportador</option>
+                        <?php foreach ($exportadores as $exportador): ?>
+                            <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Remitir_Nota_Pedido">Remitir Doc a</label>
-                <input type="text" class="form-control" id="Remitir_Nota_Pedido" name="Remitir_Nota_Pedido" required>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Remitir_Nota_Pedido">Remitir Doc a</label>
+                    <input type="text" class="form-control" id="Remitir_Nota_Pedido" name="Remitir_Nota_Pedido" required>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Pais_Nota_Pedido">País de origen</label>
-                <select id="Pais_Nota_Pedido" class="choices form-control" name="Pais_Nota_Pedido">
-                    <option value="" disabled selected>Seleccione un país</option>
-                    <?php foreach ($pais as $paises): ?>
-                        <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Pais_Nota_Pedido">País de origen</label>
+                    <select id="Pais_Nota_Pedido" class="choices form-control" name="Pais_Nota_Pedido">
+                        <option value="" disabled selected>Seleccione un país</option>
+                        <?php foreach ($pais as $paises): ?>
+                            <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Forma_Pago_Nota_Pedido">Forma de pago</label>
-                <select class="form-control" id="Forma_Pago_Nota_Pedido" name="Forma_Pago_Nota_Pedido">
-                    <option value="" disabled selected>Seleccione una forma de pago</option>
-                    <option value="Contado">Contado</option>
-                    <option value="Crédito">Crédito</option>
-                    <option value="Transferencia">Transferencia</option>
-                </select>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Forma_Pago_Nota_Pedido">Forma de pago</label>
+                    <select class="form-control" id="Forma_Pago_Nota_Pedido" name="Forma_Pago_Nota_Pedido">
+                        <option value="" disabled selected>Seleccione una forma de pago</option>
+                        <option value="Contado">Contado</option>
+                        <option value="Crédito">Crédito</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-12">
-            <div class="form-group">
-                <label for="Moneda_Nota_Pedido">Moneda</label>
-                <select class="form-control" id="Moneda_Nota_Pedido" name="Moneda_Nota_Pedido">
-                    <option value="" disabled selected>Seleccionar moneda</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
-                </select>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="Moneda_Nota_Pedido">Moneda</label>
+                    <select class="form-control" id="Moneda_Nota_Pedido" name="Moneda_Nota_Pedido">
+                        <option value="" disabled selected>Seleccionar moneda</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -156,7 +178,7 @@
 
 
 
-
+                        
                         </div>
                     </div>
                 </div>
