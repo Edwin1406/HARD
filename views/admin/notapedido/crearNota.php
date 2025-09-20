@@ -55,7 +55,6 @@
 
                     <div class="card-content">
                         <div class="card-body">
-                            
 
 <form class="form" method="POST" action="/admin/notaPedido/crearNota" onsubmit="return bloquearBoton(this)">
     <div class="row">
@@ -178,7 +177,20 @@
 
 
 
-                        
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                        </div>
+                                    </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -186,46 +198,56 @@
         </div>
     </section>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const importador = document.getElementById("Codigo_Importador");
+        const remitente = document.getElementById("Remitir_Nota_Pedido");
 
-  <section class="section">
-        <div class="card">
-            <div class="card-header">
-                Tabla de registros de Notas de Pedido
-            </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
-                    <thead>
+        importador.addEventListener("change", function() {
+            remitente.value = importador.value;
+        });
+    });
+</script>
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            Tabla de registros de Notas de Pedido
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="table1">
+                <thead>
+                    <tr>
+                        <th class="fs-6" style="min-width: 90px;">Id</th>
+                        <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
+                        <th class="fs-6" style="min-width: 100px;">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($notasPedidos as $notaItem): ?>
                         <tr>
-                            <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
-                            <th class="fs-6" style="min-width: 100px;">Acciones</th>
-                        </tr>
-                    </thead>
+                            <td><?= $notaItem->id ?></td>
+                            <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
+                            <td>
 
-                    <tbody>
-                        <?php foreach ($notasPedidos as $notaItem): ?>
-                            <tr>
-                                <td><?= $notaItem->id ?></td>
-                                <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
-                                <td>
-
-                                    <div class="d-flex gap-1">
-                                        <a href="/admin/pruebas/aaa?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
-                                        <!-- <form action="/admin/eliminarPruebas" method="POST">
+                                <div class="d-flex gap-1">
+                                    <a href="/admin/pruebas/aaa?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
+                                    <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form> -->
-                                    </div>
+                                </div>
 
-                                </td>
+                            </td>
 
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
+</section>
 
 
 
