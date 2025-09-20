@@ -55,7 +55,7 @@
 
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/marca/crearMarca" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/notaPedido/crearNota" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
                                     <div class="col-md-3 col-12">

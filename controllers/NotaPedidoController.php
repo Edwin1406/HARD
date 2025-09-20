@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Exportadores;
 use Model\Importadores;
+use Model\NotaPedido;
 use Model\Pais;
 use MVC\Router;
 
@@ -27,6 +28,26 @@ class NotaPedidoController
         $exportadores = Exportadores::all();
 
         $pais = Pais::all();
+
+        $notaPedido = new NotaPedido;
+
+        // $bodega =  Bodega::all();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $notaPedido->sincronizar($_POST);
+
+            // debuguear($marca);
+            $alertas = $notaPedido->validar();
+
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $notaPedido->guardar();
+
+                if ($resultado) {
+                    header('Location: /admin/notaPedido/crearNota?exito=1');
+                }
+            }
+        }
 
 
 
