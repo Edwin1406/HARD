@@ -343,7 +343,7 @@
                         <?php foreach ($notasPedidos as $notaItem): ?>
                             <tr>
                                 <td><?= $notaItem->id ?></td>
-                                <td><?= $notaItem->Nombre_Marca ?></td>
+                                <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
                                 <td>
 
                                     <div class="d-flex gap-1">
