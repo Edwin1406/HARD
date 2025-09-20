@@ -176,12 +176,12 @@
 
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="exportador">Exportador</label>
+                                                                                    <label for="Codigo_Exportador">Exportador</label>
                                                                                     <div class="position-relative">
-                                                                                        <select id="exportador" class="choices form-control" name="exportador">
+                                                                                        <select id="Codigo_Exportador" class="choices form-control" name="Codigo_Exportador">
                                                                                             <option value="" disabled selected>Seleccione un exportador</option>
                                                                                             <?php foreach ($exportadores as $exportador): ?>
-                                                                                                <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
+                                                                                                <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                         </select>    
                                                                                     </div>
@@ -244,11 +244,11 @@
 
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="remitente">Remitir Doc a</label>
+                                                                                    <label for="Remitir_Nota_Pedido">Remitir Doc a</label>
                                                                                     <div class="position-relative">
                                                                                         <input type="text" class="form-control"
                                                                                             placeholder="Remitir Doc a"
-                                                                                            id="remitente" name="remitente">
+                                                                                            id="Remitir_Nota_Pedido" name="Remitir_Nota_Pedido">
 
                                                                                     </div>
                                                                                 </div>
@@ -258,10 +258,10 @@
                                                                             <div class="col-12">
 
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="exportador">Pais/origen</label>
+                                                                                    <label for="Pais_Nota_Pedido">Pais/origen</label>
                                                                                     <div class="position-relative">
 
-                                                                                        <select id="pais_origen" class="choices form-control" name="pais_origen">
+                                                                                        <select id="Pais_Nota_Pedido" class="choices form-control" name="Pais_Nota_Pedido">
                                                                                             <option value="" disabled selected>Seleccione un país</option>
                                                                                             <?php foreach ($pais as $paises): ?>
                                                                                                 <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
@@ -274,10 +274,10 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="forma_pago">Forma de pago</label>
+                                                                                    <label for="Forma_Pago_Nota_Pedido">Forma de pago</label>
                                                                                     <div class="position-relative">
 
-                                                                                        <select class="form-select" id="forma_pago" name="forma_pago">
+                                                                                        <select class="form-select" id="Forma_Pago_Nota_Pedido" name="Forma_Pago_Nota_Pedido">
                                                                                             <option value="" disabled selected>Seleccione una forma de pago</option>
                                                                                             <option value="Contado">Contado</option>
                                                                                             <option value="Crédito">Crédito</option>
@@ -288,16 +288,14 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="moneda">Moneda</label>
+                                                                                    <label for="Moneda_Nota_Pedido">Moneda</label>
                                                                                     <div class="position-relative">
-
-                                                                                        <select class="form-select" id="moneda" name="moneda">
+                                                                                        <select class="form-select" id="Moneda_Nota_Pedido" name="Moneda_Nota_Pedido">
                                                                                             <option value="">Seleccionar moneda</option>
                                                                                             <option value="USD">USD</option>
                                                                                             <option value="EUR">EUR</option>
                                                                                             <option value="GBP">GBP</option>
                                                                                         </select>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
