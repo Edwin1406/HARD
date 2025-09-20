@@ -105,52 +105,35 @@
                                                                         <div class="row">
 
                                                                             <div class="col-12">
-    <div class="form-group">
-        <label for="Codigo_Importador">Importador</label>
-        <div class="position-relative">
-            <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
-                <option value="" disabled selected>Seleccione un importador</option>
-                <?php foreach ($importadores as $importador): ?>
-                    <option value="<?php echo s($importador->id); ?>" data-nombre="<?php echo s($importador->Nombre_Importador); ?>">
-                        <?php echo s($importador->Nombre_Importador); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
-</div>
+                                                                                <div class="form-group">
+                                                                                    <label for="Codigo_Importador">Importador</label>
+                                                                                    <div class="position-relative">
 
-<div class="col-12">
-    <div class="form-group has-icon-left">
-        <label for="remitente">Remitir Doc a</label>
-        <div class="position-relative">
-            <input type="text" class="form-control" placeholder="Remitir Doc a" id="remitente" name="remitente" readonly>
-        </div>
-    </div>
-</div>
+                                                                                        <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
+                                                                                            <option value="" disabled selected>Seleccione un importador</option>
+                                                                                            <?php foreach ($importadores as $importador): ?>
+                                                                                                <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                            <?php endforeach; ?>
+                                                                                        </select>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const importador = document.getElementById("Codigo_Importador");
-        const remitente = document.getElementById("remitente");
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
 
-        // Function to update remitente value
-        function updateRemitente() {
-            const selectedOption = importador.options[importador.selectedIndex];
-            remitente.value = selectedOption.getAttribute('data-nombre') || ''; // Fallback to empty string if no data-nombre
-        }
+                                                                          
 
-        // Initialize the remitente field with selected importador (if any)
-        updateRemitente();
+                                                                            <script>
+                                                                                document.addEventListener("DOMContentLoaded", function() {
+                                                                                    const importador = document.getElementById("Codigo_Importador");
+                                                                                    const remitente = document.getElementById("remitente");
 
-        // Event listener for the change on the importador dropdown
-        importador.addEventListener("change", function() {
-            updateRemitente();
-        });
-    });
-</script>
-
-
+                                                                                    importador.addEventListener("change", function() {
+                                                                                        // Obtener el nombre del importador a partir del atributo 'data-nombre' del option seleccionado
+                                                                                        const selectedOption = importador.options[importador.selectedIndex];
+                                                                                        remitente.value = selectedOption.getAttribute('data-nombre'); // Asigna el nombre del importador al campo 'remitente'
+                                                                                    });
+                                                                                });
+                                                                            </script>
 
 
                                                                             <!-- <div class="col-12">
