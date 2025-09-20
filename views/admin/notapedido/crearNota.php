@@ -112,7 +112,7 @@
                                                                                         <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
                                                                                             <option value="" disabled selected>Seleccione un importador</option>
                                                                                             <?php foreach ($importadores as $importador): ?>
-                                                                                                <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                                <option value="<?php echo s($importador->Codigo_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                         </select>
 
