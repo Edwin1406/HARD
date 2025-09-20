@@ -55,6 +55,17 @@
 
                     <div class="card-content">
                         <div class="card-body">
+                            <?php foreach ($alertas as $tipo => $mensajes) : ?>
+                                <?php foreach ($mensajes as $mensaje) : ?>
+                                    <div class="alert alert-<?= $tipo ?> alert-dismissible fade show" role="alert">
+                                        <?= $mensaje ?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
+
+
+
                             <form class="form" method="POST" action="/admin/notaPedido/crearNota" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
 
@@ -100,7 +111,7 @@
                                                     <div class="card" style="background-color: #dacdcdff;">
                                                         <div class="card-content">
                                                             <div class="card-body">
-                                                                <form class="form form-vertical">
+                                                                <div class="form form-vertical">
                                                                     <div class="form-body">
                                                                         <div class="row">
 
@@ -133,34 +144,10 @@
 
 
 
-                                                                            <!-- <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="email-id-vertical">Email</label>
-                                                                                    <input type="email" id="email-id-vertical"
-                                                                                        class="form-control" name="email-id"
-                                                                                        placeholder="Email">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="contact-info-vertical">Mobile</label>
-                                                                                    <input type="number" id="contact-info-vertical"
-                                                                                        class="form-control" name="contact"
-                                                                                        placeholder="Mobile">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="password-vertical">Password</label>
-                                                                                    <input type="password" id="password-vertical"
-                                                                                        class="form-control" name="contact"
-                                                                                        placeholder="Password">
-                                                                                </div>
-                                                                            </div> -->
 
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +157,7 @@
 
                                                         <div class="card-content">
                                                             <div class="card-body">
-                                                                <form class="form form-vertical">
+                                                                <div class="form form-vertical">
                                                                     <div class="form-body">
                                                                         <div class="row">
 
@@ -183,51 +170,14 @@
                                                                                             <?php foreach ($exportadores as $exportador): ?>
                                                                                                 <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
                                                                                             <?php endforeach; ?>
-                                                                                        </select>    
+                                                                                        </select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
 
-                                                                            <!-- <div class="col-12">
-
-                                                                                <div class="form-group has-icon-left">
-                                                                                    <label for="email-id-icon">Email</label>
-                                                                                    <div class="position-relative">
-                                                                                        <input type="text" class="form-control"
-                                                                                            placeholder="Email" id="email-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-envelope"></i>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-12">
-                                                                                <div class="form-group has-icon-left">
-                                                                                    <label for="mobile-id-icon">Mobile</label>
-                                                                                    <div class="position-relative">
-                                                                                        <input type="text" class="form-control"
-                                                                                            placeholder="Mobile" id="mobile-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-phone"></i>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-12">
-                                                                                <div class="form-group has-icon-left">
-                                                                                    <label for="password-id-icon">Password</label>
-                                                                                    <div class="position-relative">
-                                                                                        <input type="password" class="form-control"
-                                                                                            placeholder="Password" id="password-id-icon">
-                                                                                        <div class="form-control-icon">
-                                                                                            <i class="bi bi-lock"></i>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div> -->
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -237,7 +187,7 @@
 
                                                         <div class="card-content">
                                                             <div class="card-body">
-                                                                <form class="form form-vertical">
+                                                                <div class="form form-vertical">
                                                                     <div class="form-body">
                                                                         <div class="row">
 
@@ -303,7 +253,7 @@
 
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -316,6 +266,7 @@
                                         </div>
                                     </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -324,45 +275,45 @@
     </section>
 </div>
 
-  <section class="section">
-        <div class="card">
-            <div class="card-header">
-                Tabla de registros de Notas de Pedido
-            </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
-                    <thead>
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            Tabla de registros de Notas de Pedido
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="table1">
+                <thead>
+                    <tr>
+                        <th class="fs-6" style="min-width: 90px;">Id</th>
+                        <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
+                        <th class="fs-6" style="min-width: 100px;">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($notasPedidos as $notaItem): ?>
                         <tr>
-                            <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
-                            <th class="fs-6" style="min-width: 100px;">Acciones</th>
-                        </tr>
-                    </thead>
+                            <td><?= $notaItem->id ?></td>
+                            <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
+                            <td>
 
-                    <tbody>
-                        <?php foreach ($notasPedidos as $notaItem): ?>
-                            <tr>
-                                <td><?= $notaItem->id ?></td>
-                                <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
-                                <td>
-
-                                    <div class="d-flex gap-1">
-                                        <a href="/admin/pruebas/aaa?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
-                                        <!-- <form action="/admin/eliminarPruebas" method="POST">
+                                <div class="d-flex gap-1">
+                                    <a href="/admin/pruebas/aaa?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
+                                    <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form> -->
-                                    </div>
+                                </div>
 
-                                </td>
+                            </td>
 
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
+</section>
 
 
 
