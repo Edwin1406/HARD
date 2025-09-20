@@ -29,6 +29,7 @@ class NotaPedidoController
 
         $pais = Pais::all();
         $notasPedidos = NotaPedido::all();
+        debuguear($notasPedidos);
     
         $notaPedido = new NotaPedido;
 
