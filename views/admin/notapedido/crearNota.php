@@ -120,14 +120,7 @@
     </div>
 </div>
 
-<div class="col-12">
-    <div class="form-group has-icon-left">
-        <label for="remitente">Remitir Doc a</label>
-        <div class="position-relative">
-            <input type="text" class="form-control" placeholder="Remitir Doc a" id="remitente" name="remitente" readonly>
-        </div>
-    </div>
-</div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
