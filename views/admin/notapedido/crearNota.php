@@ -324,6 +324,47 @@
     </section>
 </div>
 
+  <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Tabla de registros de Bodegas
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <th class="fs-6" style="min-width: 90px;">Id</th>
+                            <th class="fs-6" style="min-width: 93px;">Nombre Marca</th>
+                            <th class="fs-6" style="min-width: 100px;">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($marca as $marcaItem): ?>
+                            <tr>
+                                <td><?= $marcaItem->id ?></td>
+                                <td><?= $marcaItem->Nombre_Marca ?></td>
+                                <td>
+
+                                    <div class="d-flex gap-1">
+                                        <a href="/admin/marca/editarMarca?id=<?= $marcaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                        <form action="/admin/eliminarMarca" method="POST">
+                                            <input type="hidden" name="id" value="<?= $marcaItem->id ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
 
 
 
