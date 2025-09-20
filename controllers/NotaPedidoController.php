@@ -36,6 +36,8 @@ class NotaPedidoController
 
             $notaPedido->sincronizar($_POST);
 
+            debuguear($notaPedido);
+
             // debuguear($marca);
             $alertas = $notaPedido->validar();
 
