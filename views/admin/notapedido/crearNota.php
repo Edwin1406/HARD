@@ -60,47 +60,40 @@
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="nota_pedido">Nota de pedido N°</label>
-                                            <input type="number" id="nota_pedido" class="form-control"
-                                                placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
+                                            <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
+                                            <input type="number" id="Codigo_Nota_Pedido" class="form-control"
+                                                placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido">
                                         </div>
                                     </div>
 
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="num_pedido"></label>
-                                            <input type="number" id="num_pedido" class="form-control"
-                                                placeholder="# Pedido" name="num_pedido" step="0.01">
+                                            <label for="Numero_Nota_Pedido"></label>
+                                            <input type="number" id="Numero_Nota_Pedido" class="form-control"
+                                                placeholder="# Pedido" name="Numero_Nota_Pedido">
                                         </div>
                                     </div>
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="num_importacion"></label>
-                                            <input type="number" id="num_importacion" class="form-control"
-                                                placeholder="# Importación" name="num_importacion" step="0.01">
+                                            <label for="Codigo_Importacion"></label>
+                                            <input type="text" id="Codigo_Importacion" class="form-control"
+                                                placeholder="# Importación" name="Codigo_Importacion">
                                         </div>
                                     </div>
 
                                     <!-- fecha -->
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="fecha">Fecha</label>
-                                            <input type="date" id="fecha" class="form-control"
-                                                name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                                            <label for="Fecha_Nota_Pedido">Fecha</label>
+                                            <input type="date" id="Fecha_Nota_Pedido" class="form-control"
+                                                name="Fecha_Nota_Pedido" value="<?php echo date('Y-m-d'); ?>" required>
                                         </div>
                                     </div>
 
 
                                     <div class="row">
-
-
-
-
-
-
-
                                         <section id="basic-vertical-layouts">
                                             <div class="row match-height">
                                                 <div class="col-md-4 col-12">
@@ -113,13 +106,13 @@
 
                                                                             <div class="col-12">
                                                                                 <div class="form-group">
-                                                                                    <label for="first-name-vertical">Importador</label>
+                                                                                    <label for="Codigo_Importador">Importador</label>
                                                                                     <div class="position-relative">
 
-                                                                                        <select id="importador" class="choices form-control" name="importador">
+                                                                                        <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
                                                                                             <option value="" disabled selected>Seleccione un importador</option>
                                                                                             <?php foreach ($importadores as $importador): ?>
-                                                                                                <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                                <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                         </select>
 
@@ -128,15 +121,15 @@
                                                                             </div>
 
                                                                             <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const importador = document.getElementById("importador");
-        const remitente = document.getElementById("remitente");
+                                                                                document.addEventListener("DOMContentLoaded", function() {
+                                                                                    const importador = document.getElementById("Codigo_Importador");
+                                                                                    const remitente = document.getElementById("remitente");
 
-        importador.addEventListener("change", function() {
-            remitente.value = importador.value;
-        });
-    });
-</script>
+                                                                                    importador.addEventListener("change", function() {
+                                                                                        remitente.value = importador.value;
+                                                                                    });
+                                                                                });
+                                                                            </script>
 
 
 
@@ -183,20 +176,17 @@
 
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="first-name-icon">Exportador</label>
+                                                                                    <label for="exportador">Exportador</label>
                                                                                     <div class="position-relative">
-
                                                                                         <select id="exportador" class="choices form-control" name="exportador">
                                                                                             <option value="" disabled selected>Seleccione un exportador</option>
                                                                                             <?php foreach ($exportadores as $exportador): ?>
                                                                                                 <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
                                                                                             <?php endforeach; ?>
-                                                                                        </select>
-
+                                                                                        </select>    
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
 
                                                                             <!-- <div class="col-12">
 
@@ -235,8 +225,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div> -->
-
-
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -270,7 +258,7 @@
                                                                             <div class="col-12">
 
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="email-id-icon">Pais/origen</label>
+                                                                                    <label for="exportador">Pais/origen</label>
                                                                                     <div class="position-relative">
 
                                                                                         <select id="pais_origen" class="choices form-control" name="pais_origen">
@@ -286,7 +274,7 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="mobile-id-icon">Forma de pago</label>
+                                                                                    <label for="forma_pago">Forma de pago</label>
                                                                                     <div class="position-relative">
 
                                                                                         <select class="form-select" id="forma_pago" name="forma_pago">
@@ -300,10 +288,10 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="password-id-icon">Moneda</label>
+                                                                                    <label for="moneda">Moneda</label>
                                                                                     <div class="position-relative">
 
-                                                                                        <select class="form-select" id="currency-id-icon">
+                                                                                        <select class="form-select" id="moneda" name="moneda">
                                                                                             <option value="">Seleccionar moneda</option>
                                                                                             <option value="USD">USD</option>
                                                                                             <option value="EUR">EUR</option>
@@ -336,10 +324,6 @@
             </div>
         </div>
     </section>
-
-
-
-
 </div>
 
 
