@@ -5,6 +5,7 @@ class NotaPedido extends ActiveRecord {
 
     protected static $tabla = 'NOTA_PEDIDO';
     protected static $columnasDB = [
+        'id',
         'Codigo_Nota_Pedido',
         'Fecha_Nota_Pedido',
         'Codigo_Importador',
@@ -33,6 +34,7 @@ class NotaPedido extends ActiveRecord {
         'Desactivado_Nota_Pedido'
     ];
 
+    public $id;
     public $Codigo_Nota_Pedido;
     public $Fecha_Nota_Pedido;
     public $Codigo_Importador;
@@ -62,6 +64,7 @@ class NotaPedido extends ActiveRecord {
     
     public function __construct($args = [])
     {
+        $this->id = $args['id'] ?? null;
         $this->Codigo_Nota_Pedido = $args['Codigo_Nota_Pedido'] ?? null;
         $this->Fecha_Nota_Pedido = $args['Fecha_Nota_Pedido'] ?? '';
         $this->Codigo_Importador = $args['Codigo_Importador'] ?? '';
