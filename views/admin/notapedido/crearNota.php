@@ -327,7 +327,7 @@
   <section class="section">
         <div class="card">
             <div class="card-header">
-                Tabla de registros de Bodegas
+                Tabla de registros de Notas de Pedido
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
