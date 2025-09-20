@@ -28,7 +28,7 @@ class NotaPedidoController
         $exportadores = Exportadores::all();
 
         $pais = Pais::all();
-
+    
         $notaPedido = new NotaPedido;
 
         // $bodega =  Bodega::all();
