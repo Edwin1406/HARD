@@ -57,6 +57,14 @@
                         <div class="card-body">
                             <form class="form" method="POST" action="/admin/notaPedido/crearNota" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
+                                    <?php foreach ($alertas as $tipo => $mensajes) : ?>
+                                        <?php foreach ($mensajes as $mensaje) : ?>
+                                            <div class="alert alert-<?= s($tipo) ?> alert-dismissible fade show" role="alert">
+                                                <?= s($mensaje) ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
