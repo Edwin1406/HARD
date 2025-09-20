@@ -112,7 +112,7 @@
                                                                                         <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
                                                                                             <option value="" disabled selected>Seleccione un importador</option>
                                                                                             <?php foreach ($importadores as $importador): ?>
-                                                                                                <option value="<?php echo s($importador->Nombre_Importador); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
+                                                                                                <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                         </select>
 
@@ -120,20 +120,17 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                          
-
                                                                             <script>
                                                                                 document.addEventListener("DOMContentLoaded", function() {
                                                                                     const importador = document.getElementById("Codigo_Importador");
                                                                                     const remitente = document.getElementById("remitente");
 
                                                                                     importador.addEventListener("change", function() {
-                                                                                        // Obtener el nombre del importador a partir del atributo 'data-nombre' del option seleccionado
-                                                                                        const selectedOption = importador.options[importador.selectedIndex];
-                                                                                        remitente.value = selectedOption.getAttribute('data-nombre'); // Asigna el nombre del importador al campo 'remitente'
+                                                                                        remitente.value = importador.value;
                                                                                     });
                                                                                 });
                                                                             </script>
+
 
 
                                                                             <!-- <div class="col-12">
@@ -186,7 +183,7 @@
                                                                                             <?php foreach ($exportadores as $exportador): ?>
                                                                                                 <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
                                                                                             <?php endforeach; ?>
-                                                                                        </select>
+                                                                                        </select>    
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
