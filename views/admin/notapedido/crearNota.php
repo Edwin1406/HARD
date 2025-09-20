@@ -104,7 +104,7 @@
                                                                     <div class="form-body">
                                                                         <div class="row">
 
-                                                                           <div class="col-12">
+                                                                            <div class="col-12">
     <div class="form-group">
         <label for="Codigo_Importador">Importador</label>
         <div class="position-relative">
@@ -120,20 +120,28 @@
     </div>
 </div>
 
-                                                                          
+<div class="col-12">
+    <div class="form-group has-icon-left">
+        <label for="remitente">Remitir Doc a</label>
+        <div class="position-relative">
+            <input type="text" class="form-control" placeholder="Remitir Doc a" id="remitente" name="remitente">
+        </div>
+    </div>
+</div>
 
-                                                                            <script>
-                                                                                document.addEventListener("DOMContentLoaded", function() {
-                                                                                    const importador = document.getElementById("Codigo_Importador");
-                                                                                    const remitente = document.getElementById("remitente");
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const importador = document.getElementById("Codigo_Importador");
+        const remitente = document.getElementById("remitente");
 
-                                                                                    importador.addEventListener("change", function() {
-                                                                                        // Obtener el nombre del importador a partir del atributo 'data-nombre' del option seleccionado
-                                                                                        const selectedOption = importador.options[importador.selectedIndex];
-                                                                                        remitente.value = selectedOption.getAttribute('data-nombre'); // Asigna el nombre del importador al campo 'remitente'
-                                                                                    });
-                                                                                });
-                                                                            </script>
+        importador.addEventListener("change", function() {
+            // Obtener el nombre del importador a partir del atributo 'data-nombre' del option seleccionado
+            const selectedOption = importador.options[importador.selectedIndex];
+            remitente.value = selectedOption.getAttribute('data-nombre'); // Asigna el nombre del importador al campo 'remitente'
+        });
+    });
+</script>
+
 
 
                                                                             <!-- <div class="col-12">
