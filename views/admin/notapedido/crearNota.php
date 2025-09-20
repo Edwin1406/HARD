@@ -334,7 +334,7 @@
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Nombre Marca</th>
+                            <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
