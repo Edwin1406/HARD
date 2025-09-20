@@ -104,21 +104,21 @@
                                                                     <div class="form-body">
                                                                         <div class="row">
 
-                                                                            <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="Codigo_Importador">Importador</label>
-                                                                                    <div class="position-relative">
-
-                                                                                        <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
-                                                                                            <option value="" disabled selected>Seleccione un importador</option>
-                                                                                            <?php foreach ($importadores as $importador): ?>
-                                                                                                <option value="<?php echo s($importador->id); ?>"><?php echo s($importador->Nombre_Importador); ?></option>
-                                                                                            <?php endforeach; ?>
-                                                                                        </select>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                           <div class="col-12">
+    <div class="form-group">
+        <label for="Codigo_Importador">Importador</label>
+        <div class="position-relative">
+            <select id="Codigo_Importador" class="choices form-control" name="Codigo_Importador">
+                <option value="" disabled selected>Seleccione un importador</option>
+                <?php foreach ($importadores as $importador): ?>
+                    <option value="<?php echo s($importador->id); ?>" data-nombre="<?php echo s($importador->Nombre_Importador); ?>">
+                        <?php echo s($importador->Nombre_Importador); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
 
                                                                           
 
