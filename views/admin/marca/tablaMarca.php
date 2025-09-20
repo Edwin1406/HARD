@@ -108,7 +108,7 @@
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Nombre Marca</th>
+                            <th class="fs-6" style="min-width: 93px;">Codigo</th>
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
@@ -117,7 +117,7 @@
                         <?php foreach ($marca as $marcaItem): ?>
                             <tr>
                                 <td><?= $marcaItem->id ?></td>
-                                <td><?= $marcaItem->Nombre_Marca ?></td>
+                                <td><?= $marcaItem->Codigo_Nota_Pedido  ?></td>
                                 <td>
 
                                     <div class="d-flex gap-1">

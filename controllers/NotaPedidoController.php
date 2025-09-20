@@ -28,6 +28,7 @@ class NotaPedidoController
         $exportadores = Exportadores::all();
 
         $pais = Pais::all();
+        $notasPedidos = NotaPedido::all();
     
         $notaPedido = new NotaPedido;
 
@@ -65,7 +66,8 @@ class NotaPedidoController
             'alertas' => $alertas,
             'importadores' => $importadores,
             'exportadores' => $exportadores,
-            'pais' => $pais
+            'pais' => $pais,
+            'notasPedidos' => $notasPedidos,
         ]);
     }
 }

@@ -340,16 +340,16 @@
                     </thead>
 
                     <tbody>
-                        <?php foreach ($marca as $marcaItem): ?>
+                        <?php foreach ($notasPedidos as $notaItem): ?>
                             <tr>
-                                <td><?= $marcaItem->id ?></td>
-                                <td><?= $marcaItem->Nombre_Marca ?></td>
+                                <td><?= $notaItem->id ?></td>
+                                <td><?= $notaItem->Nombre_Marca ?></td>
                                 <td>
 
                                     <div class="d-flex gap-1">
-                                        <a href="/admin/marca/editarMarca?id=<?= $marcaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                        <a href="/admin/marca/editarMarca?id=<?= $notaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
                                         <form action="/admin/eliminarMarca" method="POST">
-                                            <input type="hidden" name="id" value="<?= $marcaItem->id ?>">
+                                            <input type="hidden" name="id" value="<?= $notaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     </div>
