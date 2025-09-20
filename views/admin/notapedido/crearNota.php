@@ -120,27 +120,36 @@
     </div>
 </div>
 
-
+<div class="col-12">
+    <div class="form-group has-icon-left">
+        <label for="remitente">Remitir Doc a</label>
+        <div class="position-relative">
+            <input type="text" class="form-control" placeholder="Remitir Doc a" id="remitente" name="remitente" readonly>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const importador = document.getElementById("Codigo_Importador");
         const remitente = document.getElementById("remitente");
 
-        // Verificamos si hay un importador seleccionado en el inicio
-        if (importador.value) {
+        // Function to update remitente value
+        function updateRemitente() {
             const selectedOption = importador.options[importador.selectedIndex];
-            remitente.value = selectedOption.getAttribute('data-nombre'); 
-            console.log("Importador inicial:", remitente.value);
+            remitente.value = selectedOption.getAttribute('data-nombre') || ''; // Fallback to empty string if no data-nombre
         }
 
+        // Initialize the remitente field with selected importador (if any)
+        updateRemitente();
+
+        // Event listener for the change on the importador dropdown
         importador.addEventListener("change", function() {
-            const selectedOption = importador.options[importador.selectedIndex];
-            remitente.value = selectedOption.getAttribute('data-nombre');
-            console.log("Importador cambiado:", remitente.value);
+            updateRemitente();
         });
     });
 </script>
+
 
 
 
