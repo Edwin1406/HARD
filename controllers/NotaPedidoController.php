@@ -36,6 +36,19 @@ class NotaPedidoController
         // $bodega =  Bodega::all();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $Codigo_Nota_Pedido = $_POST['Codigo_Nota_Pedido'] ?? 0;
+            $existeNotaPedido = NotaPedido::where('Codigo_Nota_Pedido', $Codigo_Nota_Pedido);
+            if ($existeNotaPedido) {
+                // Mensaje de error
+                NotaPedido::setAlerta('error', 'Ya existe una Nota Pedido con ese código');
+                $alertas = NotaPedido::getAlertas();
+            } else {
+                // Crea una nueva instancia
+                $notaPedido = new NotaPedido($_POST);
+            }
+
+            // Sincronizar objeto con los datos del formulario
+            
             $notaPedido->sincronizar($_POST);
 
             // debuguear($notaPedido);
