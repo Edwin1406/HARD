@@ -123,7 +123,7 @@
                                                                             <script>
                                                                                 document.addEventListener("DOMContentLoaded", function() {
                                                                                     const importador = document.getElementById("Codigo_Importador");
-                                                                                    const remitente = document.getElementById("remitente");
+                                                                                    const remitente = document.getElementById("Remitir_Nota_Pedido");
 
                                                                                     importador.addEventListener("change", function() {
                                                                                         remitente.value = importador.value;
