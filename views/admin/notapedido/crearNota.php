@@ -347,7 +347,7 @@
                                 <td>
 
                                     <div class="d-flex gap-1">
-                                        <a href="/admin/pruebas/crearPruebas?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
+                                        <a href="/admin/pruebas/aaa?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">Jalar Codigo_Nota_Pedido </a>
                                         <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
