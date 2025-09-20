@@ -95,10 +95,10 @@
 
                                     <div class="row">
 
-                                   
 
 
-                                 
+
+
 
 
                                         <section id="basic-vertical-layouts">
@@ -127,8 +127,20 @@
                                                                                 </div>
                                                                             </div>
 
+                                                                            <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const importador = document.getElementById("importador");
+        const remitente = document.getElementById("remitente");
 
-                                                                                                                <!-- <div class="col-12">
+        importador.addEventListener("change", function() {
+            remitente.value = importador.value;
+        });
+    });
+</script>
+
+
+
+                                                                            <!-- <div class="col-12">
                                                                                 <div class="form-group">
                                                                                     <label for="email-id-vertical">Email</label>
                                                                                     <input type="email" id="email-id-vertical"
@@ -240,17 +252,21 @@
                                                                 <form class="form form-vertical">
                                                                     <div class="form-body">
                                                                         <div class="row">
+
+
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
-                                                                                    <label for="first-name-icon">Remitir Doc a</label>
+                                                                                    <label for="remitente">Remitir Doc a</label>
                                                                                     <div class="position-relative">
                                                                                         <input type="text" class="form-control"
                                                                                             placeholder="Remitir Doc a"
-                                                                                            id="first-name-icon">
+                                                                                            id="remitente" name="remitente">
 
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+
+
                                                                             <div class="col-12">
 
                                                                                 <div class="form-group has-icon-left">
