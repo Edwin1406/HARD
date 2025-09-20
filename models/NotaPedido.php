@@ -98,9 +98,7 @@ class NotaPedido extends ActiveRecord {
             self::$alertas['error'][] = 'El Campo Codigo Nota Pedido es Obligatorio';
         }
 
-        if(!$this->Fecha_Nota_Pedido) {
-            self::$alertas['error'][] = 'El Campo Fecha Nota Pedido es Obligatorio';
-        }
+        
 
         // Aquí puedes agregar validaciones adicionales para otros campos si es necesario
         
