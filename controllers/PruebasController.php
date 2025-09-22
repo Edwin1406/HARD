@@ -30,6 +30,7 @@ class PruebasController
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
         $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido;
+        
 
 
     //  debuguear($informacionNota);
@@ -85,6 +86,8 @@ class PruebasController
             'email' => $email,
             'carritoTemporal' => $carritoTemporal,
             'id_nota' => $id_nota,
+            'informacionNota' => $informacionNota,
+            'fecha' => $fecha,
         ]);
     }
 

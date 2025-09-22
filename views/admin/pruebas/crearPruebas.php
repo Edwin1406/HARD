@@ -92,7 +92,7 @@
                                         <div class="form-group">
                                             <label for="fecha">Fecha</label>
                                             <input type="date" id="fecha" class="form-control"
-                                                name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                                                name="fecha" value="<?php echo $fecha; ?>" required>
                                         </div>
                                     </div>
 
