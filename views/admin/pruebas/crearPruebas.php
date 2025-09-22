@@ -57,7 +57,7 @@
                     <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
+                            <div class="alert alert-info">
                                 <div class="row">
 
 
@@ -97,7 +97,7 @@
                                     </div>
 
 
-                                    <div class="row">
+                                 
 
                                         <!-- importador select -->
                                         <div class="col-md-4 col-12">
@@ -128,7 +128,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                  
                             </form>
                         </div>
                     </div>
