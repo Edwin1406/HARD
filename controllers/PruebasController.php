@@ -18,6 +18,11 @@ class PruebasController
         if (!isset($_SESSION['email'])) {
             header('Location: /');
         }
+
+
+        $id_pedido = $_GET['id'] ?? null;
+        debuguear($id_pedido);
+
         $alertas = [];
 
         // NOMBRE DE LA PERSONA LOGEADA
