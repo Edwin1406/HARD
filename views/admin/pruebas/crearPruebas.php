@@ -73,9 +73,9 @@
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="num_pedido"></label>
-                                            <input type="number" id="num_pedido" class="form-control"
-                                                placeholder="# Pedido" name="num_pedido" step="0.01" value="<?php echo $informacionNota->Numero_Pedido; ?>">
+                                            <label for="Numero_Nota_Pedido"></label>
+                                            <input type="number" id="Numero_Nota_Pedido" class="form-control"
+                                                placeholder="# Pedido" name="Numero_Nota_Pedido" step="0.01" value="<?php echo $informacionNota->Numero_Nota_Pedido; ?>">
                                         </div>
                                     </div>
 
