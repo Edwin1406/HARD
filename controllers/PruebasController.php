@@ -20,8 +20,12 @@ class PruebasController
         }
 
 
-        $id_pedido = $_GET['id'] ?? null;
-        debuguear($id_pedido);
+        $id_nota = $_GET['id'] ?? null;
+        if (!$id_nota) {
+            header('Location: /admin/notapedido/crearNota');
+            exit;
+        }
+        // debuguear($id_nota);
 
         $alertas = [];
 
@@ -72,6 +76,7 @@ class PruebasController
             'nombre' => $nombre,
             'email' => $email,
             'carritoTemporal' => $carritoTemporal,
+            'id_nota' => $id_nota,
         ]);
     }
 

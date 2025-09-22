@@ -61,7 +61,8 @@
                                         <div class="form-group">
                                             <label for="nota_pedido">Nota de pedido N°</label>
                                             <input type="number" id="nota_pedido" class="form-control"
-                                                placeholder="Nota de pedido N°" name="nota_pedido" step="0.01">
+                                                placeholder="Nota de pedido N°" name="nota_pedido" step="0.01"
+                                                value="<?= $id_nota; ?>" readonly>
                                         </div>
                                     </div>
 
