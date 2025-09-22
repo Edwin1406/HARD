@@ -77,12 +77,12 @@
 
                                 <div class="col-md-3 col-12">
                                     <small class="text-muted">Importador</small><br>
-                                    <span class="fw-bold"><?php echo $informacionNota->Importador ?? '-'; ?></span>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Importador ?? '-'; ?></span>
                                 </div>
 
                                 <div class="col-md-3 col-12">
                                     <small class="text-muted">Exportador</small><br>
-                                    <span class="fw-bold"><?php echo $informacionNota->Exportador ?? '-'; ?></span>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Exportador ?? '-'; ?></span>
                                 </div>
 
                             </div>
