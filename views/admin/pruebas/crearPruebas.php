@@ -46,9 +46,10 @@
 
     <style>
 
-          header .py-3 {
-            display: none;
-        }
+        header, .header, .header.py-3 {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
 
     </style>
 
