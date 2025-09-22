@@ -61,6 +61,96 @@
                                 <div class="row">
 
 
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="nota_pedido">Nota de pedido N°</label>
+                                            <input type="number" id="nota_pedido" class="form-control"
+                                                placeholder="Nota de pedido N°" name="nota_pedido" step="0.01"
+                                                value="<?php echo $id_nota; ?>" readonly>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="Numero_Nota_Pedido"></label>
+                                            <input type="number" id="Numero_Nota_Pedido" class="form-control"
+                                                placeholder="# Pedido" name="Numero_Nota_Pedido" step="0.01" value="<?php echo $informacionNota->Numero_Nota_Pedido; ?>" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="num_importacion"></label>
+                                            <input type="number" id="num_importacion" class="form-control"
+                                                placeholder="# Importación" name="num_importacion" step="0.01">
+                                        </div>
+                                    </div>
+
+                                    <!-- fecha -->
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="fecha">Fecha</label>
+                                            <input type="date" id="fecha" class="form-control"
+                                                name="fecha" value="<?php echo $fecha; ?>" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <!-- importador select -->
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label for="importador">Importador</label>
+                                                <select id="importador" class="choices form-control" name="importador">
+                                                    <option value="" disabled selected>Seleccione un importador</option>
+                                                    <option value="IMPORTADORA MEGA ECUADOR S.A">IMPORTADORA MEGA ECUADOR S.A</option>
+                                                    <option value="IMPORTADORA MEGA DEL PERU S.A.C">IMPORTADORA MEGA DEL PERU S.A.C</option>
+                                                    <option value="IMPORTADORA MEGA DE COLOMBIA S.A.S">IMPORTADORA MEGA DE COLOMBIA S.A.S</option>
+                                                    <option value="IMPORTADORA MEGA DE CHILE LTDA">IMPORTADORA MEGA DE CHILE LTDA</option>
+                                                    <option value="IMPORTADORA MEGA DE MEXICO S.A. DE C.V.">IMPORTADORA MEGA DE MEXICO S.A. DE C.V.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label for="exportador">Exportador</label>
+                                                <select id="exportador" class="choices form-control" name="exportador">
+                                                    <option value="" disabled selected>Seleccione un exportador</option>
+                                                    <option value="INDUSTRIAS CARTONAJES S.A">INDUSTRIAS CARTONAJES S.A</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DEL PERU S.A.C">INDUSTRIAS CARTONAJES DEL PERU S.A.C</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S">INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE CHILE LTDA">INDUSTRIAS CARTONAJES DE CHILE LTDA</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.">INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.</option>
+                                                    <option value="INDUSTRIAS CARTONAJES DE ECUADOR S.A.">INDUSTRIAS CARTONAJES DE ECUADOR S.A.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card">
+
+                    <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
+                                <div class="row">
+
+
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="nota_pedido">Nota de pedido N°</label>
@@ -155,6 +245,10 @@
             </div>
         </div>
     </section>
+
+
+
+
     <section class="section">
         <div class="card">
             <div class="card-header">
