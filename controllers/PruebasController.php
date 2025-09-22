@@ -29,6 +29,11 @@ class PruebasController
 
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+
+        // Obtener la información de la nota de pedido
+        $informacionNota = $informacionNota[0] ?? null;
+        
+
         debuguear($informacionNota);
         // debuguear($id_nota);
 
