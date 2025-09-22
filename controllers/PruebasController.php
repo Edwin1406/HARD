@@ -39,7 +39,7 @@ class PruebasController
         }
 
         debuguear($informacionNota);
-        )
+    
         $alertas = [];
 
         // NOMBRE DE LA PERSONA LOGEADA
