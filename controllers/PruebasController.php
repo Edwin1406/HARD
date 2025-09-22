@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Carrito;
 use Model\DetalleVenta;
+use Model\NotaPedido;
 use Model\Ventas;
 use MVC\Router;
 
@@ -25,6 +26,10 @@ class PruebasController
             header('Location: /admin/notapedido/crearNota');
             exit;
         }
+
+
+        $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+        debuguear($informacionNota);
         // debuguear($id_nota);
 
         $alertas = [];
