@@ -170,7 +170,7 @@
                             <tr>
                                 <th class="fs-6" style="min-width: 90px;">ID</th>
                                 <th class="fs-6" style="min-width: 90px;">id_usuario</th>
-                                <th class="fs-6" style="min-width: 90px;">tipo_maquina</th>
+                                <th class="fs-6" style="min-width: 90px;">tipo</th>
                                 <!-- <th class="fs-6" style="min-width: 90px;">tipo_clasificacion</th> -->
                                 <th class="fs-6" style="min-width: 90px;">casos</th>
                                 <th class="fs-6" style="min-width: 80px;">Cantidad</th>
@@ -225,7 +225,7 @@
 
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                                <label for="consumo_papel">Consumo papel (Kg)</label>
+                                <label for="consumo_papel">C</label>
                                 <input type="number" step="0.01" id="consumo_papel"
                                     class="form-control" placeholder="Consumo papel (Kg)" name="consumo_papel" required>
                             </div>
@@ -233,7 +233,7 @@
 
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                                <label for="n_laminas">N° de Laminas</label>
+                                <label for="n_laminas">N° de</label>
                                 <input type="number" id="n_laminas" class="form-control"
                                     placeholder="N° de Laminas" name="n_laminas">
                             </div>
@@ -243,7 +243,7 @@
                         <div class="col-md-3 col-12">
 
                             <div class="form-group">
-                                <label for="metros_lineales_C">Metros Lineales C</label>
+                                <label for="metros_lineales_C">Metros</label>
                                 <input type="number" id="metros_lineales_C" class="form-control"
                                     placeholder="Metros Lineales C" name="metros_lineales_C">
                             </div>
@@ -255,22 +255,22 @@
                     <div class="row g-3 mt-1">
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                                <label for="metros_lineales_B">Metros Lineales B</label>
+                                <label for="metros_lineales_B">Met</label>
                                 <input type="number" id="metros_lineales_B" class="form-control"
                                     placeholder="Metros Lineales B" name="metros_lineales_B">
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                                <label for="metros_lineales">Metros Lineales E</label>
+                                <label for="metros_lineales">met</label>
                                 <input type="number" id="metros_lineales_E" class="form-control"
                                     placeholder="Metros Lineales E" name="metros_lineales_E">
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-12 <?php echo (trim(strtolower($email)) !== 'corrugador@megaecuador.com') ? 'd-none' : ''; ?>">
+                        <div class="col-md-3 col-12 ">
                             <div class="form-group">
-                                <label for="consumo_recubrimiento">Consumo Recubrimiento (Kg)</label>
+                                <label for="consumo_recubrimiento">Con </label>
                                 <input type="number" step="0.01" id="consumo_recubrimiento" class="form-control"
                                     placeholder="Consumo Recubrimiento (Kg)" name="consumo_recubrimiento">
                             </div>
@@ -280,16 +280,13 @@
 
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                                <label for="operador">OPERADOR</label>
+                                <label for="operador"></label>
                                 <select id="operador" class="choices form-control" name="operador">
-                                    <option value="" disabled <?php echo !isset($turno) ? 'selected' : ''; ?>>Seleccione un operador</option>
+                                    <option value="" disabled <?php echo !isset($turno) ? 'selected' : ''; ?>>Seleccione </option>
 
                                     <!-- CONTROLABLES -->
-                                    <option value="RAFAEL ORTEGA">RAFAEL ORTEGA</option>
-                                    <option value="GEOVANNY MANTILLA">GEOVANNY MANTILLA</option>
-                                    <option value="WILLIAM NAULA">WILLIAM NAULA</option>
-                                    <option value="MARCO TAPIA">MARCO TAPIA</option>
-                                    <option value="KEVIN DELGADO">KEVIN DELGADO</option>
+                                    <option value="EDWIN" <?php echo (isset($operador) && $operador === 'EDWIN') ? 'selected' : ''; ?>>EDWIN</option>
+                                    
                                 </select>
 
                             </div>
@@ -298,7 +295,7 @@
                         <div class="row g-3 mt-1">
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="n_cambios">N° de Cambios</label>
+                                    <label for="n_cambios">N° de </label>
                                     <input type="number" id="n_cambios" class="form-control"
                                         placeholder="N° de Cambios" name="n_cambios">
                                 </div>
@@ -306,7 +303,7 @@
 
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="turno">Turno</label>
+                                    <label for="turno">fd</label>
                                     <select class="form-select" name="turno" id="turno">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -316,7 +313,7 @@
 
                             <div class="col-md-3 col-12 <?php echo (trim(strtolower($email)) !== 'corrugador@megaecuador.com') ? 'd-none' : ''; ?>">
                                 <div class="form-group">
-                                    <label for="consumo_almidon">Consumo Almidón (Kg)</label>
+                                    <label for="consumo_almidon"> (Kg)</label>
                                     <input type="number" step="0.01" id="consumo_almidon" class="form-control"
                                         placeholder="Consumo Almidón (Kg)" name="consumo_almidon">
                                 </div>
@@ -324,7 +321,7 @@
 
                             <div class="col-md-3 col-12 <?php echo (trim(strtolower($email)) !== 'corrugador@megaecuador.com') ? 'd-none' : ''; ?>">
                                 <div class="form-group">
-                                    <label for="consumo_resina">Consumo Resina (Kg)</label>
+                                    <label for="consumo_resina">  (Kg)</label>
                                     <input type="number" step="0.01" id="consumo_resina" class="form-control"
                                         placeholder="Consumo Resina (Kg)" name="consumo_resina">
                                 </div>
@@ -337,7 +334,7 @@
                             <div class="col-md-3 col-12">
 
                                 <div class="form-group">
-                                    <label for="metros_lineales">Metros Lineales</label>
+                                    <label for="metros_lineales">ghgfh</label>
                                     <input type="number" id="metros_lineales" class="form-control"
                                         placeholder="Metros Lineales" name="metros_lineales">
                                 </div>
