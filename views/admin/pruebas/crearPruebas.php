@@ -61,7 +61,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-1 col-12">
                                         <div class="form-group">
                                             <label for="nota_pedido">Nota de pedido N°</label>
                                             <input type="number" id="nota_pedido" class="form-control"
@@ -71,7 +71,7 @@
                                     </div>
 
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-1 col-12">
                                         <div class="form-group">
                                             <label for="Numero_Nota_Pedido"></label>
                                             <input type="number" id="Numero_Nota_Pedido" class="form-control"
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-1 col-12">
                                         <div class="form-group">
                                             <label for="num_importacion"></label>
                                             <input type="number" id="num_importacion" class="form-control"
@@ -88,7 +88,7 @@
                                     </div>
 
                                     <!-- fecha -->
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-1 col-12">
                                         <div class="form-group">
                                             <label for="fecha">Fecha</label>
                                             <input type="date" id="fecha" class="form-control"
@@ -100,7 +100,7 @@
                                  
 
                                         <!-- importador select -->
-                                        <div class="col-md-2 col-12">
+                                        <div class="col-md-3 col-12">
                                             <div class="form-group">
                                                 <label for="importador">Importador</label>
                                                 <select id="importador" class="choices form-control" name="importador">
@@ -113,7 +113,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-12">
+                                        <div class="col-md-3 col-12">
                                             <div class="form-group">
                                                 <label for="exportador">Exportador</label>
                                                 <select id="exportador" class="choices form-control" name="exportador">
