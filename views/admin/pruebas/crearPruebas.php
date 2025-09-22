@@ -51,7 +51,7 @@
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
-            <div class="card">
+            <!-- <div class="card"> -->
                 <div class="card-content mt-0">
                     <div class="card-body">
                         <div class="alert alert-info py-2">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </section>
