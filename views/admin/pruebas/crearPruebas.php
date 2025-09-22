@@ -61,7 +61,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-1 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="nota_pedido">Nota de pedido N°</label>
                                             <input type="number" id="nota_pedido" class="form-control"
