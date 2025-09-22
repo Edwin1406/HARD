@@ -33,7 +33,7 @@ class PruebasController
         
 
 
-     debuguear($informacionNota);
+    //  debuguear($informacionNota);
     //  debuguear($fecha);
 
         $alertas = [];
