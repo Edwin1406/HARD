@@ -129,9 +129,9 @@
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="num_importacion"></label>
-                                            <input type="number" id="num_importacion" class="form-control"
-                                                placeholder="# Importación" name="num_importacion" step="0.01">
+                                            <label for="Codigo_Importacion"></label>
+                                            <input type="number" id="Codigo_Importacion" class="form-control"
+                                                placeholder="# Importación" name="Codigo_Importacion" value="<?php echo $informacionNota->Codigo_Importacion; ?>" readonly step="0.01">
                                         </div>
                                     </div>
 
