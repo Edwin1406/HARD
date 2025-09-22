@@ -100,7 +100,7 @@
                                  
 
                                         <!-- importador select -->
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-2 col-12">
                                             <div class="form-group">
                                                 <label for="importador">Importador</label>
                                                 <select id="importador" class="choices form-control" name="importador">
@@ -113,7 +113,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-2 col-12">
                                             <div class="form-group">
                                                 <label for="exportador">Exportador</label>
                                                 <select id="exportador" class="choices form-control" name="exportador">
