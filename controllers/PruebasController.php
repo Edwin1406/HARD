@@ -29,10 +29,12 @@ class PruebasController
 
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+        $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido;
 
-     debuguear($informacionNota);
 
-    
+    //  debuguear($informacionNota);
+     debuguear($fecha);
+
         $alertas = [];
 
         // NOMBRE DE LA PERSONA LOGEADA
