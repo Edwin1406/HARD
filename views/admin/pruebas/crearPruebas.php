@@ -55,7 +55,7 @@
                 <div class="card">
 
                     <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
-                    <div class="card-content">
+                    <div class="card-content mb-3">
                         <div class="card-body">
                             <div class="alert alert-info">
                                 <div class="row">
