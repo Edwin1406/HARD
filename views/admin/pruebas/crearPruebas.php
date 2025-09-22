@@ -75,7 +75,7 @@
                                         <div class="form-group">
                                             <label for="Numero_Nota_Pedido"></label>
                                             <input type="number" id="Numero_Nota_Pedido" class="form-control"
-                                                placeholder="# Pedido" name="Numero_Nota_Pedido" step="0.01" value="<?php echo $informacionNota->Numero_Nota_Pedido; ?>">
+                                                placeholder="# Pedido" name="Numero_Nota_Pedido" step="0.01" value="<?php echo $informacionNota->Numero_Nota_Pedido; ?>" readonly>
                                         </div>
                                     </div>
 
