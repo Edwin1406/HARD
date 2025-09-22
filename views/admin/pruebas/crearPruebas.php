@@ -69,7 +69,7 @@
 
                                 <div class="col-md-1 col-6">
                                     <small class="text-muted"># Importación</small><br>
-                                    <span class="fw-bold"><?php echo $num_importacion ?? '-'; ?></span>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Importacion ?? '-'; ?></span>
                                 </div>
 
                                 <div class="col-md-2 col-6">
