@@ -36,11 +36,11 @@ class PruebasController
                 $informacionNota = $nota;
                 $fecha = $nota->Fecha;
 
+                debuguear($fecha);
                 break;
             }
         }
 
-        debuguear($fecha);
     
         $alertas = [];
 
