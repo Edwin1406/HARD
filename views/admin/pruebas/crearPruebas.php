@@ -227,7 +227,7 @@
                             <div class="form-group">
                                 <label for="consumo_papel">C</label>
                                 <input type="number" step="0.01" id="consumo_papel"
-                                    class="form-control" placeholder="Consumo papel (Kg)" name="consumo_papel" required>
+                                    class="form-control" placeholder=")" name="consumo_papel" required>
                             </div>
                         </div>
 
@@ -235,7 +235,7 @@
                             <div class="form-group">
                                 <label for="n_laminas">N° de</label>
                                 <input type="number" id="n_laminas" class="form-control"
-                                    placeholder="N° de Laminas" name="n_laminas">
+                                    placeholder="N° " name="n_laminas">
                             </div>
                         </div>
 
@@ -245,7 +245,7 @@
                             <div class="form-group">
                                 <label for="metros_lineales_C">Metros</label>
                                 <input type="number" id="metros_lineales_C" class="form-control"
-                                    placeholder="Metros Lineales C" name="metros_lineales_C">
+                                    placeholder="Metr" name="metros_lineales_C">
                             </div>
 
                         </div>
@@ -257,14 +257,14 @@
                             <div class="form-group">
                                 <label for="metros_lineales_B">Met</label>
                                 <input type="number" id="metros_lineales_B" class="form-control"
-                                    placeholder="Metros Lineales B" name="metros_lineales_B">
+                                    placeholder="Me" name="metros_lineales_B">
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="metros_lineales">met</label>
                                 <input type="number" id="metros_lineales_E" class="form-control"
-                                    placeholder="Metros Lineales E" name="metros_lineales_E">
+                                    placeholder="Met" name="metros_lineales_E">
                             </div>
                         </div>
 
@@ -272,7 +272,7 @@
                             <div class="form-group">
                                 <label for="consumo_recubrimiento">Con </label>
                                 <input type="number" step="0.01" id="consumo_recubrimiento" class="form-control"
-                                    placeholder="Consumo Recubrimiento (Kg)" name="consumo_recubrimiento">
+                                    placeholder="Co)" name="consumo_recubrimiento">
                             </div>
                         </div>
 
@@ -297,7 +297,7 @@
                                 <div class="form-group">
                                     <label for="n_cambios">N° de </label>
                                     <input type="number" id="n_cambios" class="form-control"
-                                        placeholder="N° de Cambios" name="n_cambios">
+                                        placeholder="N° de " name="n_cambios">
                                 </div>
                             </div>
 
@@ -315,7 +315,7 @@
                                 <div class="form-group">
                                     <label for="consumo_almidon"> (Kg)</label>
                                     <input type="number" step="0.01" id="consumo_almidon" class="form-control"
-                                        placeholder="Consumo Almidón (Kg)" name="consumo_almidon">
+                                        placeholder="Con)" name="consumo_almidon">
                                 </div>
                             </div>
 
@@ -323,7 +323,7 @@
                                 <div class="form-group">
                                     <label for="consumo_resina">  (Kg)</label>
                                     <input type="number" step="0.01" id="consumo_resina" class="form-control"
-                                        placeholder="Consumo Resina (Kg)" name="consumo_resina">
+                                        placeholder="Con)" name="consumo_resina">
                                 </div>
                             </div>
 
@@ -336,7 +336,7 @@
                                 <div class="form-group">
                                     <label for="metros_lineales">ghgfh</label>
                                     <input type="number" id="metros_lineales" class="form-control"
-                                        placeholder="Metros Lineales" name="metros_lineales">
+                                        placeholder="Me" name="metros_lineales">
                                 </div>
                             </div>
 
