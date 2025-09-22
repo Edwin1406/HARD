@@ -30,16 +30,7 @@ class PruebasController
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
 
-        // Obtener la información de la nota de pedido sacar la fecha
-        foreach ($informacionNota as $nota) {
-            if ($nota->Codigo_Nota_Pedido === $id_nota) {
-                $informacionNota = $nota;
-                $fecha = $nota->Fecha;
-
-                debuguear($fecha);
-                break;
-            }
-        }
+     debuguear($informacionNota);
 
     
         $alertas = [];
