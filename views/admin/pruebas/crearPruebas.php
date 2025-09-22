@@ -44,22 +44,6 @@
     </section> -->
 
 
-    <style>
-
-        header, .header, .header.py-3 {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-.d-flex {
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-
-    </style>
-
 
 
 <section id="multiple-column-form">
