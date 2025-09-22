@@ -148,14 +148,14 @@
                                         <!-- importador select -->
                                         <div class="col-md-5 col-12">
                                             <div class="form-group">
-                                                <label for="importador">Importador</label>
+                                                <label for="importador">Tienda</label>
                                                 <select id="importador" class="choices form-control" name="importador">
-                                                    <option value="" disabled selected>Seleccione un importador</option>
-                                                    <option value="IMPORTADORA MEGA ECUADOR S.A">IMPORTADORA MEGA ECUADOR S.A</option>
-                                                    <option value="IMPORTADORA MEGA DEL PERU S.A.C">IMPORTADORA MEGA DEL PERU S.A.C</option>
-                                                    <option value="IMPORTADORA MEGA DE COLOMBIA S.A.S">IMPORTADORA MEGA DE COLOMBIA S.A.S</option>
-                                                    <option value="IMPORTADORA MEGA DE CHILE LTDA">IMPORTADORA MEGA DE CHILE LTDA</option>
-                                                    <option value="IMPORTADORA MEGA DE MEXICO S.A. DE C.V.">IMPORTADORA MEGA DE MEXICO S.A. DE C.V.</option>
+                                                    <option value="" disabled selected>Seleccione una tienda</option>
+                                                    <?php foreach ($tiendas as $tienda) : ?>
+                                                        <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
+                                                            <?php echo $tienda->Nombre_Tienda; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                         </div>
