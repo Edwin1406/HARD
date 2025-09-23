@@ -306,17 +306,17 @@ $selIf    = function ($left, $right) {
         return true;
     }
 
-const elemento = document.getElementById('importador');
-
 const choices = new Choices(elemento, {
-  placeholder: false,            // quita completamente el “Press to select”
-    searchPlaceholderValue: 'Buscar...', // placeholder para el campo de búsqueda
-    
-
+  placeholder: false,
+  placeholderValue: '',
+  searchPlaceholderValue: 'Buscar...', // aparece solo en el input de búsqueda
 });
-
-
-
+choices.setChoices([
+  { value: '', label: 'Seleccione una tienda', disabled: true, selected: true },
+  <?php foreach ($tiendas as $t) : ?>
+    { value: '<?= htmlspecialchars($t->Nombre_Tienda) ?>', label: '<?= htmlspecialchars($t->Nombre_Tienda) ?>' },
+  <?php endforeach; ?>
+]);
 
 </script>
 
