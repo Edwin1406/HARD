@@ -124,8 +124,12 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
 <?php
 // Helper para “old values”
 $old      = $old ?? [];
-$oldVal   = function($key, $default = '') use ($old) { return htmlspecialchars($old[$key] ?? $default); };
-$selIf    = function($left, $right) { return ((string)$left === (string)$right) ? 'selected' : ''; };
+$oldVal   = function ($key, $default = '') use ($old) {
+    return htmlspecialchars($old[$key] ?? $default);
+};
+$selIf    = function ($left, $right) {
+    return ((string)$left === (string)$right) ? 'selected' : '';
+};
 ?>
 
 <section id="multiple-column-form">
@@ -138,10 +142,10 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                 <div class="card-content">
                     <div class="card-body">
                         <form class="form"
-                              method="POST"
-                              action="/admin/pruebas/crearPruebas"
-                              enctype="multipart/form-data"
-                              onsubmit="return bloquearBoton(this)">
+                            method="POST"
+                            action="/admin/pruebas/crearPruebas"
+                            enctype="multipart/form-data"
+                            onsubmit="return bloquearBoton(this)">
 
                             <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
 
@@ -170,11 +174,11 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                     <div class="form-group">
                                         <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
                                         <input type="date"
-                                               id="Fecha_Tienda_Nota_Pedido"
-                                               class="form-control"
-                                               name="Fecha_Tienda_Nota_Pedido"
-                                               value="<?= $oldVal('Fecha_Tienda_Nota_Pedido', $fecha) ?>"
-                                               required>
+                                            id="Fecha_Tienda_Nota_Pedido"
+                                            class="form-control"
+                                            name="Fecha_Tienda_Nota_Pedido"
+                                            value="<?= $oldVal('Fecha_Tienda_Nota_Pedido', $fecha) ?>"
+                                            required>
                                     </div>
                                 </div>
 
@@ -183,12 +187,12 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                     <div class="form-group">
                                         <label for="Factura_Nota_Pedido"># Factura</label>
                                         <input type="number"
-                                               id="Factura_Nota_Pedido"
-                                               class="form-control"
-                                               placeholder="# Factura"
-                                               name="Factura_Nota_Pedido"
-                                               step="0.01"
-                                               value="<?= $oldVal('Factura_Nota_Pedido') ?>">
+                                            id="Factura_Nota_Pedido"
+                                            class="form-control"
+                                            placeholder="# Factura"
+                                            name="Factura_Nota_Pedido"
+                                            step="0.01"
+                                            value="<?= $oldVal('Factura_Nota_Pedido') ?>">
                                     </div>
                                 </div>
 
@@ -251,11 +255,11 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                     <div class="form-group">
                                         <label for="Total_Tienda_Nota_Pedido">Total</label>
                                         <input type="number"
-                                               id="Total_Tienda_Nota_Pedido"
-                                               class="form-control"
-                                               name="Total_Tienda_Nota_Pedido"
-                                               step="0.01"
-                                               value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
+                                            id="Total_Tienda_Nota_Pedido"
+                                            class="form-control"
+                                            name="Total_Tienda_Nota_Pedido"
+                                            step="0.01"
+                                            value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
                                     </div>
                                 </div>
 
@@ -263,16 +267,20 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                     <div class="form-group">
                                         <label for="cantidad">Cantidad</label>
                                         <input type="number"
-                                               id="cantidad"
-                                               class="form-control"
-                                               name="cantidad"
-                                               step="1"
-                                               value="<?= $oldVal('cantidad', '0') ?>">
+                                            id="cantidad"
+                                            class="form-control"
+                                            name="cantidad"
+                                            step="1"
+                                            value="<?= $oldVal('cantidad', '0') ?>">
                                     </div>
                                 </div>
 
 
-                            
+                                <style>
+                                    .choices__placeholder {
+                                        display: none !important;
+                                    }
+                                </style>
 
 
 
@@ -293,13 +301,15 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
 </section>
 
 <script>
-// Si usas un plugin como Choices, inicialízalo DESPUÉS de que el HTML ya venga
-// con los <option selected> correctos.
-function bloquearBoton(form) {
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = true; }
-    return true;
-}
+    // Si usas un plugin como Choices, inicialízalo DESPUÉS de que el HTML ya venga
+    // con los <option selected> correctos.
+    function bloquearBoton(form) {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.disabled = true;
+        }
+        return true;
+    }
 </script>
 
 
