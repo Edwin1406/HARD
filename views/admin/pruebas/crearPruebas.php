@@ -224,12 +224,12 @@
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">ID</th>
-                            <th class="fs-6" style="min-width: 90px;">id_usuario</th>
-                            <th class="fs-6" style="min-width: 90px;">tipo</th>
-                            <!-- <th class="fs-6" style="min-width: 90px;">tipo_clasificacion</th> -->
-                            <th class="fs-6" style="min-width: 90px;">casos</th>
-                            <th class="fs-6" style="min-width: 80px;">Cantidad</th>
-                            <th class="fs-6" style="min-width: 100px;">Observaciones</th>
+                            <th class="fs-6" style="min-width: 90px;">Nombre Tienda</th>
+                            <th class="fs-6" style="min-width: 90px;">Fecha_Tienda_Nota_Pedido</th>
+                            <th class="fs-6" style="min-width: 90px;">Factura_Nota_Pedido</th>
+                            <th class="fs-6" style="min-width: 90px;">Total_Tienda_Nota_Pedido</th>
+                            <!-- <th class="fs-6" style="min-width: 80px;">Cantidad</th> -->
+                            <!-- <th class="fs-6" style="min-width: 100px;">Observaciones</th> -->
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
@@ -238,11 +238,10 @@
                         <?php foreach ($carritoTemporal as $contro): ?>
                             <tr>
                                 <td><?= $contro->id ?></td>
-                                <td><?= $contro->id_usuario ?></td>
-                                <td><?= $contro->tipo_maquina ?></td>
-                                <td><?= $contro->casos ?></td>
-                                <td><?= $contro->cantidad ?></td>
-                                <td><?= $contro->observaciones ?></td>
+                                <td><?= $contro->Nombre_Tienda ?></td>
+                                <td><?= $contro->Fecha_Tienda_Nota_Pedido ?></td>
+                                <td><?= $contro->Factura_Nota_Pedido ?></td>
+                                <td><?= $contro->Total_Tienda_Nota_Pedido ?></td>
 
                                 <td>
                                     <div class="d-flex gap-1">
