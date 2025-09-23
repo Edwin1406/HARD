@@ -28,7 +28,7 @@ class PruebasController
 
         $id_nota = $_GET['id'] ?? null;
         if (!$id_nota) {
-            header('Location: /admin/notapedido/crearNota');
+            header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
             exit;
         }
 
