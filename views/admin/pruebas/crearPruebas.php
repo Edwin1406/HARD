@@ -254,6 +254,7 @@
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">ID</th>
+                            <th class="fs-6" style="min-width: 90px;">Código Nota Pedido</th>
                             <th class="fs-6" style="min-width: 90px;">Nombre Tienda</th>
                             <th class="fs-6" style="min-width: 90px;">Fecha_Tienda_Nota_Pedido</th>
                             <th class="fs-6" style="min-width: 90px;">Factura_Nota_Pedido</th>
@@ -268,6 +269,7 @@
                         <?php foreach ($carritoTemporal as $contro): ?>
                             <tr>
                                 <td><?= $contro->id ?></td>
+                                <td><?= $contro->Codigo_Nota_Pedido ?></td>
                                 <td><?= $contro->Nombre_Tienda ?></td>
                                 <td><?= $contro->Fecha_Tienda_Nota_Pedido ?></td>
                                 <td><?= $contro->Factura_Nota_Pedido ?></td>
