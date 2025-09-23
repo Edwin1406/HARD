@@ -147,7 +147,7 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="marca">Marca</label>
-                                           <select id="importador" class="choices form-control" name="importador">
+                                        <select id="importador" class="choices form-control" name="importador">
                                             <option value="" disabled selected>Seleccione una Marca</option>
                                             <?php foreach ($marca as $marcas) : ?>
                                                 <option value="<?php echo $marcas->Nombre_Marca; ?>" <?php echo (isset($importador) && $importador === $marcas->Nombre_Marca) ? 'selected' : ''; ?>>
@@ -165,7 +165,7 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="origen">Origen</label>
-                                          <select id="importador" class="choices form-control" name="importador">
+                                        <select id="importador" class="choices form-control" name="importador">
                                             <option value="" disabled selected>Seleccione una Pais</option>
                                             <?php foreach ($pais as $paises) : ?>
                                                 <option value="<?php echo $paises->Pais_Origen; ?>" <?php echo (isset($importador) && $importador === $paises->Pais_Origen) ? 'selected' : ''; ?>>
@@ -181,7 +181,7 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="bodega">Bodega</label>
-                                            <select id="bodega" class="choices form-control" name="bodega">
+                                        <select id="bodega" class="choices form-control" name="bodega">
                                             <option value="" disabled selected>Seleccione una Bodega</option>
                                             <?php foreach ($bodega as $bodegas) : ?>
                                                 <option value="<?php echo $bodegas->Sigla_Bodega; ?>" <?php echo (isset($importador) && $importador === $bodegas->Sigla_Bodega) ? 'selected' : ''; ?>>
@@ -193,58 +193,21 @@
                                     </div>
                                 </div>
 
-                             <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label for="importador">Tienda</label>
-                                            <select id="importador" class="choices form-control" name="importador">
-                                                <option value="" disabled selected>Seleccione una tienda</option>
-                                                <?php foreach ($tiendas as $tienda) : ?>
-                                                    <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
-                                                        <?php echo $tienda->Nombre_Tienda; ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="importador">Tienda</label>
+                                        <select id="importador" class="choices form-control" name="importador">
+                                            <option value="" disabled selected>Seleccione una tienda</option>
+                                            <?php foreach ($tiendas as $tienda) : ?>
+                                                <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
+                                                    <?php echo $tienda->Nombre_Tienda; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
+                                </div>
 
-
-                                <div class="row">
-                                    <!-- importador select -->
-                                    <div class="col-md-5 col-12">
-                                        <div class="form-group">
-                                            <label for="importador">Tienda</label>
-                                            <select id="importador" class="choices form-control" name="importador">
-                                                <option value="" disabled selected>Seleccione una tienda</option>
-                                                <?php foreach ($tiendas as $tienda) : ?>
-                                                    <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
-                                                        <?php echo $tienda->Nombre_Tienda; ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 col-12">
-                                        <div class="form-group">
-                                            <label for="exportador">Exportador</label>
-                                            <select id="exportador" class="choices form-control" name="exportador">
-                                                <option value="" disabled selected>Seleccione un exportador</option>
-                                                <option value="INDUSTRIAS CARTONAJES S.A">INDUSTRIAS CARTONAJES S.A</option>
-                                                <option value="INDUSTRIAS CARTONAJES DEL PERU S.A.C">INDUSTRIAS CARTONAJES DEL PERU S.A.C</option>
-                                                <option value="INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S">INDUSTRIAS CARTONAJES DE COLOMBIA S.A.S</option>
-                                                <option value="INDUSTRIAS CARTONAJES DE CHILE LTDA">INDUSTRIAS CARTONAJES DE CHILE LTDA</option>
-                                                <option value="INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.">INDUSTRIAS CARTONAJES DE MEXICO S.A. DE C.V.</option>
-                                                <option value="INDUSTRIAS CARTONAJES DE ECUADOR S.A.">INDUSTRIAS CARTONAJES DE ECUADOR S.A.</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <style>
-
-
-
-
-                                    </style>
+                                  
 
 
 
@@ -255,7 +218,7 @@
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
                                     </div>
-                                </div>
+                                
                         </form>
                     </div>
                 </div>
