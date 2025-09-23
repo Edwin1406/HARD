@@ -232,51 +232,55 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <!-- Bodega -->
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="bodega">Bodega</label>
-                                        <select id="bodega" class="choices form-control" name="bodega">
-                                            <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
-                                                Seleccione
-                                            </option>
-                                            <?php foreach ($bodega as $b) : ?>
-                                                <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
-                                                    <?= $selIf(($old['bodega'] ?? ''), $b->Sigla_Bodega) ?>>
-                                                    <?= htmlspecialchars($b->Sigla_Bodega) ?>
+                                <div class="row">
+
+
+                                    <!-- Bodega -->
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="bodega">Bodega</label>
+                                            <select id="bodega" class="choices form-control" name="bodega">
+                                                <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
+                                                    Seleccione
                                                 </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                                <?php foreach ($bodega as $b) : ?>
+                                                    <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
+                                                        <?= $selIf(($old['bodega'] ?? ''), $b->Sigla_Bodega) ?>>
+                                                        <?= htmlspecialchars($b->Sigla_Bodega) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- (Opcionales) Total y Cantidad si los usas -->
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="Total_Tienda_Nota_Pedido">Total</label>
+                                            <input type="number"
+                                                id="Total_Tienda_Nota_Pedido"
+                                                class="form-control"
+                                                name="Total_Tienda_Nota_Pedido"
+                                                step="0.01"
+                                                value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="number"
+                                                id="cantidad"
+                                                class="form-control"
+                                                name="cantidad"
+                                                step="1"
+                                                value="<?= $oldVal('cantidad', '0') ?>">
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- (Opcionales) Total y Cantidad si los usas -->
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="Total_Tienda_Nota_Pedido">Total</label>
-                                        <input type="number"
-                                            id="Total_Tienda_Nota_Pedido"
-                                            class="form-control"
-                                            name="Total_Tienda_Nota_Pedido"
-                                            step="0.01"
-                                            value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="cantidad">Cantidad</label>
-                                        <input type="number"
-                                            id="cantidad"
-                                            class="form-control"
-                                            name="cantidad"
-                                            step="1"
-                                            value="<?= $oldVal('cantidad', '0') ?>">
-                                    </div>
-                                </div>
 
 
-                              
 
 
 
@@ -306,7 +310,7 @@ $selIf    = function ($left, $right) {
         return true;
     }
 
-// 
+    // 
 </script>
 
 
