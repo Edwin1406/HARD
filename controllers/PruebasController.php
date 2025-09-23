@@ -57,6 +57,9 @@ class PruebasController
         $bodega = Bodega::all();
         $ciudad = Ciudad::all();
         $pais = Pais::all();
+
+debuguear($pais);
+
         $marca = Marca::all();
 
 
