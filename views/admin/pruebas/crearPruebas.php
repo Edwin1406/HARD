@@ -233,8 +233,6 @@ $selIf    = function ($left, $right) {
                                 </div>
 
                                 <div class="row">
-
-
                                     <!-- Bodega -->
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
@@ -253,18 +251,9 @@ $selIf    = function ($left, $right) {
                                         </div>
                                     </div>
 
-                                    <!-- (Opcionales) Total y Cantidad si los usas -->
-                                    <div class="col-md-2 col-12">
-                                        <div class="form-group">
-                                            <label for="Total_Tienda_Nota_Pedido">Total</label>
-                                            <input type="number"
-                                                id="Total_Tienda_Nota_Pedido"
-                                                class="form-control"
-                                                name="Total_Tienda_Nota_Pedido"
-                                                step="0.01"
-                                                value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
-                                        </div>
-                                    </div>
+                                    
+
+                                    
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">

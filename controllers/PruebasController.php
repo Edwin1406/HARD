@@ -27,6 +27,10 @@ public static function crearPruebas(Router $router)
 
         // id_nota puede venir por GET o por POST
         $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+        if (!$id_nota) {
+            header('Location: /admin/notaPedido/crearNota');
+            exit;
+        }
 
         // Catálogos
         $tiendas = Tienda::all();
