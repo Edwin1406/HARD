@@ -104,7 +104,7 @@
                 <div class="card-content">
                     <div class="card-body">
                         <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
-                              <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
 
                             <div class="row">
                                 <div class="col-md-3 col-12">
@@ -139,7 +139,7 @@
                                         <label for="Factura_Nota_Pedido"># Factura</label>
                                         <input type="number" id="Factura_Nota_Pedido" class="form-control"
                                             placeholder="# Factura" name="Factura_Nota_Pedido" step="0.01"
-                                            value="" >
+                                            value="">
                                     </div>
                                 </div>
 
@@ -249,6 +249,8 @@
                                     <div class="d-flex gap-1">
                                         <!-- <a href="/admin/editarConsumo?id=<?= $contro->id ?>" class="btn btn-primary btn-sm">Editar</a> -->
                                         <form action="/admin/eliminarCarrito" method="POST">
+                                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+
                                             <input type="hidden" name="id" value="<?= $contro->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>

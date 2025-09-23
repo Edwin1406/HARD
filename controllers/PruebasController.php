@@ -125,6 +125,10 @@ class PruebasController
             header('Location: /');
         }
 
+
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             $carrito = Carrito::find($id);
@@ -135,7 +139,8 @@ class PruebasController
                 exit;
             } else {
                 // Manejar el caso en que no se encuentra el registro
-                header('Location: /admin/pruebas/crearPruebas?error=1');
+                // header('Location: /admin/pruebas/crearPruebas?error=1');
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
                 exit;
             }
         }
