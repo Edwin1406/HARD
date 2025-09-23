@@ -193,16 +193,19 @@
                                     </div>
                                 </div>
 
-                          
-
-                                <!-- fecha -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="fecha">Fecha</label>
-                                        <input type="date" id="fecha" class="form-control"
-                                            name="fecha" value="<?php echo $fecha; ?>" required>
+                             <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="importador">Tienda</label>
+                                            <select id="importador" class="choices form-control" name="importador">
+                                                <option value="" disabled selected>Seleccione una tienda</option>
+                                                <?php foreach ($tiendas as $tienda) : ?>
+                                                    <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
+                                                        <?php echo $tienda->Nombre_Tienda; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
 
                                 <div class="row">
