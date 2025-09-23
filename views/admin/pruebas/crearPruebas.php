@@ -184,8 +184,8 @@
                                             <select id="bodega" class="choices form-control" name="bodega">
                                             <option value="" disabled selected>Seleccione una Bodega</option>
                                             <?php foreach ($bodega as $bodegas) : ?>
-                                                <option value="<?php echo $bodegas->Nombre_Bodega; ?>" <?php echo (isset($importador) && $importador === $bodegas->Nombre_Bodega) ? 'selected' : ''; ?>>
-                                                    <?php echo $bodegas->Nombre_Bodega; ?>
+                                                <option value="<?php echo $bodegas->Sigla_Bodega; ?>" <?php echo (isset($importador) && $importador === $bodegas->Sigla_Bodega) ? 'selected' : ''; ?>>
+                                                    <?php echo $bodegas->Sigla_Bodega; ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
