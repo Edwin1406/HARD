@@ -267,6 +267,8 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                         <?php
                         $idUrl = $id_nota ?? null; // id que llega por la URL
 
+                        debuguear($idUrl);
+
                         
 
                         foreach ($carritoTemporal as $contro):
