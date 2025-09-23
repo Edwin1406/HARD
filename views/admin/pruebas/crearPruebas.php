@@ -310,7 +310,8 @@ const elemento = document.getElementById('importador');
 
 const choices = new Choices(elemento, {
   placeholder: false,            // quita completamente el “Press to select”
-//   placeholderValue: '',          // asegura que no muestre nada
+    searchPlaceholderValue: 'Buscar...', // placeholder para el campo de búsqueda
+    
 
 });
 
