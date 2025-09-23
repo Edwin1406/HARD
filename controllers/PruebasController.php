@@ -65,6 +65,8 @@ class PruebasController
 
 
         $carrito = new Carrito;
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Procesar el formulario
