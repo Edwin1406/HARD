@@ -1,46 +1,32 @@
 <?php 
 namespace Model;
 
-
-
-
 class Carrito extends ActiveRecord {
 
     protected static $tabla = 'carrito';
-    protected static $columnasDB = ['id', 'id_usuario','tipo_maquina','tipo_clasificacion','casos','cantidad', 'observaciones'];
+    protected static $columnasDB = [
+        'id',
+        'Nombre_Tienda',
+        'Fecha_Tienda_Nota_Pedido',
+        'Factura_Nota_Pedido',
+        'Total_Tienda_Nota_Pedido',
+        'cantidad'
+    ];
 
     public $id;
-    public $id_usuario;
-    public $tipo_maquina;
-    public $tipo_clasificacion;
-    public $casos;
+    public $Nombre_Tienda;
+    public $Fecha_Tienda_Nota_Pedido;
+    public $Factura_Nota_Pedido;
+    public $Total_Tienda_Nota_Pedido;
     public $cantidad;
-    public $observaciones;
     
-    
-
-
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
-        $this->id_usuario = $args['id_usuario'] ?? null;
-        $this->tipo_maquina = $args['tipo_maquina'] ?? null;
-        $this->tipo_clasificacion = $args['tipo_clasificacion'] ?? null;
-        $this->casos = $args['casos'] ?? null;
+        $this->Nombre_Tienda = $args['Nombre_Tienda'] ?? '';
+        $this->Fecha_Tienda_Nota_Pedido = $args['Fecha_Tienda_Nota_Pedido'] ?? null;
+        $this->Factura_Nota_Pedido = $args['Factura_Nota_Pedido'] ?? null;
+        $this->Total_Tienda_Nota_Pedido = $args['Total_Tienda_Nota_Pedido'] ?? 0.00;
         $this->cantidad = $args['cantidad'] ?? 0;
-        $this->observaciones = $args['observaciones'] ?? '';
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

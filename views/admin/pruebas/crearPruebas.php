@@ -107,8 +107,8 @@
                             <div class="row">
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="importador">Tienda</label>
-                                        <select id="importador" class="choices form-control" name="importador">
+                                        <label for="Nombre_Tienda">Tienda</label>
+                                        <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
                                             <option value="" disabled selected>Seleccione una tienda</option>
                                             <?php foreach ($tiendas as $tienda) : ?>
                                                 <option value="<?php echo $tienda->Nombre_Tienda; ?>" <?php echo (isset($importador) && $importador === $tienda->Nombre_Tienda) ? 'selected' : ''; ?>>
@@ -126,18 +126,18 @@
 
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="fecha">Fecha</label>
-                                        <input type="date" id="fecha" class="form-control"
-                                            name="fecha" value="<?php echo $fecha; ?>" required>
+                                        <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
+                                        <input type="date" id="Fecha_Tienda_Nota_Pedido" class="form-control"
+                                            name="Fecha_Tienda_Nota_Pedido" value="<?php echo $fecha; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for=""># Factura</label>
-                                        <input type="number" id="nota_pedido" class="form-control"
-                                            placeholder="# Factura" name="nota_pedido" step="0.01"
-                                            value="<?php echo $id_nota; ?>" readonly>
+                                        <label for="Factura_Nota_Pedido"># Factura</label>
+                                        <input type="number" id="Factura_Nota_Pedido" class="form-control"
+                                            placeholder="# Factura" name="Factura_Nota_Pedido" step="0.01"
+                                            value="" readonly>
                                     </div>
                                 </div>
 
