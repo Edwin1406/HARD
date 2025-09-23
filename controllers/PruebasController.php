@@ -65,13 +65,13 @@ class PruebasController
 
 
         $carrito = new Carrito;
-        $Codigo_Nota_Pedido = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
         
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Procesar el formulario
             // $carrito-> = $_SESSION['id'];
-            $carrito->Codigo_Nota_Pedido = $Codigo_Nota_Pedido;
+            $carrito->Codigo_Nota_Pedido = $Codigo_Nota_Pedido = $id_nota;
             $carrito->Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
             $carrito->Fecha_Tienda_Nota_Pedido = $_POST['Fecha_Tienda_Nota_Pedido'] ?? null;
             $carrito->Factura_Nota_Pedido = $_POST['Factura_Nota_Pedido'] ?? null;
@@ -88,7 +88,7 @@ class PruebasController
                 $resultado = $carrito->guardar();
                 if ($resultado) {
                     // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                    header("Location: /admin/pruebas/crearPruebas?id=$Codigo_Nota_Pedido&exito=1");
+                    header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
 
                     exit;
                 } else {
@@ -127,7 +127,7 @@ class PruebasController
         }
 
 
-        $Codigo_Nota_Pedido = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -137,12 +137,12 @@ class PruebasController
             if ($carrito) {
                 $carrito->eliminar();
                 // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                header("Location: /admin/pruebas/crearPruebas?id=$Codigo_Nota_Pedido&eliminado=3");
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
                 exit;
             } else {
                 // Manejar el caso en que no se encuentra el registro
                 // header('Location: /admin/pruebas/crearPruebas?error=1');
-                header("Location: /admin/pruebas/crearPruebas?id=$Codigo_Nota_Pedido&error=1");
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
                 exit;
             }
         }
