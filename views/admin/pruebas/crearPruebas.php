@@ -265,12 +265,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
 
                     <tbody>
                         <?php
-                        $idUrl = $id_nota ?? null; // id que llega por la URL
-
-                        // debuguear($idUrl);
-
-                        
-
+                        $idUrl = $id_nota ?? null; // id que llega 
                         foreach ($carritoTemporal as $contro):
                             // si el id de la URL no coincide con el id del registro, saltar
                             if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
