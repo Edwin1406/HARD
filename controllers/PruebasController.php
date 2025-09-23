@@ -38,11 +38,11 @@ class PruebasController
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
         $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido;
-        
 
 
-    //  debuguear($informacionNota);
-    //  debuguear($fecha);
+
+        //  debuguear($informacionNota);
+        //  debuguear($fecha);
 
         $alertas = [];
 
@@ -58,7 +58,7 @@ class PruebasController
         $ciudad = Ciudad::all();
         $pais = Pais::all();
 
-// debuguear($pais);
+        // debuguear($pais);
 
         $marca = Marca::all();
 
@@ -85,8 +85,8 @@ class PruebasController
                 $resultado = $carrito->guardar();
                 if ($resultado) {
                     // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                     header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
-    
+                    header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
+
                     exit;
                 } else {
                     $alertas['error'][] = 'Error al guardar el registro';
@@ -247,9 +247,9 @@ class PruebasController
             $metros_lineales_B = $_POST['metros_lineales_B'] ?? 0;
             $metros_lineales_E = $_POST['metros_lineales_E'] ?? 0;
             // operador
-            $operador =$_POST['operador'] ?? '';
+            $operador = $_POST['operador'] ?? '';
             $turno = $_POST['turno'] ?? '';
-            
+
             // fecha manual
             $fecha = $_POST['fecha'] ?? date('Y-m-d');
 

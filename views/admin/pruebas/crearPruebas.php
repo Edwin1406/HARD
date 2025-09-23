@@ -104,6 +104,8 @@
                 <div class="card-content">
                     <div class="card-body">
                         <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
+                              <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+
                             <div class="row">
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
