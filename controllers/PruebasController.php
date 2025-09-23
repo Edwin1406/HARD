@@ -84,7 +84,9 @@ class PruebasController
                 // Guardar en la base de datos
                 $resultado = $carrito->guardar();
                 if ($resultado) {
-                    header('Location: /admin/pruebas/crearPruebas?exito=1');
+                    // header('Location: /admin/pruebas/crearPruebas?exito=1');
+                     header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
+    
                     exit;
                 } else {
                     $alertas['error'][] = 'Error al guardar el registro';
