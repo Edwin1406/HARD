@@ -137,7 +137,7 @@
                                         <label for="Factura_Nota_Pedido"># Factura</label>
                                         <input type="number" id="Factura_Nota_Pedido" class="form-control"
                                             placeholder="# Factura" name="Factura_Nota_Pedido" step="0.01"
-                                            value="" readonly>
+                                            value="" >
                                     </div>
                                 </div>
 
