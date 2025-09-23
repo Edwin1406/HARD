@@ -68,12 +68,12 @@ class PruebasController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Procesar el formulario
-            $carrito->id_usuario = $_SESSION['id'];
-            $carrito->tipo_maquina = $nombre;
-            $carrito->tipo_clasificacion = $_POST['tipo_clasificacion'];
-            $carrito->casos = $_POST['casos'];
-            $carrito->cantidad = $_POST['cantidad'];
-            $carrito->observaciones = $_POST['observaciones'];
+            // $carrito-> = $_SESSION['id'];
+            $carrito->Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
+            $carrito->Fecha_Tienda_Nota_Pedido = $_POST['Fecha_Tienda_Nota_Pedido'] ?? null;
+            $carrito->Factura_Nota_Pedido = $_POST['Factura_Nota_Pedido'] ?? null;
+            $carrito->Total_Tienda_Nota_Pedido = $_POST['Total_Tienda_Nota_Pedido'] ?? 0.00;
+            $carrito->cantidad = $_POST['cantidad'] ?? 0;
 
             // $carrito->precio_unitario = $carrito->cantidad * 20; // Ejemplo de cálculo
 
