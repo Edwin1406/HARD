@@ -17,107 +17,90 @@ use MVC\Router;
 class PruebasController
 {
 
-
-    public static function crearPruebas(Router $router)
+public static function crearPruebas(Router $router)
     {
         session_start();
         if (!isset($_SESSION['email'])) {
             header('Location: /');
+            exit;
         }
 
+        // id_nota puede venir por GET o por POST
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
 
-        $id_nota = $_GET['id'] ?? null;
-        // if (!$id_nota) {
-        //     header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
-        //     exit;
-        // }
+        // Catálogos
+        $tiendas = Tienda::all();
+        $bodega  = Bodega::all();
+        $ciudad  = Ciudad::all();
+        $pais    = Pais::all();
+        $marca   = Marca::all();
 
-
-        $tienda = Tienda::all();
-
-
+        // Info de la nota
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
-        $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido;
+        $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido ?? date('Y-m-d');
 
+        // Datos de sesión
+        $nombre = $_SESSION['nombre'];
+        $email  = $_SESSION['email'];
 
-
-        //  debuguear($informacionNota);
-        //  debuguear($fecha);
-
+        // Auxiliares
+        $carritoTemporal = Carrito::all();
+        $carrito = new Carrito;
         $alertas = [];
 
-        // NOMBRE DE LA PERSONA LOGEADA
-        $nombre = $_SESSION['nombre'];
-        $email = $_SESSION['email'];
-        // $id_usuario = $_SESSION['id'];
-        // debuguear($id_usuario);
+        // 1) Recuperar “old” de sesión (flash) si vienes de un redirect
+        $old = $_SESSION['old'] ?? [];
+        if (isset($_SESSION['old'])) {
+            unset($_SESSION['old']); // flash: se usa una vez
+        }
 
-
-        $carritoTemporal = Carrito::all();
-        $bodega = Bodega::all();
-        $ciudad = Ciudad::all();
-        $pais = Pais::all();
-
-        // debuguear($pais);
-
-        $marca = Marca::all();
-
-
-
-        $carrito = new Carrito;
-        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
-        
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Procesar el formulario
-            // $carrito-> = $_SESSION['id'];
-            $carrito->Codigo_Nota_Pedido = $Codigo_Nota_Pedido = $id_nota;
-            $carrito->Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
+            // 2) Guardar lo recibido como “old”
+            $old = $_POST;
+
+            // Mapear POST al modelo
+            $carrito->Codigo_Nota_Pedido       = $id_nota;
+            $carrito->Nombre_Tienda            = $_POST['Nombre_Tienda'] ?? '';
             $carrito->Fecha_Tienda_Nota_Pedido = $_POST['Fecha_Tienda_Nota_Pedido'] ?? null;
-            $carrito->Factura_Nota_Pedido = $_POST['Factura_Nota_Pedido'] ?? null;
+            $carrito->Factura_Nota_Pedido      = $_POST['Factura_Nota_Pedido'] ?? null;
             $carrito->Total_Tienda_Nota_Pedido = $_POST['Total_Tienda_Nota_Pedido'] ?? 0.00;
-            $carrito->cantidad = $_POST['cantidad'] ?? 0;
+            $carrito->cantidad                 = $_POST['cantidad'] ?? 0;
 
-            // $carrito->precio_unitario = $carrito->cantidad * 20; // Ejemplo de cálculo
-
-            // Validar los datos
+            // Validación del modelo
             $alertas = $carrito->validar();
 
             if (empty($alertas)) {
-                // Guardar en la base de datos
                 $resultado = $carrito->guardar();
                 if ($resultado) {
-                    // header('Location: /admin/pruebas/crearPruebas?exito=1');
+                    // 3) Guardar “old” en sesión antes del redirect
+                    $_SESSION['old'] = $old;
                     header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
-
                     exit;
                 } else {
                     $alertas['error'][] = 'Error al guardar el registro';
                 }
             }
+            // Si hay errores, seguimos al render con $old ya cargado
         }
 
-
-
-
-        // Renderizar la vista de crear pruebas
+        // Renderizar la vista
         $router->render('admin/pruebas/crearPruebas', [
-            'titulo' => 'Crear Pruebas',
-            'alertas' => $alertas,
-            'nombre' => $nombre,
-            'email' => $email,
+            'titulo'          => 'Crear Pruebas',
+            'alertas'         => $alertas,
+            'nombre'          => $nombre,
+            'email'           => $email,
             'carritoTemporal' => $carritoTemporal,
-            'id_nota' => $id_nota,
+            'id_nota'         => $id_nota,
             'informacionNota' => $informacionNota,
-            'fecha' => $fecha,
-            'tiendas' => $tienda,
-            'bodega' => $bodega,
-            'ciudad' => $ciudad,
-            'pais' => $pais,
-            'marca' => $marca,
+            'fecha'           => $fecha,
+            'tiendas'         => $tiendas,
+            'bodega'          => $bodega,
+            'ciudad'          => $ciudad,
+            'pais'            => $pais,
+            'marca'           => $marca,
+            'old'             => $old,
         ]);
     }
-
 
     public static function eliminarCarrito()
     {

@@ -122,137 +122,179 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
     </div>
 </section>
 <?php
-// Valores “pegajosos” (del POST si existen, si no los que ya tengas)
-// Usa nombres distintos para listas vs. valor actual
-$valTienda      = $_POST['Nombre_Tienda']           ?? ($importador ?? ''); // si tu “tienda actual” vive en $importador cámbialo por la var correcta
-$valFecha       = $_POST['Fecha_Tienda_Nota_Pedido'] ?? ($fecha ?? '');
-$valFactura     = $_POST['Factura_Nota_Pedido']      ?? '';
-$valMarca       = $_POST['importador']               ?? ($importador ?? '');
-$valCiudad      = $_POST['ciudad']                   ?? ($ciudadActual ?? '');   // evita chocar con $ciudad (array)
-$valBodega      = $_POST['bodega']                   ?? ($bodegaActual ?? '');   // evita chocar con $bodega (array)
+// Helper para “old values”
+$old      = $old ?? [];
+$oldVal   = function($key, $default = '') use ($old) { return htmlspecialchars($old[$key] ?? $default); };
+$selIf    = function($left, $right) { return ((string)$left === (string)$right) ? 'selected' : ''; };
 ?>
 
 <section id="multiple-column-form">
-  <div class="row match-height">
-    <div class="col-12">
-      <div class="card">
-        <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
-        <div class="card-content">
-          <div class="card-body">
-            <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
-              <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
 
-              <div class="row">
+                <?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
 
-                <!-- Tienda -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="Nombre_Tienda">Tienda</label>
-                    <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda" required>
-                      <option value="" disabled <?= $valTienda === '' ? 'selected' : '' ?>>Seleccione una tienda</option>
-                      <?php foreach ($tiendas as $tienda): ?>
-                        <?php $opt = $tienda->Nombre_Tienda; ?>
-                        <option value="<?= htmlspecialchars($opt) ?>" <?= ($valTienda === $opt) ? 'selected' : '' ?>>
-                          <?= htmlspecialchars($opt) ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form"
+                              method="POST"
+                              action="/admin/pruebas/crearPruebas"
+                              enctype="multipart/form-data"
+                              onsubmit="return bloquearBoton(this)">
+
+                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+
+                            <div class="row">
+
+                                <!-- Tienda -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Nombre_Tienda">Tienda</label>
+                                        <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
+                                            <option value="" disabled <?= empty($old['Nombre_Tienda']) ? 'selected' : '' ?>>
+                                                Seleccione una tienda
+                                            </option>
+                                            <?php foreach ($tiendas as $t) : ?>
+                                                <option value="<?= htmlspecialchars($t->Nombre_Tienda) ?>"
+                                                    <?= $selIf(($old['Nombre_Tienda'] ?? ''), $t->Nombre_Tienda) ?>>
+                                                    <?= htmlspecialchars($t->Nombre_Tienda) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Fecha -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
+                                        <input type="date"
+                                               id="Fecha_Tienda_Nota_Pedido"
+                                               class="form-control"
+                                               name="Fecha_Tienda_Nota_Pedido"
+                                               value="<?= $oldVal('Fecha_Tienda_Nota_Pedido', $fecha) ?>"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <!-- # Factura -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Factura_Nota_Pedido"># Factura</label>
+                                        <input type="number"
+                                               id="Factura_Nota_Pedido"
+                                               class="form-control"
+                                               placeholder="# Factura"
+                                               name="Factura_Nota_Pedido"
+                                               step="0.01"
+                                               value="<?= $oldVal('Factura_Nota_Pedido') ?>">
+                                    </div>
+                                </div>
+
+                                <!-- Marca (name="importador") -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="importador">Marca</label>
+                                        <select id="importador" class="choices form-control" name="importador">
+                                            <option value="" disabled <?= empty($old['importador']) ? 'selected' : '' ?>>
+                                                Seleccione una Marca
+                                            </option>
+                                            <?php foreach ($marca as $m) : ?>
+                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
+                                                    <?= $selIf(($old['importador'] ?? ''), $m->Nombre_Marca) ?>>
+                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Ciudad -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="ciudad">Ciudad</label>
+                                        <select id="ciudad" class="choices form-control" name="ciudad">
+                                            <option value="" disabled <?= empty($old['ciudad']) ? 'selected' : '' ?>>
+                                                Seleccione una Ciudad
+                                            </option>
+                                            <?php foreach ($ciudad as $c) : ?>
+                                                <option value="<?= htmlspecialchars($c->Sigla_Ciudad) ?>"
+                                                    <?= $selIf(($old['ciudad'] ?? ''), $c->Sigla_Ciudad) ?>>
+                                                    <?= htmlspecialchars($c->Sigla_Ciudad) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Bodega -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="bodega">Bodega</label>
+                                        <select id="bodega" class="choices form-control" name="bodega">
+                                            <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
+                                                Seleccione una Bodega
+                                            </option>
+                                            <?php foreach ($bodega as $b) : ?>
+                                                <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
+                                                    <?= $selIf(($old['bodega'] ?? ''), $b->Sigla_Bodega) ?>>
+                                                    <?= htmlspecialchars($b->Sigla_Bodega) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- (Opcionales) Total y Cantidad si los usas -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Total_Tienda_Nota_Pedido">Total</label>
+                                        <input type="number"
+                                               id="Total_Tienda_Nota_Pedido"
+                                               class="form-control"
+                                               name="Total_Tienda_Nota_Pedido"
+                                               step="0.01"
+                                               value="<?= $oldVal('Total_Tienda_Nota_Pedido', '0.00') ?>">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="cantidad">Cantidad</label>
+                                        <input type="number"
+                                               id="cantidad"
+                                               class="form-control"
+                                               name="cantidad"
+                                               step="1"
+                                               value="<?= $oldVal('cantidad', '0') ?>">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                </div>
+
+                            </div> <!-- /.row -->
+                        </form>
+                    </div>
                 </div>
 
-                <!-- Fecha -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
-                    <input
-                      type="date"
-                      id="Fecha_Tienda_Nota_Pedido"
-                      class="form-control"
-                      name="Fecha_Tienda_Nota_Pedido"
-                      value="<?= htmlspecialchars($valFecha) ?>"
-                      required
-                    >
-                  </div>
-                </div>
-
-                <!-- # Factura -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="Factura_Nota_Pedido"># Factura</label>
-                    <input
-                      type="number"
-                      id="Factura_Nota_Pedido"
-                      class="form-control"
-                      placeholder="# Factura"
-                      name="Factura_Nota_Pedido"
-                      step="0.01"
-                      value="<?= htmlspecialchars($valFactura) ?>"
-                    >
-                  </div>
-                </div>
-
-                <!-- Marca -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="importador">Marca</label>
-                    <select id="importador" class="choices form-control" name="importador" required>
-                      <option value="" disabled <?= $valMarca === '' ? 'selected' : '' ?>>Seleccione una Marca</option>
-                      <?php foreach ($marca as $marcas): ?>
-                        <?php $opt = $marcas->Nombre_Marca; ?>
-                        <option value="<?= htmlspecialchars($opt) ?>" <?= ($valMarca === $opt) ? 'selected' : '' ?>>
-                          <?= htmlspecialchars($opt) ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Ciudad -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="ciudad">Ciudad</label>
-                    <select id="ciudad" class="choices form-control" name="ciudad" required>
-                      <option value="" disabled <?= $valCiudad === '' ? 'selected' : '' ?>>Seleccione una Ciudad</option>
-                      <?php foreach ($ciudad as $ciudades): ?>
-                        <?php $opt = $ciudades->Sigla_Ciudad; ?>
-                        <option value="<?= htmlspecialchars($opt) ?>" <?= ($valCiudad === $opt) ? 'selected' : '' ?>>
-                          <?= htmlspecialchars($opt) ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Bodega -->
-                <div class="col-md-3 col-12">
-                  <div class="form-group">
-                    <label for="bodega">Bodega</label>
-                    <select id="bodega" class="choices form-control" name="bodega" required>
-                      <option value="" disabled <?= $valBodega === '' ? 'selected' : '' ?>>Seleccione una Bodega</option>
-                      <?php foreach ($bodega as $bodegas): ?>
-                        <?php $opt = $bodegas->Sigla_Bodega; ?>
-                        <option value="<?= htmlspecialchars($opt) ?>" <?= ($valBodega === $opt) ? 'selected' : '' ?>>
-                          <?= htmlspecialchars($opt) ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-12 d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                  <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                </div>
-
-              </div> <!-- /.row -->
-            </form>
-          </div>
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
 </section>
+
+<script>
+// Si usas un plugin como Choices, inicialízalo DESPUÉS de que el HTML ya venga
+// con los <option selected> correctos.
+function bloquearBoton(form) {
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; }
+    return true;
+}
+</script>
 
 
 
