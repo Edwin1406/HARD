@@ -105,7 +105,7 @@
                     <div class="card-body">
                         <form class="form" method="POST" action="/admin/pruebas/crearPruebas" enctype="multipart/form-data" onsubmit="return bloquearBoton(this)">
                             <div class="row">
-                                <div class="col-md-5 col-12">
+                                <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="importador">Tienda</label>
                                         <select id="importador" class="choices form-control" name="importador">
