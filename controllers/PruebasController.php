@@ -87,7 +87,7 @@ class PruebasController
                 $resultado = $carrito->guardar();
                 if ($resultado) {
                     // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                    header("Location: /admin/pruebas/crearPruebas?id=$id_nota");
+                    header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
 
                     exit;
                 } else {
@@ -136,7 +136,7 @@ class PruebasController
             if ($carrito) {
                 $carrito->eliminar();
                 // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=1");
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
                 exit;
             } else {
                 // Manejar el caso en que no se encuentra el registro
