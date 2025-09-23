@@ -6,6 +6,7 @@ use Model\Bodega;
 use Model\Carrito;
 use Model\Ciudad;
 use Model\DetalleVenta;
+use Model\Marca;
 use Model\NotaPedido;
 use Model\Pais;
 use Model\Tienda;
@@ -56,6 +57,7 @@ class PruebasController
         $bodega = Bodega::all();
         $ciudad = Ciudad::all();
         $pais = Pais::all();
+        $marca = Marca::all();
 
 
 
@@ -104,6 +106,7 @@ class PruebasController
             'bodega' => $bodega,
             'ciudad' => $ciudad,
             'pais' => $pais,
+            'marca' => $marca,
         ]);
     }
 
