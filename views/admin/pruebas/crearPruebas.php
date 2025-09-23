@@ -220,7 +220,7 @@ $selIf    = function ($left, $right) {
                                         <label for="ciudad">Ciudad</label>
                                         <select id="ciudad" class="choices form-control" name="ciudad">
                                             <option value="" disabled <?= empty($old['ciudad']) ? 'selected' : '' ?>>
-                                                Seleccione una Ciudad
+                                                Seleccione
                                             </option>
                                             <?php foreach ($ciudad as $c) : ?>
                                                 <option value="<?= htmlspecialchars($c->Sigla_Ciudad) ?>"
@@ -238,7 +238,7 @@ $selIf    = function ($left, $right) {
                                         <label for="bodega">Bodega</label>
                                         <select id="bodega" class="choices form-control" name="bodega">
                                             <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
-                                                Seleccione una Bodega
+                                                Seleccione
                                             </option>
                                             <?php foreach ($bodega as $b) : ?>
                                                 <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
