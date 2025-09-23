@@ -194,12 +194,12 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
 
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="origen">Origen</label>
-                                        <select id="importador" class="choices form-control" name="importador">
+                                        <label for="ciudad">Ciudad</label>
+                                        <select id="ciudad" class="choices form-control" name="ciudad">
                                             <option value="" disabled selected>Seleccione una Ciudad</option>
                                             <?php foreach ($ciudad as $ciudades) : ?>
-                                                <option value="<?php echo $ciudades->Nombre_Ciudad; ?>" <?php echo (isset($importador) && $importador === $ciudades->Nombre_Ciudad) ? 'selected' : ''; ?>>
-                                                    <?php echo $ciudades->Nombre_Ciudad; ?>
+                                                <option value="<?php echo $ciudades->Sigla_Ciudad; ?>" <?php echo (isset($ciudad) && $ciudad === $ciudades->Sigla_Ciudad) ? 'selected' : ''; ?>>
+                                                    <?php echo $ciudades->Sigla_Ciudad; ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
