@@ -193,21 +193,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="Numero_Nota_Pedido"></label>
-                                        <input type="number" id="Numero_Nota_Pedido" class="form-control"
-                                            placeholder="# Pedido" name="Numero_Nota_Pedido" step="0.01" value="<?php echo $informacionNota->Numero_Nota_Pedido; ?>" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="Codigo_Importacion"></label>
-                                        <input type="number" id="Codigo_Importacion" class="form-control"
-                                            placeholder="# Importación" name="Codigo_Importacion" value="<?php echo $informacionNota->Codigo_Importacion; ?>" readonly step="0.01">
-                                    </div>
-                                </div>
+                          
 
                                 <!-- fecha -->
                                 <div class="col-md-3 col-12">
