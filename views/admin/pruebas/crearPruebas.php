@@ -84,32 +84,32 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                         <div class="row align-items-center">
 
                             <div class="col-md-2 col-6">
-                                <small class="text-muted">Nota de pedido N°</small><br>
+                                <small class="text-muted"><b>Nota de pedido N°</b></small><br>
                                 <span class="fw-bold"><?php echo $id_nota; ?></span>
                             </div>
 
                             <div class="col-md-1 col-6">
-                                <small class="text-muted"># Pedido</small><br>
+                                <small class="text-muted"><b># Pedido</b></small><br>
                                 <span class="fw-bold"><?php echo $informacionNota->Numero_Nota_Pedido; ?></span>
                             </div>
 
                             <div class="col-md-1 col-6">
-                                <small class="text-muted"># Import</small><br>
+                                <small class="text-muted"><b># Import</b></small><br>
                                 <span class="fw-bold"><?php echo $informacionNota->Codigo_Importacion ?? '-'; ?></span>
                             </div>
 
                             <div class="col-md-2 col-6">
-                                <small class="text-muted">Fecha</small><br>
+                                <small class="text-muted"><b>Fecha</b></small><br>
                                 <span class="fw-bold"><?php echo date("d/m/Y", strtotime($fecha)); ?></span>
                             </div>
 
                             <div class="col-md-3 col-12">
-                                <small class="text-muted">Importador</small><br>
+                                <small class="text-muted"><b>Importador</b></small><br>
                                 <span class="fw-bold"><?php echo $informacionNota->Codigo_Importador ?? '-'; ?></span>
                             </div>
 
                             <div class="col-md-3 col-12">
-                                <small class="text-muted">Exportador</small><br>
+                                <small class="text-muted"><b>Exportador</b></small><br>
                                 <span class="fw-bold"><?php echo $informacionNota->Codigo_Exportador ?? '-'; ?></span>
                             </div>
 
@@ -251,7 +251,7 @@ $selIf    = function ($left, $right) {
                                         </div>
                                     </div>
 
-                                    
+
 
                                     
 
