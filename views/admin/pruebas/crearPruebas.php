@@ -168,8 +168,8 @@
                                           <select id="importador" class="choices form-control" name="importador">
                                             <option value="" disabled selected>Seleccione una Pais</option>
                                             <?php foreach ($pais as $paises) : ?>
-                                                <option value="<?php echo $paises->Nombre_Pais; ?>" <?php echo (isset($importador) && $importador === $paises->Nombre_Pais) ? 'selected' : ''; ?>>
-                                                    <?php echo $paises->Nombre_Pais; ?>
+                                                <option value="<?php echo $paises->Pais_Origen; ?>" <?php echo (isset($importador) && $importador === $paises->Pais_Origen) ? 'selected' : ''; ?>>
+                                                    <?php echo $paises->Pais_Origen; ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
