@@ -276,12 +276,7 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                                <style>
-                                    .choices__placeholder {
-                                        display: none !important;
-                                    }
-                                </style>
-
+                              
 
 
 
