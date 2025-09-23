@@ -7,58 +7,58 @@
 <!-- <div class="page-heading"> -->
 
 
-       <?php
-            $toastId = null;
-            $toastMessage = null;
-            $toastClass = null;
-            $paramToRemove = null;
+<?php
+$toastId = null;
+$toastMessage = null;
+$toastClass = null;
+$paramToRemove = null;
 
-            if (isset($_GET['exito']) && $_GET['exito'] == '1') {
-                $toastId = 'toastExito';
-                $toastMessage = '¡Registro creado!';
-                $toastClass = 'text-bg-success';
-                $paramToRemove = 'exito';
-            } elseif (isset($_GET['editado']) && $_GET['editado'] == '2') {
-                $toastId = 'toastEditado';
-                $toastMessage = '¡Registro editado correctamente!';
-                $toastClass = 'text-bg-primary';
-                $paramToRemove = 'editado';
-            } elseif (isset($_GET['eliminado']) && $_GET['eliminado'] == '3') {
-                $toastId = 'toastEliminado';
-                $toastMessage = '¡Registro eliminado correctamente!';
-                $toastClass = 'text-bg-danger';
-                $paramToRemove = 'eliminado';
-            }
-            ?>
+if (isset($_GET['exito']) && $_GET['exito'] == '1') {
+    $toastId = 'toastExito';
+    $toastMessage = '¡Registro creado!';
+    $toastClass = 'text-bg-success';
+    $paramToRemove = 'exito';
+} elseif (isset($_GET['editado']) && $_GET['editado'] == '2') {
+    $toastId = 'toastEditado';
+    $toastMessage = '¡Registro editado correctamente!';
+    $toastClass = 'text-bg-primary';
+    $paramToRemove = 'editado';
+} elseif (isset($_GET['eliminado']) && $_GET['eliminado'] == '3') {
+    $toastId = 'toastEliminado';
+    $toastMessage = '¡Registro eliminado correctamente!';
+    $toastClass = 'text-bg-danger';
+    $paramToRemove = 'eliminado';
+}
+?>
 
-            <?php if ($toastId) : ?>
-                <!-- Toast HTML -->
-                <div class="toast-container position-fixed top-0 end-0 p-3">
-                    <div id="<?php echo $toastId; ?>" class="toast align-items-center <?php echo $toastClass; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                <?php echo $toastMessage; ?>
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                    </div>
+<?php if ($toastId) : ?>
+    <!-- Toast HTML -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="<?php echo $toastId; ?>" class="toast align-items-center <?php echo $toastClass; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <?php echo $toastMessage; ?>
                 </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
-                <!-- Toast JS -->
-                <script>
-                    window.addEventListener('DOMContentLoaded', function() {
-                        var toastEl = document.getElementById('<?php echo $toastId; ?>');
-                        if (toastEl) {
-                            var toast = new bootstrap.Toast(toastEl);
-                            toast.show();
-                        }
+    <!-- Toast JS -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var toastEl = document.getElementById('<?php echo $toastId; ?>');
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
 
-                        const url = new URL(window.location);
-                        url.searchParams.delete('<?php echo $paramToRemove; ?>');
-                        window.history.replaceState({}, document.title, url.toString());
-                    });
-                </script>
-            <?php endif; ?>
+            const url = new URL(window.location);
+            url.searchParams.delete('<?php echo $paramToRemove; ?>');
+            window.history.replaceState({}, document.title, url.toString());
+        });
+    </script>
+<?php endif; ?>
 
 
 <!-- <section class="section">
@@ -259,14 +259,18 @@
                             <th class="fs-6" style="min-width: 90px;">Fecha_Tienda_Nota_Pedido</th>
                             <th class="fs-6" style="min-width: 90px;">Factura_Nota_Pedido</th>
                             <th class="fs-6" style="min-width: 90px;">Total_Tienda_Nota_Pedido</th>
-                            <!-- <th class="fs-6" style="min-width: 80px;">Cantidad</th> -->
-                            <!-- <th class="fs-6" style="min-width: 100px;">Observaciones</th> -->
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <?php foreach ($carritoTemporal as $contro): ?>
+                        <?php
+                        $idUrl = $_GET['id'] ?? null; // id que llega por la URL
+
+                        foreach ($carritoTemporal as $contro):
+                            // si el id de la URL no coincide con el id del registro, saltar
+                            if ($idUrl != $contro->id) continue;
+                        ?>
                             <tr>
                                 <td><?= $contro->id ?></td>
                                 <td><?= $contro->Codigo_Nota_Pedido ?></td>
@@ -274,13 +278,10 @@
                                 <td><?= $contro->Fecha_Tienda_Nota_Pedido ?></td>
                                 <td><?= $contro->Factura_Nota_Pedido ?></td>
                                 <td><?= $contro->Total_Tienda_Nota_Pedido ?></td>
-
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <!-- <a href="/admin/editarConsumo?id=<?= $contro->id ?>" class="btn btn-primary btn-sm">Editar</a> -->
                                         <form action="/admin/eliminarCarrito" method="POST">
                                             <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
-
                                             <input type="hidden" name="id" value="<?= $contro->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
@@ -289,17 +290,18 @@
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
+
                     <tfoot>
                         <tr>
                             <td colspan="3"></td>
                             <td><b>Total</b></td>
                             <td><?= array_sum(array_column($carritoTemporal, 'cantidad'))  ?>(KG)</td>
-
                             <td colspan="5"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
+
             <form action="/admin/pruebas/registrarVenta" method="POST">
                 <!-- Fila 1 -->
                 <div class="row g-3">
