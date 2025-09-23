@@ -147,8 +147,14 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="marca">Marca</label>
-                                        <input type="text" id="marca" class="form-control"
-                                            placeholder="Marca" name="marca" value="<?php echo $informacionNota->Marca; ?>" readonly>
+                                           <select id="importador" class="choices form-control" name="importador">
+                                            <option value="" disabled selected>Seleccione una Marca</option>
+                                            <?php foreach ($marca as $marcas) : ?>
+                                                <option value="<?php echo $marcas->Nombre_Marca; ?>" <?php echo (isset($importador) && $importador === $marcas->Nombre_Marca) ? 'selected' : ''; ?>>
+                                                    <?php echo $marcas->Nombre_Marca; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
 

@@ -2,9 +2,12 @@
 
 namespace Controllers;
 
+use Model\Bodega;
 use Model\Carrito;
+use Model\Ciudad;
 use Model\DetalleVenta;
 use Model\NotaPedido;
+use Model\Pais;
 use Model\Tienda;
 use Model\Ventas;
 use MVC\Router;
@@ -50,6 +53,11 @@ class PruebasController
 
 
         $carritoTemporal = Carrito::all();
+        $bodega = Bodega::all();
+        $ciudad = Ciudad::all();
+        $pais = Pais::all();
+
+
 
         $carrito = new Carrito;
 
@@ -92,7 +100,10 @@ class PruebasController
             'id_nota' => $id_nota,
             'informacionNota' => $informacionNota,
             'fecha' => $fecha,
-            'tiendas' => $tienda
+            'tiendas' => $tienda,
+            'bodega' => $bodega,
+            'ciudad' => $ciudad,
+            'pais' => $pais,
         ]);
     }
 
