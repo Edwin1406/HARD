@@ -148,7 +148,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                             <div class="row">
 
                                 <!-- Tienda -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Nombre_Tienda">Tienda</label>
                                         <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
@@ -166,7 +166,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- Fecha -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
                                         <input type="date"
@@ -179,7 +179,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- # Factura -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Factura_Nota_Pedido"># Factura</label>
                                         <input type="number"
@@ -193,7 +193,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- Marca (name="importador") -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="importador">Marca</label>
                                         <select id="importador" class="choices form-control" name="importador">
@@ -211,7 +211,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- Ciudad -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="ciudad">Ciudad</label>
                                         <select id="ciudad" class="choices form-control" name="ciudad">
@@ -229,7 +229,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- Bodega -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="bodega">Bodega</label>
                                         <select id="bodega" class="choices form-control" name="bodega">
@@ -247,7 +247,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                 </div>
 
                                 <!-- (Opcionales) Total y Cantidad si los usas -->
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Total_Tienda_Nota_Pedido">Total</label>
                                         <input type="number"
@@ -259,7 +259,7 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="cantidad">Cantidad</label>
                                         <input type="number"
@@ -270,6 +270,12 @@ $selIf    = function($left, $right) { return ((string)$left === (string)$right) 
                                                value="<?= $oldVal('cantidad', '0') ?>">
                                     </div>
                                 </div>
+
+
+                            
+
+
+
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
