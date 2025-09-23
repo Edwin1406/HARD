@@ -165,8 +165,14 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="origen">Origen</label>
-                                        <input type="text" id="origen" class="form-control"
-                                            placeholder="Origen" name="origen" value="<?php echo $informacionNota->Origen; ?>" readonly>
+                                          <select id="importador" class="choices form-control" name="importador">
+                                            <option value="" disabled selected>Seleccione una Pais</option>
+                                            <?php foreach ($pais as $paises) : ?>
+                                                <option value="<?php echo $paises->Nombre_Pais; ?>" <?php echo (isset($importador) && $importador === $paises->Nombre_Pais) ? 'selected' : ''; ?>>
+                                                    <?php echo $paises->Nombre_Pais; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -175,8 +181,14 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="bodega">Bodega</label>
-                                        <input type="text" id="bodega" class="form-control"
-                                            placeholder="Bodega" name="bodega" value="<?php echo $informacionNota->Bodega; ?>" readonly>
+                                            <select id="bodega" class="choices form-control" name="bodega">
+                                            <option value="" disabled selected>Seleccione una Bodega</option>
+                                            <?php foreach ($bodega as $bodegas) : ?>
+                                                <option value="<?php echo $bodegas->Nombre_Bodega; ?>" <?php echo (isset($importador) && $importador === $bodegas->Nombre_Bodega) ? 'selected' : ''; ?>>
+                                                    <?php echo $bodegas->Nombre_Bodega; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
 
                                     </div>
                                 </div>
