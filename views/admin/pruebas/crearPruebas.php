@@ -341,6 +341,59 @@ $selIf    = function ($left, $right) {
 
                             </div>
                         </form>
+
+
+                        <!-- tabla -->
+
+
+                        <!-- Contenedor responsive -->
+                        <div class="table-responsive">
+                            <table class="table table-striped w-100" id="table1">
+                                <thead>
+                                    <tr>
+                                        <th class="fs-6" style="min-width: 90px;">ID</th>
+
+                                        <th class="fs-6" style="min-width: 90px;">Prenda</th>
+                                        <th class="fs-6" style="min-width: 90px;">Cantidad</th>
+                                        <th class="fs-6" style="min-width: 100px;">Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $idUrl = $id_nota ?? null; // id que llega 
+                                    foreach ($carritoTemporal2 as $contro):
+                                        // si el id de la URL no coincide con el id del registro, saltar
+                                        if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
+                                    ?>
+                                        <tr>
+                                            <td><?= $contro->id ?></td>
+                                            <td><?= $contro->prenda ?></td>
+                                            <td><?= $contro->cantidad ?></td>
+                                            <td>
+                                                <div class="d-flex gap-1">
+                                                    <form action="/admin/eliminarCarrito" method="POST">
+                                                        <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+                                                        <input type="hidden" name="id" value="<?= $contro->id ?>">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td><b>Total</b></td>
+                                        <td><?= array_sum(array_column($carritoTemporal2, 'cantidad'))  ?>(KG)</td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
 
@@ -387,54 +440,7 @@ $selIf    = function ($left, $right) {
 
         <div class="card-body">
 
-            <!-- Contenedor responsive -->
-            <div class="table-responsive">
-                <table class="table table-striped w-100" id="table1">
-                    <thead>
-                        <tr>
-                            <th class="fs-6" style="min-width: 90px;">ID</th>
 
-                            <th class="fs-6" style="min-width: 90px;">Prenda</th>
-                            <th class="fs-6" style="min-width: 90px;">Cantidad</th>
-                            <th class="fs-6" style="min-width: 100px;">Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php
-                        $idUrl = $id_nota ?? null; // id que llega 
-                        foreach ($carritoTemporal2 as $contro):
-                            // si el id de la URL no coincide con el id del registro, saltar
-                            if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
-                        ?>
-                            <tr>
-                                <td><?= $contro->id ?></td>
-                                <td><?= $contro->prenda ?></td>
-                                <td><?= $contro->cantidad ?></td>
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <form action="/admin/eliminarCarrito" method="POST">
-                                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
-                                            <input type="hidden" name="id" value="<?= $contro->id ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-
-                    <tfoot>
-                        <tr>
-                            <td colspan="3"></td>
-                            <td><b>Total</b></td>
-                            <td><?= array_sum(array_column($carritoTemporal2, 'cantidad'))  ?>(KG)</td>
-                            <td colspan="5"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            
             <form action="/admin/pruebas/registrarVenta" method="POST">
                 <!-- Fila 1 -->
                 <div class="row g-3">
