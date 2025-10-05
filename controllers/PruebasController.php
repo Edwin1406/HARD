@@ -107,8 +107,6 @@ class PruebasController
     //     ]);
     // }
 
-
-
     public static function crearPruebas(Router $router)
     {
         session_start();
@@ -124,14 +122,19 @@ class PruebasController
             exit;
         }
 
-        // Catálogos
+        // Detectar si el cliente quiere JSON (AJAX)
+        $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        $acceptsJson = isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
+        $wantsJson   = $isAjax || $acceptsJson;
+
+        // Catálogos (como los tenías)
         $tiendas = Tienda::all();
         $bodega  = Bodega::all();
         $ciudad  = Ciudad::all();
         $pais    = Pais::all();
         $marca   = Marca::all();
 
-        // Info de la nota
+        // Info de la nota (como lo tenías)
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
         $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido ?? date('Y-m-d');
 
@@ -139,35 +142,56 @@ class PruebasController
         $nombre = $_SESSION['nombre'];
         $email  = $_SESSION['email'];
 
-        // Auxiliares
-        // $carritoTemporal = Carrito::all();
+        // Datos existentes para pintar en la vista
         $carritoTemporal2 = Carrito2::all();
 
-        // debuguear($carritoTemporal);
         $carrito = new Carrito2;
         $alertas = [];
 
-        // 1) Recuperar “old” de sesión (flash) si vienes de un redirect
+        // Flash "old" si vienes de redirect
         $old = $_SESSION['old'] ?? [];
         if (isset($_SESSION['old'])) {
-            unset($_SESSION['old']); // flash: se usa una vez
+            unset($_SESSION['old']);
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 2) Guardar lo recibido como “old”
+            // Guardar "old" para el flujo con redirect
             $old = $_POST;
 
-            // Mapear POST al modelo
-            $carrito->Codigo_Nota_Pedido = $id_nota;
-            $carrito->prenda   = $_POST['prenda'] ?? '';
-            $carrito->cantidad = $_POST['cantidad'] ?? 0;
-            // Validación del modelo
+            // Mapear POST -> modelo (solo los campos pedidos)
+            $carrito->Codigo_Nota_Pedido = $id_nota;                         // fuerza por URL
+            $carrito->prenda             = $_POST['prenda']   ?? '';
+            $carrito->cantidad           = $_POST['cantidad'] ?? 0;
+
+            // Saneos mínimos
+            $carrito->prenda   = trim((string)$carrito->prenda);
+            $carrito->cantidad = is_numeric($carrito->cantidad) ? (float)$carrito->cantidad : 0.0;
+
+            // Validación del modelo (usa tu Carrito2::validar())
             $alertas = $carrito->validar();
 
             if (empty($alertas)) {
-                $resultado = $carrito->guardar();
-                if ($resultado) {
-                    // 3) Guardar “old” en sesión antes del redirect
+                $ok = $carrito->guardar();
+
+                if ($ok) {
+                    // Rama AJAX/JSON: devolver JSON y NO redirigir
+                    if ($wantsJson) {
+                        header('Content-Type: application/json');
+                        echo json_encode([
+                            'ok'  => true,
+                            'id'  => $carrito->id ?? null,
+                            'row' => [
+                                'id'                  => $carrito->id ?? null,
+                                // nombres que usa el frontend en Handsontable
+                                'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
+                                'prenda'              => $carrito->prenda,
+                                'cantidad'            => (float)$carrito->cantidad,
+                            ],
+                        ], JSON_UNESCAPED_UNICODE);
+                        exit;
+                    }
+
+                    // Rama FORM tradicional: redirect como siempre
                     $_SESSION['old'] = $old;
                     header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
                     exit;
@@ -175,27 +199,39 @@ class PruebasController
                     $alertas['error'][] = 'Error al guardar el registro';
                 }
             }
-            // Si hay errores, seguimos al render con $old ya cargado
+
+            // Si viene por AJAX y hay errores -> 422 con JSON
+            if ($wantsJson) {
+                http_response_code(422);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'ok'     => false,
+                    'errors' => $alertas,
+                ], JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+            // Si es FORM y hay errores: continuar al render mostrando alertas
         }
 
         // Renderizar la vista
         $router->render('admin/pruebas/crearPruebas', [
-            'titulo'          => 'Crear Pruebas',
-            'alertas'         => $alertas,
-            'nombre'          => $nombre,
-            'email'           => $email,
-            'carritoTemporal2' => $carritoTemporal2,
-            'id_nota'         => $id_nota,
-            'informacionNota' => $informacionNota,
-            'fecha'           => $fecha,
-            'tiendas'         => $tiendas,
-            'bodega'          => $bodega,
-            'ciudad'          => $ciudad,
-            'pais'            => $pais,
-            'marca'           => $marca,
-            'old'             => $old,
+            'titulo'            => 'Crear Pruebas',
+            'alertas'           => $alertas,
+            'nombre'            => $nombre,
+            'email'             => $email,
+            'carritoTemporal2'  => $carritoTemporal2,
+            'id_nota'           => $id_nota,
+            'informacionNota'   => $informacionNota,
+            'fecha'             => $fecha,
+            'tiendas'           => $tiendas,
+            'bodega'            => $bodega,
+            'ciudad'            => $ciudad,
+            'pais'              => $pais,
+            'marca'             => $marca,
+            'old'               => $old,
         ]);
     }
+
 
     public static function eliminarCarrito()
     {
