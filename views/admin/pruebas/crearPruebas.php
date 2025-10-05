@@ -289,15 +289,14 @@ $selIf    = function ($left, $right) {
 </section>
 
 
-<!-- Handsontable -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
-<script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
-
+<!-- (mismo CDN y estilos que ya tienes) -->
 <style>
   #hot-min { width:100%; height:420px; border:1px solid #cbd5e1; background:#fff; }
   .toolbar { display:flex; gap:12px; align-items:center; margin:12px 0; }
   .btn-lite { padding:8px 10px; border:1px solid #cbd5e1; background:#fff; border-radius:8px; cursor:pointer; }
   .hint { font-size:13px; color:#475569; }
+  .btn-del { padding:2px 8px; border:1px solid #ef4444; color:#ef4444; background:#fff; border-radius:6px; cursor:pointer; }
+  .btn-del:hover { background:#fee2e2; }
 </style>
 
 <div class="table-responsive">
@@ -310,10 +309,8 @@ $selIf    = function ($left, $right) {
 </div>
 
 <script>
-  // ---- Puentes PHP ----
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  // Filtramos lo existente para esta nota y lo cargamos al grid
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
@@ -331,32 +328,33 @@ $selIf    = function ($left, $right) {
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
-  // ---- Handsontable ----
   const cont = document.getElementById('hot-min');
   const hot = new Handsontable(cont, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad'],
+    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad', 'Acciones'],
     columns: [
-      { data:'id', readOnly:true }, // si existe, no se re-postea
-      // muestra id_nota aunque el valor en la fila sea null
+      { data:'id', readOnly:true },
       { data:'codigo_nota_pedido', readOnly:true, renderer: (inst, td, row, col, prop, val) => {
           td.textContent = val ?? (ID_NOTA ?? '');
         }
       },
       { data:'prenda' },
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+      // Columna de botones (no forma parte del dataset, render-only)
+      { readOnly:true, renderer: (inst, td, row) => {
+          td.innerHTML = `<button class="btn-del" data-row="${row}">Eliminar</button>`;
+        }
+      },
     ],
     rowHeaders: true,
     stretchH: 'all',
     height: 420,
     licenseKey: 'non-commercial-and-evaluation',
-    // Que se “sienta” Excel
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
-    // UX para pegar/cargar más
     minSpareRows: 1,
     afterChange(changes, source) {
       if (!changes || source === 'loadData') return;
@@ -379,7 +377,6 @@ $selIf    = function ($left, $right) {
     }
   }
 
-  // ---- Guardado por fila (usa tu mismo controlador crearPruebas) ----
   async function postFila(row){
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
@@ -390,24 +387,19 @@ $selIf    = function ($left, $right) {
       method: 'POST',
       body: fd,
       headers: {
-        'X-Requested-With': 'XMLHttpRequest', // activa rama JSON en el controlador
+        'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json'
-      },
-      // credentials: 'include' // descomenta si tu sesión lo requiere
+      }
     });
 
-    // Si tu controlador devuelve JSON cuando es AJAX (sugerido), marcamos el id
     try {
       const json = await resp.json();
-      if (json && json.ok && json.id) {
-        row.id = json.id; // ya no se re-postea
-        row.codigo_nota_pedido = ID_NOTA; // por si estaba vacío al pegar
+      if (json?.ok && json.id) {
+        row.id = json.id;
+        row.codigo_nota_pedido = ID_NOTA;
         hot.render();
       }
-    } catch (e) {
-      // Si el controlador hace redirect (HTML) en vez de JSON, puedes recargar:
-      // location.reload();
-    }
+    } catch(e) {/* si no devuelve JSON, ignora o recarga */}
   }
 
   async function guardarNuevasFilas(){
@@ -415,7 +407,7 @@ $selIf    = function ($left, $right) {
     const data = hot.getSourceData();
     const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
     for (const r of nuevas) {
-      await postFila(r); // una por una (compat con tu acción actual)
+      await postFila(r);
     }
   }
 
@@ -427,11 +419,51 @@ $selIf    = function ($left, $right) {
   function maybeAutosave(){
     if (document.getElementById('autosave').checked) guardarNuevasFilas();
   }
+
+  // === ELIMINAR: delegación de eventos sobre el contenedor del grid ===
+  cont.addEventListener('click', async (ev) => {
+    const btn = ev.target.closest('.btn-del');
+    if (!btn) return;
+
+    const rowIndex = parseInt(btn.dataset.row, 10);
+    const rowData = hot.getSourceDataAtRow(rowIndex);
+
+    // Si aún no está guardada (no tiene id), simplemente quitarla localmente
+    if (!rowData?.id) {
+      hot.alter('remove_row', rowIndex, 1);
+      return;
+    }
+
+    // Confirmación y POST AJAX al backend
+    if (!confirm('¿Eliminar este registro definitivamente?')) return;
+
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+    fd.append('id', rowData.id);
+
+    const resp = await fetch('/admin/eliminarCarrito', {
+      method: 'POST',
+      body: fd,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json'
+      }
+    });
+
+    try {
+      const json = await resp.json();
+      if (json?.ok) {
+        hot.alter('remove_row', rowIndex, 1);
+      } else {
+        alert('No se pudo eliminar (revisa permisos o id).');
+      }
+    } catch(e) {
+      // Si tu controlador devuelve redirect/HTML en vez de JSON
+      // descomenta si prefieres refrescar:
+      // location.reload();
+    }
+  });
 </script>
-
-
-
-
 
 
 

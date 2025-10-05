@@ -233,34 +233,94 @@ class PruebasController
     }
 
 
+
     public static function eliminarCarrito()
-    {
-        session_start();
-        if (!isset($_SESSION['email'])) {
-            header('Location: /');
-        }
+{
+    session_start();
+    if (!isset($_SESSION['email'])) {
+        header('Location: /');
+        exit;
+    }
 
+    $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
 
-        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+    // Detección de AJAX/JSON
+    $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    $acceptsJson = isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
+    $wantsJson   = $isAjax || $acceptsJson;
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            $carrito = Carrito::find($id);
+        // Usa Carrito2 si es el modelo que corresponde a la tabla pintada
+        $carrito = $id ? Carrito2::find($id) : null;
 
-            if ($carrito) {
-                $carrito->eliminar();
-                // header('Location: /admin/pruebas/crearPruebas?exito=1');
-                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
-                exit;
-            } else {
-                // Manejar el caso en que no se encuentra el registro
-                // header('Location: /admin/pruebas/crearPruebas?error=1');
-                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+        if ($carrito) {
+            $carrito->eliminar();
+
+            if ($wantsJson) {
+                header('Content-Type: application/json');
+                echo json_encode(['ok' => true], JSON_UNESCAPED_UNICODE);
                 exit;
             }
+
+            header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
+            exit;
+        } else {
+            if ($wantsJson) {
+                http_response_code(404);
+                header('Content-Type: application/json');
+                echo json_encode(['ok' => false, 'error' => 'Registro no encontrado'], JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+
+            header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+            exit;
         }
     }
+
+    // Si no es POST:
+    if ($wantsJson) {
+        http_response_code(405);
+        header('Content-Type: application/json');
+        echo json_encode(['ok' => false, 'error' => 'Method not allowed'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+    exit;
+}
+
+
+
+    // public static function eliminarCarrito()
+    // {
+    //     session_start();
+    //     if (!isset($_SESSION['email'])) {
+    //         header('Location: /');
+    //     }
+
+
+    //     $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $id = $_POST['id'];
+    //         $carrito = Carrito::find($id);
+
+    //         if ($carrito) {
+    //             $carrito->eliminar();
+    //             // header('Location: /admin/pruebas/crearPruebas?exito=1');
+    //             header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
+    //             exit;
+    //         } else {
+    //             // Manejar el caso en que no se encuentra el registro
+    //             // header('Location: /admin/pruebas/crearPruebas?error=1');
+    //             header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+    //             exit;
+    //         }
+    //     }
+    // }
 
 
     // public static function registrarVenta()
