@@ -289,35 +289,31 @@ $selIf    = function ($left, $right) {
 </section>
 
 
-<!-- CDN Handsontable -->
+<!-- Handsontable -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  #hot-prendas{width:100%;height:420px;border:1px solid #cbd5e1;background:#fff}
-  .toolbar{display:flex;gap:8px;align-items:center;margin:12px 0}
-  .btn-lite{padding:8px 10px;border:1px solid #cbd5e1;background:#fff;border-radius:8px;cursor:pointer}
-  .hint{font-size:13px;color:#475569}
+  #hot-min { width:100%; height:420px; border:1px solid #cbd5e1; background:#fff; }
+  .toolbar { display:flex; gap:12px; align-items:center; margin:12px 0; }
+  .btn-lite { padding:8px 10px; border:1px solid #cbd5e1; background:#fff; border-radius:8px; cursor:pointer; }
+  .hint { font-size:13px; color:#475569; }
 </style>
 
-<!-- Contenedor responsive -->
 <div class="table-responsive">
   <div class="toolbar">
     <button id="guardar-nuevas" class="btn-lite">Guardar NUEVAS filas</button>
-    <label class="hint"><input type="checkbox" id="autosave" checked> Auto-guardar al pegar</label>
-    <span class="hint">Pega desde Excel: coloca el cursor en A1 y Ctrl/⌘+V</span>
+    <label class="hint"><input type="checkbox" id="autosave" checked> Autosave tras pegar/editar</label>
+    <span class="hint">Pega desde Excel: selecciona A1 y Ctrl/⌘+V</span>
   </div>
-  <div id="hot-prendas"></div>
-  <div class="mt-2">
-    <b>Total KG:</b> <span id="total-kg">0.000</span>
-  </div>
+  <div id="hot-min"></div>
 </div>
 
 <script>
-  // === Config/puentes PHP ===
+  // ---- Puentes PHP ----
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  // Lo que ya existe en BD (mostrado en el grid, no se vuelve a postear)
+  // Filtramos lo existente para esta nota y lo cargamos al grid
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
@@ -326,7 +322,7 @@ $selIf    = function ($left, $right) {
         if ($idUrl != $r->Codigo_Nota_Pedido) continue;
         $out[] = [
           'id'                 => (int)$r->id,
-          'Codigo_Nota_Pedido' => $r->Codigo_Nota_Pedido,
+          'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
           'prenda'             => $r->prenda,
           'cantidad'           => (float)$r->cantidad,
         ];
@@ -335,42 +331,41 @@ $selIf    = function ($left, $right) {
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
-  // === Grid ===
-  const cont = document.getElementById('hot-prendas');
+  // ---- Handsontable ----
+  const cont = document.getElementById('hot-min');
   const hot = new Handsontable(cont, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['ID','Código Nota Pedido','Prenda','Cantidad (KG)'],
+    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad'],
     columns: [
-      { data:'id', readOnly:true }, // si existe, viene de BD
-      { data:'Codigo_Nota_Pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
+      { data:'id', readOnly:true }, // si existe, no se re-postea
+      // muestra id_nota aunque el valor en la fila sea null
+      { data:'codigo_nota_pedido', readOnly:true, renderer: (inst, td, row, col, prop, val) => {
           td.textContent = val ?? (ID_NOTA ?? '');
         }
       },
       { data:'prenda' },
-      { data:'cantidad', type:'numeric', numericFormat:{pattern:'0.[000]'} },
+      { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
     ],
-    rowHeaders:true,
-    stretchH:'all',
-    height:420,
-    licenseKey:'non-commercial-and-evaluation',
-    contextMenu:true,
-    dropdownMenu:true,
-    filters:true,
-    manualColumnResize:true,
-    manualRowResize:true,
-    minSpareRows: 1, // fila vacía para pegar/cargar nuevas
-    afterLoadData(){ actualizarTotal(); },
-    afterChange(changes, source){
-      if (!changes || source==='loadData') return;
+    rowHeaders: true,
+    stretchH: 'all',
+    height: 420,
+    licenseKey: 'non-commercial-and-evaluation',
+    // Que se “sienta” Excel
+    filters: true,
+    dropdownMenu: true,
+    columnSorting: true,
+    manualColumnResize: true,
+    manualRowResize: true,
+    // UX para pegar/cargar más
+    minSpareRows: 1,
+    afterChange(changes, source) {
+      if (!changes || source === 'loadData') return;
       normalizar();
-      actualizarTotal();
+      maybeAutosave();
     },
-    afterPaste(){
+    afterPaste() {
       normalizar();
-      actualizarTotal();
-      if (document.getElementById('autosave').checked) {
-        guardarNuevasFilas();
-      }
+      maybeAutosave();
     }
   });
 
@@ -378,48 +373,39 @@ $selIf    = function ($left, $right) {
     const data = hot.getSourceData();
     for (const r of data) {
       if (!r) continue;
-      if (!r.Codigo_Nota_Pedido && ID_NOTA) r.Codigo_Nota_Pedido = ID_NOTA;
-      r.cantidad = Number(r.cantidad) || 0;
+      if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
       if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
+      r.cantidad = Number(r.cantidad) || 0;
     }
   }
 
-  function actualizarTotal(){
-    const data = hot.getSourceData();
-    let sum = 0;
-    for (const r of data) {
-      if (!r) continue;
-      sum += Number(r.cantidad)||0;
-    }
-    document.getElementById('total-kg').textContent = sum.toFixed(3);
-  }
-
-  // === Guardar NUEVAS filas (sin ID) por AJAX a tu ruta actual ===
+  // ---- Guardado por fila (usa tu mismo controlador crearPruebas) ----
   async function postFila(row){
     const fd = new FormData();
-    fd.append('id_nota', ID_NOTA ?? row.Codigo_Nota_Pedido ?? '');
+    fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
     fd.append('prenda', row.prenda ?? '');
     fd.append('cantidad', row.cantidad ?? 0);
 
-    // TIP: si usas protección CSRF, agrega el token aquí:
-    // fd.append('csrf_token', '<?= $_SESSION['csrf_token'] ?? '' ?>');
-
     const resp = await fetch('/admin/pruebas/crearPruebas', {
-      method:'POST',
+      method: 'POST',
       body: fd,
-      headers: { 'X-Requested-With': 'XMLHttpRequest' } // para que el servidor pueda devolver JSON
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest', // activa rama JSON en el controlador
+        'Accept': 'application/json'
+      },
+      // credentials: 'include' // descomenta si tu sesión lo requiere
     });
 
-    let json = null;
-    try { json = await resp.json(); } catch(e){ /* quizá devolvió HTML por el redirect */ }
-
-    if (json && json.ok && json.id) {
-      // Pintamos el id recién creado (evita re-postear)
-      row.id = json.id;
-      hot.render();
-    } else {
-      // Si no hubo JSON (porque tu acción hace redirect), recargamos para “hidratar” los IDs
-      // Comentado por si prefieres evitar reload:
+    // Si tu controlador devuelve JSON cuando es AJAX (sugerido), marcamos el id
+    try {
+      const json = await resp.json();
+      if (json && json.ok && json.id) {
+        row.id = json.id; // ya no se re-postea
+        row.codigo_nota_pedido = ID_NOTA; // por si estaba vacío al pegar
+        hot.render();
+      }
+    } catch (e) {
+      // Si el controlador hace redirect (HTML) en vez de JSON, puedes recargar:
       // location.reload();
     }
   }
@@ -427,13 +413,9 @@ $selIf    = function ($left, $right) {
   async function guardarNuevasFilas(){
     normalizar();
     const data = hot.getSourceData();
-    // Nuevas = sin ID y con datos mínimos
     const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
-    if (!nuevas.length) return;
-
-    // Guardar una por una (como tu acción actual) evitando spam
     for (const r of nuevas) {
-      await postFila(r);
+      await postFila(r); // una por una (compat con tu acción actual)
     }
   }
 
@@ -441,6 +423,10 @@ $selIf    = function ($left, $right) {
     await guardarNuevasFilas();
     alert('Guardado completado.');
   });
+
+  function maybeAutosave(){
+    if (document.getElementById('autosave').checked) guardarNuevasFilas();
+  }
 </script>
 
 
