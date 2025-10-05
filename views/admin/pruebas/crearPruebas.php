@@ -334,21 +334,7 @@ $selIf    = function ($left, $right) {
                                             required>
                                     </div>
                                 </div>
-
-                                <!-- # Factura -->
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="Factura_Nota_Pedido"># Factura</label>
-                                        <input type="number"
-                                            id="Factura_Nota_Pedido"
-                                            class="form-control"
-                                            placeholder="# Factura"
-                                            name="Factura_Nota_Pedido"
-                                            step="0.01"
-                                            value="<?= $oldVal('Factura_Nota_Pedido') ?>">
-                                    </div>
-                                </div>
-
+                                
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="importador">Marca</label>
