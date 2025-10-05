@@ -334,19 +334,6 @@ $selIf    = function ($left, $right) {
                                             required>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="importador">Marca</label>
-                                        <select id="importador" class="choices form-control" name="importador">
-                                            <option value="Tienda 1">Tienda 1</option>
-                                            <option value="Tienda 2">Tienda 2</option>
-                                            <option value="Tienda 3">Tienda 3</option>
-                                            <option value="Tienda 4">Tienda 4</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
