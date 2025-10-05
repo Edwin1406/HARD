@@ -403,9 +403,9 @@ $selIf    = function ($left, $right) {
                     <tbody>
                         <?php
                         $idUrl = $id_nota ?? null; // id que llega 
-                        foreach ($carritoTemporal as $contro):
+                        foreach ($carritoTemporal2 as $contro):
                             // si el id de la URL no coincide con el id del registro, saltar
-                            if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
+                            if ($idUrl != 1047) continue;
                         ?>
                             <tr>
                                 <td><?= $contro->id ?></td>
@@ -428,13 +428,63 @@ $selIf    = function ($left, $right) {
                         <tr>
                             <td colspan="3"></td>
                             <td><b>Total</b></td>
-                            <td><?= array_sum(array_column($carritoTemporal, 'cantidad'))  ?>(KG)</td>
+                            <td><?= array_sum(array_column($carritoTemporal2, 'cantidad'))  ?>(KG)</td>
                             <td colspan="5"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
-          
+            <!-- <div class="table-responsive">
+                <table class="table table-striped w-100" id="table1">
+                    <thead>
+                        <tr>
+                            <th class="fs-6" style="min-width: 90px;">ID</th>
+                            <th class="fs-6" style="min-width: 90px;">Código Nota Pedido</th>
+                            <th class="fs-6" style="min-width: 90px;">Nombre Tienda</th>
+                            <th class="fs-6" style="min-width: 90px;">Fecha_Tienda_Nota_Pedido</th>
+                            <th class="fs-6" style="min-width: 90px;">Factura_Nota_Pedido</th>
+                            <th class="fs-6" style="min-width: 90px;">Total_Tienda_Nota_Pedido</th>
+                            <th class="fs-6" style="min-width: 100px;">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php
+                        $idUrl = $id_nota ?? null; // id que llega 
+                        foreach ($carritoTemporal as $contro):
+                            // si el id de la URL no coincide con el id del registro, saltar
+                            if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
+                        ?>
+                            <tr>
+                                <td><?= $contro->id ?></td>
+                                <td><?= $contro->Codigo_Nota_Pedido ?></td>
+                                <td><?= $contro->Nombre_Tienda ?></td>
+                                <td><?= $contro->Fecha_Tienda_Nota_Pedido ?></td>
+                                <td><?= $contro->Factura_Nota_Pedido ?></td>
+                                <td><?= $contro->Total_Tienda_Nota_Pedido ?></td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <form action="/admin/eliminarCarrito" method="POST">
+                                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+                                            <input type="hidden" name="id" value="<?= $contro->id ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td><b>Total</b></td>
+                            <td><?= array_sum(array_column($carritoTemporal, 'cantidad'))  ?>(KG)</td>
+                            <td colspan="5"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> -->
 
             <form action="/admin/pruebas/registrarVenta" method="POST">
                 <!-- Fila 1 -->

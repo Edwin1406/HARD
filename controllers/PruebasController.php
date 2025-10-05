@@ -141,7 +141,7 @@ class PruebasController
 
         // Auxiliares
         // $carritoTemporal = Carrito::all();
-        $carritoTemporal = Carrito2::all();
+        $carritoTemporal2 = Carrito2::all();
 
         // debuguear($carritoTemporal);
         $carrito = new Carrito2;
@@ -183,7 +183,7 @@ class PruebasController
             'alertas'         => $alertas,
             'nombre'          => $nombre,
             'email'           => $email,
-            'carritoTemporal' => $carritoTemporal,
+            'carritoTemporal2' => $carritoTemporal2,
             'id_nota'         => $id_nota,
             'informacionNota' => $informacionNota,
             'fecha'           => $fecha,
