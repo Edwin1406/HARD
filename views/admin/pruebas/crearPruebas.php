@@ -312,8 +312,8 @@ $selIf    = function ($left, $right) {
                                 <!-- Tienda -->
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="Nombre_Tienda">Tienda</label>
-                                        <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
+                                        <label for="tienda">Tienda</label>
+                                        <select id="tienda" class="choices form-control" name="tienda">
                                             <option value="Tienda 1">Tienda 1</option>
                                             <option value="Tienda 2">Tienda 2</option>
                                             <option value="Tienda 3">Tienda 3</option>
