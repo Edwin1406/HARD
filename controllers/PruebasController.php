@@ -140,7 +140,8 @@ class PruebasController
         $email  = $_SESSION['email'];
 
         // Auxiliares
-        $carritoTemporal = Carrito::all();
+        // $carritoTemporal = Carrito::all();
+        $carritoTemporal = Carrito2::all();
         $carrito = new Carrito2;
         $alertas = [];
 
