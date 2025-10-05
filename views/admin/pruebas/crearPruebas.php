@@ -312,11 +312,11 @@ $selIf    = function ($left, $right) {
                                 <!-- Tienda -->
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="tienda">Tienda</label>
-                                        <select id="tienda" class="choices form-control" name="tienda">
-                                            <option value="Tienda 1">Tienda 1</option>
-                                            <option value="Tienda 2">Tienda 2</option>
-                                            <option value="Tienda 3">Tienda 3</option>
+                                        <label for="prenda">Prenda</label>
+                                        <select id="prenda" class="choices form-control" name="prenda">
+                                            <option value="Prenda 1">Prenda 1</option>
+                                            <option value="Prenda 2">Prenda 2</option>
+                                            <option value="Prenda 3">Prenda 3</option>
                                         </select>
                                     </div>
                                 </div>
