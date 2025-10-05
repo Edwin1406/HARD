@@ -220,7 +220,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            
+
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
                                                                                     <label for="Forma_Pago_Nota_Pedido">Forma de pago</label>
@@ -235,6 +235,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+
                                                                             <div class="col-12">
                                                                                 <div class="form-group has-icon-left">
                                                                                     <label for="Moneda_Nota_Pedido">Moneda</label>
@@ -248,7 +249,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
 
                                                                         </div>
                                                                     </div>
@@ -332,14 +332,17 @@
 
 
 <script>
+    
     document.addEventListener("DOMContentLoaded", function() {
         const dataTable = new simpleDatatables.DataTable("#table1", {
             scrollX: true,
             columnDefs: [{
                     width: "110px",
                     targets: [6, 7, 8]
-                } // índices de columnas Hora Inicio, Hora Fin, Total Horas
+                } 
             ]
         });
     });
+
 </script>
+
