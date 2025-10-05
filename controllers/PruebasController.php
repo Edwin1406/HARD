@@ -142,6 +142,8 @@ class PruebasController
         // Auxiliares
         // $carritoTemporal = Carrito::all();
         $carritoTemporal = Carrito2::all();
+
+        debuguear($carritoTemporal);
         $carrito = new Carrito2;
         $alertas = [];
 
