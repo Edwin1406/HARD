@@ -405,7 +405,7 @@ $selIf    = function ($left, $right) {
                         $idUrl = $id_nota ?? null; // id que llega 
                         foreach ($carritoTemporal2 as $contro):
                             // si el id de la URL no coincide con el id del registro, saltar
-                            if ($idUrl != 1047) continue;
+                            if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
                         ?>
                             <tr>
                                 <td><?= $contro->id ?></td>

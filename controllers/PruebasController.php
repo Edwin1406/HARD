@@ -158,6 +158,7 @@ class PruebasController
             $old = $_POST;
 
             // Mapear POST al modelo
+            $carrito->Codigo_Nota_Pedido = $id_nota;
             $carrito->prenda   = $_POST['prenda'] ?? '';
             $carrito->cantidad = $_POST['cantidad'] ?? 0;
             // Validación del modelo
