@@ -289,119 +289,159 @@ $selIf    = function ($left, $right) {
 </section>
 
 
+<!-- CDN Handsontable -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
+<script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
-<section id="multiple-column-form">
-    <div class="row match-height">
-        <div class="col-12">
-            <div class="card">
+<style>
+  #hot-prendas{width:100%;height:420px;border:1px solid #cbd5e1;background:#fff}
+  .toolbar{display:flex;gap:8px;align-items:center;margin:12px 0}
+  .btn-lite{padding:8px 10px;border:1px solid #cbd5e1;background:#fff;border-radius:8px;cursor:pointer}
+  .hint{font-size:13px;color:#475569}
+</style>
 
-                <?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
+<!-- Contenedor responsive -->
+<div class="table-responsive">
+  <div class="toolbar">
+    <button id="guardar-nuevas" class="btn-lite">Guardar NUEVAS filas</button>
+    <label class="hint"><input type="checkbox" id="autosave" checked> Auto-guardar al pegar</label>
+    <span class="hint">Pega desde Excel: coloca el cursor en A1 y Ctrl/⌘+V</span>
+  </div>
+  <div id="hot-prendas"></div>
+  <div class="mt-2">
+    <b>Total KG:</b> <span id="total-kg">0.000</span>
+  </div>
+</div>
 
-                <div class="card-content">
-                    <div class="card-body">
-                        <form class="form"
-                            method="POST"
-                            action="/admin/pruebas/crearPruebas"
-                            enctype="multipart/form-data"
-                            onsubmit="return bloquearBoton(this)">
+<script>
+  // === Config/puentes PHP ===
+  const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+  // Lo que ya existe en BD (mostrado en el grid, no se vuelve a postear)
+  const existentes = <?php
+    $idUrl = $id_nota ?? null;
+    $out = [];
+    if (!empty($carritoTemporal2)) {
+      foreach ($carritoTemporal2 as $r) {
+        if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+        $out[] = [
+          'id'                 => (int)$r->id,
+          'Codigo_Nota_Pedido' => $r->Codigo_Nota_Pedido,
+          'prenda'             => $r->prenda,
+          'cantidad'           => (float)$r->cantidad,
+        ];
+      }
+    }
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+  ?>;
 
-                            <div class="row">
+  // === Grid ===
+  const cont = document.getElementById('hot-prendas');
+  const hot = new Handsontable(cont, {
+    data: existentes.length ? existentes : [],
+    colHeaders: ['ID','Código Nota Pedido','Prenda','Cantidad (KG)'],
+    columns: [
+      { data:'id', readOnly:true }, // si existe, viene de BD
+      { data:'Codigo_Nota_Pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
+          td.textContent = val ?? (ID_NOTA ?? '');
+        }
+      },
+      { data:'prenda' },
+      { data:'cantidad', type:'numeric', numericFormat:{pattern:'0.[000]'} },
+    ],
+    rowHeaders:true,
+    stretchH:'all',
+    height:420,
+    licenseKey:'non-commercial-and-evaluation',
+    contextMenu:true,
+    dropdownMenu:true,
+    filters:true,
+    manualColumnResize:true,
+    manualRowResize:true,
+    minSpareRows: 1, // fila vacía para pegar/cargar nuevas
+    afterLoadData(){ actualizarTotal(); },
+    afterChange(changes, source){
+      if (!changes || source==='loadData') return;
+      normalizar();
+      actualizarTotal();
+    },
+    afterPaste(){
+      normalizar();
+      actualizarTotal();
+      if (document.getElementById('autosave').checked) {
+        guardarNuevasFilas();
+      }
+    }
+  });
 
-                                <!-- Tienda -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="prenda">Prenda</label>
-                                        <select id="prenda" class="choices form-control" name="prenda">
-                                            <option value="Prenda 1">Prenda 1</option>
-                                            <option value="Prenda 2">Prenda 2</option>
-                                            <option value="Prenda 3">Prenda 3</option>
-                                        </select>
-                                    </div>
-                                </div>
+  function normalizar(){
+    const data = hot.getSourceData();
+    for (const r of data) {
+      if (!r) continue;
+      if (!r.Codigo_Nota_Pedido && ID_NOTA) r.Codigo_Nota_Pedido = ID_NOTA;
+      r.cantidad = Number(r.cantidad) || 0;
+      if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
+    }
+  }
 
-                                <!-- Cantidad -->
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="cantidad">cantidad</label>
-                                        <input
-                                            type="number"
-                                            id="cantidad"
-                                            class="form-control"
-                                            name="cantidad"
-                                            value="<?= $oldVal('cantidad', $cantidad) ?>"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                                </div>
+  function actualizarTotal(){
+    const data = hot.getSourceData();
+    let sum = 0;
+    for (const r of data) {
+      if (!r) continue;
+      sum += Number(r.cantidad)||0;
+    }
+    document.getElementById('total-kg').textContent = sum.toFixed(3);
+  }
 
-                            </div>
-                        </form>
+  // === Guardar NUEVAS filas (sin ID) por AJAX a tu ruta actual ===
+  async function postFila(row){
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? row.Codigo_Nota_Pedido ?? '');
+    fd.append('prenda', row.prenda ?? '');
+    fd.append('cantidad', row.cantidad ?? 0);
 
+    // TIP: si usas protección CSRF, agrega el token aquí:
+    // fd.append('csrf_token', '<?= $_SESSION['csrf_token'] ?? '' ?>');
 
-                        <!-- tabla -->
+    const resp = await fetch('/admin/pruebas/crearPruebas', {
+      method:'POST',
+      body: fd,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' } // para que el servidor pueda devolver JSON
+    });
 
+    let json = null;
+    try { json = await resp.json(); } catch(e){ /* quizá devolvió HTML por el redirect */ }
 
-                        <!-- Contenedor responsive -->
-                        <div class="table-responsive">
-                            <table class="table table-striped w-100" id="table1">
-                                <thead>
-                                    <tr>
-                                        <th class="fs-6" style="min-width: 90px;">ID</th>
+    if (json && json.ok && json.id) {
+      // Pintamos el id recién creado (evita re-postear)
+      row.id = json.id;
+      hot.render();
+    } else {
+      // Si no hubo JSON (porque tu acción hace redirect), recargamos para “hidratar” los IDs
+      // Comentado por si prefieres evitar reload:
+      // location.reload();
+    }
+  }
 
-                                        <th class="fs-6" style="min-width: 90px;">Prenda</th>
-                                        <th class="fs-6" style="min-width: 90px;">Cantidad</th>
-                                        <th class="fs-6" style="min-width: 100px;">Acciones</th>
-                                    </tr>
-                                </thead>
+  async function guardarNuevasFilas(){
+    normalizar();
+    const data = hot.getSourceData();
+    // Nuevas = sin ID y con datos mínimos
+    const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
+    if (!nuevas.length) return;
 
-                                <tbody>
-                                    <?php
-                                    $idUrl = $id_nota ?? null; // id que llega 
-                                    foreach ($carritoTemporal2 as $contro):
-                                        // si el id de la URL no coincide con el id del registro, saltar
-                                        if ($idUrl != $contro->Codigo_Nota_Pedido) continue;
-                                    ?>
-                                        <tr>
-                                            <td><?= $contro->id ?></td>
-                                            <td><?= $contro->prenda ?></td>
-                                            <td><?= $contro->cantidad ?></td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    <form action="/admin/eliminarCarrito" method="POST">
-                                                        <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
-                                                        <input type="hidden" name="id" value="<?= $contro->id ?>">
-                                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
+    // Guardar una por una (como tu acción actual) evitando spam
+    for (const r of nuevas) {
+      await postFila(r);
+    }
+  }
 
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3"></td>
-                                        <td><b>Total</b></td>
-                                        <td><?= array_sum(array_column($carritoTemporal2, 'cantidad'))  ?>(KG)</td>
-                                        <td colspan="5"></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
+  document.getElementById('guardar-nuevas').addEventListener('click', async ()=>{
+    await guardarNuevasFilas();
+    alert('Guardado completado.');
+  });
+</script>
 
 
 
