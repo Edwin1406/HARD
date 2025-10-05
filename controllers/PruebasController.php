@@ -17,7 +17,7 @@ use MVC\Router;
 class PruebasController
 {
 
-public static function crearPruebas(Router $router)
+    public static function crearPruebas(Router $router)
     {
         session_start();
         if (!isset($_SESSION['email'])) {
