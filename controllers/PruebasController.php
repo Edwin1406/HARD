@@ -199,7 +199,15 @@ class PruebasController
 
                     // Rama FORM tradicional: redirect como siempre
                     $_SESSION['old'] = $old;
+
                     header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
+                    
+                    // cargo de nuevo la página para evitar reenvío de formulario
+
+                    
+
+
+
                     exit;
                 } else {
                     $alertas['error'][] = 'Error al guardar el registro';
