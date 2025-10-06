@@ -287,13 +287,9 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </section>
-
-
-
-
-<!-- Bootstrap CSS (ACTIVADO) -->
+<!-- ====== Bootstrap 5 & Icons ====== -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- ====== Handsontable ====== -->
@@ -301,42 +297,13 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  /* Card + Toolbar */
   .hot-card{border:1px solid #e9ecef;box-shadow:0 6px 24px rgba(33,37,41,.06);border-radius:1rem;overflow:hidden}
   .hot-toolbar .btn{border-radius:.6rem}
+  #hot-min{height:clamp(360px,60vh,640px)}
+  .handsontable th,.handsontable td{font-size:.95rem}
+  .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
   .hot-badge{font-size:.7rem;letter-spacing:.02em}
   .text-mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-
-  /* Altura del grid (responsiva) */
-  #hot-min{height:clamp(300px,58vh,560px)}
-
-  /* Celdas más compactas */
-  .handsontable th, .handsontable td{font-size:.92rem; line-height:1.2}
-  .handsontable td, .handsontable th { padding:.35rem .5rem; }
-  .handsontable .ht_master .wtHider .wtHolder { overscroll-behavior: contain; }
-
-  /* Encabezados congelados con fondo suave */
-  .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
-
-  /* Columna de acciones: centrado perfecto */
-  .hot-actions{
-    display:flex; align-items:center; justify-content:center; gap:.25rem; min-width:70px;
-  }
-
-  /* Botón eliminar más “limpio” */
-  .btn-del{
-    --bs-btn-padding-y:.2rem; --bs-btn-padding-x:.45rem; --bs-btn-font-size:.9rem;
-    border-radius:999px;
-  }
-
-  /* Tuning para móvil */
-  @media (max-width: 576px){
-    .handsontable th, .handsontable td{font-size:.85rem}
-    #hot-min{height:clamp(260px,56vh,520px)}
-    .hot-toolbar .btn span.label{display:none} /* esconde texto largo del botón en xs */
-    .hot-toolbar .btn{padding:.375rem .5rem}
-    .btn-del{--bs-btn-font-size:.95rem}
-  }
 </style>
 
 <div class="container-xxl my-4">
@@ -355,12 +322,10 @@ $selIf    = function ($left, $right) {
             <input class="form-check-input" type="checkbox" id="autosave" checked> 
             <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
           </div>
-          <button id="guardar-nuevas" class="btn btn-primary d-inline-flex align-items-center gap-1">
-            <i class="bi bi-save"></i><span class="label">Guardar <span class="d-none d-sm-inline">NUEVAS filas</span></span>
+          <button id="guardar-nuevas" class="btn btn-primary">
+            <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
           </button>
-          <button id="recargar" class="btn btn-outline-secondary d-inline-flex align-items-center gap-1">
-            <i class="bi bi-arrow-repeat"></i><span class="label">Recargar</span>
-          </button>
+          <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
         </div>
       </div>
     </div>
@@ -384,9 +349,7 @@ $selIf    = function ($left, $right) {
       <div class="modal-body pt-0">¿Eliminar este registro definitivamente?</div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" id="btnConfirmDelete" class="btn btn-danger">
-          <i class="bi bi-trash me-1"></i> Eliminar
-        </button>
+        <button type="button" id="btnConfirmDelete" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Eliminar</button>
       </div>
     </div>
   </div>
@@ -447,11 +410,19 @@ $selIf    = function ($left, $right) {
 
   const hot = new Handsontable(container, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['id','codigo_nota_pedido','prenda','cantidad','precio_unitario','total','Acciones'],
+    colHeaders: [
+      'id',
+      'codigo_nota_pedido',
+      'prenda',
+      'cantidad',
+      'precio_unitario',
+      'total',
+      'Acciones'
+    ],
     columns: [
       { data:'id', readOnly:true },
 
-      // codigo_nota_pedido
+      // codigo_nota_pedido (renderer sin usar variable externa hot)
       { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
           td.textContent = val ?? (ID_NOTA ?? '');
         }
@@ -463,7 +434,7 @@ $selIf    = function ($left, $right) {
 
       { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
 
-      // total calculado
+      // total calculado (renderer usa inst)
       { data:'total', readOnly:true, renderer(inst, td, row){
           const r = inst.getSourceDataAtRow(row) || {};
           const cant = Number(r.cantidad) || 0;
@@ -475,26 +446,19 @@ $selIf    = function ($left, $right) {
         }
       },
 
-      // acciones
+      // acciones (renderer usa inst)
       { readOnly:true, renderer(inst, td, row){
           td.classList.add('text-center');
           td.innerHTML = `
-            <div class="hot-actions">
-              <button class="btn btn-outline-danger btn-sm btn-del btn-del--icon btn-del--adaptive" data-row="${row}" title="Eliminar">
-                <i class="bi bi-trash"></i>
-                <span class="d-none d-sm-inline ms-1">Eliminar</span>
-              </button>
-            </div>`;
+            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>`;
         }
       },
     ],
 
     rowHeaders: true,
     stretchH: 'all',
-
-    /* Tamaño de fila más bajo */
-    rowHeights: 34,
-
     height: container.clientHeight,
     licenseKey: 'non-commercial-and-evaluation',
 
@@ -502,7 +466,7 @@ $selIf    = function ($left, $right) {
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
-    manualRowResize: false,
+    manualRowResize: true,
 
     minSpareRows: 1,
     allowInsertColumn: false,
@@ -511,6 +475,7 @@ $selIf    = function ($left, $right) {
     afterChange(changes, source) {
       if (!changes || source === 'loadData') return;
 
+      // Recalcula y guarda cuando cambian cantidad, precio o prenda
       const rowsToUpdate = new Set();
       for (const [row, prop] of changes) {
         if (['cantidad','precio_unitario','prenda'].includes(prop)) {
@@ -540,7 +505,7 @@ $selIf    = function ($left, $right) {
     r.cantidad = Number(r.cantidad) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
     r.total = round(r.cantidad * r.precio_unitario);
-    hot.render();
+    hot.render(); // refresca la celda total
   }
 
   function filasNuevas(){
@@ -572,7 +537,7 @@ $selIf    = function ($left, $right) {
         row.codigo_nota_pedido = ID_NOTA;         // fija la nota
         return true;
       }
-    }catch(e){}
+    }catch(e){ /* backend podría redirigir; ignoramos aquí */ }
     return false;
   }
 
@@ -659,6 +624,7 @@ $selIf    = function ($left, $right) {
     finally { modalDelete.hide(); }
   });
 </script>
+
 
 
 
