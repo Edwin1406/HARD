@@ -311,7 +311,7 @@ public static function actualizarPruebas()
     $prenda    = trim($_POST['prenda'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-    $total     = (float)($_POST['total'] ?? ($cantidad * $precioU));
+    $total     = (float)($cantidad * $precioU);
 
     if (!$id) {
       header('Content-Type: application/json');
