@@ -287,7 +287,7 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </section>
-<!-- ====== Bootstrap 5 & Bootstrap Icons ====== -->
+<!-- ====== Bootstrap 5 & Icons ====== -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -297,20 +297,17 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  .hot-card { border:1px solid #e9ecef; box-shadow:0 6px 24px rgba(33,37,41,.06); border-radius:1rem; overflow:hidden; }
-  .hot-toolbar .btn { border-radius:.6rem; }
-  #hot-min { height: clamp(360px, 60vh, 640px); }
-  .handsontable th, .handsontable td { font-size:.95rem; }
-  .handsontable .ht_clone_top th, .handsontable .ht_clone_top td { background-color:#f8f9fa; }
-  .btn-del { white-space:nowrap; }
-  .hot-badge { font-size:.7rem; letter-spacing:.02em; }
-  .text-mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  .hot-card{border:1px solid #e9ecef;box-shadow:0 6px 24px rgba(33,37,41,.06);border-radius:1rem;overflow:hidden}
+  .hot-toolbar .btn{border-radius:.6rem}
+  #hot-min{height:clamp(360px,60vh,640px)}
+  .handsontable th,.handsontable td{font-size:.95rem}
+  .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
+  .hot-badge{font-size:.7rem;letter-spacing:.02em}
+  .text-mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 </style>
 
 <div class="container-xxl my-4">
   <div class="hot-card">
-
-    <!-- Header -->
     <div class="p-3 p-md-4 border-bottom bg-white">
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
         <div>
@@ -318,11 +315,8 @@ $selIf    = function ($left, $right) {
             Carrito de Pruebas
             <span class="badge text-bg-light hot-badge">Handsontable</span>
           </h5>
-          <div class="text-secondary small">
-            Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd>
-          </div>
+          <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
         </div>
-
         <div class="hot-toolbar d-flex align-items-center gap-2">
           <div class="form-check form-switch me-2">
             <input class="form-check-input" type="checkbox" id="autosave" checked>
@@ -331,39 +325,31 @@ $selIf    = function ($left, $right) {
           <button id="guardar-nuevas" class="btn btn-primary">
             <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
           </button>
-          <button id="recargar" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-repeat me-1"></i> Recargar
-          </button>
+          <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
         </div>
       </div>
     </div>
 
-    <!-- Tabla -->
     <div class="p-2 p-md-3 bg-light-subtle">
       <div class="table-responsive">
         <div id="hot-min" class="bg-white rounded-3"></div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- Modal de confirmación de borrado -->
+<!-- Modal eliminar -->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header border-0">
-        <h6 class="modal-title">
-          <i class="bi bi-exclamation-triangle text-danger me-2"></i> Confirmar eliminación
-        </h6>
+        <h6 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i> Confirmar eliminación</h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body pt-0">¿Eliminar este registro definitivamente?</div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" id="btnConfirmDelete" class="btn btn-danger">
-          <i class="bi bi-trash me-1"></i> Eliminar
-        </button>
+        <button type="button" id="btnConfirmDelete" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Eliminar</button>
       </div>
     </div>
   </div>
@@ -389,7 +375,6 @@ $selIf    = function ($left, $right) {
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  // Construimos array inicial desde PHP (agregamos precio_unitario y total si existen)
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
@@ -411,13 +396,14 @@ $selIf    = function ($left, $right) {
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
-  // ---------- Utils UI ----------
+  // Utils UI
   const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1800 });
   const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
-  const modalDeleteEl = document.getElementById('modalConfirmDelete');
-  const modalDelete = new bootstrap.Modal(modalDeleteEl);
-
+  const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
   let rowPendingDelete = null;
+
+  // Helpers
+  function round(n){ return Math.round((n + Number.EPSILON) * 100) / 100; }
 
   // ---------- Handsontable ----------
   const container = document.getElementById('hot-min');
@@ -435,24 +421,33 @@ $selIf    = function ($left, $right) {
     ],
     columns: [
       { data:'id', readOnly:true },
+
+      // codigo_nota_pedido (renderer sin usar variable externa hot)
       { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
           td.textContent = val ?? (ID_NOTA ?? '');
         }
       },
+
       { data:'prenda' },
+
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+
       { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
-      { data:'total', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
-          const r = hot.getSourceDataAtRow(row);
-          const cant = Number(r?.cantidad) || 0;
-          const pu   = Number(r?.precio_unitario) || 0;
-          const tot  = round2(cant * pu);
+
+      // total calculado (renderer usa inst)
+      { data:'total', readOnly:true, renderer(inst, td, row){
+          const r = inst.getSourceDataAtRow(row) || {};
+          const cant = Number(r.cantidad) || 0;
+          const pu   = Number(r.precio_unitario) || 0;
+          const tot  = round(cant * pu);
           r.total = tot;
           td.classList.add('text-end','text-mono');
           td.textContent = tot.toFixed(2);
         }
       },
-      { readOnly:true, renderer:(inst, td, row) => {
+
+      // acciones (renderer usa inst)
+      { readOnly:true, renderer(inst, td, row){
           td.classList.add('text-center');
           td.innerHTML = `
             <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
@@ -461,15 +456,18 @@ $selIf    = function ($left, $right) {
         }
       },
     ],
+
     rowHeaders: true,
     stretchH: 'all',
     height: container.clientHeight,
     licenseKey: 'non-commercial-and-evaluation',
+
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
+
     minSpareRows: 1,
     allowInsertColumn: false,
     allowRemoveColumn: false,
@@ -477,31 +475,28 @@ $selIf    = function ($left, $right) {
     afterChange(changes, source) {
       if (!changes || source === 'loadData') return;
 
-      // Si cambia cantidad o precio_unitario → recalcular total y guardar
+      // Recalcula y guarda cuando cambian cantidad, precio o prenda
       const rowsToUpdate = new Set();
-      for (const [row, prop, oldVal, newVal] of changes) {
-        if (['cantidad', 'precio_unitario', 'prenda'].includes(prop)) {
+      for (const [row, prop] of changes) {
+        if (['cantidad','precio_unitario','prenda'].includes(prop)) {
           recalcRow(row);
           rowsToUpdate.add(row);
         }
       }
-      if (rowsToUpdate.size > 0) {
-        maybeAutosave(Array.from(rowsToUpdate));
-      }
+      if (rowsToUpdate.size) maybeAutosave([...rowsToUpdate]);
     },
 
     afterPaste() {
       const len = hot.countRows();
-      for (let i = 0; i < len; i++) recalcRow(i);
+      for (let i=0;i<len;i++) recalcRow(i);
       maybeAutosave([...Array(len).keys()]);
     }
   });
 
+  // Ajuste de altura responsive
   window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
 
-  // ---------- Helpers de datos ----------
-  function round2(n){ return Math.round((n + Number.EPSILON) * 100) / 100; }
-
+  // --- Lógica de fila
   function recalcRow(rowIndex){
     const r = hot.getSourceDataAtRow(rowIndex);
     if (!r) return;
@@ -509,16 +504,15 @@ $selIf    = function ($left, $right) {
     if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
     r.cantidad = Number(r.cantidad) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
-    r.total = round2(r.cantidad * r.precio_unitario);
-    hot.render(); // actualiza celda total
+    r.total = round(r.cantidad * r.precio_unitario);
+    hot.render(); // refresca la celda total
   }
 
   function filasNuevas(){
-    const data = hot.getSourceData();
-    return data.filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+    return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
   }
 
-  // ---- Guardar/Actualizar por fila ----
+  // --- Guardar/actualizar
   async function saveOrUpdateFila(row){
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
@@ -528,37 +522,32 @@ $selIf    = function ($left, $right) {
     fd.append('precio_unitario', row.precio_unitario ?? 0);
     fd.append('total', row.total ?? 0);
 
-    // Si tiene id → actualizar; si no, crear
     const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
     const resp = await fetch(url, {
       method: 'POST',
       body: fd,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Accept': 'application/json'
-      }
+      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
     });
 
-    try {
+    try{
       const json = await resp.json();
       if (json?.ok) {
-        if (json.id) row.id = json.id;         // alta
-        row.codigo_nota_pedido = ID_NOTA;       // fija la nota
+        if (json.id) row.id = json.id;           // alta
+        row.codigo_nota_pedido = ID_NOTA;         // fija la nota
         return true;
       }
-    } catch(e) { /* si backend redirige, ignoramos aquí */ }
+    }catch(e){ /* backend podría redirigir; ignoramos aquí */ }
     return false;
   }
 
   async function guardarNuevasFilas(btn){
-    btn?.setAttribute('disabled', 'disabled');
-    btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
+    btn?.setAttribute('disabled','disabled');
+    btn?.insertAdjacentHTML('afterbegin','<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
 
     const nuevas = filasNuevas();
     let ok = true;
     for (const r of nuevas) {
-      recalcRow(hot.toPhysicalRow(hot.toVisualRow(hot.getData().indexOf(r))));
       const exito = await saveOrUpdateFila(r);
       if (!exito) ok = false;
     }
@@ -568,24 +557,21 @@ $selIf    = function ($left, $right) {
     ok ? toastOk.show() : toastErr.show();
   }
 
-  // Autosave selectivo: guarda solo filas cuyos índices pasamos
   async function maybeAutosave(rowIdxList){
     if (!document.getElementById('autosave').checked) return;
 
     let ok = true;
-    if (Array.isArray(rowIdxList) && rowIdxList.length) {
-      for (const idx of rowIdxList) {
+    if (Array.isArray(rowIdxList) && rowIdxList.length){
+      for (const idx of rowIdxList){
         const r = hot.getSourceDataAtRow(idx);
         if (!r) continue;
-        // Si la fila está vacía y sin id, salta
-        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
+        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue; // vacía
         const exito = await saveOrUpdateFila(r);
         if (!exito) ok = false;
       }
     } else {
-      // fallback: guarda nuevas
       const nuevas = filasNuevas();
-      for (const r of nuevas) {
+      for (const r of nuevas){
         const exito = await saveOrUpdateFila(r);
         if (!exito) ok = false;
       }
@@ -593,10 +579,11 @@ $selIf    = function ($left, $right) {
     ok ? toastOk.show() : toastErr.show();
   }
 
+  // Botones top
   document.getElementById('guardar-nuevas').addEventListener('click', (e)=> guardarNuevasFilas(e.currentTarget));
   document.getElementById('recargar').addEventListener('click', ()=> location.reload());
 
-  // ---- Eliminar (columna Acciones) ----
+  // Eliminar (con modal)
   container.addEventListener('click', (ev) => {
     const btn = ev.target.closest('.btn-del');
     if (!btn) return;
@@ -604,7 +591,7 @@ $selIf    = function ($left, $right) {
     const rowIndex = parseInt(btn.dataset.row, 10);
     const rowData  = hot.getSourceDataAtRow(rowIndex);
 
-    if (!rowData?.id) { // sin persistir: borra local
+    if (!rowData?.id) { // sin persistir → borra local
       hot.alter('remove_row', rowIndex, 1);
       return;
     }
@@ -612,7 +599,7 @@ $selIf    = function ($left, $right) {
     modalDelete.show();
   });
 
-  document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
+  document.getElementById('btnConfirmDelete').addEventListener('click', async ()=>{
     const info = rowPendingDelete;
     rowPendingDelete = null;
     if (!info) return;
@@ -623,19 +610,17 @@ $selIf    = function ($left, $right) {
     fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
     fd.append('id', rowData.id);
 
-    try {
+    try{
       const resp = await fetch('/admin/eliminarCarrito', {
         method: 'POST',
         body: fd,
         headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
       });
-
       let ok = false;
       try { const json = await resp.json(); ok = !!json?.ok; } catch {}
-
-      if (ok) { hot.alter('remove_row', rowIndex, 1); toastOk.show(); }
-      else    { toastErr.show(); }
-    } catch { toastErr.show(); }
+      if (ok){ hot.alter('remove_row', rowIndex, 1); toastOk.show(); }
+      else   { toastErr.show(); }
+    }catch{ toastErr.show(); }
     finally { modalDelete.hide(); }
   });
 </script>
