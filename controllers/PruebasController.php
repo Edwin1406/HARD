@@ -188,8 +188,8 @@ class PruebasController
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
                                 'prenda'              => $carrito->prenda,
                                 'cantidad'            => (float)$carrito->cantidad,
-                                'precio_unitario'     => (float)$carrito->precio_unitario,
-                                'total'               => (float)$carrito->total,
+                                // 'precio_unitario'     => (float)$carrito->precio_unitario,
+                                // 'total'               => (float)$carrito->total,
                             ],
                         ], JSON_UNESCAPED_UNICODE);
                         exit;
@@ -313,7 +313,9 @@ public static function actualizarPruebas()
     $prenda    = trim($_POST['prenda'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-    $total     = (float)($cantidad * $precioU);
+    $total     = (float)($_POST['total'] ?? 0);
+
+    // $total     = (float)($cantidad * $precioU);
 
     if (!$id) {
       header('Content-Type: application/json');
