@@ -233,60 +233,60 @@ class PruebasController
     }
 
 
-public static function eliminarCarrito()
-{
-    session_start();
-    if (!isset($_SESSION['email'])) {
-        header('Location: /');
-        exit;
-    }
-
-    $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
-
-    // AJAX/JSON
-    $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-    $acceptsJson = isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
-    $wantsJson   = $isAjax || $acceptsJson;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = $_POST['id'] ?? null;
-        $carrito = $id ? Carrito2::find($id) : null;
-
-        if ($carrito) {
-            $carrito->eliminar();
-
-            if ($wantsJson) {
-                header('Content-Type: application/json');
-                echo json_encode(['ok' => true], JSON_UNESCAPED_UNICODE);
-                exit;
-            }
-
-            header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
-            exit;
-        } else {
-            if ($wantsJson) {
-                http_response_code(404);
-                header('Content-Type: application/json');
-                echo json_encode(['ok' => false, 'error' => 'Registro no encontrado'], JSON_UNESCAPED_UNICODE);
-                exit;
-            }
-
-            header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+    public static function eliminarCarrito()
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
             exit;
         }
-    }
 
-    // No-POST
-    if ($wantsJson) {
-        http_response_code(405);
-        header('Content-Type: application/json');
-        echo json_encode(['ok' => false, 'error' => 'Method not allowed'], JSON_UNESCAPED_UNICODE);
+        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+
+        // AJAX/JSON
+        $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        $acceptsJson = isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
+        $wantsJson   = $isAjax || $acceptsJson;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            $carrito = $id ? Carrito2::find($id) : null;
+
+            if ($carrito) {
+                $carrito->eliminar();
+
+                if ($wantsJson) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['ok' => true], JSON_UNESCAPED_UNICODE);
+                    exit;
+                }
+
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
+                exit;
+            } else {
+                if ($wantsJson) {
+                    http_response_code(404);
+                    header('Content-Type: application/json');
+                    echo json_encode(['ok' => false, 'error' => 'Registro no encontrado'], JSON_UNESCAPED_UNICODE);
+                    exit;
+                }
+
+                header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
+                exit;
+            }
+        }
+
+        // No-POST
+        if ($wantsJson) {
+            http_response_code(405);
+            header('Content-Type: application/json');
+            echo json_encode(['ok' => false, 'error' => 'Method not allowed'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
         exit;
     }
-
-    header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
-    exit;
-}
 
 
 
