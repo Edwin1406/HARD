@@ -299,7 +299,7 @@ $selIf    = function ($left, $right) {
 <style>
   .hot-card{border:1px solid #e9ecef;box-shadow:0 6px 24px rgba(33,37,41,.06);border-radius:1rem;overflow:hidden}
   .hot-toolbar .btn{border-radius:.4rem}
-  #hot-min{height:clamp(360px,60vh,640px)}
+  /* #hot-min{height:clamp(360px,60vh,640px)} */
   .handsontable th,.handsontable td{font-size:.95rem}
   .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
   .hot-badge{font-size:.5rem;letter-spacing:.02em}
