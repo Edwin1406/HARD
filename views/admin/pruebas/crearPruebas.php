@@ -319,7 +319,7 @@ $selIf    = function ($left, $right) {
         </div>
         <div class="hot-toolbar d-flex align-items-center gap-2">
           <div class="form-check form-switch me-2">
-            <input class="form-check-input" type="checkbox" id="autosave" >
+            <input class="form-check-input" type="checkbox" id="autosave" checked> >
             <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
           </div>
           <button id="guardar-nuevas" class="btn btn-primary">
