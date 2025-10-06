@@ -287,9 +287,8 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </section>
-
 <!-- ====== Bootstrap 5 & Bootstrap Icons ====== -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -298,45 +297,14 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  /* Card + tabla */
-  .hot-card {
-    border: 1px solid #e9ecef;
-    box-shadow: 0 6px 24px rgba(33,37,41,.06);
-    border-radius: 1rem;
-    overflow: hidden;
-  }
-
-  .hot-toolbar .btn {
-    border-radius: .6rem;
-  }
-
-  /* Altura adaptable sin scroll doble */
-  #hot-min {
-    height: clamp(360px, 60vh, 640px);
-  }
-
-  /* Pulimos Handsontable para que combine con Bootstrap */
-  .handsontable th, .handsontable td {
-    font-size: .95rem;
-  }
-  .handsontable th .htFiltersMenuCondition {
-    font-size: .9rem;
-  }
-  .handsontable .ht_clone_top th,
-  .handsontable .ht_clone_top td {
-    background-color: #f8f9fa;
-  }
-
-  /* Botón de acciones en celda */
-  .btn-del {
-    white-space: nowrap;
-  }
-
-  /* Badges en cabeceras (opcional) */
-  .hot-badge {
-    font-size: .7rem;
-    letter-spacing: .02em;
-  }
+  .hot-card { border:1px solid #e9ecef; box-shadow:0 6px 24px rgba(33,37,41,.06); border-radius:1rem; overflow:hidden; }
+  .hot-toolbar .btn { border-radius:.6rem; }
+  #hot-min { height: clamp(360px, 60vh, 640px); }
+  .handsontable th, .handsontable td { font-size:.95rem; }
+  .handsontable .ht_clone_top th, .handsontable .ht_clone_top td { background-color:#f8f9fa; }
+  .btn-del { white-space:nowrap; }
+  .hot-badge { font-size:.7rem; letter-spacing:.02em; }
+  .text-mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 </style>
 
 <div class="container-xxl my-4">
@@ -357,14 +325,12 @@ $selIf    = function ($left, $right) {
 
         <div class="hot-toolbar d-flex align-items-center gap-2">
           <div class="form-check form-switch me-2">
-            <input class="form-check-input" type="checkbox" id="autosave" >
+            <input class="form-check-input" type="checkbox" id="autosave" checked>
             <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
           </div>
-
           <button id="guardar-nuevas" class="btn btn-primary">
             <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
           </button>
-
           <button id="recargar" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-repeat me-1"></i> Recargar
           </button>
@@ -392,9 +358,7 @@ $selIf    = function ($left, $right) {
         </h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body pt-0">
-        ¿Eliminar este registro definitivamente?
-      </div>
+      <div class="modal-body pt-0">¿Eliminar este registro definitivamente?</div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" id="btnConfirmDelete" class="btn btn-danger">
@@ -406,21 +370,16 @@ $selIf    = function ($left, $right) {
 </div>
 
 <!-- Toasts -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:1080">
   <div id="toastOk" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
-      <div class="toast-body">
-        <i class="bi bi-check-circle me-2"></i> Guardado completado.
-      </div>
+      <div class="toast-body"><i class="bi bi-check-circle me-2"></i> Operación realizada.</div>
       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
-
   <div id="toastErr" class="toast align-items-center text-bg-danger border-0 mt-2" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
-      <div class="toast-body">
-        <i class="bi bi-x-circle me-2"></i> No se pudo procesar la operación.
-      </div>
+      <div class="toast-body"><i class="bi bi-x-circle me-2"></i> No se pudo procesar.</div>
       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
@@ -430,30 +389,35 @@ $selIf    = function ($left, $right) {
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
+  // Construimos array inicial desde PHP (agregamos precio_unitario y total si existen)
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
     if (!empty($carritoTemporal2)) {
       foreach ($carritoTemporal2 as $r) {
         if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+        $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
+        $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
         $out[] = [
           'id'                 => (int)$r->id,
           'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
           'prenda'             => $r->prenda,
-          'cantidad'           => (float)$r->cantidad,
+          'cantidad'           => $cant,
+          'precio_unitario'    => $precio,
+          'total'              => round($cant * $precio, 2),
         ];
       }
     }
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
-  // ---------- Utils UI (toasts & modal) ----------
+  // ---------- Utils UI ----------
   const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1800 });
   const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
   const modalDeleteEl = document.getElementById('modalConfirmDelete');
   const modalDelete = new bootstrap.Modal(modalDeleteEl);
 
-  let rowPendingDelete = null; // índice de fila a borrar tras confirmar
+  let rowPendingDelete = null;
 
   // ---------- Handsontable ----------
   const container = document.getElementById('hot-min');
@@ -465,6 +429,8 @@ $selIf    = function ($left, $right) {
       'codigo_nota_pedido',
       'prenda',
       'cantidad',
+      'precio_unitario',
+      'total',
       'Acciones'
     ],
     columns: [
@@ -475,6 +441,17 @@ $selIf    = function ($left, $right) {
       },
       { data:'prenda' },
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+      { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
+      { data:'total', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
+          const r = hot.getSourceDataAtRow(row);
+          const cant = Number(r?.cantidad) || 0;
+          const pu   = Number(r?.precio_unitario) || 0;
+          const tot  = round2(cant * pu);
+          r.total = tot;
+          td.classList.add('text-end','text-mono');
+          td.textContent = tot.toFixed(2);
+        }
+      },
       { readOnly:true, renderer:(inst, td, row) => {
           td.classList.add('text-center');
           td.innerHTML = `
@@ -488,51 +465,73 @@ $selIf    = function ($left, $right) {
     stretchH: 'all',
     height: container.clientHeight,
     licenseKey: 'non-commercial-and-evaluation',
-
-    // UX tipo Excel
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
-
-    // UX de pegado/edición
     minSpareRows: 1,
     allowInsertColumn: false,
     allowRemoveColumn: false,
 
     afterChange(changes, source) {
       if (!changes || source === 'loadData') return;
-      normalizar();
-      maybeAutosave();
+
+      // Si cambia cantidad o precio_unitario → recalcular total y guardar
+      const rowsToUpdate = new Set();
+      for (const [row, prop, oldVal, newVal] of changes) {
+        if (['cantidad', 'precio_unitario', 'prenda'].includes(prop)) {
+          recalcRow(row);
+          rowsToUpdate.add(row);
+        }
+      }
+      if (rowsToUpdate.size > 0) {
+        maybeAutosave(Array.from(rowsToUpdate));
+      }
     },
+
     afterPaste() {
-      normalizar();
-      maybeAutosave();
+      const len = hot.countRows();
+      for (let i = 0; i < len; i++) recalcRow(i);
+      maybeAutosave([...Array(len).keys()]);
     }
   });
 
-  // Recalcula alto si cambia el viewport
   window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
 
-  function normalizar(){
-    const data = hot.getSourceData();
-    for (const r of data) {
-      if (!r) continue;
-      if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-      if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-      r.cantidad = Number(r.cantidad) || 0;
-    }
+  // ---------- Helpers de datos ----------
+  function round2(n){ return Math.round((n + Number.EPSILON) * 100) / 100; }
+
+  function recalcRow(rowIndex){
+    const r = hot.getSourceDataAtRow(rowIndex);
+    if (!r) return;
+    if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
+    if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
+    r.cantidad = Number(r.cantidad) || 0;
+    r.precio_unitario = Number(r.precio_unitario) || 0;
+    r.total = round2(r.cantidad * r.precio_unitario);
+    hot.render(); // actualiza celda total
   }
 
-  // ---- Guardado por fila (usa tu endpoint actual /admin/pruebas/crearPruebas) ----
-  async function postFila(row){
+  function filasNuevas(){
+    const data = hot.getSourceData();
+    return data.filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+  }
+
+  // ---- Guardar/Actualizar por fila ----
+  async function saveOrUpdateFila(row){
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
+    if (row.id) fd.append('id', row.id);
     fd.append('prenda', row.prenda ?? '');
     fd.append('cantidad', row.cantidad ?? 0);
+    fd.append('precio_unitario', row.precio_unitario ?? 0);
+    fd.append('total', row.total ?? 0);
 
-    const resp = await fetch('/admin/pruebas/crearPruebas', {
+    // Si tiene id → actualizar; si no, crear
+    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
+
+    const resp = await fetch(url, {
       method: 'POST',
       body: fd,
       headers: {
@@ -543,15 +542,12 @@ $selIf    = function ($left, $right) {
 
     try {
       const json = await resp.json();
-      if (json?.ok && json.id) {
-        row.id = json.id;
-        row.codigo_nota_pedido = ID_NOTA;
-        hot.render();
+      if (json?.ok) {
+        if (json.id) row.id = json.id;         // alta
+        row.codigo_nota_pedido = ID_NOTA;       // fija la nota
         return true;
       }
-    } catch(e) {
-      /* Ignora si backend hace redirect */
-    }
+    } catch(e) { /* si backend redirige, ignoramos aquí */ }
     return false;
   }
 
@@ -559,28 +555,46 @@ $selIf    = function ($left, $right) {
     btn?.setAttribute('disabled', 'disabled');
     btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
 
-    normalizar();
-    const data = hot.getSourceData();
-    const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
-
+    const nuevas = filasNuevas();
     let ok = true;
     for (const r of nuevas) {
-      const exito = await postFila(r);
+      recalcRow(hot.toPhysicalRow(hot.toVisualRow(hot.getData().indexOf(r))));
+      const exito = await saveOrUpdateFila(r);
       if (!exito) ok = false;
     }
 
     btn?.removeAttribute('disabled');
     btn?.querySelector('.spinner-border')?.remove();
+    ok ? toastOk.show() : toastErr.show();
+  }
 
+  // Autosave selectivo: guarda solo filas cuyos índices pasamos
+  async function maybeAutosave(rowIdxList){
+    if (!document.getElementById('autosave').checked) return;
+
+    let ok = true;
+    if (Array.isArray(rowIdxList) && rowIdxList.length) {
+      for (const idx of rowIdxList) {
+        const r = hot.getSourceDataAtRow(idx);
+        if (!r) continue;
+        // Si la fila está vacía y sin id, salta
+        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    } else {
+      // fallback: guarda nuevas
+      const nuevas = filasNuevas();
+      for (const r of nuevas) {
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    }
     ok ? toastOk.show() : toastErr.show();
   }
 
   document.getElementById('guardar-nuevas').addEventListener('click', (e)=> guardarNuevasFilas(e.currentTarget));
   document.getElementById('recargar').addEventListener('click', ()=> location.reload());
-
-  function maybeAutosave(){
-    if (document.getElementById('autosave').checked) guardarNuevasFilas();
-  }
 
   // ---- Eliminar (columna Acciones) ----
   container.addEventListener('click', (ev) => {
@@ -590,8 +604,7 @@ $selIf    = function ($left, $right) {
     const rowIndex = parseInt(btn.dataset.row, 10);
     const rowData  = hot.getSourceDataAtRow(rowIndex);
 
-    // Si no tiene id -> borrar local sin modal
-    if (!rowData?.id) {
+    if (!rowData?.id) { // sin persistir: borra local
       hot.alter('remove_row', rowIndex, 1);
       return;
     }
@@ -599,7 +612,6 @@ $selIf    = function ($left, $right) {
     modalDelete.show();
   });
 
-  // Confirmar eliminación desde el modal
   document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
     const info = rowPendingDelete;
     rowPendingDelete = null;
@@ -615,35 +627,18 @@ $selIf    = function ($left, $right) {
       const resp = await fetch('/admin/eliminarCarrito', {
         method: 'POST',
         body: fd,
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Accept': 'application/json'
-        }
+        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
       });
 
       let ok = false;
-      try {
-        const json = await resp.json();
-        ok = !!json?.ok;
-      } catch { /* puede ser redirect/HTML */ }
+      try { const json = await resp.json(); ok = !!json?.ok; } catch {}
 
-      if (ok) {
-        hot.alter('remove_row', rowIndex, 1);
-        toastOk.show();
-      } else {
-        toastErr.show();
-      }
-    } catch {
-      toastErr.show();
-    } finally {
-      modalDelete.hide();
-    }
+      if (ok) { hot.alter('remove_row', rowIndex, 1); toastOk.show(); }
+      else    { toastErr.show(); }
+    } catch { toastErr.show(); }
+    finally { modalDelete.hide(); }
   });
 </script>
-
-
-
-
 
 
 
