@@ -288,25 +288,11 @@ $selIf    = function ($left, $right) {
     </div>
 </section>
 
-<!-- CDN Handsontable -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
-<script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Handsontable -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
   <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
-  <title>Nota / Carrito</title>
-</head>
-<body class="bg-light">
 
 <div class="container py-4">
   <div class="card shadow-sm">
@@ -510,8 +496,7 @@ $selIf    = function ($left, $right) {
     }
   });
 </script>
-</body>
-</html>
+
 
 
 
