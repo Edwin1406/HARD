@@ -162,6 +162,8 @@ class PruebasController
             $carrito->Codigo_Nota_Pedido = $id_nota;                         // fuerza por URL
             $carrito->prenda             = $_POST['prenda']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
+            $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
+            $carrito->total              = $_POST['total'] ?? 0;
 
             // Saneos mínimos
             $carrito->prenda   = trim((string)$carrito->prenda);
