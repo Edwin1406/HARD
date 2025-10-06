@@ -143,7 +143,7 @@ class PruebasController
         $email  = $_SESSION['email'];
 
         // Datos existentes para pintar en la vista
-        $carritoTemporal2 = Carrito2::all();
+        $carritoTemporal2 = Carrito2::all('DESC');
 
         $carrito = new Carrito2;
         $alertas = [];
