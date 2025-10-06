@@ -163,7 +163,9 @@ class PruebasController
             $carrito->prenda             = $_POST['prenda']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
-            $carrito->total              = $_POST['total'] ?? 0;
+            // $carrito->total              = $_POST['total'] ?? 0;
+            $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
+            
 
             // Saneos mínimos
             $carrito->prenda   = trim((string)$carrito->prenda);
@@ -189,7 +191,7 @@ class PruebasController
                                 'prenda'              => $carrito->prenda,
                                 'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
-                                'total'               => (float)$carrito->cantidad * (float)$carrito->precio_unitario,
+                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
                             ],
                         ], JSON_UNESCAPED_UNICODE);
                         exit;
