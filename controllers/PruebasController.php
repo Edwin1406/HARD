@@ -189,7 +189,7 @@ class PruebasController
                                 'prenda'              => $carrito->prenda,
                                 'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
-                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
+                                'total'               => (float)$carrito->cantidad * (float)$carrito->precio_unitario,
                             ],
                         ], JSON_UNESCAPED_UNICODE);
                         exit;
