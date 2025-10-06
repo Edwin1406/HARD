@@ -188,6 +188,8 @@ class PruebasController
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
                                 'prenda'              => $carrito->prenda,
                                 'cantidad'            => (float)$carrito->cantidad,
+                                'precio_unitario'     => (float)$carrito->precio_unitario,
+                                'total'               => (float)$carrito->total,
                             ],
                         ], JSON_UNESCAPED_UNICODE);
                         exit;
