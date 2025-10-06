@@ -148,7 +148,8 @@ $router->post('/admin/eliminarCarrito', [PruebasController::class, 'eliminarCarr
 $router->post('/admin/pruebas/registrarVenta', [PruebasController::class, 'registrarVenta']);
 
 
-
+// actualizar  
+$router->post('/admin/pruebas/actualizarPruebas', [PruebasController::class, 'actualizarPruebas']);
 
 
 

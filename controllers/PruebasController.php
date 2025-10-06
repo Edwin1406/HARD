@@ -291,6 +291,54 @@ class PruebasController
     }
 
 
+public static function actualizarPruebas()
+{
+    session_start();
+    if (!isset($_SESSION['email'])) {
+        header('Content-Type: application/json');
+        echo json_encode(['ok' => false, 'error' => 'no-auth']);
+        return;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Content-Type: application/json');
+        echo json_encode(['ok' => false, 'error' => 'bad-method']);
+        return;
+    }
+
+    $id        = $_POST['id'] ?? null;
+    $idNota    = $_POST['id_nota'] ?? null;
+    $prenda    = trim($_POST['prenda'] ?? '');
+    $cantidad  = (float)($_POST['cantidad'] ?? 0);
+    $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+    $total     = (float)($_POST['total'] ?? ($cantidad * $precioU));
+
+    if (!$id) {
+      header('Content-Type: application/json');
+      echo json_encode(['ok' => false, 'error' => 'missing-id']);
+      return;
+    }
+
+    $carrito = Carrito2::find($id);
+    if (!$carrito) {
+      header('Content-Type: application/json');
+      echo json_encode(['ok' => false, 'error' => 'not-found']);
+      return;
+    }
+
+    // Actualiza campos
+    $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
+    $carrito->prenda = $prenda;
+    $carrito->cantidad = $cantidad;
+    $carrito->precio_unitario = $precioU;
+    $carrito->total = $total;
+
+    $ok = $carrito->guardar(); // o ->actualizar()
+    header('Content-Type: application/json');
+    echo json_encode(['ok' => (bool)$ok]);
+}
+
+
 
 
 
