@@ -288,33 +288,148 @@ $selIf    = function ($left, $right) {
     </div>
 </section>
 
-<!-- CDN Handsontable -->
+<!-- ====== Bootstrap 5 & Bootstrap Icons ====== -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ====== Handsontable ====== -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  #hot-min { width:100%; height:420px; border:1px solid #cbd5e1; background:#fff; }
-  .toolbar { display:flex; gap:12px; align-items:center; margin:12px 0; }
-  .btn-lite { padding:8px 10px; border:1px solid #cbd5e1; background:#fff; border-radius:8px; cursor:pointer; }
-  .hint { font-size:13px; color:#475569; }
-  .btn-del { padding:2px 8px; border:1px solid #ef4444; color:#ef4444; background:#fff; border-radius:6px; cursor:pointer }
-  .btn-del:hover { background:#fee2e2 }
+  /* Card + tabla */
+  .hot-card {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 6px 24px rgba(33,37,41,.06);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .hot-toolbar .btn {
+    border-radius: .6rem;
+  }
+
+  /* Altura adaptable sin scroll doble */
+  #hot-min {
+    height: clamp(360px, 60vh, 640px);
+  }
+
+  /* Pulimos Handsontable para que combine con Bootstrap */
+  .handsontable th, .handsontable td {
+    font-size: .95rem;
+  }
+  .handsontable th .htFiltersMenuCondition {
+    font-size: .9rem;
+  }
+  .handsontable .ht_clone_top th,
+  .handsontable .ht_clone_top td {
+    background-color: #f8f9fa;
+  }
+
+  /* Botón de acciones en celda */
+  .btn-del {
+    white-space: nowrap;
+  }
+
+  /* Badges en cabeceras (opcional) */
+  .hot-badge {
+    font-size: .7rem;
+    letter-spacing: .02em;
+  }
 </style>
 
-<div class="table-responsive">
-  <div class="toolbar">
-    <button id="guardar-nuevas" class="btn-lite">Guardar NUEVAS filas</button>
-    <label class="hint"><input type="checkbox" id="autosave" checked> Autosave tras pegar/editar</label>
-    <span class="hint">Pega desde Excel: selecciona A1 y Ctrl/⌘+V</span>
+<div class="container-xxl my-4">
+  <div class="hot-card">
+
+    <!-- Header -->
+    <div class="p-3 p-md-4 border-bottom bg-white">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+          <h5 class="mb-1 d-flex align-items-center gap-2">
+            Carrito de Pruebas
+            <span class="badge text-bg-light hot-badge">Handsontable</span>
+          </h5>
+          <div class="text-secondary small">
+            Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd>
+          </div>
+        </div>
+
+        <div class="hot-toolbar d-flex align-items-center gap-2">
+          <div class="form-check form-switch me-2">
+            <input class="form-check-input" type="checkbox" id="autosave" checked>
+            <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
+          </div>
+
+          <button id="guardar-nuevas" class="btn btn-primary">
+            <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
+          </button>
+
+          <button id="recargar" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-repeat me-1"></i> Recargar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="p-2 p-md-3 bg-light-subtle">
+      <div class="table-responsive">
+        <div id="hot-min" class="bg-white rounded-3"></div>
+      </div>
+    </div>
+
   </div>
-  <div id="hot-min"></div>
+</div>
+
+<!-- Modal de confirmación de borrado -->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h6 class="modal-title">
+          <i class="bi bi-exclamation-triangle text-danger me-2"></i> Confirmar eliminación
+        </h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body pt-0">
+        ¿Eliminar este registro definitivamente?
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" id="btnConfirmDelete" class="btn btn-danger">
+          <i class="bi bi-trash me-1"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toasts -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+  <div id="toastOk" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="bi bi-check-circle me-2"></i> Guardado completado.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <div id="toastErr" class="toast align-items-center text-bg-danger border-0 mt-2" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="bi bi-x-circle me-2"></i> No se pudo procesar la operación.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
 </div>
 
 <script>
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  // Construimos el array de existentes para ESTA nota
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
@@ -332,11 +447,26 @@ $selIf    = function ($left, $right) {
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
+  // ---------- Utils UI (toasts & modal) ----------
+  const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1800 });
+  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
+  const modalDeleteEl = document.getElementById('modalConfirmDelete');
+  const modalDelete = new bootstrap.Modal(modalDeleteEl);
+
+  let rowPendingDelete = null; // índice de fila a borrar tras confirmar
+
   // ---------- Handsontable ----------
   const container = document.getElementById('hot-min');
+
   const hot = new Handsontable(container, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad', 'Acciones'], // + Acciones
+    colHeaders: [
+      'id',
+      'codigo_nota_pedido',
+      'prenda',
+      'cantidad',
+      'Acciones'
+    ],
     columns: [
       { data:'id', readOnly:true },
       { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
@@ -345,25 +475,28 @@ $selIf    = function ($left, $right) {
       },
       { data:'prenda' },
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
-      // Columna solo visual para el botón
       { readOnly:true, renderer:(inst, td, row) => {
-          td.innerHTML = `<button class="btn-del" data-row="${row}">Eliminar</button>`;
+          td.classList.add('text-center');
+          td.innerHTML = `
+            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>`;
         }
       },
     ],
     rowHeaders: true,
     stretchH: 'all',
-    height: 420,
+    height: container.clientHeight,
     licenseKey: 'non-commercial-and-evaluation',
 
-    // Look & feel tipo Excel
+    // UX tipo Excel
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
 
-    // UX de pegado
+    // UX de pegado/edición
     minSpareRows: 1,
     allowInsertColumn: false,
     allowRemoveColumn: false,
@@ -379,6 +512,9 @@ $selIf    = function ($left, $right) {
     }
   });
 
+  // Recalcula alto si cambia el viewport
+  window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
+
   function normalizar(){
     const data = hot.getSourceData();
     for (const r of data) {
@@ -389,7 +525,7 @@ $selIf    = function ($left, $right) {
     }
   }
 
-  // ---- Guardado por fila (usa tu ruta actual crearPruebas) ----
+  // ---- Guardado por fila (usa tu endpoint actual /admin/pruebas/crearPruebas) ----
   async function postFila(row){
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
@@ -400,67 +536,6 @@ $selIf    = function ($left, $right) {
       method: 'POST',
       body: fd,
       headers: {
-        'X-Requested-With': 'XMLHttpRequest', // activa rama JSON
-        'Accept': 'application/json'
-      }
-    });
-
-    // Si el controlador devuelve JSON con {ok,id}
-    try {
-      const json = await resp.json();
-      if (json?.ok && json.id) {
-        row.id = json.id; // marca la fila como persistida
-        row.codigo_nota_pedido = ID_NOTA;
-        hot.render();
-      }
-    } catch(e) {
-      // si devolvió HTML/redirect, podrías recargar:
-      // location.reload();
-    }
-  }
-
-  async function guardarNuevasFilas(){
-    normalizar();
-    const data = hot.getSourceData();
-    const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
-    for (const r of nuevas) {
-      await postFila(r);
-    }
-  }
-
-  document.getElementById('guardar-nuevas').addEventListener('click', async ()=>{
-    await guardarNuevasFilas();
-    alert('Guardado completado.');
-  });
-
-  function maybeAutosave(){
-    if (document.getElementById('autosave').checked) guardarNuevasFilas();
-  }
-
-  // ---- Eliminar (columna Acciones) ----
-  container.addEventListener('click', async (ev) => {
-    const btn = ev.target.closest('.btn-del');
-    if (!btn) return;
-
-    const rowIndex = parseInt(btn.dataset.row, 10);
-    const rowData  = hot.getSourceDataAtRow(rowIndex);
-
-    // Si aún no tiene id, solo quítala localmente
-    if (!rowData?.id) {
-      hot.alter('remove_row', rowIndex, 1);
-      return;
-    }
-
-    if (!confirm('¿Eliminar este registro definitivamente?')) return;
-
-    const fd = new FormData();
-    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-    fd.append('id', rowData.id);
-
-    const resp = await fetch('/admin/eliminarCarrito', {
-      method: 'POST',
-      body: fd,
-      headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json'
       }
@@ -468,19 +543,103 @@ $selIf    = function ($left, $right) {
 
     try {
       const json = await resp.json();
-      if (json?.ok) {
+      if (json?.ok && json.id) {
+        row.id = json.id;
+        row.codigo_nota_pedido = ID_NOTA;
+        hot.render();
+        return true;
+      }
+    } catch(e) {
+      /* Ignora si backend hace redirect */
+    }
+    return false;
+  }
+
+  async function guardarNuevasFilas(btn){
+    btn?.setAttribute('disabled', 'disabled');
+    btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
+
+    normalizar();
+    const data = hot.getSourceData();
+    const nuevas = data.filter(r => r && !r.id && (r.prenda || r.cantidad));
+
+    let ok = true;
+    for (const r of nuevas) {
+      const exito = await postFila(r);
+      if (!exito) ok = false;
+    }
+
+    btn?.removeAttribute('disabled');
+    btn?.querySelector('.spinner-border')?.remove();
+
+    ok ? toastOk.show() : toastErr.show();
+  }
+
+  document.getElementById('guardar-nuevas').addEventListener('click', (e)=> guardarNuevasFilas(e.currentTarget));
+  document.getElementById('recargar').addEventListener('click', ()=> location.reload());
+
+  function maybeAutosave(){
+    if (document.getElementById('autosave').checked) guardarNuevasFilas();
+  }
+
+  // ---- Eliminar (columna Acciones) ----
+  container.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.btn-del');
+    if (!btn) return;
+
+    const rowIndex = parseInt(btn.dataset.row, 10);
+    const rowData  = hot.getSourceDataAtRow(rowIndex);
+
+    // Si no tiene id -> borrar local sin modal
+    if (!rowData?.id) {
+      hot.alter('remove_row', rowIndex, 1);
+      return;
+    }
+    rowPendingDelete = { rowIndex, rowData };
+    modalDelete.show();
+  });
+
+  // Confirmar eliminación desde el modal
+  document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
+    const info = rowPendingDelete;
+    rowPendingDelete = null;
+    if (!info) return;
+
+    const { rowIndex, rowData } = info;
+
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+    fd.append('id', rowData.id);
+
+    try {
+      const resp = await fetch('/admin/eliminarCarrito', {
+        method: 'POST',
+        body: fd,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        }
+      });
+
+      let ok = false;
+      try {
+        const json = await resp.json();
+        ok = !!json?.ok;
+      } catch { /* puede ser redirect/HTML */ }
+
+      if (ok) {
         hot.alter('remove_row', rowIndex, 1);
+        toastOk.show();
       } else {
-        alert('No se pudo eliminar (revisa permisos o id).');
+        toastErr.show();
       }
     } catch {
-      // Si el backend respondió con redirect/HTML:
-      // location.reload();
+      toastErr.show();
+    } finally {
+      modalDelete.hide();
     }
   });
 </script>
-
-
 
 
 
