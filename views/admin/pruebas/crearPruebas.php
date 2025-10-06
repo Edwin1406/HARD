@@ -370,6 +370,7 @@ $selIf    = function ($left, $right) {
     </div>
   </div>
 </div>
+
 <script>
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
@@ -395,40 +396,45 @@ $selIf    = function ($left, $right) {
     echo json_encode($out, JSON_UNESCAPED_UNICODE);
   ?>;
 
-  // ---------- UI ----------
-  const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1500 });
-  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2200 });
+  // Utils UI
+  const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1800 });
+  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
   const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
   let rowPendingDelete = null;
 
-  // ---------- Helpers ----------
+  // Helpers
   function round(n){ return Math.round((n + Number.EPSILON) * 100) / 100; }
-  function nonEmptyRow(r){
-    return r && (r.id || r.prenda || Number(r.cantidad) || Number(r.precio_unitario));
-  }
-  function contentTypeIsJSON(resp){
-    const ct = resp.headers.get('content-type') || '';
-    return ct.includes('application/json');
-  }
-
-  // Evitar crear dos veces mientras está en vuelo
-  const posted = new WeakSet();
 
   // ---------- Handsontable ----------
   const container = document.getElementById('hot-min');
 
   const hot = new Handsontable(container, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['id','codigo_nota_pedido','prenda','cantidad','precio_unitario','total','Acciones'],
+    colHeaders: [
+      'id',
+      'codigo_nota_pedido',
+      'prenda',
+      'cantidad',
+      'precio_unitario',
+      'total',
+      'Acciones'
+    ],
     columns: [
       { data:'id', readOnly:true },
+
+      // codigo_nota_pedido (renderer sin usar variable externa hot)
       { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
           td.textContent = val ?? (ID_NOTA ?? '');
         }
       },
+
       { data:'prenda' },
+
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+
       { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
+
+      // total calculado (renderer usa inst)
       { data:'total', readOnly:true, renderer(inst, td, row){
           const r = inst.getSourceDataAtRow(row) || {};
           const cant = Number(r.cantidad) || 0;
@@ -439,6 +445,8 @@ $selIf    = function ($left, $right) {
           td.textContent = tot.toFixed(2);
         }
       },
+
+      // acciones (renderer usa inst)
       { readOnly:true, renderer(inst, td, row){
           td.classList.add('text-center');
           td.innerHTML = `
@@ -448,55 +456,47 @@ $selIf    = function ($left, $right) {
         }
       },
     ],
+
     rowHeaders: true,
     stretchH: 'all',
     height: container.clientHeight,
     licenseKey: 'non-commercial-and-evaluation',
+
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
+
     minSpareRows: 1,
     allowInsertColumn: false,
     allowRemoveColumn: false,
 
-    // IMPORTANTE: evitar doble guardado
     afterChange(changes, source) {
       if (!changes || source === 'loadData') return;
 
-      // Si vino por pegar o autofill, lo maneja afterPaste
-      if (source === 'CopyPaste.paste' || source === 'Autofill.fill') return;
-
-      const rows = new Set();
+      // Recalcula y guarda cuando cambian cantidad, precio o prenda
+      const rowsToUpdate = new Set();
       for (const [row, prop] of changes) {
         if (['cantidad','precio_unitario','prenda'].includes(prop)) {
           recalcRow(row);
-          rows.add(row);
+          rowsToUpdate.add(row);
         }
       }
-      if (rows.size) scheduleSave([...rows]);
+      if (rowsToUpdate.size) maybeAutosave([...rowsToUpdate]);
     },
 
-    // Guardado tras pegar (una sola vez)
     afterPaste() {
-      // Recalcula todo el rango pegado (o todas las filas no vacías si es más simple)
       const len = hot.countRows();
-      for (let i = 0; i < len; i++) recalcRow(i);
-
-      // Guarda solo filas “con contenido”
-      const targetRows = [];
-      for (let i = 0; i < len; i++) {
-        const r = hot.getSourceDataAtRow(i);
-        if (nonEmptyRow(r)) targetRows.push(i);
-      }
-      if (targetRows.length) scheduleSave(targetRows);
+      for (let i=0;i<len;i++) recalcRow(i);
+      maybeAutosave([...Array(len).keys()]);
     }
   });
 
+  // Ajuste de altura responsive
   window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
 
-  // --- Cálculo de fila
+  // --- Lógica de fila
   function recalcRow(rowIndex){
     const r = hot.getSourceDataAtRow(rowIndex);
     if (!r) return;
@@ -505,15 +505,15 @@ $selIf    = function ($left, $right) {
     r.cantidad = Number(r.cantidad) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
     r.total = round(r.cantidad * r.precio_unitario);
+    hot.render(); // refresca la celda total
   }
 
-  // --- Guardar / actualizar con antirrepetición
+  function filasNuevas(){
+    return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+  }
+
+  // --- Guardar/actualizar
   async function saveOrUpdateFila(row){
-    if (!row) return true;
-
-    // Si es nueva y ya la estamos posteando, evita duplicado
-    if (!row.id && posted.has(row)) return true;
-
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
     if (row.id) fd.append('id', row.id);
@@ -524,82 +524,66 @@ $selIf    = function ($left, $right) {
 
     const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
-    if (!row.id) posted.add(row); // marca “en vuelo” para no crear 2 veces
+    const resp = await fetch(url, {
+      method: 'POST',
+      body: fd,
+      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
+    });
 
-    try {
-      const resp = await fetch(url, {
-        method: 'POST',
-        body: fd,
-        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
-      });
-
-      if (!contentTypeIsJSON(resp)) {
-        // El backend no respondió JSON (posible redirect): no crear en bucle
-        posted.delete(row);
-        return false;
-      }
-
+    try{
       const json = await resp.json();
       if (json?.ok) {
-        if (json.id) row.id = json.id;   // alta correcta
-        row.codigo_nota_pedido = ID_NOTA;
-        posted.delete(row);
+        if (json.id) row.id = json.id;           // alta
+        row.codigo_nota_pedido = ID_NOTA;         // fija la nota
         return true;
       }
-    } catch (e) {
-      // network u otro fallo: soltamos el candado para reintentar manualmente
-      posted.delete(row);
-    }
+    }catch(e){ /* backend podría redirigir; ignoramos aquí */ }
     return false;
   }
 
-  // --- Cola con debounce para no martillar el backend
-  let saveQueue = new Set();
-  let saveTimer = null;
+  async function guardarNuevasFilas(btn){
+    btn?.setAttribute('disabled','disabled');
+    btn?.insertAdjacentHTML('afterbegin','<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
 
-  function scheduleSave(rowIdxList){
-    for (const r of rowIdxList) saveQueue.add(r);
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(runSaveQueue, 300); // junta cambios de 300ms
-  }
-
-  async function runSaveQueue(){
-    const rows = Array.from(saveQueue);
-    saveQueue.clear();
+    const nuevas = filasNuevas();
     let ok = true;
-
-    for (const idx of rows){
-      const row = hot.getSourceDataAtRow(idx);
-      if (!nonEmptyRow(row)) continue;
-      // Crear si no tiene id, actualizar si tiene id
-      const exito = await saveOrUpdateFila(row);
-      if (!exito) ok = false;
-    }
-    ok ? toastOk.show() : toastErr.show();
-  }
-
-  // ---- Botones top
-  document.getElementById('guardar-nuevas').addEventListener('click', async (e)=>{
-    const btn = e.currentTarget;
-    btn.setAttribute('disabled','disabled');
-    btn.insertAdjacentHTML('afterbegin','<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
-
-    // Sólo filas nuevas con contenido
-    const nuevas = hot.getSourceData().filter(r => r && !r.id && (r.prenda || Number(r.cantidad) || Number(r.precio_unitario)));
-    let ok = true;
-    for (const r of nuevas){
+    for (const r of nuevas) {
       const exito = await saveOrUpdateFila(r);
       if (!exito) ok = false;
     }
 
-    btn.removeAttribute('disabled');
-    btn.querySelector('.spinner-border')?.remove();
+    btn?.removeAttribute('disabled');
+    btn?.querySelector('.spinner-border')?.remove();
     ok ? toastOk.show() : toastErr.show();
-  });
+  }
 
+  async function maybeAutosave(rowIdxList){
+    if (!document.getElementById('autosave').checked) return;
+
+    let ok = true;
+    if (Array.isArray(rowIdxList) && rowIdxList.length){
+      for (const idx of rowIdxList){
+        const r = hot.getSourceDataAtRow(idx);
+        if (!r) continue;
+        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue; // vacía
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    } else {
+      const nuevas = filasNuevas();
+      for (const r of nuevas){
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    }
+    ok ? toastOk.show() : toastErr.show();
+  }
+
+  // Botones top
+  document.getElementById('guardar-nuevas').addEventListener('click', (e)=> guardarNuevasFilas(e.currentTarget));
   document.getElementById('recargar').addEventListener('click', ()=> location.reload());
 
-  // ---- Eliminar (modal)
+  // Eliminar (con modal)
   container.addEventListener('click', (ev) => {
     const btn = ev.target.closest('.btn-del');
     if (!btn) return;
@@ -607,7 +591,7 @@ $selIf    = function ($left, $right) {
     const rowIndex = parseInt(btn.dataset.row, 10);
     const rowData  = hot.getSourceDataAtRow(rowIndex);
 
-    if (!rowData?.id) { // local
+    if (!rowData?.id) { // sin persistir → borra local
       hot.alter('remove_row', rowIndex, 1);
       return;
     }
@@ -621,6 +605,7 @@ $selIf    = function ($left, $right) {
     if (!info) return;
 
     const { rowIndex, rowData } = info;
+
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
     fd.append('id', rowData.id);
