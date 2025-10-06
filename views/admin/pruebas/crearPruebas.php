@@ -288,49 +288,33 @@ $selIf    = function ($left, $right) {
     </div>
 </section>
 
+<!-- CDN Handsontable -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
+<script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
-  <!-- Handsontable -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
+<style>
+  #hot-min { width:100%; height:420px; border:1px solid #cbd5e1; background:#fff; }
+  .toolbar { display:flex; gap:12px; align-items:center; margin:12px 0; }
+  .btn-lite { padding:8px 10px; border:1px solid #cbd5e1; background:#fff; border-radius:8px; cursor:pointer; }
+  .hint { font-size:13px; color:#475569; }
+  .btn-del { padding:2px 8px; border:1px solid #ef4444; color:#ef4444; background:#fff; border-radius:6px; cursor:pointer }
+  .btn-del:hover { background:#fee2e2 }
+</style>
 
-
-<div class="container py-4">
-  <div class="card shadow-sm">
-    <div class="card-header">
-      <div class="d-flex flex-wrap align-items-center gap-3">
-        <h5 class="mb-0">Ítems de Nota</h5>
-
-        <button id="guardar-nuevas" class="btn btn-outline-primary btn-sm">
-          Guardar NUEVAS filas
-        </button>
-
-        <div class="form-check d-flex align-items-center">
-          <input class="form-check-input me-2" type="checkbox" id="autosave" checked>
-          <label class="form-check-label" for="autosave">
-            Autosave tras pegar/editar
-          </label>
-        </div>
-
-        <span class="text-secondary small ms-auto">
-          Tip: pega desde Excel (selecciona A1 y Ctrl/⌘+V)
-        </span>
-      </div>
-    </div>
-
-    <div class="card-body">
-      <!-- La altura visual la controla Handsontable (height: 420) -->
-      <div id="hot-min" class="border rounded bg-white"></div>
-    </div>
+<div class="table-responsive">
+  <div class="toolbar">
+    <button id="guardar-nuevas" class="btn-lite">Guardar NUEVAS filas</button>
+    <label class="hint"><input type="checkbox" id="autosave" checked> Autosave tras pegar/editar</label>
+    <span class="hint">Pega desde Excel: selecciona A1 y Ctrl/⌘+V</span>
   </div>
+  <div id="hot-min"></div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  // Construimos el array de existentes SOLO para ESTA nota
+  // Construimos el array de existentes para ESTA nota
   const existentes = <?php
     $idUrl = $id_nota ?? null;
     $out = [];
@@ -352,7 +336,7 @@ $selIf    = function ($left, $right) {
   const container = document.getElementById('hot-min');
   const hot = new Handsontable(container, {
     data: existentes.length ? existentes : [],
-    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad', 'Acciones'],
+    colHeaders: ['id', 'codigo_nota_pedido', 'prenda', 'cantidad', 'Acciones'], // + Acciones
     columns: [
       { data:'id', readOnly:true },
       { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
@@ -361,11 +345,9 @@ $selIf    = function ($left, $right) {
       },
       { data:'prenda' },
       { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+      // Columna solo visual para el botón
       { readOnly:true, renderer:(inst, td, row) => {
-          td.innerHTML = `
-            <button type="button" class="btn btn-outline-danger btn-sm" data-row="${row}">
-              Eliminar
-            </button>`;
+          td.innerHTML = `<button class="btn-del" data-row="${row}">Eliminar</button>`;
         }
       },
     ],
@@ -374,14 +356,14 @@ $selIf    = function ($left, $right) {
     height: 420,
     licenseKey: 'non-commercial-and-evaluation',
 
-    // UX tipo Excel
+    // Look & feel tipo Excel
     filters: true,
     dropdownMenu: true,
     columnSorting: true,
     manualColumnResize: true,
     manualRowResize: true,
 
-    // Pegado/edición
+    // UX de pegado
     minSpareRows: 1,
     allowInsertColumn: false,
     allowRemoveColumn: false,
@@ -418,20 +400,21 @@ $selIf    = function ($left, $right) {
       method: 'POST',
       body: fd,
       headers: {
-        'X-Requested-With': 'XMLHttpRequest',
+        'X-Requested-With': 'XMLHttpRequest', // activa rama JSON
         'Accept': 'application/json'
       }
     });
 
+    // Si el controlador devuelve JSON con {ok,id}
     try {
       const json = await resp.json();
       if (json?.ok && json.id) {
-        row.id = json.id;
+        row.id = json.id; // marca la fila como persistida
         row.codigo_nota_pedido = ID_NOTA;
         hot.render();
       }
     } catch(e) {
-      // Si el backend devuelve HTML/redirect, puedes recargar:
+      // si devolvió HTML/redirect, podrías recargar:
       // location.reload();
     }
   }
@@ -456,7 +439,7 @@ $selIf    = function ($left, $right) {
 
   // ---- Eliminar (columna Acciones) ----
   container.addEventListener('click', async (ev) => {
-    const btn = ev.target.closest('button.btn-outline-danger');
+    const btn = ev.target.closest('.btn-del');
     if (!btn) return;
 
     const rowIndex = parseInt(btn.dataset.row, 10);
@@ -496,6 +479,8 @@ $selIf    = function ($left, $right) {
     }
   });
 </script>
+
+
 
 
 
