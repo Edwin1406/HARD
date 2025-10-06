@@ -297,7 +297,13 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
- 
+  .hot-card{border:1px solid #e9ecef;box-shadow:0 6px 24px rgba(33,37,41,.06);border-radius:1rem;overflow:hidden}
+  .hot-toolbar .btn{border-radius:.6rem}
+  #hot-min{height:clamp(360px,60vh,640px)}
+  .handsontable th,.handsontable td{font-size:.95rem}
+  .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
+  .hot-badge{font-size:.7rem;letter-spacing:.02em}
+  .text-mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 </style>
 
 <div class="container-xxl my-4">
