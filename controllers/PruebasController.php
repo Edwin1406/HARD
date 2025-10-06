@@ -233,8 +233,7 @@ class PruebasController
     }
 
 
-
-    public static function eliminarCarrito()
+public static function eliminarCarrito()
 {
     session_start();
     if (!isset($_SESSION['email'])) {
@@ -244,15 +243,13 @@ class PruebasController
 
     $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
 
-    // Detección de AJAX/JSON
+    // AJAX/JSON
     $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     $acceptsJson = isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json');
     $wantsJson   = $isAjax || $acceptsJson;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'] ?? null;
-
-        // Usa Carrito2 si es el modelo que corresponde a la tabla pintada
         $carrito = $id ? Carrito2::find($id) : null;
 
         if ($carrito) {
@@ -279,7 +276,7 @@ class PruebasController
         }
     }
 
-    // Si no es POST:
+    // No-POST
     if ($wantsJson) {
         http_response_code(405);
         header('Content-Type: application/json');
@@ -290,6 +287,10 @@ class PruebasController
     header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
     exit;
 }
+
+
+
+
 
 
 
