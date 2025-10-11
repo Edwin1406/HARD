@@ -348,6 +348,40 @@ $selIf    = function ($left, $right) {
 </div>
 
 
+<!-- ====== Modal para agregar una nueva prenda ====== -->
+<div class="modal fade" id="modalNuevaPrenda" tabindex="-1" aria-labelledby="modalNuevaPrendaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="modalNuevaPrendaLabel">Agregar nueva prenda</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <form id="formNuevaPrenda" method="POST" action="/ruta/para/guardar/prenda">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombrePrenda" class="form-label">Nombre de la prenda</label>
+            <input type="text" class="form-control" id="nombrePrenda" name="nombrePrenda" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcionPrenda" class="form-label">Descripción (opcional)</label>
+            <textarea class="form-control" id="descripcionPrenda" name="descripcionPrenda" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="partida">Partida</label>
