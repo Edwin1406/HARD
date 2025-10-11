@@ -7,7 +7,10 @@ class Carrito2 extends ActiveRecord {
     protected static $columnasDB = [
         'id',
         'Codigo_Nota_Pedido',
+        'etiqueta',
         'prenda',
+        'partida',
+        'composicion',
         'cantidad',
         'precio_unitario',
         'total'
@@ -15,7 +18,10 @@ class Carrito2 extends ActiveRecord {
 
     public $id;
     public $Codigo_Nota_Pedido;
+    public $etiqueta;
     public $prenda;
+    public $partida;
+    public $composicion;
     public $cantidad;
     public $precio_unitario;
     public $total;
@@ -24,7 +30,10 @@ class Carrito2 extends ActiveRecord {
     {
         $this->id = $args['id'] ?? null;
         $this->Codigo_Nota_Pedido = $args['Codigo_Nota_Pedido'] ?? null;
+        $this->etiqueta = $args['etiqueta'] ?? null;
         $this->prenda = $args['prenda'] ?? null;
+        $this->partida = $args['partida'] ?? null;
+        $this->composicion = $args['composicion'] ?? null;
         $this->cantidad = $args['cantidad'] ?? 0;
         $this->precio_unitario = $args['precio_unitario'] ?? 0.0;
         $this->total = $args['total'] ?? 0.0;
