@@ -310,6 +310,20 @@ $selIf    = function ($left, $right) {
 
                             <div class="row">
 
+                                <!-- # Factura -->
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="etiqueta"># Etiq</label>
+                                        <input type="text"
+                                            id="etiqueta"
+                                            class="form-control"
+                                            placeholder="# Etiq"
+                                            name="etiqueta"
+                                            value="<?= $oldVal('etiqueta') ?>">
+                                    </div>
+                                </div>
+
+
                                 <!-- Tienda -->
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
@@ -328,122 +342,90 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <!-- Fecha -->
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
-                                        <label for="Fecha_Tienda_Nota_Pedido">Fecha</label>
-                                        <input type="date"
-                                            id="Fecha_Tienda_Nota_Pedido"
+                                        <label for="partida">Partida</label>
+                                        <input type="text"
+                                            id="partida"
                                             class="form-control"
-                                            name="Fecha_Tienda_Nota_Pedido"
-                                            value="<?= $oldVal('Fecha_Tienda_Nota_Pedido', $fecha) ?>"
-                                            required>
+                                            placeholder="Partida"
+                                            name="partida"
+                                            value="<?= $oldVal('partida') ?>">
                                     </div>
                                 </div>
 
-                                <!-- # Factura -->
+
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
-                                        <label for="Factura_Nota_Pedido"># Factura</label>
+                                        <label for="composicion">Composicion</label>
+                                        <input type="text"
+                                            id="composicion"
+                                            class="form-control"
+                                            placeholder="# Composicion"
+                                            name="composicion"
+                                            value="<?= $oldVal('composicion') ?>">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="cantidad">Cantidad</label>
                                         <input type="number"
-                                            id="Factura_Nota_Pedido"
+                                            id="cantidad"
                                             class="form-control"
-                                            placeholder="# Factura"
-                                            name="Factura_Nota_Pedido"
-                                            step="0.01"
-                                            value="<?= $oldVal('Factura_Nota_Pedido') ?>">
+                                            name="cantidad"
+                                            step="1"
+                                            value="<?= $oldVal('cantidad', '0') ?>">
                                     </div>
                                 </div>
-
-                                <!-- Marca (name="importador") -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="importador">Marca</label>
-                                        <select id="importador" class="choices form-control" name="importador">
-                                            <option value="" disabled <?= empty($old['importador']) ? 'selected' : '' ?>>
-                                                Seleccione una Marca
-                                            </option>
-                                            <?php foreach ($marca as $m) : ?>
-                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
-                                                    <?= $selIf(($old['importador'] ?? ''), $m->Nombre_Marca) ?>>
-                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Ciudad -->
+                                                <!-- precio_unitario -->
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
-                                        <label for="ciudad">Ciudad</label>
-                                        <select id="ciudad" class="choices form-control" name="ciudad">
-                                            <option value="" disabled <?= empty($old['ciudad']) ? 'selected' : '' ?>>
-                                                Seleccione
-                                            </option>
-                                            <?php foreach ($ciudad as $c) : ?>
-                                                <option value="<?= htmlspecialchars($c->Sigla_Ciudad) ?>"
-                                                    <?= $selIf(($old['ciudad'] ?? ''), $c->Sigla_Ciudad) ?>>
-                                                    <?= htmlspecialchars($c->Sigla_Ciudad) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <label for="precio_unitario">Precio Unitario</label>
+                                        <input type="number"
+                                            id="precio_unitario"
+                                            class="form-control"
+                                            name="precio_unitario"
+                                            step="0.01"
+                                            value="<?= $oldVal('precio_unitario', '0.00') ?>">
+                                            <div class="invalid-feedback">El precio unitario debe ser un número válido.</div>
+                                            <div class="valid-feedback">¡Todo bien!</div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Verificado
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                    Verificado
+                                                </label>
+                                            </div>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <!-- Bodega -->
-                                    <div class="col-md-2 col-12">
-                                        <div class="form-group">
-                                            <label for="bodega">Bodega</label>
-                                            <select id="bodega" class="choices form-control" name="bodega">
-                                                <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
-                                                    Seleccione
-                                                </option>
-                                                <?php foreach ($bodega as $b) : ?>
-                                                    <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
-                                                        <?= $selIf(($old['bodega'] ?? ''), $b->Sigla_Bodega) ?>>
-                                                        <?= htmlspecialchars($b->Sigla_Bodega) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                
 
 
 
 
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
+                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                            </div>
 
-                                    <div class="col-md-2 col-12">
-                                        <div class="form-group">
-                                            <label for="cantidad">Cantidad</label>
-                                            <input type="number"
-                                                id="cantidad"
-                                                class="form-control"
-                                                name="cantidad"
-                                                step="1"
-                                                value="<?= $oldVal('cantidad', '0') ?>">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
-
-
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                                </div>
-
-                            </div> <!-- /.row -->
-                        </form>
-                    </div>
+                    </div> <!-- /.row -->
+                    </form>
                 </div>
-
             </div>
+
         </div>
+    </div>
     </div>
 </section>
 
@@ -791,7 +773,8 @@ $selIf    = function ($left, $right) {
                 return true;
             }
         } catch (e) {
-            /* backend podría redirigir; ignoramos aquí */ }
+            /* backend podría redirigir; ignoramos aquí */
+        }
         return false;
     }
 
