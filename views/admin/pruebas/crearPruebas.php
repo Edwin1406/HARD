@@ -365,7 +365,7 @@ $selIf    = function ($left, $right) {
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="Partida_Partida" class="form-label">Partida</label>
-                                                        <input type="text" class="form-control" id="Partida_Partida" name="Partida_Partida" required>
+                                                        <input type="number" class="form-control" id="Partida_Partida" name="Partida_Partida" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="Composicion_Partida" class="form-label">Composición</label>
