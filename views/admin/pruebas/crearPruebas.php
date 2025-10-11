@@ -323,145 +323,30 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-<link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
                                 <!-- Tienda -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="Prenda_Partida">Prenda</label>
-                                        <select id="Prenda_Partida" class=" form-control" name="Prenda_Partida">
-                                            <option value="" disabled selected>Seleccione una prenda</option>
-                                            <?php foreach ($prendas as $p) : ?>
-                                                <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
-                                                    <?= htmlspecialchars($p->Prenda_Partida) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
+                              <!-- ====== Campo Prenda con botón + ====== -->
+<div class="col-md-3 col-12">
+  <div class="form-group d-flex align-items-end">
+    <div class="flex-grow-1">
+      <label for="Prenda_Partida">Prenda</label>
+      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+        <option value="" disabled selected>Seleccione una prenda</option>
+        <?php foreach ($prendas as $p) : ?>
+          <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+            <?= htmlspecialchars($p->Prenda_Partida) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-                                <!-- Modal: Agregar prenda -->
-                                <div class="modal fade" id="modalAgregarPrenda" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <form id="formAgregarPrenda" class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Agregar prenda</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <label class="form-label">Nombre de la prenda</label>
-                                                <input type="text" class="form-control" id="inputNuevaPrenda" name="Prenda_Partida" required>
-                                                <div class="form-text">Ej.: BLUSA, PANTALÓN, etc.</div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+    <!-- Botón + para abrir el modal -->
+    <button type="button" class="btn btn-outline-primary ms-2 mb-1" data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const selectEl = document.getElementById('Prenda_Partida');
-  if (!selectEl) return;
-
-  // Inicializa Choices una sola vez
-  if (window.prendaChoices) window.prendaChoices.destroy();
-  window.prendaChoices = new Choices(selectEl, {
-    searchEnabled: true,
-    shouldSort: false,
-    placeholder: true,
-    searchPlaceholderValue: 'Escriba para buscar…',
-    noResultsText: 'Sin resultados',
-  });
-
-  const choicesRoot = selectEl.closest('.choices') || selectEl.parentElement.querySelector('.choices');
-  const dropdown   = choicesRoot ? choicesRoot.querySelector('.choices__list--dropdown') : null;
-
-  const ADD_MARK = '__create__:'; 
-  let addId = null;
-
-  function removeAdd() {
-    if (!addId || !dropdown) return;
-    const li = dropdown.querySelector(`[data-id="${addId}"]`);
-    if (li) li.remove();
-    const storeItem = window.prendaChoices._store.choices.find(c => c.id === addId);
-    if (storeItem) storeItem.active = false;
-    addId = null;
-  }
-
-  selectEl.addEventListener('search', (ev) => {
-    if (!dropdown) return;
-    const q = (ev.detail?.value || '').trim();
-    removeAdd();
-    if (!q) return;
-
-    const visibleExists = Array.from(
-      dropdown.querySelectorAll('.choices__item--choice:not(.is-disabled):not([data-create])')
-    ).some(li => (li.textContent || '').toLowerCase().includes(q.toLowerCase()));
-
-    if (!visibleExists) {
-      addId = Date.now();
-      window.prendaChoices._store.addChoice({
-        id: addId,
-        value: ADD_MARK + q,
-        label: `➕ Agregar "${q}"`,
-        selected: false,
-        disabled: false,
-        groupId: -1,
-        customProperties: { isCreate: true }
-      });
-      const li = dropdown.querySelector(`[data-id="${addId}"]`);
-      if (li) { li.setAttribute('data-create','1'); li.parentElement.prepend(li); }
-    }
-  });
-
-  selectEl.addEventListener('addItem', (evt) => {
-    const val = evt.detail.value || '';
-    if (!val.startsWith(ADD_MARK)) return;
-
-    const nombre = val.slice(ADD_MARK.length);
-    window.prendaChoices.removeActiveItems();
-    removeAdd();
-
-    const modalEl = document.getElementById('modalAgregarPrenda');
-    const inputEl = document.getElementById('inputNuevaPrenda');
-    if (!modalEl || !inputEl) {
-      console.error('Falta modalAgregarPrenda o inputNuevaPrenda');
-      return;
-    }
-    inputEl.value = nombre;
-    new bootstrap.Modal(modalEl).show();
-  });
-
-  const form = document.getElementById('formAgregarPrenda');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const nombre = (document.getElementById('inputNuevaPrenda')?.value || '').trim();
-      if (!nombre) return;
-      try {
-        const resp = await fetch('/api/prendas/crear', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ Prenda_Partida: nombre })
-        });
-        if (!resp.ok) throw new Error('Error al guardar');
-        window.prendaChoices.setChoices([{ value: nombre, label: nombre, selected: true }], 'value', 'label', false);
-        bootstrap.Modal.getInstance(document.getElementById('modalAgregarPrenda')).hide();
-      } catch (e2) {
-        console.error(e2); alert('No se pudo guardar la prenda.');
-      }
-    });
-  } else {
-    console.warn('formAgregarPrenda no encontrado.');
-  }
-});
-</script>
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -515,7 +400,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
                                     </div>
                                 </div>
-                                <!-- precio_unitario -->
+                                                <!-- precio_unitario -->
+                             
+
+
+                                
 
 
 
@@ -527,29 +416,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-                                <!-- </div> -->
+                            <!-- </div> -->
 
 
 
 
 
 
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                                </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
+                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                            </div>
 
-                            </div> <!-- /.row -->
-                        </form>
-                    </div>
+                    </div> <!-- /.row -->
+                    </form>
                 </div>
-
             </div>
+
         </div>
+    </div>
     </div>
 </section>
 
