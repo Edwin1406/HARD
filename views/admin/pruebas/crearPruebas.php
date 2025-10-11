@@ -357,7 +357,7 @@ $selIf    = function ($left, $right) {
                                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                             </div>
 
-                                            <form id="formNuevaPrenda" method="POST" action="/admin/prendas/crear" onsubmit="return bloquearBoton(this)">
+                                            <form id="formNuevaPrenda" method="POST" action="/admin/prenda/crearPrenda" onsubmit="return bloquearBoton(this)">
                                                 <div class="modal-body">
                                                     <div class="mb-3">
                                                         <label for="Prenda_Partida" class="form-label">Nombre de la prenda</label>
