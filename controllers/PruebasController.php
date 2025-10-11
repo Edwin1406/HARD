@@ -10,6 +10,7 @@ use Model\DetalleVenta;
 use Model\Marca;
 use Model\NotaPedido;
 use Model\Pais;
+use Model\Prenda;
 use Model\Tienda;
 use Model\Ventas;
 use MVC\Router;
