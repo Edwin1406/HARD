@@ -342,11 +342,15 @@ $selIf    = function ($left, $right) {
   const errorBox    = document.getElementById('np_errorBox');
   const okBox       = document.getElementById('np_okBox');
   const modalEl     = document.getElementById('modalNuevaPrenda');
-  const prendaSelect= document.getElementById('Prenda_Partida');
+
+  // ⚠️ Mantenemos tus IDs/NAME. Solo nos aseguramos de tomar el <select> que está FUERA del modal.
+  const prendaSelect = (() => {
+    const nodes = document.querySelectorAll('select[name="Prenda_Partida"], select#Prenda_Partida');
+    return Array.from(nodes).find(el => !modalEl.contains(el)) || nodes[0] || null;
+  })();
 
   // ======= helpers =======
   function showError(msg) {
-  
     errorBox.textContent = msg || 'No se pudo guardar.';
     errorBox.classList.remove('d-none');
     okBox.classList.add('d-none');
@@ -366,6 +370,7 @@ $selIf    = function ($left, $right) {
   // Añade la opción nueva al <select> (soporta Choices.js si está activo)
   function addOptionToSelect(selectEl, value, label) {
     if (!selectEl) return;
+
     // Detectar instancia Choices ya inicializada (evita re-init)
     const choicesInstance =
       (selectEl && selectEl.choices) ||
@@ -373,12 +378,16 @@ $selIf    = function ($left, $right) {
       null;
 
     if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
+      // Añade sin reemplazar y selecciónala
       choicesInstance.setChoices(
         [{ value, label, selected: true }],
         'value',
         'label',
         false
       );
+      if (typeof choicesInstance.setChoiceByValue === 'function') {
+        choicesInstance.setChoiceByValue(value);
+      }
       return;
     }
 
@@ -401,17 +410,22 @@ $selIf    = function ($left, $right) {
 
   // Muestra un toast SweetAlert2 (sin backdrop)
   function showSavedToast() {
-    Swal.fire({
-      toast: true,
-      position: 'top-end',
-      icon: 'success',
-      title: 'Prenda guardada',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      // sin backdrop
-      backdrop: false
-    });
+    if (window.Swal && typeof Swal.fire === 'function') {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: 'Prenda guardada',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        backdrop: false
+      });
+    } else {
+      // Fallback mínimo por si no está SweetAlert2
+      showOK('Prenda guardada');
+      setTimeout(() => okBox.classList.add('d-none'), 1500);
+    }
   }
 
   // ======= submit =======
@@ -441,8 +455,8 @@ $selIf    = function ($left, $right) {
         return;
       }
 
-      // Añadir/seleccionar prenda en el <select>
-      const nombre = data.prenda?.Prenda_Partida || fd.get('Prenda_Partida') || '';
+      // Añadir/seleccionar prenda en el <select> (fuera del modal)
+      const nombre = (data.prenda && data.prenda.Prenda_Partida) || fd.get('Prenda_Partida') || '';
       addOptionToSelect(prendaSelect, nombre, nombre);
 
       // Resetear formulario
@@ -450,22 +464,16 @@ $selIf    = function ($left, $right) {
 
       // Cerrar modal y tras ocultarse, mostrar toast
       const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-
-      // Si ya está oculto por alguna razón, muestra el toast directo
       const isOpen = modalEl.classList.contains('show');
 
       if (isOpen) {
-        // Escuchar UNA sola vez cuando termine de ocultarse
         modalEl.addEventListener('hidden.bs.modal', () => {
-          // Limpieza defensiva (por si quedó backdrop)
           scrubBackdrops();
-          // Mostrar éxito como toast (sin backdrop)
           showSavedToast();
         }, { once: true });
 
         bsModal.hide();
       } else {
-        // No estaba abierto; simplemente toast
         showSavedToast();
       }
     } catch (err) {
@@ -483,13 +491,10 @@ $selIf    = function ($left, $right) {
 
   // ======= seguridad extra: al ocultar modal, barrer backdrops colgados =======
   modalEl.addEventListener('hidden.bs.modal', () => {
-    // En teoría Bootstrap limpia; esto es por si algo quedó colgado
     scrubBackdrops();
   });
 })();
 </script>
-
-
 
 
 
