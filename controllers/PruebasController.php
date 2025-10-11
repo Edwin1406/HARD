@@ -160,9 +160,9 @@ class PruebasController
 
             // Mapear POST -> modelo (solo los campos pedidos)
             $carrito->Codigo_Nota_Pedido = $id_nota;  
-            $carrito->etiqueta           = $_POST['etiqueta']   ?? '';
+            $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
             $carrito->prenda             = $_POST['prenda']   ?? '';
-            $carrito->partida            = $_POST['partida']   ?? '';
+            $carrito->partida            = $_POST['partida']   ?? 0;
             $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
@@ -176,6 +176,9 @@ class PruebasController
 
             // Validación del modelo (usa tu Carrito2::validar())
             $alertas = $carrito->validar();
+
+
+            debuguear($carrito);
 
             if (empty($alertas)) {
                 $ok = $carrito->guardar();
