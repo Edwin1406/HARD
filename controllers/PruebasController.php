@@ -271,10 +271,10 @@ class PruebasController
             exit;
         }
 
-        $prenda = new Prenda;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        
+            
+            
+            $prenda = new Prenda;
 
 
             // Mapear POST al modelo
@@ -282,7 +282,7 @@ class PruebasController
             $prenda->Partida_Partida     = $_POST['Partida_Partida'] ?? '';
             $prenda->Composicion_Partida = $_POST['Composicion_Partida'] ?? '';
 
-            debuguear($prenda);
+            // debuguear($prenda);
 
             // Validación del modelo (usa tu Prenda::validar() si la tienes)
             $alertas = $prenda->validar();
