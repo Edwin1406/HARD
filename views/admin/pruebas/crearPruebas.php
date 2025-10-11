@@ -360,13 +360,18 @@ $selIf    = function ($left, $right) {
                                             <form id="formNuevaPrenda" method="POST" action="/admin/prendas/crear" onsubmit="return bloquearBoton(this)">
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label for="nombrePrenda" class="form-label">Nombre de la prenda</label>
-                                                        <input type="text" class="form-control" id="nombrePrenda" name="nombrePrenda" required>
+                                                        <label for="Prenda_Partida" class="form-label">Nombre de la prenda</label>
+                                                        <input type="text" class="form-control" id="Prenda_Partida" name="Prenda_Partida" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="descripcionPrenda" class="form-label">Descripción (opcional)</label>
-                                                        <textarea class="form-control" id="descripcionPrenda" name="descripcionPrenda" rows="2"></textarea>
+                                                        <label for="Partida_Partida" class="form-label">Partida</label>
+                                                        <input type="text" class="form-control" id="Partida_Partida" name="Partida_Partida" required>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <label for="Composicion_Partida" class="form-label">Composición</label>
+                                                        <input type="text" class="form-control" id="Composicion_Partida" name="Composicion_Partida" required>
+                                                    </div>
+                                                   
                                                 </div>
 
                                                 <div class="modal-footer">
