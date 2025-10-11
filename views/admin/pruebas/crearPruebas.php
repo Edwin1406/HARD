@@ -429,7 +429,18 @@ $selIf    = function ($left, $right) {
 
                 // limpiar y cerrar
                 form.reset();
-                showOK('¡Guardada!');
+                // showOK('¡Guardada!');
+                // SWEET ALERT2
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Prenda guardada',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+
+
                 const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
                 bsModal.hide();
 
