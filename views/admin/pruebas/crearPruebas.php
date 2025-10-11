@@ -493,60 +493,70 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                                <!-- Tienda -->
-                                <!-- ====== Campo Prenda con botón + (sin cambios en nombres) ====== -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group d-flex align-items-end">
-                                        <div class="flex-grow-1">
-                                            <label for="Prenda_Partida">Prenda</label>
-                                            <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-                                                <option value="" disabled selected>Seleccione una prenda</option>
-                                                <?php foreach ($prendas as $p) : ?>
-                                                    <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
-                                                        <?= htmlspecialchars($p->Prenda_Partida) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
+                          <div class="col-md-3 col-12">
+  <div class="form-group d-flex align-items-end">
+    <div class="flex-grow-1">
+      <label for="Prenda_Partida">Prenda</label>
+      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+        <option value="" disabled selected>Seleccione una prenda</option>
+        <?php foreach ($prendas as $p) : ?>
+          <option 
+            value="<?= htmlspecialchars($p->Prenda_Partida) ?>" 
+            data-partida="<?= htmlspecialchars($p->partida) ?>" 
+            data-composicion="<?= htmlspecialchars($p->composicion) ?>">
+            <?= htmlspecialchars($p->Prenda_Partida) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-                                        <!-- Botón + para abrir el modal -->
-                                        <button type="button" class="btn btn-outline-primary ms-2 mb-1"
-                                            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
-                                            <i class="bi bi-plus-lg"></i>
-                                        </button>
-                                    </div>
-                                </div>
+    <button type="button" class="btn btn-outline-primary ms-2 mb-1"
+      data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+</div>
 
+<div class="col-md-2 col-12">
+  <div class="form-group">
+    <label for="partida">Partida</label>
+    <input type="text"
+      id="partida"
+      class="form-control"
+      placeholder="Partida"
+      name="partida"
+      value="<?= $oldVal('partida') ?>">
+  </div>
+</div>
 
+<div class="col-md-2 col-12">
+  <div class="form-group">
+    <label for="composicion">Composición</label>
+    <input type="text"
+      id="composicion"
+      class="form-control"
+      placeholder="Composición"
+      name="composicion"
+      value="<?= $oldVal('composicion') ?>">
+  </div>
+</div>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const prendaSelect = document.getElementById("Prenda_Partida");
+  const partidaInput = document.getElementById("partida");
+  const composicionInput = document.getElementById("composicion");
 
+  prendaSelect.addEventListener("change", (e) => {
+    const selected = e.target.options[e.target.selectedIndex];
+    const partida = selected.getAttribute("data-partida");
+    const composicion = selected.getAttribute("data-composicion");
 
-
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="partida">Partida</label>
-                                        <input type="text"
-                                            id="partida"
-                                            class="form-control"
-                                            placeholder="Partida"
-                                            name="partida"
-                                            value="<?= $oldVal('partida') ?>">
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="composicion">Composicion</label>
-                                        <input type="text"
-                                            id="composicion"
-                                            class="form-control"
-                                            placeholder="# Composicion"
-                                            name="composicion"
-                                            value="<?= $oldVal('composicion') ?>">
-                                    </div>
-                                </div>
+    partidaInput.value = partida || "";
+    composicionInput.value = composicion || "";
+  });
+});
+</script>
 
 
 
