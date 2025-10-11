@@ -510,9 +510,9 @@ $selIf    = function ($left, $right) {
     const r = hot.getSourceDataAtRow(rowIndex);
     if (!r) return;
     if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-    if (typeof r.etiqueta === 'int') r.etiqueta = r.etiqueta.trim();
+    if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
     if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-    if (typeof r.partida === 'int') r.partida = r.partida.trim();
+    if (typeof r.partida === 'string') r.partida = r.partida.trim();
     if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
     r.cantidad = Number(r.cantidad) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
