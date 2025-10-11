@@ -383,7 +383,7 @@ $selIf    = function ($left, $right) {
                                             value="<?= $oldVal('cantidad', '0') ?>">
                                     </div>
                                 </div>
-                                                <!-- precio_unitario -->
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="precio_unitario">Precio Unitario</label>
@@ -393,23 +393,27 @@ $selIf    = function ($left, $right) {
                                             name="precio_unitario"
                                             step="0.01"
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
-                                            <div class="invalid-feedback">El precio unitario debe ser un número válido.</div>
-                                            <div class="valid-feedback">¡Todo bien!</div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Verificado
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                                <label class="form-check-label" for="flexCheckChecked">
-                                                    Verificado
-                                                </label>
-                                            </div>
                                     </div>
                                 </div>
+                                                <!-- precio_unitario -->
+                             
+
+
                                 
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+
+
 
 
 
