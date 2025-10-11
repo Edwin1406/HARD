@@ -261,6 +261,57 @@ class PruebasController
     }
 
 
+
+    // Crear prenda
+    public static function crearPrenda()
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $prenda = new Prenda;
+
+            // Mapear POST al modelo
+            $prenda->Prenda_Partida      = $_POST['Prenda_Partida'] ?? '';
+            $prenda->Partida_Partida     = $_POST['Partida_Partida'] ?? '';
+            $prenda->Composicion_Partida = $_POST['Composicion_Partida'] ?? '';
+
+            // Validación del modelo (usa tu Prenda::validar() si la tienes)
+            $alertas = $prenda->validar();
+
+            if (empty($alertas)) {
+                $resultado = $prenda->guardar();
+                if ($resultado) {
+                    header("Location: /admin/pruebas/crearPruebas?exito=1");
+                    exit;
+                } else {
+                    $alertas['error'][] = 'Error al guardar el registro de prenda';
+                }
+            }
+
+            // Si hay errores, podrías manejarlo aquí o redirigir con mensajes
+            // Por simplicidad, redirigimos con un error genérico
+            header("Location: /admin/pruebas/crearPruebas?errorPrenda=1");
+            exit;
+        }
+
+        // Si no es POST, redirigir a la página principal de pruebas
+        header('Location: /admin/pruebas/crearPruebas');
+        exit;
+    }
+
+
+
+
+
+
+
+
+
+
     public static function eliminarCarrito()
     {
         session_start();

@@ -325,58 +325,58 @@ $selIf    = function ($left, $right) {
 
 
                                 <!-- Tienda -->
-                              <!-- ====== Campo Prenda con botón + ====== -->
-<div class="col-md-3 col-12">
-  <div class="form-group d-flex align-items-end">
-    <div class="flex-grow-1">
-      <label for="Prenda_Partida">Prenda</label>
-      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-        <option value="" disabled selected>Seleccione una prenda</option>
-        <?php foreach ($prendas as $p) : ?>
-          <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
-            <?= htmlspecialchars($p->Prenda_Partida) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+                                <!-- ====== Campo Prenda con botón + ====== -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group d-flex align-items-end">
+                                        <div class="flex-grow-1">
+                                            <label for="Prenda_Partida">Prenda</label>
+                                            <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                                <option value="" disabled selected>Seleccione una prenda</option>
+                                                <?php foreach ($prendas as $p) : ?>
+                                                    <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+                                                        <?= htmlspecialchars($p->Prenda_Partida) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
 
-    <!-- Botón + para abrir el modal -->
-    <button type="button" class="btn btn-outline-primary ms-2 mb-1" data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
-      <i class="bi bi-plus-lg"></i>
-    </button>
-  </div>
-</div>
+                                        <!-- Botón + para abrir el modal -->
+                                        <button type="button" class="btn btn-outline-primary ms-2 mb-1" data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
 
-<!-- ====== Modal para agregar una nueva prenda ====== -->
-<div class="modal fade" id="modalNuevaPrenda" tabindex="-1" aria-labelledby="modalNuevaPrendaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="modalNuevaPrendaLabel">Agregar nueva prenda</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
+                                <!-- ====== Modal para agregar una nueva prenda ====== -->
+                                <div class="modal fade" id="modalNuevaPrenda" tabindex="-1" aria-labelledby="modalNuevaPrendaLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="modalNuevaPrendaLabel">Agregar nueva prenda</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                            </div>
 
-      <form id="formNuevaPrenda" method="POST" action="/ruta/para/guardar/prenda">
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="nombrePrenda" class="form-label">Nombre de la prenda</label>
-            <input type="text" class="form-control" id="nombrePrenda" name="nombrePrenda" required>
-          </div>
-          <div class="mb-3">
-            <label for="descripcionPrenda" class="form-label">Descripción (opcional)</label>
-            <textarea class="form-control" id="descripcionPrenda" name="descripcionPrenda" rows="2"></textarea>
-          </div>
-        </div>
+                                            <form id="formNuevaPrenda" method="POST" action="/admin/prendas/crear" onsubmit="return bloquearBoton(this)">
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="nombrePrenda" class="form-label">Nombre de la prenda</label>
+                                                        <input type="text" class="form-control" id="nombrePrenda" name="nombrePrenda" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="descripcionPrenda" class="form-label">Descripción (opcional)</label>
+                                                        <textarea class="form-control" id="descripcionPrenda" name="descripcionPrenda" rows="2"></textarea>
+                                                    </div>
+                                                </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
@@ -434,11 +434,7 @@ $selIf    = function ($left, $right) {
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
                                     </div>
                                 </div>
-                                                <!-- precio_unitario -->
-                             
-
-
-                                
+                                <!-- precio_unitario -->
 
 
 
@@ -450,25 +446,29 @@ $selIf    = function ($left, $right) {
 
 
 
-                            <!-- </div> -->
+
+
+
+
+                                <!-- </div> -->
 
 
 
 
 
 
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                            </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                </div>
 
-                    </div> <!-- /.row -->
-                    </form>
+                            </div> <!-- /.row -->
+                        </form>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
 </section>
 

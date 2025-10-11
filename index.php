@@ -140,6 +140,9 @@ $router->post('/admin/notaPedido/crearNota', [NotaPedidoController::class, 'crea
 $router->get('/admin/pruebas/crearPruebas', [PruebasController::class, 'crearPruebas']);
 $router->post('/admin/pruebas/crearPruebas', [PruebasController::class, 'crearPruebas']);
 
+// CREAR PRENDA
+$router->post('/admin/prenda/crearPrenda', [PruebasController::class, 'crearPrenda']);
+
 
 // eliminar carrito
 $router->post('/admin/eliminarCarrito', [PruebasController::class, 'eliminarCarrito']);
