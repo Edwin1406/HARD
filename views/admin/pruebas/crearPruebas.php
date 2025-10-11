@@ -334,130 +334,136 @@ $selIf    = function ($left, $right) {
 </div>
 
 <script>
-(function () {
-  // ======= refs =======
-  const form        = document.getElementById('formNuevaPrenda');
-  const btn         = document.getElementById('np_btnGuardar');
-  const spinner     = document.getElementById('np_spinner');
-  const errorBox    = document.getElementById('np_errorBox');
-  const okBox       = document.getElementById('np_okBox');
-  const modalEl     = document.getElementById('modalNuevaPrenda');
+    (function() {
+        // ======= refs =======
+        const form = document.getElementById('formNuevaPrenda');
+        const btn = document.getElementById('np_btnGuardar');
+        const spinner = document.getElementById('np_spinner');
+        const errorBox = document.getElementById('np_errorBox');
+        const okBox = document.getElementById('np_okBox');
+        const modalEl = document.getElementById('modalNuevaPrenda');
 
-  // Mantiene tus IDs, pero asegura que apunte al <select> fuera del modal
-  const prendaSelect = (() => {
-    const nodes = document.querySelectorAll('select[name="Prenda_Partida"], select#Prenda_Partida');
-    return Array.from(nodes).find(el => !modalEl.contains(el)) || nodes[0] || null;
-  })();
+        // Mantiene tus IDs, pero asegura que apunte al <select> fuera del modal
+        const prendaSelect = (() => {
+            const nodes = document.querySelectorAll('select[name="Prenda_Partida"], select#Prenda_Partida');
+            return Array.from(nodes).find(el => !modalEl.contains(el)) || nodes[0] || null;
+        })();
 
-  // ======= helpers =======
-  function showError(msg) {
-    errorBox.textContent = msg || 'No se pudo guardar.';
-    errorBox.classList.remove('d-none');
-    okBox.classList.add('d-none');
-  }
+        // ======= helpers =======
+        function showError(msg) {
+            errorBox.textContent = msg || 'No se pudo guardar.';
+            errorBox.classList.remove('d-none');
+            okBox.classList.add('d-none');
+        }
 
-  function showOK(msg) {
-    okBox.textContent = msg || '¡Guardada!';
-    okBox.classList.remove('d-none');
-    errorBox.classList.add('d-none');
-  }
+        function showOK(msg) {
+            okBox.textContent = msg || '¡Guardada!';
+            okBox.classList.remove('d-none');
+            errorBox.classList.add('d-none');
+        }
 
-  function setLoading(v) {
-    if (btn) btn.disabled = v;
-    if (spinner) spinner.classList.toggle('d-none', !v);
-  }
+        function setLoading(v) {
+            if (btn) btn.disabled = v;
+            if (spinner) spinner.classList.toggle('d-none', !v);
+        }
 
-  function scrubBackdrops() {
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    document.body.classList.remove('modal-open');
-    document.body.style.removeProperty('overflow');
-    document.body.style.removeProperty('padding-right');
-  }
+        function scrubBackdrops() {
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('overflow');
+            document.body.style.removeProperty('padding-right');
+        }
 
-  function showSavedToast() {
-    if (window.Swal && typeof Swal.fire === 'function') {
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        icon: 'success',
-        title: 'Prenda guardada',
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        backdrop: false
-      });
-    } else {
-      showOK('Prenda guardada');
-      setTimeout(() => okBox.classList.add('d-none'), 1200);
-    }
-  }
+        function showSavedToast() {
+            if (window.Swal && typeof Swal.fire === 'function') {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Prenda guardada',
+                    showConfirmButton: false,
+                    timer: 1200,
+                    timerProgressBar: true,
+                    backdrop: false
+                });
+            } else {
+                showOK('Prenda guardada');
+                setTimeout(() => okBox.classList.add('d-none'), 1200);
+            }
+        }
 
-  // ======= submit =======
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    setLoading(true);
-    errorBox.classList.add('d-none');
-    okBox.classList.add('d-none');
+        // ======= submit =======
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            setLoading(true);
+            errorBox.classList.add('d-none');
+            okBox.classList.add('d-none');
 
-    try {
-      const fd = new FormData(form);
+            try {
+                const fd = new FormData(form);
 
-      const res = await fetch('/admin/prenda/crearPrenda', {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: fd
-      });
+                const res = await fetch('/admin/prenda/crearPrenda', {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: fd
+                });
 
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch {}
+                const raw = await res.text();
+                let data = null;
+                try {
+                    data = JSON.parse(raw);
+                } catch {}
 
-      if (!res.ok || !data || data.ok !== true) {
-        const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
-        showError(msg);
-        setLoading(false);
-        return;
-      }
+                if (!res.ok || !data || data.ok !== true) {
+                    const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
+                    showError(msg);
+                    setLoading(false);
+                    return;
+                }
 
-      const nombre = (data.prenda && data.prenda.Prenda_Partida) || fd.get('Prenda_Partida') || '';
+                const nombre = (data.prenda && data.prenda.Prenda_Partida) || fd.get('Prenda_Partida') || '';
 
-      // Resetea formulario
-      form.reset();
+                // Resetea formulario
+                form.reset();
 
-      const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-      const isOpen = modalEl.classList.contains('show');
+                const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                const isOpen = modalEl.classList.contains('show');
 
-      if (isOpen) {
+                if (isOpen) {
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        scrubBackdrops();
+                        showSavedToast();
+                        // 🔄 Recargar página después del toast
+                        setTimeout(() => location.reload(), 1300);
+                    }, {
+                        once: true
+                    });
+
+                    bsModal.hide();
+                } else {
+                    showSavedToast();
+                    setTimeout(() => location.reload(), 1300);
+                }
+            } catch (err) {
+                showError('Error de red o servidor.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // ======= limpiar mensajes al abrir modal =======
+        modalEl.addEventListener('show.bs.modal', () => {
+            errorBox.classList.add('d-none');
+            okBox.classList.add('d-none');
+        });
+
+        // ======= seguridad extra: limpiar backdrop =======
         modalEl.addEventListener('hidden.bs.modal', () => {
-          scrubBackdrops();
-          showSavedToast();
-          // 🔄 Recargar página después del toast
-          setTimeout(() => location.reload(), 1300);
-        }, { once: true });
-
-        bsModal.hide();
-      } else {
-        showSavedToast();
-        setTimeout(() => location.reload(), 1300);
-      }
-    } catch (err) {
-      showError('Error de red o servidor.');
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  // ======= limpiar mensajes al abrir modal =======
-  modalEl.addEventListener('show.bs.modal', () => {
-    errorBox.classList.add('d-none');
-    okBox.classList.add('d-none');
-  });
-
-  // ======= seguridad extra: limpiar backdrop =======
-  modalEl.addEventListener('hidden.bs.modal', () => {
-    scrubBackdrops();
-  });
-})();
+            scrubBackdrops();
+        });
+    })();
 </script>
 
 <section id="multiple-column-form">
@@ -493,61 +499,59 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                          <!-- SELECT -->
-<div class="col-md-3 col-12">
-  <div class="form-group d-flex align-items-end">
-    <div class="flex-grow-1">
-      <label for="Prenda_Partida">Prenda</label>
-      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-        <option value="" disabled selected>Seleccione una prenda</option>
-        <?php foreach ($prendas as $p): ?>
-          <option
-            value="<?= htmlspecialchars($p->Prenda_Partida) ?>"
-            data-partida="<?= htmlspecialchars($p->Partida_Partida) ?>"
-            data-composicion="<?= htmlspecialchars($p->Composicion_Partida) ?>">
-            <?= htmlspecialchars($p->Prenda_Partida) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
 
-    <button type="button" class="btn btn-outline-primary ms-2 mb-1"
-            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
-      <i class="bi bi-plus-lg"></i>
-    </button>
-  </div>
-</div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group d-flex align-items-end">
+                                        <div class="flex-grow-1">
+                                            <label for="Prenda_Partida">Prenda</label>
+                                            <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                                <option value="" disabled selected>Seleccione una prenda</option>
+                                                <?php foreach ($prendas as $p) : ?>
+                                                    <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+                                                        <?= htmlspecialchars($p->Prenda_Partida) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
 
-<!-- INPUTS -->
-<div class="col-md-2 col-12">
-  <div class="form-group">
-    <label for="partida">Partida</label>
-    <input type="text" id="partida" class="form-control" name="partida"
-           placeholder="Partida" value="<?= $oldVal('partida') ?>">
-  </div>
-</div>
+                                        <!-- Botón + para abrir el modal -->
+                                        <button type="button" class="btn btn-outline-primary ms-2 mb-1"
+                                            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
-<div class="col-md-2 col-12">
-  <div class="form-group">
-    <label for="composicion">Composición</label>
-    <input type="text" id="composicion" class="form-control" name="composicion"
-           placeholder="Composición" value="<?= $oldVal('composicion') ?>">
-  </div>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const sel = document.getElementById('Prenda_Partida');
-  const partida = document.getElementById('partida');
-  const comp = document.getElementById('composicion');
 
-  sel.addEventListener('change', e => {
-    const opt = e.target.options[e.target.selectedIndex];
-    partida.value = opt.getAttribute('data-partida') || '';
-    comp.value = opt.getAttribute('data-composicion') || '';
-  });
-});
-</script>
+
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="partida">Partida</label>
+                                        <input type="text"
+                                            id="partida"
+                                            class="form-control"
+                                            placeholder="Partida"
+                                            name="partida"
+                                            value="<?= $oldVal('partida') ?>">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="composicion">Composicion</label>
+                                        <input type="text"
+                                            id="composicion"
+                                            class="form-control"
+                                            placeholder="# Composicion"
+                                            name="composicion"
+                                            value="<?= $oldVal('composicion') ?>">
+                                    </div>
+                                </div>
 
 
 
@@ -575,35 +579,89 @@ document.addEventListener('DOMContentLoaded', () => {
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
                                     </div>
                                 </div>
-                                <!-- precio_unitario -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                <!-- </div> -->
-
-
-
-
-
-
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="importador">Marca</label>
+                                        <select id="importador" class="choices form-control" name="importador">
+                                            <option value="" disabled <?= empty($old['importador']) ? 'selected' : '' ?>>
+                                                Seleccione una Marca
+                                            </option>
+                                            <?php foreach ($marca as $m) : ?>
+                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
+                                                    <?= $selIf(($old['importador'] ?? ''), $m->Nombre_Marca) ?>>
+                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
 
-                            </div> <!-- /.row -->
+                                <!-- Ciudad -->
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="ciudad">Ciudad</label>
+                                        <select id="ciudad" class="choices form-control" name="ciudad">
+                                            <option value="" disabled <?= empty($old['ciudad']) ? 'selected' : '' ?>>
+                                                Seleccione
+                                            </option>
+                                            <?php foreach ($ciudad as $c) : ?>
+                                                <option value="<?= htmlspecialchars($c->Sigla_Ciudad) ?>"
+                                                    <?= $selIf(($old['ciudad'] ?? ''), $c->Sigla_Ciudad) ?>>
+                                                    <?= htmlspecialchars($c->Sigla_Ciudad) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="num_caja">#caja</label>
+                                        <input type="number"
+                                            id="num_caja"
+                                            class="form-control"
+                                            name="num_caja"
+                                            step="1"
+                                            value="<?= $oldVal('num_caja', '0') ?>">
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <!-- Bodega -->
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="bodega">Bodega</label>
+                                            <select id="bodega" class="choices form-control" name="bodega">
+                                                <option value="" disabled <?= empty($old['bodega']) ? 'selected' : '' ?>>
+                                                    Seleccione
+                                                </option>
+                                                <?php foreach ($bodega as $b) : ?>
+                                                    <option value="<?= htmlspecialchars($b->Sigla_Bodega) ?>"
+                                                        <?= $selIf(($old['bodega'] ?? ''), $b->Sigla_Bodega) ?>>
+                                                        <?= htmlspecialchars($b->Sigla_Bodega) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Agregar</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                    </div>
+
+                                </div> <!-- /.row -->
                         </form>
                     </div>
                 </div>
