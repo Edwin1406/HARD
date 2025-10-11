@@ -325,22 +325,40 @@ $selIf    = function ($left, $right) {
 
 
                                 <!-- Tienda -->
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="Prenda_Partida">Prenda</label>
-                                        <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-                                            <option value="" disabled <?= empty($old['Prenda_Partida']) ? 'selected' : '' ?>>
-                                                Seleccione una prenda
-                                            </option>
-                                            <?php foreach ($prendas as $p) : ?>
-                                                <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>"
-                                                    <?= $selIf(($old['Prenda_Partida'] ?? ''), $p->Prenda_Partida) ?>>
-                                                    <?= htmlspecialchars($p->Prenda_Partida) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
+                              <div class="col-md-3 col-12">
+  <div class="form-group">
+    <label for="Prenda_Partida">Prenda</label>
+    <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+      <option value="" disabled selected>Seleccione una prenda</option>
+      <?php foreach ($prendas as $p) : ?>
+        <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+          <?= htmlspecialchars($p->Prenda_Partida) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+</div>
+
+<!-- Modal: Agregar prenda -->
+<div class="modal fade" id="modalAgregarPrenda" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="formAgregarPrenda" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar prenda</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Nombre de la prenda</label>
+        <input type="text" class="form-control" id="inputNuevaPrenda" name="Prenda_Partida" required>
+        <div class="form-text">Ej.: BLUSA, PANTALÓN, etc.</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 
                                 <div class="col-md-2 col-12">
