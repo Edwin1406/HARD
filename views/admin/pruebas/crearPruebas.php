@@ -313,15 +313,15 @@ $selIf    = function ($left, $right) {
                                 <!-- Tienda -->
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="Nombre_Tienda">Tienda</label>
-                                        <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
-                                            <option value="" disabled <?= empty($old['Nombre_Tienda']) ? 'selected' : '' ?>>
-                                                Seleccione una tienda
+                                        <label for="Prenda_Partida">Prenda</label>
+                                        <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                            <option value="" disabled <?= empty($old['Prenda_Partida']) ? 'selected' : '' ?>>
+                                                Seleccione una prenda
                                             </option>
-                                            <?php foreach ($tiendas as $t) : ?>
-                                                <option value="<?= htmlspecialchars($t->Nombre_Tienda) ?>"
-                                                    <?= $selIf(($old['Nombre_Tienda'] ?? ''), $t->Nombre_Tienda) ?>>
-                                                    <?= htmlspecialchars($t->Nombre_Tienda) ?>
+                                            <?php foreach ($prendas as $p) : ?>
+                                                <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>"
+                                                    <?= $selIf(($old['Prenda_Partida'] ?? ''), $p->Prenda_Partida) ?>>
+                                                    <?= htmlspecialchars($p->Prenda_Partida) ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
