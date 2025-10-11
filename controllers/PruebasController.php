@@ -178,7 +178,7 @@ class PruebasController
             $alertas = $carrito->validar();
 
 
-            debuguear($carrito);
+            // debuguear($carrito);
 
             if (empty($alertas)) {
                 $ok = $carrito->guardar();
