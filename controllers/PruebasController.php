@@ -271,8 +271,11 @@ class PruebasController
             exit;
         }
 
+        $prenda = new Prenda;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $prenda = new Prenda;
+
+        
+
 
             // Mapear POST al modelo
             $prenda->Prenda_Partida      = $_POST['Prenda_Partida'] ?? '';
@@ -387,7 +390,10 @@ public static function actualizarPruebas()
 
     $id        = $_POST['id'] ?? null;
     $idNota    = $_POST['id_nota'] ?? null;
+    $etiqueta   = trim($_POST['etiqueta'] ?? '');
     $prenda    = trim($_POST['prenda'] ?? '');
+    $partida   = trim($_POST['partida'] ?? '');
+    $composicion = trim($_POST['composicion'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
     // $total     = (float)($_POST['total'] ?? 0);
@@ -409,7 +415,10 @@ public static function actualizarPruebas()
 
     // Actualiza campos
     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
+    $carrito->etiqueta = $etiqueta;
     $carrito->prenda = $prenda;
+    $carrito->partida = $partida;
+    $carrito->composicion = $composicion;
     $carrito->cantidad = $cantidad;
     $carrito->precio_unitario = $precioU;
     $carrito->total = $total;
