@@ -159,8 +159,11 @@ class PruebasController
             $old = $_POST;
 
             // Mapear POST -> modelo (solo los campos pedidos)
-            $carrito->Codigo_Nota_Pedido = $id_nota;                         // fuerza por URL
+            $carrito->Codigo_Nota_Pedido = $id_nota;  
+            $carrito->etiqueta           = $_POST['etiqueta']   ?? '';
             $carrito->prenda             = $_POST['prenda']   ?? '';
+            $carrito->partida            = $_POST['partida']   ?? '';
+            $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
             // $carrito->total              = $_POST['total'] ?? 0;
@@ -188,7 +191,10 @@ class PruebasController
                                 'id'                  => $carrito->id ?? null,
                                 // nombres que usa el frontend en Handsontable
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
+                                'etiqueta'            => $carrito->etiqueta,
                                 'prenda'              => $carrito->prenda,
+                                'partida'             => $carrito->partida,
+                                'composicion'         => $carrito->composicion,
                                 'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
                                 'total'               => number_format((float)$carrito->total, 2, '.', ''),
