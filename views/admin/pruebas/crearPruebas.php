@@ -439,8 +439,10 @@ $selIf    = function ($left, $right) {
                     timer: 1500
                 });
 
-                // QUITAR  MODAL
-                const modalEl = document.getElementById('modalCrearPrenda');
+                // QUITAR  MODAL 
+                    remove.modalEl('show');
+
+
                 const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
                 bsModal.hide();
 
