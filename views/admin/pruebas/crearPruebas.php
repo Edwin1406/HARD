@@ -478,7 +478,7 @@ $selIf    = function ($left, $right) {
     }
 
     #hot-min {
-        height: clamp(760px, 60vh, 740px)
+        height: clamp(360px, 60vh, 740px)
     }
 
     .handsontable th,
