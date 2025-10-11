@@ -262,51 +262,124 @@ class PruebasController
 
 
 
+ // En tu PruebasController
+class PruebasController
+{
     // Crear prenda
     public static function crearPrenda()
     {
         session_start();
         if (!isset($_SESSION['email'])) {
+            if (self::isAjax()) {
+                return self::json(['ok' => false, 'error' => 'No autorizado'], 401);
+            }
             header('Location: /');
             exit;
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            
-            $prenda = new Prenda;
-
-
-            // Mapear POST al modelo
-            $prenda->Prenda_Partida      = $_POST['Prenda_Partida'] ?? '';
-            $prenda->Partida_Partida     = $_POST['Partida_Partida'] ?? '';
-            $prenda->Composicion_Partida = $_POST['Composicion_Partida'] ?? '';
-
-            // debuguear($prenda);
-
-            // Validación del modelo (usa tu Prenda::validar() si la tienes)
-            $alertas = $prenda->validar();
-
-            if (empty($alertas)) {
-                $resultado = $prenda->guardar();
-                if ($resultado) {
-                    header("Location: /admin/pruebas/crearPruebas?exito=1");
-                    exit;
-                } else {
-                    $alertas['error'][] = 'Error al guardar el registro de prenda';
-                }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            if (self::isAjax()) {
+                return self::json(['ok' => false, 'error' => 'Método no permitido'], 405);
             }
+            header('Location: /admin/pruebas/crearPruebas');
+            exit;
+        }
 
-            // Si hay errores, podrías manejarlo aquí o redirigir con mensajes
-            // Por simplicidad, redirigimos con un error genérico
+        // Sanitizar / normalizar
+        $Prenda_Partida      = trim($_POST['Prenda_Partida'] ?? '');
+        $Partida_Partida     = trim($_POST['Partida_Partida'] ?? '');
+        $Composicion_Partida = trim($_POST['Composicion_Partida'] ?? '');
+
+        // Validaciones mínimas (además de las del modelo)
+        $errores = [];
+        if ($Prenda_Partida === '')      $errores[] = 'El campo "Prenda" es obligatorio.';
+        if ($Partida_Partida === '')     $errores[] = 'El campo "Partida" es obligatorio.';
+        if ($Composicion_Partida === '') $errores[] = 'El campo "Composición" es obligatorio.';
+
+        // (Opcional) evitar duplicados por nombre exacto
+        // $existe = Prenda::where('Prenda_Partida', $Prenda_Partida)->first();
+        // if ($existe) $errores[] = 'Ya existe una prenda con ese nombre.';
+
+        if (!empty($errores)) {
+            if (self::isAjax()) {
+                return self::json(['ok' => false, 'error' => implode(' ', $errores)], 422);
+            }
             header("Location: /admin/pruebas/crearPruebas?errorPrenda=1");
             exit;
         }
 
-        // Si no es POST, redirigir a la página principal de pruebas
-        header('Location: /admin/pruebas/crearPruebas');
+        // Mapear al modelo
+        $prenda = new Prenda;
+        $prenda->Prenda_Partida      = $Prenda_Partida;
+        $prenda->Partida_Partida     = $Partida_Partida;
+        $prenda->Composicion_Partida = $Composicion_Partida;
+
+        // Validación del modelo si existe
+        $alertas = method_exists($prenda, 'validar') ? $prenda->validar() : [];
+        if (!empty($alertas)) {
+            $msg = !empty($alertas['error']) ? implode(' ', $alertas['error']) : 'Validación fallida.';
+            if (self::isAjax()) {
+                return self::json(['ok' => false, 'error' => $msg], 422);
+            }
+            header("Location: /admin/pruebas/crearPruebas?errorPrenda=1");
+            exit;
+        }
+
+        // Guardar con manejo de errores
+        try {
+            $resultado = $prenda->guardar(); // ideal: setea $prenda->id o retorna el ID
+            if ($resultado) {
+                // Si tu ORM devuelve ID, asegúrate de exponerlo:
+                // $id = is_numeric($resultado) ? (int)$resultado : ($prenda->id ?? null);
+                $id = $prenda->id ?? (is_numeric($resultado) ? (int)$resultado : null);
+
+                if (self::isAjax()) {
+                    return self::json([
+                        'ok' => true,
+                        'prenda' => [
+                            'id' => $id,
+                            'Prenda_Partida'      => $prenda->Prenda_Partida,
+                            'Partida_Partida'     => $prenda->Partida_Partida,
+                            'Composicion_Partida' => $prenda->Composicion_Partida,
+                        ],
+                    ], 201);
+                }
+
+                header("Location: /admin/pruebas/crearPruebas?exito=1");
+                exit;
+            } else {
+                $msg = 'Error al guardar el registro de prenda.';
+                if (self::isAjax()) {
+                    return self::json(['ok' => false, 'error' => $msg], 500);
+                }
+                header("Location: /admin/pruebas/crearPruebas?errorPrenda=1");
+                exit;
+            }
+        } catch (Throwable $e) {
+            // Log real aquí si tienes logger
+            if (self::isAjax()) {
+                return self::json(['ok' => false, 'error' => 'Excepción al guardar la prenda.'], 500);
+            }
+            header("Location: /admin/pruebas/crearPruebas?errorPrenda=1");
+            exit;
+        }
+    }
+
+    // ---------- Helpers ----------
+    private static function isAjax(): bool
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    }
+
+    private static function json(array $payload, int $status = 200)
+    {
+        http_response_code($status);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($payload, JSON_UNESCAPED_UNICODE);
         exit;
     }
+}
 
 
 
