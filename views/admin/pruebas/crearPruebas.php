@@ -291,6 +291,168 @@ $selIf    = function ($left, $right) {
 
 
 
+
+<!-- ====== Modal para agregar una nueva prenda (IDs únicos, mismos NAME) ====== -->
+<div class="modal fade" id="modalNuevaPrenda" tabindex="-1" aria-labelledby="modalNuevaPrendaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalNuevaPrendaLabel">Agregar nueva prenda</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <form id="formNuevaPrenda" method="POST" action="/admin/prenda/crearPrenda" onsubmit="return false">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Prenda_Partida" class="form-label">Nombre de la prenda</label>
+                        <!-- NAME igual; ID distinto para no chocar -->
+                        <input type="text" class="form-control" id="Prenda_Partida" name="Prenda_Partida" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Partida_Partida" class="form-label">Partida</label>
+                        <input type="text" class="form-control" id="Partida_Partida" name="Partida_Partida" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Composicion_Partida" class="form-label">Composición</label>
+                        <input type="text" class="form-control" id="Composicion_Partida" name="Composicion_Partida" required>
+                    </div>
+
+                    <div class="alert alert-danger d-none" id="np_errorBox"></div>
+                    <div class="alert alert-success d-none" id="np_okBox">Prenda guardada.</div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="np_btnGuardar">
+                        <span class="spinner-border spinner-border-sm me-2 d-none" id="np_spinner" role="status" aria-hidden="true"></span>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('formNuevaPrenda');
+        const btn = document.getElementById('np_btnGuardar');
+        const spinner = document.getElementById('np_spinner');
+        const errorBox = document.getElementById('np_errorBox');
+        const okBox = document.getElementById('np_okBox');
+        const modalEl = document.getElementById('modalNuevaPrenda');
+        const prendaSelect = document.getElementById('Prenda_Partida');
+
+        function showError(msg) {
+            errorBox.textContent = msg || 'No se pudo guardar.';
+            errorBox.classList.remove('d-none');
+            okBox.classList.add('d-none');
+        }
+
+        function showOK(msg) {
+            okBox.textContent = msg || '¡Guardada!';
+            okBox.classList.remove('d-none');
+            errorBox.classList.add('d-none');
+        }
+
+        function setLoading(v) {
+            btn.disabled = v;
+            spinner.classList.toggle('d-none', !v);
+        }
+
+        // Añade la opción nueva al <select> (soporta Choices.js si está activo)
+        function addOptionToSelect(selectEl, value, label) {
+            // Detectar instancia Choices
+            const choicesInstance =
+                (selectEl && selectEl.choices) ||
+                (window.prendaChoices) ||
+                null;
+
+            if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
+                // Añadir una opción y seleccionarla (sin re-inicializar)
+                choicesInstance.setChoices(
+                    [{
+                        value: value,
+                        label: label,
+                        selected: true
+                    }],
+                    'value',
+                    'label',
+                    false // false: no limpia las existentes
+                );
+                return;
+            }
+
+            // Vanilla
+            const opt = document.createElement('option');
+            opt.value = value;
+            opt.textContent = label;
+            selectEl.appendChild(opt);
+            selectEl.value = value;
+            selectEl.dispatchEvent(new Event('change', {
+                bubbles: true
+            }));
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            setLoading(true);
+            errorBox.classList.add('d-none');
+            okBox.classList.add('d-none');
+
+            try {
+                const fd = new FormData(form);
+
+                const res = await fetch('/admin/prenda/crearPrenda', {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: fd
+                });
+
+                const raw = await res.text();
+                let data = null;
+                try {
+                    data = JSON.parse(raw);
+                } catch {}
+
+                if (!res.ok || !data || data.ok !== true) {
+                    const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
+                    showError(msg);
+                    setLoading(false);
+                    return;
+                }
+
+                const nombre = data.prenda?.Prenda_Partida || fd.get('Prenda_Partida') || '';
+                addOptionToSelect(prendaSelect, nombre, nombre);
+
+                // limpiar y cerrar
+                form.reset();
+                showOK('¡Guardada!');
+                const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                bsModal.hide();
+
+            } catch (err) {
+                showError('Error de red o servidor.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Limpiar mensajes al abrir
+        modalEl.addEventListener('show.bs.modal', () => {
+            errorBox.classList.add('d-none');
+            okBox.classList.add('d-none');
+        });
+    })();
+</script>
+
+
+
+
+
+
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -325,172 +487,28 @@ $selIf    = function ($left, $right) {
 
 
                                 <!-- Tienda -->
-                            <!-- ====== Campo Prenda con botón + (sin cambios en nombres) ====== -->
-<div class="col-md-3 col-12">
-  <div class="form-group d-flex align-items-end">
-    <div class="flex-grow-1">
-      <label for="Prenda_Partida">Prenda</label>
-      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-        <option value="" disabled selected>Seleccione una prenda</option>
-        <?php foreach ($prendas as $p) : ?>
-          <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
-            <?= htmlspecialchars($p->Prenda_Partida) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+                                <!-- ====== Campo Prenda con botón + (sin cambios en nombres) ====== -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group d-flex align-items-end">
+                                        <div class="flex-grow-1">
+                                            <label for="Prenda_Partida">Prenda</label>
+                                            <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                                <option value="" disabled selected>Seleccione una prenda</option>
+                                                <?php foreach ($prendas as $p) : ?>
+                                                    <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+                                                        <?= htmlspecialchars($p->Prenda_Partida) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
 
-    <!-- Botón + para abrir el modal -->
-    <button type="button" class="btn btn-outline-primary ms-2 mb-1"
-            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
-      <i class="bi bi-plus-lg"></i>
-    </button>
-  </div>
-</div>
-
-<!-- ====== Modal para agregar una nueva prenda (IDs únicos, mismos NAME) ====== -->
-<div class="modal fade" id="modalNuevaPrenda" tabindex="-1" aria-labelledby="modalNuevaPrendaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="modalNuevaPrendaLabel">Agregar nueva prenda</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-
-      <form id="formNuevaPrenda" method="POST" action="/admin/prenda/crearPrenda" onsubmit="return false">
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="Prenda_Partida" class="form-label">Nombre de la prenda</label>
-            <!-- NAME igual; ID distinto para no chocar -->
-            <input type="text" class="form-control" id="Prenda_Partida" name="Prenda_Partida" required>
-          </div>
-          <div class="mb-3">
-            <label for="Partida_Partida" class="form-label">Partida</label>
-            <input type="text" class="form-control" id="Partida_Partida" name="Partida_Partida" required>
-          </div>
-          <div class="mb-3">
-            <label for="Composicion_Partida" class="form-label">Composición</label>
-            <input type="text" class="form-control" id="Composicion_Partida" name="Composicion_Partida" required>
-          </div>
-
-          <div class="alert alert-danger d-none" id="np_errorBox"></div>
-          <div class="alert alert-success d-none" id="np_okBox">Prenda guardada.</div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="np_btnGuardar">
-            <span class="spinner-border spinner-border-sm me-2 d-none" id="np_spinner" role="status" aria-hidden="true"></span>
-            Guardar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<script>
-(function () {
-  const form = document.getElementById('formNuevaPrenda');
-  const btn = document.getElementById('np_btnGuardar');
-  const spinner = document.getElementById('np_spinner');
-  const errorBox = document.getElementById('np_errorBox');
-  const okBox = document.getElementById('np_okBox');
-  const modalEl = document.getElementById('modalNuevaPrenda');
-  const prendaSelect = document.getElementById('Prenda_Partida');
-
-  function showError(msg) {
-    errorBox.textContent = msg || 'No se pudo guardar.';
-    errorBox.classList.remove('d-none');
-    okBox.classList.add('d-none');
-  }
-  function showOK(msg) {
-    okBox.textContent = msg || '¡Guardada!';
-    okBox.classList.remove('d-none');
-    errorBox.classList.add('d-none');
-  }
-  function setLoading(v) {
-    btn.disabled = v;
-    spinner.classList.toggle('d-none', !v);
-  }
-
-  // Añade la opción nueva al <select> (soporta Choices.js si está activo)
-  function addOptionToSelect(selectEl, value, label) {
-    // Detectar instancia Choices
-    const choicesInstance =
-      (selectEl && selectEl.choices) ||
-      (window.prendaChoices) ||
-      null;
-
-    if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
-      // Añadir una opción y seleccionarla (sin re-inicializar)
-      choicesInstance.setChoices(
-        [{ value: value, label: label, selected: true }],
-        'value',
-        'label',
-        false // false: no limpia las existentes
-      );
-      return;
-    }
-
-    // Vanilla
-    const opt = document.createElement('option');
-    opt.value = value;
-    opt.textContent = label;
-    selectEl.appendChild(opt);
-    selectEl.value = value;
-    selectEl.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    setLoading(true);
-    errorBox.classList.add('d-none');
-    okBox.classList.add('d-none');
-
-    try {
-      const fd = new FormData(form);
-
-      const res = await fetch('/admin/prenda/crearPrenda', {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: fd
-      });
-
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch {}
-
-      if (!res.ok || !data || data.ok !== true) {
-        const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
-        showError(msg);
-        setLoading(false);
-        return;
-      }
-
-      const nombre = data.prenda?.Prenda_Partida || fd.get('Prenda_Partida') || '';
-      addOptionToSelect(prendaSelect, nombre, nombre);
-
-      // limpiar y cerrar
-      form.reset();
-      showOK('¡Guardada!');
-      const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-      bsModal.hide();
-
-    } catch (err) {
-      showError('Error de red o servidor.');
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  // Limpiar mensajes al abrir
-  modalEl.addEventListener('show.bs.modal', () => {
-    errorBox.classList.add('d-none');
-    okBox.classList.add('d-none');
-  });
-})();
-</script>
+                                        <!-- Botón + para abrir el modal -->
+                                        <button type="button" class="btn btn-outline-primary ms-2 mb-1"
+                                            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
 
 
