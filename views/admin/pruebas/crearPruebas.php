@@ -289,64 +289,6 @@ $selIf    = function ($left, $right) {
 </section>
 
 
-
-
-<section id="multiple-column-form">
-    <div class="row match-height">
-        <div class="col-12">
-            <div class="card">
-
-                <?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
-
-                <div class="card-content">
-                    <div class="card-body">
-                        <form class="form"
-                            method="POST"
-                            action="/admin/pruebas/crearPruebas"
-                            enctype="multipart/form-data"
-                            onsubmit="return bloquearBoton(this)">
-
-                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
-
-                            <div class="row">
-
-                                <!-- # Factura -->
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="etiqueta"># Etiq</label>
-                                        <input type="text"
-                                            id="etiqueta"
-                                            class="form-control"
-                                            placeholder="# Etiq"
-                                            name="etiqueta"
-                                            value="<?= $oldVal('etiqueta') ?>">
-                                    </div>
-                                </div>
-
-
-                                <!-- Tienda -->
-                            <!-- ====== Campo Prenda con botón + (sin cambios en nombres) ====== -->
-<div class="col-md-3 col-12">
-  <div class="form-group d-flex align-items-end">
-    <div class="flex-grow-1">
-      <label for="Prenda_Partida">Prenda</label>
-      <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
-        <option value="" disabled selected>Seleccione una prenda</option>
-        <?php foreach ($prendas as $p) : ?>
-          <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
-            <?= htmlspecialchars($p->Prenda_Partida) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-
-    <!-- Botón + para abrir el modal -->
-    <button type="button" class="btn btn-outline-primary ms-2 mb-1"
-            data-bs-toggle="modal" data-bs-target="#pm_modalNuevaPrenda">
-      <i class="bi bi-plus-lg"></i>
-    </button>
-  </div>
-</div>
 <!-- ====== Modal para agregar una nueva prenda (IDs únicos, mismos NAME) ====== -->
 <div class="modal fade" id="pm_modalNuevaPrenda" tabindex="-1" aria-labelledby="pm_modalNuevaPrendaLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -489,6 +431,64 @@ $selIf    = function ($left, $right) {
 })();
 </script>
 
+
+
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+
+                <?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
+
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form"
+                            method="POST"
+                            action="/admin/pruebas/crearPruebas"
+                            enctype="multipart/form-data"
+                            onsubmit="return bloquearBoton(this)">
+
+                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+
+                            <div class="row">
+
+                                <!-- # Factura -->
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="etiqueta"># Etiq</label>
+                                        <input type="text"
+                                            id="etiqueta"
+                                            class="form-control"
+                                            placeholder="# Etiq"
+                                            name="etiqueta"
+                                            value="<?= $oldVal('etiqueta') ?>">
+                                    </div>
+                                </div>
+
+
+                                <!-- Tienda -->
+                                <!-- ====== Campo Prenda con botón + (sin cambios en nombres) ====== -->
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group d-flex align-items-end">
+                                        <div class="flex-grow-1">
+                                            <label for="Prenda_Partida">Prenda</label>
+                                            <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                                <option value="" disabled selected>Seleccione una prenda</option>
+                                                <?php foreach ($prendas as $p) : ?>
+                                                    <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
+                                                        <?= htmlspecialchars($p->Prenda_Partida) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+
+                                        <!-- Botón + para abrir el modal -->
+                                        <button type="button" class="btn btn-outline-primary ms-2 mb-1"
+                                            data-bs-toggle="modal" data-bs-target="#pm_modalNuevaPrenda">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
 
 
