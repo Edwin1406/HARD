@@ -343,7 +343,7 @@ $selIf    = function ($left, $right) {
   const okBox       = document.getElementById('np_okBox');
   const modalEl     = document.getElementById('modalNuevaPrenda');
 
-  // ⚠️ Mantenemos tus IDs/NAME. Solo nos aseguramos de tomar el <select> que está FUERA del modal.
+  // Mantiene tus IDs, pero asegura que apunte al <select> fuera del modal
   const prendaSelect = (() => {
     const nodes = document.querySelectorAll('select[name="Prenda_Partida"], select#Prenda_Partida');
     return Array.from(nodes).find(el => !modalEl.contains(el)) || nodes[0] || null;
@@ -367,40 +367,6 @@ $selIf    = function ($left, $right) {
     if (spinner) spinner.classList.toggle('d-none', !v);
   }
 
-  // Añade la opción nueva al <select> (soporta Choices.js si está activo)
-  function addOptionToSelect(selectEl, value, label) {
-    if (!selectEl) return;
-
-    // Detectar instancia Choices ya inicializada (evita re-init)
-    const choicesInstance =
-      (selectEl && selectEl.choices) ||
-      (window.prendaChoices) ||
-      null;
-
-    if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
-      // Añade sin reemplazar y selecciónala
-      choicesInstance.setChoices(
-        [{ value, label, selected: true }],
-        'value',
-        'label',
-        false
-      );
-      if (typeof choicesInstance.setChoiceByValue === 'function') {
-        choicesInstance.setChoiceByValue(value);
-      }
-      return;
-    }
-
-    // Vanilla
-    const opt = document.createElement('option');
-    opt.value = value;
-    opt.textContent = label;
-    selectEl.appendChild(opt);
-    selectEl.value = value;
-    selectEl.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-
-  // Limpia posibles backdrops colgados (último recurso)
   function scrubBackdrops() {
     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     document.body.classList.remove('modal-open');
@@ -408,7 +374,6 @@ $selIf    = function ($left, $right) {
     document.body.style.removeProperty('padding-right');
   }
 
-  // Muestra un toast SweetAlert2 (sin backdrop)
   function showSavedToast() {
     if (window.Swal && typeof Swal.fire === 'function') {
       Swal.fire({
@@ -417,14 +382,13 @@ $selIf    = function ($left, $right) {
         icon: 'success',
         title: 'Prenda guardada',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1200,
         timerProgressBar: true,
         backdrop: false
       });
     } else {
-      // Fallback mínimo por si no está SweetAlert2
       showOK('Prenda guardada');
-      setTimeout(() => okBox.classList.add('d-none'), 1500);
+      setTimeout(() => okBox.classList.add('d-none'), 1200);
     }
   }
 
@@ -455,14 +419,11 @@ $selIf    = function ($left, $right) {
         return;
       }
 
-      // Añadir/seleccionar prenda en el <select> (fuera del modal)
       const nombre = (data.prenda && data.prenda.Prenda_Partida) || fd.get('Prenda_Partida') || '';
-      addOptionToSelect(prendaSelect, nombre, nombre);
 
-      // Resetear formulario
+      // Resetea formulario
       form.reset();
 
-      // Cerrar modal y tras ocultarse, mostrar toast
       const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
       const isOpen = modalEl.classList.contains('show');
 
@@ -470,11 +431,14 @@ $selIf    = function ($left, $right) {
         modalEl.addEventListener('hidden.bs.modal', () => {
           scrubBackdrops();
           showSavedToast();
+          // 🔄 Recargar página después del toast
+          setTimeout(() => location.reload(), 1300);
         }, { once: true });
 
         bsModal.hide();
       } else {
         showSavedToast();
+        setTimeout(() => location.reload(), 1300);
       }
     } catch (err) {
       showError('Error de red o servidor.');
@@ -483,21 +447,18 @@ $selIf    = function ($left, $right) {
     }
   });
 
-  // ======= al abrir modal, limpiar mensajes =======
+  // ======= limpiar mensajes al abrir modal =======
   modalEl.addEventListener('show.bs.modal', () => {
     errorBox.classList.add('d-none');
     okBox.classList.add('d-none');
   });
 
-  // ======= seguridad extra: al ocultar modal, barrer backdrops colgados =======
+  // ======= seguridad extra: limpiar backdrop =======
   modalEl.addEventListener('hidden.bs.modal', () => {
     scrubBackdrops();
   });
 })();
 </script>
-
-
-
 
 <section id="multiple-column-form">
     <div class="row match-height">
