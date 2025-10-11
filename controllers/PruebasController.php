@@ -379,7 +379,7 @@ class PruebasController
         echo json_encode($payload, JSON_UNESCAPED_UNICODE);
         exit;
     }
-}
+
 
 
 
