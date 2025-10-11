@@ -342,7 +342,7 @@ $selIf    = function ($left, $right) {
 
     <!-- Botón + para abrir el modal -->
     <button type="button" class="btn btn-outline-primary ms-2 mb-1"
-            data-bs-toggle="modal" data-bs-target="#modalNuevaPrenda">
+            data-bs-toggle="modal" data-bs-target="#pm_modalNuevaPrenda">
       <i class="bi bi-plus-lg"></i>
     </button>
   </div>
