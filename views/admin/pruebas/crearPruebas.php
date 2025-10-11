@@ -361,6 +361,125 @@ $selIf    = function ($left, $right) {
 </div>
 
 
+
+<script>
+(function () {
+  // 1) Inicializar Choices
+  const selectEl = document.getElementById('Prenda_Partida');
+  const choices = new Choices(selectEl, {
+    searchPlaceholderValue: 'Escriba para buscar…',
+    placeholder: true,
+    shouldSort: false,
+    removeItemButton: false,
+    noResultsText: 'Sin resultados',
+  });
+
+  // Control de la opción "Agregar"
+  let addChoiceId = null;       // id interno de la opción "Agregar"
+  let lastQueryForAdd = '';     // para no duplicar
+
+  // 2) Detectar lo que escribe el usuario en el input interno de Choices
+  //    (el input vive dentro del contenedor de Choices)
+  const input = selectEl.parentElement.querySelector('.choices__input--cloned');
+  const dropdown = selectEl.parentElement.querySelector('.choices__list--dropdown');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    // Borrar la opción "Agregar" previa si cambia la query
+    removeAddOption();
+
+    if (!q) return;
+
+    // ¿Hay alguna opción existente que contenga la query?
+    const exists = choices._store.choices.some(ch =>
+      ch.active && !ch.placeholder &&
+      (ch.label || '').toLowerCase().includes(q.toLowerCase())
+    );
+
+    // Si NO hay coincidencias, inyectamos "Agregar "q""
+    if (!exists) {
+      addChoiceId = Date.now(); // id único
+      lastQueryForAdd = q;
+      choices._store.addChoice({
+        id: addChoiceId,
+        value: `__create__:${q}`,
+        label: `➕ Agregar "${q}"`,
+        disabled: false,
+        placeholder: false,
+        selected: false,
+        groupId: -1,
+        customProperties: { isCreate: true }
+      });
+
+      // Forzar que la opción aparezca arriba
+      const list = dropdown.querySelector('.choices__list');
+      if (list) list.prepend(list.querySelector(`[data-id="${addChoiceId}"]`));
+    }
+  });
+
+  // 3) Al seleccionar una opción
+  selectEl.addEventListener('addItem', (evt) => {
+    const val = evt.detail.value || '';
+    if (val.startsWith('__create__:')) {
+      // Cancelamos selección, reabrimos modal
+      choices.removeActiveItems();
+      const nombre = val.split('__create__:')[1] || lastQueryForAdd;
+      document.getElementById('inputNuevaPrenda').value = nombre;
+      const modal = new bootstrap.Modal('#modalAgregarPrenda');
+      modal.show();
+      // Limpieza
+      removeAddOption();
+      input.focus();
+    }
+  });
+
+  // 4) Guardar nueva prenda (AJAX al backend) y añadirla al select
+  document.getElementById('formAgregarPrenda').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('inputNuevaPrenda').value.trim();
+    if (!nombre) return;
+
+    try {
+      // TODO: ajusta la URL al endpoint real que crea la prenda en tu backend
+      const resp = await fetch('/api/prendas/crear', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ Prenda_Partida: nombre })
+      });
+
+      if (!resp.ok) throw new Error('Error al guardar en el servidor');
+
+      // Opcional: si el servidor devuelve el nombre normalizado/ID, úsalo aquí.
+      // const data = await resp.json(); const valor = data.Prenda_Partida;
+      const valor = nombre;
+
+      // Añadir opción definitivamente y seleccionarla
+      choices.setChoices([{ value: valor, label: valor, selected: true }], 'value', 'label', false);
+
+      bootstrap.Modal.getInstance(document.getElementById('modalAgregarPrenda')).hide();
+    } catch (err) {
+      alert('No se pudo guardar la prenda. Revisa la consola.');
+      console.error(err);
+    }
+  });
+
+  function removeAddOption() {
+    if (addChoiceId !== null) {
+      // Eliminar del store y del DOM la opción especial
+      const el = dropdown.querySelector(`[data-id="${addChoiceId}"]`);
+      if (el) el.remove();
+      // También limpiamos del store (marcar inactive)
+      const c = choices._store.choices.find(ch => ch.id === addChoiceId);
+      if (c) c.active = false;
+      addChoiceId = null;
+      lastQueryForAdd = '';
+    }
+  }
+})();
+</script>
+
+
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="partida">Partida</label>
