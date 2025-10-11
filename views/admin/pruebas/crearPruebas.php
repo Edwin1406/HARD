@@ -297,344 +297,436 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
 
 <style>
-  .hot-card{border:1px solid #e9ecef;box-shadow:0 6px 24px rgba(33,37,41,.06);border-radius:1rem;overflow:hidden}
-  .hot-toolbar .btn{border-radius:.6rem}
-  #hot-min{height:clamp(360px,60vh,640px)}
-  .handsontable th,.handsontable td{font-size:.95rem;white-space:nowrap;}
-  .handsontable .ht_clone_top th,.handsontable .ht_clone_top td{background-color:#f8f9fa}
-  .hot-badge{font-size:.7rem;letter-spacing:.02em}
-  .text-mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .hot-card {
+        border: 1px solid #e9ecef;
+        box-shadow: 0 6px 24px rgba(33, 37, 41, .06);
+        border-radius: 1rem;
+        overflow: hidden
+    }
+
+    .hot-toolbar .btn {
+        border-radius: .6rem
+    }
+
+    #hot-min {
+        height: clamp(360px, 60vh, 640px)
+    }
+
+    .handsontable th,
+    .handsontable td {
+        font-size: .95rem;
+        white-space: nowrap;
+    }
+
+    .handsontable .ht_clone_top th,
+    .handsontable .ht_clone_top td {
+        background-color: #f8f9fa
+    }
+
+    .hot-badge {
+        font-size: .7rem;
+        letter-spacing: .02em
+    }
+
+    .text-mono {
+        font-variant-numeric: tabular-nums;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    }
 </style>
 
 <div class="container-xxl my-4">
-  <div class="hot-card">
-    <div class="p-3 p-md-4 border-bottom bg-white">
-      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-        <div>
-          <h5 class="mb-1 d-flex align-items-center gap-2">
-            Carrito de Pruebas
-            <span class="badge text-bg-light hot-badge">Handsontable</span>
-          </h5>
-          <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
+    <div class="hot-card">
+        <div class="p-3 p-md-4 border-bottom bg-white">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                    <h5 class="mb-1 d-flex align-items-center gap-2">
+                        Carrito de Pruebas
+                        <span class="badge text-bg-light hot-badge">Handsontable</span>
+                    </h5>
+                    <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
+                </div>
+                <div class="hot-toolbar d-flex align-items-center gap-2">
+                    <div class="form-check form-switch me-2">
+                        <input class="form-check-input" type="checkbox" id="autosave" checked>
+                        <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
+                    </div>
+                    <button id="guardar-nuevas" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
+                    </button>
+                    <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
+                </div>
+            </div>
         </div>
-        <div class="hot-toolbar d-flex align-items-center gap-2">
-          <div class="form-check form-switch me-2">
-            <input class="form-check-input" type="checkbox" id="autosave" checked> 
-            <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
-          </div>
-          <button id="guardar-nuevas" class="btn btn-primary">
-            <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
-          </button>
-          <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="p-2 p-md-3 bg-light-subtle">
-      <div class="table-responsive">
-        <div id="hot-min" class="bg-white rounded-3"></div>
-      </div>
+        <div class="p-2 p-md-3 bg-light-subtle">
+            <div class="table-responsive">
+                <div id="hot-min" class="bg-white rounded-3"></div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Modal eliminar -->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-0">
-        <h6 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i> Confirmar eliminación</h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body pt-0">¿Eliminar este registro definitivamente?</div>
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" id="btnConfirmDelete" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Eliminar</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h6 class="modal-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i> Confirmar eliminación</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body pt-0">¿Eliminar este registro definitivamente?</div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnConfirmDelete" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Eliminar</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Toasts -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1080">
-  <div id="toastOk" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body"><i class="bi bi-check-circle me-2"></i> Operación realizada.</div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div id="toastOk" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i> Operación realizada.</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
     </div>
-  </div>
-  <div id="toastErr" class="toast align-items-center text-bg-danger border-0 mt-2" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body"><i class="bi bi-x-circle me-2"></i> No se pudo procesar.</div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div id="toastErr" class="toast align-items-center text-bg-danger border-0 mt-2" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-x-circle me-2"></i> No se pudo procesar.</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  // ---------- Puentes PHP ----------
-  const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
+    // ---------- Puentes PHP ----------
+    const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-  const existentes = <?php
-    $idUrl = $id_nota ?? null;
-    $out = [];
-    if (!empty($carritoTemporal2)) {
-      foreach ($carritoTemporal2 as $r) {
-        if ($idUrl != $r->Codigo_Nota_Pedido) continue;
-        $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
-        $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-        $out[] = [
-          'id'                 => (int)$r->id,
-          'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
-          'etiqueta'           => $r->etiqueta,
-          'prenda'             => $r->prenda,
-          'partida'            => $r->partida,
-          'composicion'       => $r->composicion,
-          'cantidad'           => $cant,
-          'precio_unitario'    => $precio,
-          'total'              => round($cant * $precio, 2),
-        ];
-      }
+    const existentes = <?php
+                        $idUrl = $id_nota ?? null;
+                        $out = [];
+                        if (!empty($carritoTemporal2)) {
+                            foreach ($carritoTemporal2 as $r) {
+                                if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+                                $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
+                                $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
+                                $out[] = [
+                                    'id'                 => (int)$r->id,
+                                    'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
+                                    'etiqueta'           => $r->etiqueta,
+                                    'prenda'             => $r->prenda,
+                                    'partida'            => $r->partida,
+                                    'composicion'       => $r->composicion,
+                                    'cantidad'           => $cant,
+                                    'precio_unitario'    => $precio,
+                                    'total'              => round($cant * $precio, 2),
+                                ];
+                            }
+                        }
+                        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+                        ?>;
+
+    // Utils UI
+    const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), {
+        delay: 1800
+    });
+    const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), {
+        delay: 2600
+    });
+    const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
+    let rowPendingDelete = null;
+
+    // Helpers
+    function round(n) {
+        return Math.round((n + Number.EPSILON) * 100) / 100;
     }
-    echo json_encode($out, JSON_UNESCAPED_UNICODE);
-  ?>;
 
-  // Utils UI
-  const toastOk  = new bootstrap.Toast(document.getElementById('toastOk'),  { delay: 1800 });
-  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
-  const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
-  let rowPendingDelete = null;
+    // ---------- Handsontable ----------
+    const container = document.getElementById('hot-min');
 
-  // Helpers
-  function round(n){ return Math.round((n + Number.EPSILON) * 100) / 100; }
+    const hot = new Handsontable(container, {
+        data: existentes.length ? existentes : [],
+        colHeaders: [
+            'id',
+            'codigo_nota_pedido',
+            'etiqueta',
+            'prenda',
+            'partida',
+            'composicion',
+            'cantidad',
+            'precio_unitario',
+            'total',
+            'Acciones'
+        ],
+        columns: [{
+                data: 'id',
+                readOnly: true
+            },
 
-  // ---------- Handsontable ----------
-  const container = document.getElementById('hot-min');
+            // codigo_nota_pedido (renderer sin usar variable externa hot)
+            {
+                data: 'codigo_nota_pedido',
+                readOnly: true,
+                renderer: (inst, td, row, col, prop, val) => {
+                    td.textContent = val ?? (ID_NOTA ?? '');
+                }
+            },
+            {
+                data: 'etiqueta'
+            },
 
-  const hot = new Handsontable(container, {
-    data: existentes.length ? existentes : [],
-    colHeaders: [
-      'id',
-      'codigo_nota_pedido',
-      'etiqueta',
-      'prenda',
-        'partida',
-      'composicion',
-      'cantidad',
-      'precio_unitario',
-      'total',
-      'Acciones'
-    ],
-    columns: [
-      { data:'id', readOnly:true },
+            {
+                data: 'prenda'
+            },
+            {
+                data: 'partida'
+            },
+            {
+                data: 'composicion'
+            },
 
-      // codigo_nota_pedido (renderer sin usar variable externa hot)
-      { data:'codigo_nota_pedido', readOnly:true, renderer:(inst,td,row,col,prop,val)=>{
-          td.textContent = val ?? (ID_NOTA ?? '');
-        }
-      },
-        { data:'etiqueta' },
+            {
+                data: 'cantidad',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0.[000]'
+                }
+            },
 
-      { data:'prenda' },
-        { data:'partida' },
-      { data:'composicion' },
+            {
+                data: 'precio_unitario',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0.[00]'
+                }
+            },
 
-      { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+            // total calculado (renderer usa inst)
+            {
+                data: 'total',
+                readOnly: true,
+                renderer(inst, td, row) {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    const cant = Number(r.cantidad) || 0;
+                    const pu = Number(r.precio_unitario) || 0;
+                    const tot = round(cant * pu);
+                    r.total = tot;
+                    td.classList.add('text-end', 'text-mono');
+                    td.textContent = tot.toFixed(2);
+                }
+            },
 
-      { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
-
-      // total calculado (renderer usa inst)
-      { data:'total', readOnly:true, renderer(inst, td, row){
-          const r = inst.getSourceDataAtRow(row) || {};
-          const cant = Number(r.cantidad) || 0;
-          const pu   = Number(r.precio_unitario) || 0;
-          const tot  = round(cant * pu);
-          r.total = tot;
-          td.classList.add('text-end','text-mono');
-          td.textContent = tot.toFixed(2);
-        }
-      },
-
-      // acciones (renderer usa inst)
-      { readOnly:true, renderer(inst, td, row){
-          td.classList.add('text-center');
-          td.innerHTML = `
+            // acciones (renderer usa inst)
+            {
+                readOnly: true,
+                renderer(inst, td, row) {
+                    td.classList.add('text-center');
+                    td.innerHTML = `
             <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
               <i class="bi bi-trash me-1"></i>Eliminar
             </button>`;
+                }
+            },
+        ],
+
+        rowHeaders: true,
+        stretchH: 'all',
+        height: container.clientHeight,
+        licenseKey: 'non-commercial-and-evaluation',
+
+        filters: true,
+        dropdownMenu: true,
+        columnSorting: true,
+        manualColumnResize: true,
+        manualRowResize: true,
+
+        minSpareRows: 1,
+        allowInsertColumn: false,
+        allowRemoveColumn: false,
+
+        afterChange(changes, source) {
+            if (!changes || source === 'loadData') return;
+
+            // Recalcula y guarda cuando cambian cantidad, precio o prenda
+            const rowsToUpdate = new Set();
+            for (const [row, prop] of changes) {
+                if (['cantidad', 'precio_unitario', 'prenda'].includes(prop)) {
+                    recalcRow(row);
+                    rowsToUpdate.add(row);
+                }
+            }
+            if (rowsToUpdate.size) maybeAutosave([...rowsToUpdate]);
+        },
+
+        afterPaste() {
+            const len = hot.countRows();
+            for (let i = 0; i < len; i++) recalcRow(i);
+            maybeAutosave([...Array(len).keys()]);
         }
-      },
-    ],
-
-    rowHeaders: true,
-    stretchH: 'all',
-    height: container.clientHeight,
-    licenseKey: 'non-commercial-and-evaluation',
-
-    filters: true,
-    dropdownMenu: true,
-    columnSorting: true,
-    manualColumnResize: true,
-    manualRowResize: true,
-
-    minSpareRows: 1,
-    allowInsertColumn: false,
-    allowRemoveColumn: false,
-
-    afterChange(changes, source) {
-      if (!changes || source === 'loadData') return;
-
-      // Recalcula y guarda cuando cambian cantidad, precio o prenda
-      const rowsToUpdate = new Set();
-      for (const [row, prop] of changes) {
-        if (['cantidad','precio_unitario','prenda'].includes(prop)) {
-          recalcRow(row);
-          rowsToUpdate.add(row);
-        }
-      }
-      if (rowsToUpdate.size) maybeAutosave([...rowsToUpdate]);
-    },
-
-    afterPaste() {
-      const len = hot.countRows();
-      for (let i=0;i<len;i++) recalcRow(i);
-      maybeAutosave([...Array(len).keys()]);
-    }
-  });
-
-  // Ajuste de altura responsive
-  window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
-
-  // --- Lógica de fila
-  function recalcRow(rowIndex){
-    const r = hot.getSourceDataAtRow(rowIndex);
-    if (!r) return;
-    if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-    if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-    if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-    if (typeof r.partida === 'string') r.partida = r.partida.trim();
-    if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
-    r.cantidad = Number(r.cantidad) || 0;
-    r.precio_unitario = Number(r.precio_unitario) || 0;
-    r.total = round(r.cantidad * r.precio_unitario);
-    hot.render(); // refresca la celda total
-  }
-
-  function filasNuevas(){
-    return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
-  }
-
-  // --- Guardar/actualizar
-  async function saveOrUpdateFila(row){
-    const fd = new FormData();
-    fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
-    if (row.id) fd.append('id', row.id);
-    fd.append('prenda', row.prenda ?? '');
-    fd.append('cantidad', row.cantidad ?? 0);
-    fd.append('precio_unitario', row.precio_unitario ?? 0);
-    fd.append('total', row.total ?? 0);
-
-    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
-
-    const resp = await fetch(url, {
-      method: 'POST',
-      body: fd,
-      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
     });
 
-    try{
-      const json = await resp.json();
-      if (json?.ok) {
-        if (json.id) row.id = json.id;           // alta
-        row.codigo_nota_pedido = ID_NOTA;         // fija la nota
-        return true;
-      }
-    }catch(e){ /* backend podría redirigir; ignoramos aquí */ }
-    return false;
-  }
+    // Ajuste de altura responsive
+    window.addEventListener('resize', () => hot.updateSettings({
+        height: container.clientHeight
+    }));
 
-  async function guardarNuevasFilas(btn){
-    btn?.setAttribute('disabled','disabled');
-    btn?.insertAdjacentHTML('afterbegin','<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
-
-    const nuevas = filasNuevas();
-    let ok = true;
-    for (const r of nuevas) {
-      const exito = await saveOrUpdateFila(r);
-      if (!exito) ok = false;
+    // --- Lógica de fila
+    function recalcRow(rowIndex) {
+        const r = hot.getSourceDataAtRow(rowIndex);
+        if (!r) return;
+        if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
+        if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
+        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
+        if (typeof r.partida === 'string') r.partida = r.partida.trim();
+        if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
+        r.cantidad = Number(r.cantidad) || 0;
+        r.precio_unitario = Number(r.precio_unitario) || 0;
+        r.total = round(r.cantidad * r.precio_unitario);
+        hot.render(); // refresca la celda total
     }
 
-    btn?.removeAttribute('disabled');
-    btn?.querySelector('.spinner-border')?.remove();
-    ok ? toastOk.show() : toastErr.show();
-  }
-
-  async function maybeAutosave(rowIdxList){
-    if (!document.getElementById('autosave').checked) return;
-
-    let ok = true;
-    if (Array.isArray(rowIdxList) && rowIdxList.length){
-      for (const idx of rowIdxList){
-        const r = hot.getSourceDataAtRow(idx);
-        if (!r) continue;
-        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue; // vacía
-        const exito = await saveOrUpdateFila(r);
-        if (!exito) ok = false;
-      }
-    } else {
-      const nuevas = filasNuevas();
-      for (const r of nuevas){
-        const exito = await saveOrUpdateFila(r);
-        if (!exito) ok = false;
-      }
+    function filasNuevas() {
+        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
     }
-    ok ? toastOk.show() : toastErr.show();
-  }
 
-  // Botones top
-  document.getElementById('guardar-nuevas').addEventListener('click', (e)=> guardarNuevasFilas(e.currentTarget));
-  document.getElementById('recargar').addEventListener('click', ()=> location.reload());
+    // --- Guardar/actualizar
+    async function saveOrUpdateFila(row) {
+        const fd = new FormData();
+        fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
+        if (row.id) fd.append('id', row.id);
+        fd.append('etiqueta', row.etiqueta ?? '');
+        fd.append('prenda', row.prenda ?? '');
+        fd.append('partida', row.partida ?? 0);
+        fd.append('composicion', row.composicion ?? '');
+        fd.append('cantidad', row.cantidad ?? 0);
+        fd.append('precio_unitario', row.precio_unitario ?? 0);
+        fd.append('total', row.total ?? 0);
 
-  // Eliminar (con modal)
-  container.addEventListener('click', (ev) => {
-    const btn = ev.target.closest('.btn-del');
-    if (!btn) return;
+        const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
-    const rowIndex = parseInt(btn.dataset.row, 10);
-    const rowData  = hot.getSourceDataAtRow(rowIndex);
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: fd,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        });
 
-    if (!rowData?.id) { // sin persistir → borra local
-      hot.alter('remove_row', rowIndex, 1);
-      return;
+        try {
+            const json = await resp.json();
+            if (json?.ok) {
+                if (json.id) row.id = json.id; // alta
+                row.codigo_nota_pedido = ID_NOTA; // fija la nota
+                return true;
+            }
+        } catch (e) {
+            /* backend podría redirigir; ignoramos aquí */ }
+        return false;
     }
-    rowPendingDelete = { rowIndex, rowData };
-    modalDelete.show();
-  });
 
-  document.getElementById('btnConfirmDelete').addEventListener('click', async ()=>{
-    const info = rowPendingDelete;
-    rowPendingDelete = null;
-    if (!info) return;
+    async function guardarNuevasFilas(btn) {
+        btn?.setAttribute('disabled', 'disabled');
+        btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
 
-    const { rowIndex, rowData } = info;
+        const nuevas = filasNuevas();
+        let ok = true;
+        for (const r of nuevas) {
+            const exito = await saveOrUpdateFila(r);
+            if (!exito) ok = false;
+        }
 
-    const fd = new FormData();
-    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-    fd.append('id', rowData.id);
+        btn?.removeAttribute('disabled');
+        btn?.querySelector('.spinner-border')?.remove();
+        ok ? toastOk.show() : toastErr.show();
+    }
 
-    try{
-      const resp = await fetch('/admin/eliminarCarrito', {
-        method: 'POST',
-        body: fd,
-        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }
-      });
-      let ok = false;
-      try { const json = await resp.json(); ok = !!json?.ok; } catch {}
-      if (ok){ hot.alter('remove_row', rowIndex, 1); toastOk.show(); }
-      else   { toastErr.show(); }
-    }catch{ toastErr.show(); }
-    finally { modalDelete.hide(); }
-  });
+    async function maybeAutosave(rowIdxList) {
+        if (!document.getElementById('autosave').checked) return;
+
+        let ok = true;
+        if (Array.isArray(rowIdxList) && rowIdxList.length) {
+            for (const idx of rowIdxList) {
+                const r = hot.getSourceDataAtRow(idx);
+                if (!r) continue;
+                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue; // vacía
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        } else {
+            const nuevas = filasNuevas();
+            for (const r of nuevas) {
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        }
+        ok ? toastOk.show() : toastErr.show();
+    }
+
+    // Botones top
+    document.getElementById('guardar-nuevas').addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
+    document.getElementById('recargar').addEventListener('click', () => location.reload());
+
+    // Eliminar (con modal)
+    container.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('.btn-del');
+        if (!btn) return;
+
+        const rowIndex = parseInt(btn.dataset.row, 10);
+        const rowData = hot.getSourceDataAtRow(rowIndex);
+
+        if (!rowData?.id) { // sin persistir → borra local
+            hot.alter('remove_row', rowIndex, 1);
+            return;
+        }
+        rowPendingDelete = {
+            rowIndex,
+            rowData
+        };
+        modalDelete.show();
+    });
+
+    document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
+        const info = rowPendingDelete;
+        rowPendingDelete = null;
+        if (!info) return;
+
+        const {
+            rowIndex,
+            rowData
+        } = info;
+
+        const fd = new FormData();
+        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+        fd.append('id', rowData.id);
+
+        try {
+            const resp = await fetch('/admin/eliminarCarrito', {
+                method: 'POST',
+                body: fd,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            });
+            let ok = false;
+            try {
+                const json = await resp.json();
+                ok = !!json?.ok;
+            } catch {}
+            if (ok) {
+                hot.alter('remove_row', rowIndex, 1);
+                toastOk.show();
+            } else {
+                toastErr.show();
+            }
+        } catch {
+            toastErr.show();
+        } finally {
+            modalDelete.hide();
+        }
+    });
 </script>
 
 
