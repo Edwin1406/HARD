@@ -279,6 +279,8 @@ class PruebasController
             $prenda->Partida_Partida     = $_POST['Partida_Partida'] ?? '';
             $prenda->Composicion_Partida = $_POST['Composicion_Partida'] ?? '';
 
+            debuguear($prenda);
+
             // Validación del modelo (usa tu Prenda::validar() si la tienes)
             $alertas = $prenda->validar();
 
