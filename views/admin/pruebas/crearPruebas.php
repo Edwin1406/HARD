@@ -332,133 +332,159 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </div>
-
 <script>
-    (function() {
-        const form = document.getElementById('formNuevaPrenda');
-        const btn = document.getElementById('np_btnGuardar');
-        const spinner = document.getElementById('np_spinner');
-        const errorBox = document.getElementById('np_errorBox');
-        const okBox = document.getElementById('np_okBox');
-        const modalEl = document.getElementById('modalNuevaPrenda');
-        const prendaSelect = document.getElementById('Prenda_Partida');
+(function () {
+  // ======= refs =======
+  const form        = document.getElementById('formNuevaPrenda');
+  const btn         = document.getElementById('np_btnGuardar');
+  const spinner     = document.getElementById('np_spinner');
+  const errorBox    = document.getElementById('np_errorBox');
+  const okBox       = document.getElementById('np_okBox');
+  const modalEl     = document.getElementById('modalNuevaPrenda');
+  const prendaSelect= document.getElementById('Prenda_Partida');
 
-        function showError(msg) {
-            errorBox.textContent = msg || 'No se pudo guardar.';
-            errorBox.classList.remove('d-none');
-            okBox.classList.add('d-none');
-        }
+  // ======= helpers =======
+  function showError(msg) {
+    errorBox.textContent = msg || 'No se pudo guardar.';
+    errorBox.classList.remove('d-none');
+    okBox.classList.add('d-none');
+  }
 
-        function showOK(msg) {
-            okBox.textContent = msg || '¡Guardada!';
-            okBox.classList.remove('d-none');
-            errorBox.classList.add('d-none');
-        }
+  function showOK(msg) {
+    okBox.textContent = msg || '¡Guardada!';
+    okBox.classList.remove('d-none');
+    errorBox.classList.add('d-none');
+  }
 
-        function setLoading(v) {
-            btn.disabled = v;
-            spinner.classList.toggle('d-none', !v);
-        }
+  function setLoading(v) {
+    if (btn) btn.disabled = v;
+    if (spinner) spinner.classList.toggle('d-none', !v);
+  }
 
-        // Añade la opción nueva al <select> (soporta Choices.js si está activo)
-        function addOptionToSelect(selectEl, value, label) {
-            // Detectar instancia Choices
-            const choicesInstance =
-                (selectEl && selectEl.choices) ||
-                (window.prendaChoices) ||
-                null;
+  // Añade la opción nueva al <select> (soporta Choices.js si está activo)
+  function addOptionToSelect(selectEl, value, label) {
+    if (!selectEl) return;
+    // Detectar instancia Choices ya inicializada (evita re-init)
+    const choicesInstance =
+      (selectEl && selectEl.choices) ||
+      (window.prendaChoices) ||
+      null;
 
-            if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
-                // Añadir una opción y seleccionarla (sin re-inicializar)
-                choicesInstance.setChoices(
-                    [{
-                        value: value,
-                        label: label,
-                        selected: true
-                    }],
-                    'value',
-                    'label',
-                    false // false: no limpia las existentes
-                );
-                return;
-            }
+    if (choicesInstance && typeof choicesInstance.setChoices === 'function') {
+      choicesInstance.setChoices(
+        [{ value, label, selected: true }],
+        'value',
+        'label',
+        false
+      );
+      return;
+    }
 
-            // Vanilla
-            const opt = document.createElement('option');
-            opt.value = value;
-            opt.textContent = label;
-            selectEl.appendChild(opt);
-            selectEl.value = value;
-            selectEl.dispatchEvent(new Event('change', {
-                bubbles: true
-            }));
-        }
+    // Vanilla
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = label;
+    selectEl.appendChild(opt);
+    selectEl.value = value;
+    selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+  }
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            setLoading(true);
-            errorBox.classList.add('d-none');
-            okBox.classList.add('d-none');
+  // Limpia posibles backdrops colgados (último recurso)
+  function scrubBackdrops() {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
+  }
 
-            try {
-                const fd = new FormData(form);
+  // Muestra un toast SweetAlert2 (sin backdrop)
+  function showSavedToast() {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'success',
+      title: 'Prenda guardada',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      // sin backdrop
+      backdrop: false
+    });
+  }
 
-                const res = await fetch('/admin/prenda/crearPrenda', {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: fd
-                });
+  // ======= submit =======
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    setLoading(true);
+    errorBox.classList.add('d-none');
+    okBox.classList.add('d-none');
 
-                const raw = await res.text();
-                let data = null;
-                try {
-                    data = JSON.parse(raw);
-                } catch {}
+    try {
+      const fd = new FormData(form);
 
-                if (!res.ok || !data || data.ok !== true) {
-                    const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
-                    showError(msg);
-                    setLoading(false);
-                    return;
-                }
+      const res = await fetch('/admin/prenda/crearPrenda', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: fd
+      });
 
-                const nombre = data.prenda?.Prenda_Partida || fd.get('Prenda_Partida') || '';
-                addOptionToSelect(prendaSelect, nombre, nombre);
+      const raw = await res.text();
+      let data = null;
+      try { data = JSON.parse(raw); } catch {}
 
-                // limpiar y cerrar
-                form.reset();
-                // showOK('¡Guardada!');
-                // SWEET ALERT2
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Prenda guardada',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+      if (!res.ok || !data || data.ok !== true) {
+        const msg = (data && data.error) ? data.error : 'Error al guardar la prenda.';
+        showError(msg);
+        setLoading(false);
+        return;
+      }
 
-                // QUITAR  MODAL 
-                    remove.modalEl('show');
+      // Añadir/seleccionar prenda en el <select>
+      const nombre = data.prenda?.Prenda_Partida || fd.get('Prenda_Partida') || '';
+      addOptionToSelect(prendaSelect, nombre, nombre);
 
+      // Resetear formulario
+      form.reset();
 
-                const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                bsModal.hide();
+      // Cerrar modal y tras ocultarse, mostrar toast
+      const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
 
-            } catch (err) {
-                showError('Error de red o servidor.');
-            } finally {
-                setLoading(false);
-            }
-        });
+      // Si ya está oculto por alguna razón, muestra el toast directo
+      const isOpen = modalEl.classList.contains('show');
 
-        // Limpiar mensajes al abrir
-        modalEl.addEventListener('show.bs.modal', () => {
-            errorBox.classList.add('d-none');
-            okBox.classList.add('d-none');
-        });
-    })();
+      if (isOpen) {
+        // Escuchar UNA sola vez cuando termine de ocultarse
+        modalEl.addEventListener('hidden.bs.modal', () => {
+          // Limpieza defensiva (por si quedó backdrop)
+          scrubBackdrops();
+          // Mostrar éxito como toast (sin backdrop)
+          showSavedToast();
+        }, { once: true });
+
+        bsModal.hide();
+      } else {
+        // No estaba abierto; simplemente toast
+        showSavedToast();
+      }
+    } catch (err) {
+      showError('Error de red o servidor.');
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  // ======= al abrir modal, limpiar mensajes =======
+  modalEl.addEventListener('show.bs.modal', () => {
+    errorBox.classList.add('d-none');
+    okBox.classList.add('d-none');
+  });
+
+  // ======= seguridad extra: al ocultar modal, barrer backdrops colgados =======
+  modalEl.addEventListener('hidden.bs.modal', () => {
+    // En teoría Bootstrap limpia; esto es por si algo quedó colgado
+    scrubBackdrops();
+  });
+})();
 </script>
 
 
