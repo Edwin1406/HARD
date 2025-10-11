@@ -365,108 +365,100 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   const selectEl = document.getElementById('Prenda_Partida');
+  if (!selectEl) return;
 
-  const choices = new Choices(selectEl, {
+  // Inicializa Choices una sola vez
+  if (window.prendaChoices) window.prendaChoices.destroy();
+  window.prendaChoices = new Choices(selectEl, {
     searchEnabled: true,
-    placeholder: true,
     shouldSort: false,
-    removeItemButton: false,
+    placeholder: true,
     searchPlaceholderValue: 'Escriba para buscar…',
     noResultsText: 'Sin resultados',
   });
 
-  const dropdown = selectEl.parentElement.querySelector('.choices__list--dropdown');
-  let addValueMarker = '__create__:';  // prefijo identificador
-  let addItemId = null;
+  const choicesRoot = selectEl.closest('.choices') || selectEl.parentElement.querySelector('.choices');
+  const dropdown   = choicesRoot ? choicesRoot.querySelector('.choices__list--dropdown') : null;
 
-  // 1) Mostrar "Agregar" cuando no hay resultados
+  const ADD_MARK = '__create__:'; 
+  let addId = null;
+
+  function removeAdd() {
+    if (!addId || !dropdown) return;
+    const li = dropdown.querySelector(`[data-id="${addId}"]`);
+    if (li) li.remove();
+    const storeItem = window.prendaChoices._store.choices.find(c => c.id === addId);
+    if (storeItem) storeItem.active = false;
+    addId = null;
+  }
+
   selectEl.addEventListener('search', (ev) => {
-    const q = (ev.detail && ev.detail.value ? ev.detail.value : '').trim();
-    removeAddOption();               // limpia cualquier opción anterior
+    if (!dropdown) return;
+    const q = (ev.detail?.value || '').trim();
+    removeAdd();
     if (!q) return;
 
-    // ¿Hay coincidencias visibles?
-    const visible = dropdown.querySelectorAll(
-      '.choices__item--choice:not(.is-disabled):not([data-create])'
-    );
-    const hasVisible = Array.from(visible).some(li =>
-      (li.textContent || '').toLowerCase().includes(q.toLowerCase())
-    );
+    const visibleExists = Array.from(
+      dropdown.querySelectorAll('.choices__item--choice:not(.is-disabled):not([data-create])')
+    ).some(li => (li.textContent || '').toLowerCase().includes(q.toLowerCase()));
 
-    if (!hasVisible) {
-      // Inyectar opción "Agregar"
-      addItemId = Date.now();
-      choices._store.addChoice({
-        id: addItemId,
-        value: addValueMarker + q,
+    if (!visibleExists) {
+      addId = Date.now();
+      window.prendaChoices._store.addChoice({
+        id: addId,
+        value: ADD_MARK + q,
         label: `➕ Agregar "${q}"`,
-        disabled: false,
-        placeholder: false,
         selected: false,
+        disabled: false,
         groupId: -1,
         customProperties: { isCreate: true }
       });
-
-      // Marcar en el DOM para poder diferenciarla
-      const li = dropdown.querySelector(`[data-id="${addItemId}"]`);
-      if (li) {
-        li.setAttribute('data-create', '1');
-        // Colócala arriba
-        li.parentElement.prepend(li);
-      }
+      const li = dropdown.querySelector(`[data-id="${addId}"]`);
+      if (li) { li.setAttribute('data-create','1'); li.parentElement.prepend(li); }
     }
   });
 
-  // 2) Si eligen "Agregar", abrir modal
   selectEl.addEventListener('addItem', (evt) => {
     const val = evt.detail.value || '';
-    if (val.startsWith(addValueMarker)) {
-      const nombre = val.slice(addValueMarker.length);
-      // cancelar selección
-      choices.removeActiveItems();
-      removeAddOption();
+    if (!val.startsWith(ADD_MARK)) return;
 
-      // precargar nombre en el modal y abrir
-      document.getElementById('inputNuevaPrenda').value = nombre;
-      new bootstrap.Modal('#modalAgregarPrenda').show();
+    const nombre = val.slice(ADD_MARK.length);
+    window.prendaChoices.removeActiveItems();
+    removeAdd();
+
+    const modalEl = document.getElementById('modalAgregarPrenda');
+    const inputEl = document.getElementById('inputNuevaPrenda');
+    if (!modalEl || !inputEl) {
+      console.error('Falta modalAgregarPrenda o inputNuevaPrenda');
+      return;
     }
+    inputEl.value = nombre;
+    new bootstrap.Modal(modalEl).show();
   });
 
-  // 3) Guardar en servidor y reinyectar la opción real
-  document.getElementById('formAgregarPrenda').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const nombre = document.getElementById('inputNuevaPrenda').value.trim();
-    if (!nombre) return;
-
-    try {
-      const resp = await fetch('/api/prendas/crear', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ Prenda_Partida: nombre })
-      });
-      if (!resp.ok) throw new Error('Error al guardar');
-
-      // Si tu API devuelve el nombre/ID, úsalo aquí:
-      // const data = await resp.json(); const valor = data.Prenda_Partida;
-      const valor = nombre;
-
-      choices.setChoices([{ value: valor, label: valor, selected: true }], 'value', 'label', false);
-      bootstrap.Modal.getInstance(document.getElementById('modalAgregarPrenda')).hide();
-    } catch (err) {
-      console.error(err);
-      alert('No se pudo guardar la prenda.');
-    }
-  });
-
-  function removeAddOption() {
-    if (!addItemId) return;
-    const li = dropdown.querySelector(`[data-id="${addItemId}"]`);
-    if (li) li.remove();
-    const c = choices._store.choices.find(ch => ch.id === addItemId);
-    if (c) c.active = false;
-    addItemId = null;
+  const form = document.getElementById('formAgregarPrenda');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = (document.getElementById('inputNuevaPrenda')?.value || '').trim();
+      if (!nombre) return;
+      try {
+        const resp = await fetch('/api/prendas/crear', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ Prenda_Partida: nombre })
+        });
+        if (!resp.ok) throw new Error('Error al guardar');
+        window.prendaChoices.setChoices([{ value: nombre, label: nombre, selected: true }], 'value', 'label', false);
+        bootstrap.Modal.getInstance(document.getElementById('modalAgregarPrenda')).hide();
+      } catch (e2) {
+        console.error(e2); alert('No se pudo guardar la prenda.');
+      }
+    });
+  } else {
+    console.warn('formAgregarPrenda no encontrado.');
   }
 });
 </script>
