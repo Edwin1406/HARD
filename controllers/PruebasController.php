@@ -281,9 +281,9 @@ class PruebasController
 
     // Campos (mismos nombres)
     $prenda = new Prenda;
-    $prenda->Prenda_Partida      = trim($_POST['pm_Partida_Partida'] ?? '');
-    $prenda->Partida_Partida     = trim($_POST['pm_Partida_Partida'] ?? '');
-    $prenda->Composicion_Partida = trim($_POST['pm_Composicion_Partida'] ?? '');
+    $prenda->Prenda_Partida      = trim($_POST['Prenda_Partida'] ?? '');
+    $prenda->Partida_Partida     = trim($_POST['Partida_Partida'] ?? '');
+    $prenda->Composicion_Partida = trim($_POST['Composicion_Partida'] ?? '');
 
     // Validación mínima
     if ($prenda->Prenda_Partida === '') {
