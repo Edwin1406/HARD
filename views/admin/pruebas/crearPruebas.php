@@ -332,7 +332,7 @@ $selIf    = function ($left, $right) {
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="Prenda_Partida">Prenda</label>
-                                        <select id="Prenda_Partida" class="choices form-control" name="Prenda_Partida">
+                                        <select id="Prenda_Partida" class=" form-control" name="Prenda_Partida">
                                             <option value="" disabled selected>Seleccione una prenda</option>
                                             <?php foreach ($prendas as $p) : ?>
                                                 <option value="<?= htmlspecialchars($p->Prenda_Partida) ?>">
