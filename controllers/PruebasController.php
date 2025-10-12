@@ -172,6 +172,13 @@ class PruebasController
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
             // $carrito->total              = $_POST['total'] ?? 0;
             $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
+            $carrito->num_factura        = $_POST['num_factura'] ?? 0;
+            $carrito->tienda             = $_POST['tienda'] ?? '';
+            $carrito->marca              = $_POST['marca'] ?? '';
+            $carrito->pais               = $_POST['pais'] ?? '';
+            $carrito->num_caja           = $_POST['num_caja'] ?? 0;
+            $carrito->bodega             = $_POST['bodega'] ?? 0;
+            
             
 
             // Saneos mínimos
@@ -205,6 +212,13 @@ class PruebasController
                                 'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
                                 'total'               => number_format((float)$carrito->total, 2, '.', ''),
+                                'num_factura'         => $carrito->num_factura,
+                                'tienda'              => $carrito->tienda,
+                                'marca'               => $carrito->marca,
+                                'pais'                => $carrito->pais,
+                                'num_caja'            => $carrito->num_caja,
+                                'bodega'              => $carrito->bodega,
+
                             ],
                         ], JSON_UNESCAPED_UNICODE);
                         exit;
