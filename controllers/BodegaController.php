@@ -765,116 +765,113 @@ class BodegaController
 
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/turnoDiseno/turnotablaDiseno');
+            header('Location: /admin/tienda/tablaTienda');
             exit;
         }
 
         $tienda =Tienda::find($id);
- debuguear($tienda);
+//  debuguear($tienda);
 
     
 
 
 
-        if (!empty($_FILES['pdf']['tmp_name'])) {
-            $carpeta_archivos = $_SERVER['DOCUMENT_ROOT'] . '/src/turnos';
+         if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
+                $file = $_FILES['Foto_Tienda'];
+                $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $permitidos = ['jpg', 'jpeg', 'png', 'gif'];
 
-            if (!is_dir($carpeta_archivos)) {
-                mkdir($carpeta_archivos, 0755, true);
-            }
-
-            // Detectar extensión original en minúsculas
-            $extension = strtolower(pathinfo($_FILES['pdf']['name'], PATHINFO_EXTENSION));
-
-            // Extensiones permitidas
-            $permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'ai'];
-
-            if (!in_array($extension, $permitidos)) {
-                $alertas[] = "Formato de archivo no permitido ($extension).";
-                return;
-            }
-
-            // Nombre único
-            $nombre_archivo = md5(uniqid(rand(), true)) . '.' . $extension;
-            $ruta_destino = $carpeta_archivos . '/' . $nombre_archivo;
-
-            // Mover archivo a la carpeta
-            if (move_uploaded_file($_FILES['pdf']['tmp_name'], $ruta_destino)) {
-                $turno->pdf = $nombre_archivo;
-            } else {
-                $alertas[] = "Error al mover el archivo. Verifica los permisos de la carpeta.";
-            }
-        }
-
-
-
-
-
-        // debuguear($turno->posicion);
-
-
-
-
-        // debuguear($turno->colores);
-
-        $coloresSeleccionados = [];
-        if (isset($turno->colores) && !empty($turno->colores)) {
-            $coloresSeleccionados = explode(',', $turno->colores);
-        }
-
-
-        if (!$turno) {
-            header('Location: /admin/turnoDiseno/turnotablaDiseno');
-            exit;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // O usa un método sincronizar si tu ActiveRecord lo tiene
-            if (method_exists($turno, 'sincronizar')) {
-                $turno->sincronizar($_POST);
-
-
-                function normalizar($s)
-                {
-                    $s = trim($s);
-                    $s = preg_replace('/\s+/', ' ', $s); // compacta espacios
-                    $s = mb_strtoupper($s, 'UTF-8');
-                    // elimina tildes comunes
-                    $s = strtr($s, [
-                        'Á' => 'A',
-                        'É' => 'E',
-                        'Í' => 'I',
-                        'Ó' => 'O',
-                        'Ú' => 'U',
-                        'Ü' => 'U',
-                        'Ñ' => 'N',
-                        'á' => 'A',
-                        'é' => 'E',
-                        'í' => 'I',
-                        'ó' => 'O',
-                        'ú' => 'U',
-                        'ü' => 'U',
-                        'ñ' => 'N'
-                    ]);
-                    return $s;
+                $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/src/tiendas';
+                if (!is_dir($carpeta_archivos)) {
+                    mkdir($carpeta_archivos, 0755, true);
                 }
 
-               
-            }
+                if (in_array($extension, $permitidos)) {
+                    // Tamaño deseado
+                    $ancho_final = 800;
+                    $alto_final  = 600;
 
-            // Asegurar que el id siga presente
-            $turno->id = $id;
+                    // Crear imagen desde el archivo original
+                    switch ($extension) {
+                        case 'jpg':
+                        case 'jpeg':
+                            $origen = imagecreatefromjpeg($file['tmp_name']);
+                            break;
+                        case 'png':
+                            $origen = imagecreatefrompng($file['tmp_name']);
+                            break;
+                        case 'gif':
+                            $origen = imagecreatefromgif($file['tmp_name']);
+                            break;
+                        default:
+                            $origen = null;
+                    }
 
-            $alertas = $turno->validar();
+                    if ($origen) {
+                        $ancho_orig = imagesx($origen);
+                        $alto_orig  = imagesy($origen);
 
-            if (empty($alertas)) {
-                $resultado = $turno->guardar(); // debe hacer UPDATE al tener id
-                if ($resultado) {
-                    header('Location: /admin/turnoDiseno/turnotablaDiseno?editado=2');
-                    exit;
+                        // Crear lienzo con nuevas dimensiones
+                        $imagen_redimensionada = imagecreatetruecolor($ancho_final, $alto_final);
+
+                        // Mantener transparencia en PNG/GIF
+                        if ($extension === 'png' || $extension === 'gif') {
+                            imagecolortransparent(
+                                $imagen_redimensionada,
+                                imagecolorallocatealpha($imagen_redimensionada, 0, 0, 0, 127)
+                            );
+                            imagealphablending($imagen_redimensionada, false);
+                            imagesavealpha($imagen_redimensionada, true);
+                        }
+
+                        // Redimensionar
+                        imagecopyresampled(
+                            $imagen_redimensionada,
+                            $origen,
+                            0,
+                            0,
+                            0,
+                            0,
+                            $ancho_final,
+                            $alto_final,
+                            $ancho_orig,
+                            $alto_orig
+                        );
+
+                        // Nombre único (hash)
+                        $nombre_archivo = bin2hex(random_bytes(16)) . '.' . $extension;
+                        $ruta_destino   = $carpeta_archivos . '/' . $nombre_archivo;
+
+                        // Guardar según tipo
+                        switch ($extension) {
+                            case 'jpg':
+                            case 'jpeg':
+                                imagejpeg($imagen_redimensionada, $ruta_destino, 90);
+                                break;
+                            case 'png':
+                                imagepng($imagen_redimensionada, $ruta_destino);
+                                break;
+                            case 'gif':
+                                imagegif($imagen_redimensionada, $ruta_destino);
+                                break;
+                        }
+
+                        imagedestroy($origen);
+                        imagedestroy($imagen_redimensionada);
+
+                        $tienda->Foto_Tienda = $nombre_archivo;
+                    } else {
+                        $alertas[] = "Formato de imagen no soportado para redimensionar.";
+                    }
+                } else {
+                    $alertas[] = "Formato de archivo no permitido ($extension).";
                 }
             }
-        }
+
+
+
+
+
 
         $router->render('admin/turnoDiseno/editarTurno', [
             'titulo'  => 'EDITAR TURNO',
