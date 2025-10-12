@@ -749,61 +749,142 @@ class BodegaController
 
 
 // editar tienda
-    public static function editarTienda(Router $router): void{
-        $alertas = [];
+  
+
+ public static function editarTurno(Router $router)
+    {
         session_start();
         if (!isset($_SESSION['email'])) {
             header('Location: /');
+            exit;
         }
 
         $nombre = $_SESSION['nombre'];
         $email  = $_SESSION['email'];
+        $alertas = [];
 
-        $bodega = Bodega::all();
-        $ciudad = Ciudad::all();
-
-        // Validar el ID
-        $id = $_GET['id'];
-        $id = filter_var($id, FILTER_VALIDATE_INT);
-
+        $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/tienda/tablaTienda');
+            header('Location: /admin/turnoDiseno/turnotablaDiseno');
+            exit;
         }
 
-        // Obtener los datos de la tienda a editar
-        $tienda = Tienda::find($id);
+        $tienda =Tienda::find($id);
+ debuguear($tienda);
 
-        if (!$tienda) {
-            header('Location: /admin/tienda/tablaTienda');
+    
+
+
+
+        if (!empty($_FILES['pdf']['tmp_name'])) {
+            $carpeta_archivos = $_SERVER['DOCUMENT_ROOT'] . '/src/turnos';
+
+            if (!is_dir($carpeta_archivos)) {
+                mkdir($carpeta_archivos, 0755, true);
+            }
+
+            // Detectar extensión original en minúsculas
+            $extension = strtolower(pathinfo($_FILES['pdf']['name'], PATHINFO_EXTENSION));
+
+            // Extensiones permitidas
+            $permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'ai'];
+
+            if (!in_array($extension, $permitidos)) {
+                $alertas[] = "Formato de archivo no permitido ($extension).";
+                return;
+            }
+
+            // Nombre único
+            $nombre_archivo = md5(uniqid(rand(), true)) . '.' . $extension;
+            $ruta_destino = $carpeta_archivos . '/' . $nombre_archivo;
+
+            // Mover archivo a la carpeta
+            if (move_uploaded_file($_FILES['pdf']['tmp_name'], $ruta_destino)) {
+                $turno->pdf = $nombre_archivo;
+            } else {
+                $alertas[] = "Error al mover el archivo. Verifica los permisos de la carpeta.";
+            }
+        }
+
+
+
+
+
+        // debuguear($turno->posicion);
+
+
+
+
+        // debuguear($turno->colores);
+
+        $coloresSeleccionados = [];
+        if (isset($turno->colores) && !empty($turno->colores)) {
+            $coloresSeleccionados = explode(',', $turno->colores);
+        }
+
+
+        if (!$turno) {
+            header('Location: /admin/turnoDiseno/turnotablaDiseno');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $tienda->sincronizar($_POST);
-        }
+            // O usa un método sincronizar si tu ActiveRecord lo tiene
+            if (method_exists($turno, 'sincronizar')) {
+                $turno->sincronizar($_POST);
 
-        $alertas = array_merge($alertas, $tienda->validar());
 
-        if (empty($alertas)) {
-            if ($tienda->guardar()) {
-                header('Location: /admin/tienda/tablaTienda?exito=1');
-                exit;
+                function normalizar($s)
+                {
+                    $s = trim($s);
+                    $s = preg_replace('/\s+/', ' ', $s); // compacta espacios
+                    $s = mb_strtoupper($s, 'UTF-8');
+                    // elimina tildes comunes
+                    $s = strtr($s, [
+                        'Á' => 'A',
+                        'É' => 'E',
+                        'Í' => 'I',
+                        'Ó' => 'O',
+                        'Ú' => 'U',
+                        'Ü' => 'U',
+                        'Ñ' => 'N',
+                        'á' => 'A',
+                        'é' => 'E',
+                        'í' => 'I',
+                        'ó' => 'O',
+                        'ú' => 'U',
+                        'ü' => 'U',
+                        'ñ' => 'N'
+                    ]);
+                    return $s;
+                }
+
+               
             }
-            $alertas[] = "No se pudo guardar el registro.";
+
+            // Asegurar que el id siga presente
+            $turno->id = $id;
+
+            $alertas = $turno->validar();
+
+            if (empty($alertas)) {
+                $resultado = $turno->guardar(); // debe hacer UPDATE al tener id
+                if ($resultado) {
+                    header('Location: /admin/turnoDiseno/turnotablaDiseno?editado=2');
+                    exit;
+                }
+            }
         }
 
-        $router->render('admin/tienda/editarTienda', [
-            'titulo' => 'Editar Tienda',
+        $router->render('admin/turnoDiseno/editarTurno', [
+            'titulo'  => 'EDITAR TURNO',
+            'nombre'  => $nombre,
+            'email'   => $email,
+            'turno'   => $turno,
             'alertas' => $alertas,
-            'nombre' => $nombre,
-            'email' => $email,
-            'bodega' => $bodega,
-            'ciudad' => $ciudad,
-            'tienda' => $tienda
+            'coloresSeleccionados' => $coloresSeleccionados
         ]);
     }
-
-
-
 
 
 
