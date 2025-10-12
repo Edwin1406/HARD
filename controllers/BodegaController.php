@@ -633,7 +633,7 @@ class BodegaController
 
             $tienda->sincronizar($_POST);
 
-            $tienda->Tipo_Tienda = substr(md5(uniqid(rand(), true)), 0, 6);
+            $tienda->Foto_Tienda = substr(md5(uniqid(rand(), true)), 0, 6);
 
             if (!empty($_FILES['pdf']['tmp_name'])) {
                 $carpeta_archivos = $_SERVER['DOCUMENT_ROOT'] . '/src/tiendas';
@@ -659,7 +659,7 @@ class BodegaController
 
                 // Mover archivo a la carpeta
                 if (move_uploaded_file($_FILES['pdf']['tmp_name'], $ruta_destino)) {
-                    $tienda->Tipo_Tienda = $nombre_archivo;
+                    $tienda->Foto_Tienda = $nombre_archivo;
                 } else {
                     $alertas[] = "Error al mover el archivo. Verifica los permisos de la carpeta.";
                 }
