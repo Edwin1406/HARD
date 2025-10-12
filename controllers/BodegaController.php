@@ -607,92 +607,85 @@ class BodegaController
     }
 
 
+// crear Tienda
+public static function crearTienda(Router $router): void
+{
+    $alertas = [];
+    session_start();
+    if (!isset($_SESSION['email'])) { header('Location: /'); }
 
-    // crear Tienda
-    public static function crearTienda(Router $router): void
-    {
+    $nombre = $_SESSION['nombre'];
+    $email  = $_SESSION['email'];
 
-        $alertas = [];
+    $bodega = Bodega::all();
+    $ciudad = Ciudad::all();
 
-        session_start();
-        if (!isset($_SESSION['email'])) {
-            header('Location: /');
-        }
+    $tienda = new Tienda;
 
-        $nombre = $_SESSION['nombre'];
-        $email = $_SESSION['email'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $tienda->sincronizar($_POST);
 
-        $bodega = Bodega::all();
+        // === Archivo ===
+        if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
+            $file = $_FILES['Foto_Tienda'];
 
-        $ciudad = Ciudad::all();
+            // Carpeta pública
+            $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/tiendas';
+            if (!is_dir($carpeta_archivos)) {
+                mkdir($carpeta_archivos, 0755, true);
+            }
 
-        $tienda = new Tienda;
+            // Validación extensión + MIME real
+            $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $permitidos = ['pdf','jpg','jpeg','png','gif','ai'];
+            if (!in_array($extension, $permitidos, true)) {
+                $alertas[] = "Formato de archivo no permitido ($extension).";
+            } else {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = finfo_file($finfo, $file['tmp_name']);
+                finfo_close($finfo);
 
-        // $bodega =  Bodega::all();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $tienda->sincronizar($_POST);
-
-
-            if (!empty($_FILES['pdf']['tmp_name'])) {
-                $carpeta_archivos = $_SERVER['DOCUMENT_ROOT'] . '/src/tiendas';
-
-                if (!is_dir($carpeta_archivos)) {
-                    mkdir($carpeta_archivos, 0755, true);
-                }
-
-                // Detectar extensión original en minúsculas
-                $extension = strtolower(pathinfo($_FILES['pdf']['name'], PATHINFO_EXTENSION));
-
-                // Extensiones permitidas
-                $permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'ai'];
-
-                if (!in_array($extension, $permitidos)) {
-                    $alertas[] = "Formato de archivo no permitido ($extension).";
-                    return;
-                }
-
-                // Nombre único
-                $nombre_archivo = md5(uniqid(rand(), true)) . '.' . $extension;
-                $ruta_destino = $carpeta_archivos . '/' . $nombre_archivo;
-
-                // Mover archivo a la carpeta
-                if (move_uploaded_file($_FILES['pdf']['tmp_name'], $ruta_destino)) {
-                    $tienda->Foto_Tienda = $nombre_archivo;
+                $mimes_ok = [
+                    'application/pdf','image/jpeg','image/png','image/gif'
+                ];
+                if (!in_array($mime, $mimes_ok, true) && $extension !== 'ai') {
+                    $alertas[] = "Tipo MIME inválido ($mime).";
                 } else {
-                    $alertas[] = "Error al mover el archivo. Verifica los permisos de la carpeta.";
-                }
-            }
+                    // Nombre único (hash)
+                    $nombre_archivo = bin2hex(random_bytes(16)).'.'.$extension;
+                    $ruta_destino   = $carpeta_archivos.'/'.$nombre_archivo;
 
-
-            // debuguear($tienda);
-
-
-
-            // debuguear($tienda);
-            $alertas = $tienda->validar();
-
-            if (empty($alertas)) {
-                // Guardar el registro
-                $resultado = $tienda->guardar();
-
-                if ($resultado) {
-                    header('Location: /admin/tienda/crearTienda?exito=1');
+                    if (move_uploaded_file($file['tmp_name'], $ruta_destino)) {
+                        // Guarda SOLO el nombre, no la ruta absoluta
+                        $tienda->Foto_Tienda = $nombre_archivo;
+                    } else {
+                        $alertas[] = "Error al mover el archivo. Revisa permisos de la carpeta.";
+                    }
                 }
             }
         }
 
-        // Render a la vista
-        $router->render('admin/tienda/crearTienda', [
-            'titulo' => 'Crea una Tienda',
-            'alertas' => $alertas,
-            'nombre' => $nombre,
-            'email' => $email,
-            'bodega' => $bodega,
-            'ciudad' => $ciudad,
-            'tienda' => $tienda
-        ]);
+        $alertas = array_merge($alertas, $tienda->validar());
+
+        if (empty($alertas)) {
+            if ($tienda->guardar()) {
+                header('Location: /admin/tienda/crearTienda?exito=1');
+                exit;
+            }
+            $alertas[] = "No se pudo guardar el registro.";
+        }
     }
+
+    $router->render('admin/tienda/crearTienda', [
+        'titulo' => 'Crea una Tienda',
+        'alertas' => $alertas,
+        'nombre' => $nombre,
+        'email' => $email,
+        'bodega' => $bodega,
+        'ciudad' => $ciudad,
+        'tienda' => $tienda
+    ]);
+}
 
 
 
