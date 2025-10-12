@@ -185,13 +185,13 @@
                                     </div>
 
 
-                                    <div class="col-md-3 col-12">
+                                    <!-- <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Foto_Tienda">Foto_Tienda</label>
                                             <input type="text" id="Foto_Tienda" class="form-control"
                                                 placeholder="Foto_Tienda" name="Foto_Tienda">
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-md-6 col-12">
