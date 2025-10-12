@@ -84,6 +84,9 @@ $router->post('/admin/tienda/crearTienda', [BodegaController::class, 'crearTiend
 $router->get('/admin/tienda/tablaTienda', [BodegaController::class, 'tablaTienda']);
 
 
+// editar tienda
+$router->get('/admin/tienda/editarTienda', [BodegaController::class, 'editarTienda']);
+$router->post('/admin/tienda/editarTienda', [BodegaController::class, 'editarTienda']);
 
 
 
