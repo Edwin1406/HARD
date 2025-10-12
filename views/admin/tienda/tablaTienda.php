@@ -122,16 +122,18 @@
                                 <td><?= $tiendaItem->id ?></td>
                                 <td><?= $tiendaItem->Nombre_Tienda ?></td>
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
-                          <td>
-    <?php 
-    if (!empty($tiendaItem->Foto_Tienda) && file_exists(__DIR__ . '/src/tiendas/' . $tiendaItem->Foto_Tienda)): ?>
-        <a href="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" target="_blank">
-            <img 
-                src="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
-                style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
+                            <td>
+    <?php if ($tiendaItem->Foto_Tienda): ?>
+        <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
+           target="_blank" 
+           class="text-primary text-decoration-underline">
+           Ver imagen
         </a>
+    <?php else: ?>
+        No disponible
     <?php endif; ?>
 </td>
+
 
 
                                 <td>
