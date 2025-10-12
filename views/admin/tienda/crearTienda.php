@@ -198,7 +198,7 @@
                                             <div class="form-group">
                                                 <label>Archivo actual:</label><br>
 
-                                                <a href="<?php echo $_ENV['HOST'] . '/src/turnos/' . $turno->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $turno->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
                                                     Ver / Descargar archivo
                                                 </a>
                                                 <br><br>

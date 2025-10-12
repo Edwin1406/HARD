@@ -653,7 +653,8 @@ class BodegaController
             'nombre' => $nombre,
             'email' => $email,
             'bodega' => $bodega,
-            'ciudad' => $ciudad
+            'ciudad' => $ciudad,
+            'tienda' => $tienda
         ]);
     }
 }
