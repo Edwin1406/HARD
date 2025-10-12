@@ -199,8 +199,8 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="pdf">Subir archivo (PDF o imagen)</label>
-                                            <input type="file" class="form-control" id="pdf" name="pdf" accept="application/pdf,image/*">
+                                            <label for="Foto_Tienda">Subir archivo (PDF o imagen)</label>
+                                            <input type="file" class="form-control" id="Foto_Tienda" name="Foto_Tienda" accept="application/pdf,image/*">
                                             <small class="form-text text-muted">Se permiten archivos PDF o imágenes.</small>
                                         </div>
                                     </div>
