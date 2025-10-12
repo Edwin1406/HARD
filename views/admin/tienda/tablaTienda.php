@@ -83,11 +83,11 @@
             <ul class="nav nav-tabs">
 
                 <li class="nav-item"></li>
-                <a class="nav-link" href="/admin/bodega/crearBodega">Crear Bodega</a>
+                <a class="nav-link" href="/admin/tienda/crearTienda">Crear Tienda</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="/admin/bodega/tablaBodega">Bodegas</a>
+                    <a class="nav-link active" href="/admin/tienda/tablaTienda">Tiendas</a>
                 </li>
 
 
@@ -101,31 +101,41 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                Tabla de registros de Bodegas
+                Tabla de registros de Tiendas
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
                             <th class="fs-6" style="min-width: 90px;">Id</th>
-                            <th class="fs-6" style="min-width: 93px;">Nombre Bodega</th>
-                            <th class="fs-6" style="min-width: 80px;">Siglas Bodega</th>
+                            <th class="fs-6" style="min-width: 93px;">Nombre Tienda</th>
+                            <th class="fs-6" style="min-width: 100px;">Ciudad Tienda</th>
+                            <th class="fs-6" style="min-width: 100px;">Foto Tienda</th>
+
                             <th class="fs-6" style="min-width: 100px;">Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <?php foreach ($bodega as $bodegaItem): ?>
+                        <?php foreach ($tienda as $tiendaItem): ?>
                             <tr>
-                                <td><?= $bodegaItem->id ?></td>
-                                <td><?= $bodegaItem->Nombre_Bodega ?></td>
-                                <td><?= $bodegaItem->Sigla_Bodega ?></td>
+                                <td><?= $tiendaItem->id ?></td>
+                                <td><?= $tiendaItem->Nombre_Tienda ?></td>
+                                <td><?= $tiendaItem->Ciudad_Tienda ?></td>
+                                <td>
+                                    <?php if ($tiendaItem->Foto_Tienda): ?>
+                                        <a href="<?php echo $_ENV['HOST'] . '/tiendas' . $tiendaItem->Foto_Tienda; ?>" target="_blank">Ver Foto</a>
+                                    <?php else: ?>
+                                        No disponible
+                                    <?php endif; ?>
+                                </td>
+
                                 <td>
 
                                     <div class="d-flex gap-1">
-                                        <a href="/admin/bodega/editarBodega?id=<?= $bodegaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
-                                        <form action="/admin/eliminarBodega" method="POST">
-                                            <input type="hidden" name="id" value="<?= $bodegaItem->id ?>">
+                                        <a href="/admin/tienda/editarTienda?id=<?= $tiendaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                        <form action="/admin/eliminarTienda" method="POST">
+                                            <input type="hidden" name="id" value="<?= $tiendaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     </div>

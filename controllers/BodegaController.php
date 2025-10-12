@@ -784,4 +784,36 @@ class BodegaController
             'tienda' => $tienda
         ]);
     }
+
+
+    // tabla de tienda
+    public static function tablaTienda(Router $router): void
+    {
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $tienda =  Tienda::all();
+
+        // Render a la vista
+        $router->render('admin/tienda/tablaTienda', [
+            'titulo' => 'Tabla de Tiendas',
+            'tienda' => $tienda,
+            'nombre' => $nombre,
+            'email' => $email
+        ]);
+    }
+
+
+
+
+
+
+
+
 }

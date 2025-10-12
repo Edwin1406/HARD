@@ -80,6 +80,12 @@ $router->get('/admin/tienda/crearTienda', [BodegaController::class, 'crearTienda
 $router->post('/admin/tienda/crearTienda', [BodegaController::class, 'crearTienda']);
 
 
+// tabla de tiendas
+$router->get('/admin/tienda/tablaTienda', [BodegaController::class, 'tablaTienda']);
+
+
+
+
 
 
 
