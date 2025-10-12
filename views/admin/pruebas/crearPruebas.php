@@ -814,6 +814,12 @@ $selIf    = function ($left, $right) {
                                     'cantidad'           => $cant,
                                     'precio_unitario'    => $precio,
                                     'total'              => round($cant * $precio, 2),
+                                    'num_factura'        => $r->num_factura,
+                                    'tienda'             => $r->tienda,
+                                    'marca'              => $r->marca,
+                                    'pais'               => $r->pais,
+                                    'num_caja'           => $r->num_caja,
+                                    'bodega'             => $r->bodega,
                                 ];
                             }
                         }
@@ -850,6 +856,12 @@ $selIf    = function ($left, $right) {
             'cantidad',
             'precio_unitario',
             'total',
+            'num_factura',
+            'tienda',
+            'marca',
+            'pais',
+            'num_caja',
+            'bodega',
             'Acciones'
         ],
         columns: [{
@@ -909,6 +921,30 @@ $selIf    = function ($left, $right) {
                     td.textContent = tot.toFixed(2);
                 }
             },
+
+            {
+                data: 'num_factura'
+            },
+            {
+                data: 'tienda'
+            },
+            {
+                data: 'marca'
+            },
+            {
+                data: 'pais'
+            },
+            {
+                data: 'num_caja',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0'
+                }
+            },
+            {
+                data: 'bodega'
+            },
+
 
             // acciones (renderer usa inst)
             {
@@ -976,6 +1012,13 @@ $selIf    = function ($left, $right) {
         r.cantidad = Number(r.cantidad) || 0;
         r.precio_unitario = Number(r.precio_unitario) || 0;
         r.total = round(r.cantidad * r.precio_unitario);
+        r.num_factura = Number(r.num_factura) || 0;
+        r.tienda = r.tienda ? String(r.tienda).trim() : '';
+        r.marca = r.marca ? String(r.marca).trim() : '';
+        r.pais = r.pais ? String(r.pais).trim() : '';
+        r.num_caja = Number(r.num_caja) || 0;
+        r.bodega = Number(r.bodega) || 0;
+
         hot.render(); // refresca la celda total
     }
 
@@ -995,6 +1038,12 @@ $selIf    = function ($left, $right) {
         fd.append('cantidad', row.cantidad ?? 0);
         fd.append('precio_unitario', row.precio_unitario ?? 0);
         fd.append('total', row.total ?? 0);
+        fd.append('num_factura', row.num_factura ?? 0);
+        fd.append('tienda', row.tienda ?? '');
+        fd.append('marca', row.marca ?? '');
+        fd.append('pais', row.pais ?? '');
+        fd.append('num_caja', row.num_caja ?? 0);
+        fd.append('bodega', row.bodega ?? 0);
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
