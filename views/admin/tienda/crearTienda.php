@@ -205,18 +205,18 @@
                                         </div>
                                     </div>
 
-                                    <?php if (isset($tienda->pdf)) : ?>
+                                    <?php if (isset($tienda->Foto_Tienda)) : ?>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label>Archivo actual:</label><br>
-                                                <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tienda->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tienda->Foto_Tienda; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
                                                     Ver / Descargar archivo
                                                 </a>
                                                 <br><br>
 
-                                                <?php if ($tienda->pdf): ?>
+                                                <?php if ($tienda->Foto_Tienda): ?>
                                                     <div id="archivo-actual">
-                                                        <p>Archivo actual: <?php echo htmlspecialchars($tienda->pdf); ?></p>
+                                                        <p>Archivo actual: <?php echo htmlspecialchars($tienda->Foto_Tienda); ?></p>
                                                         <a href="#"
                                                             id="btnEliminarArchivo"
                                                             data-id="<?php echo $tienda->id; ?>"

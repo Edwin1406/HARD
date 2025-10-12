@@ -694,4 +694,24 @@ class BodegaController
             'tienda' => $tienda
         ]);
     }
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
 }
