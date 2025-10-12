@@ -873,13 +873,13 @@ class BodegaController
 
 
 
-        $router->render('admin/turnoDiseno/editarTurno', [
-            'titulo'  => 'EDITAR TURNO',
+        $router->render('admin/tienda/editarTienda', [
+            'titulo'  => 'EDITAR TIENDA',
             'nombre'  => $nombre,
             'email'   => $email,
-            'turno'   => $turno,
+            'tienda' => $tienda,
             'alertas' => $alertas,
-            'coloresSeleccionados' => $coloresSeleccionados
+            
         ]);
     }
 
