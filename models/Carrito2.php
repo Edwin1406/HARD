@@ -13,7 +13,13 @@ class Carrito2 extends ActiveRecord {
         'composicion',
         'cantidad',
         'precio_unitario',
-        'total'
+        'total',
+        'num_factura',
+        'tienda',
+        'marca',
+        'pais',
+        'num_caja',
+        'bodega'
     ];
 
     public $id;
@@ -25,6 +31,13 @@ class Carrito2 extends ActiveRecord {
     public $cantidad;
     public $precio_unitario;
     public $total;
+    public $num_factura;
+    public $tienda;
+    public $marca;
+    public $pais;
+    public $num_caja;
+    public $bodega;
+    
 
     public function __construct($args = [])
     {
@@ -37,6 +50,12 @@ class Carrito2 extends ActiveRecord {
         $this->cantidad = $args['cantidad'] ?? 0;
         $this->precio_unitario = $args['precio_unitario'] ?? 0.0;
         $this->total = $args['total'] ?? 0.0;
+        $this->num_factura = $args['num_factura'] ?? null;
+        $this->tienda = $args['tienda'] ?? null;
+        $this->marca = $args['marca'] ?? null;
+        $this->pais = $args['pais'] ?? null;
+        $this->num_caja = $args['num_caja'] ?? null;
+        $this->bodega = $args['bodega'] ?? null;
 
     }
 }
