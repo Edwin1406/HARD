@@ -74,7 +74,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Codigo_Tienda">Codigo_Tienda</label>
                                             <input type="number" id="Codigo_Tienda" class="form-control"
@@ -83,7 +83,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Nombre_Tienda">Nombre_Tienda</label>
                                             <input type="text" id="Nombre_Tienda" class="form-control"
@@ -92,8 +92,7 @@
                                     </div>
 
 
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Nombre_Tienda">Nombre_Tienda</label>
                                             <input type="text" id="Nombre_Tienda" class="form-control"
@@ -102,7 +101,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Direccion_Tienda">Direccion_Tienda</label>
                                             <input type="text" id="Direccion_Tienda" class="form-control"
@@ -111,8 +110,7 @@
                                     </div>
 
 
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Telefono_Tienda">Telefono_Tienda</label>
                                             <input type="number" id="Telefono_Tienda" class="form-control"
@@ -121,9 +119,7 @@
                                     </div>
 
 
-
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Telefono1_Tienda">Telefono1_Tienda</label>
                                             <input type="number" id="Telefono1_Tienda" class="form-control"
@@ -133,8 +129,7 @@
 
 
 
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Fax_Tienda">Fax_Tienda</label>
                                             <input type="text" id="Fax_Tienda" class="form-control"
@@ -143,9 +138,7 @@
                                     </div>
 
 
-
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Email_Tienda">Email_Tienda</label>
                                             <input type="text" id="Email_Tienda" class="form-control"
@@ -154,8 +147,7 @@
                                     </div>
 
 
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Ciudad_Tienda">Ciudad_Tienda</label>
                                             <input type="text" id="Ciudad_Tienda" class="form-control"
@@ -164,8 +156,7 @@
                                     </div>
 
 
-
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Pais_Tienda">Pais_Tienda</label>
                                             <input type="text" id="Pais_Tienda" class="form-control"
@@ -175,7 +166,7 @@
 
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Contacto_Tienda">Contacto_Tienda</label>
                                             <input type="text" id="Contacto_Tienda" class="form-control"
@@ -185,7 +176,7 @@
 
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Tipo_Tienda">Tipo_Tienda</label>
                                             <input type="text" id="Tipo_Tienda" class="form-control"
@@ -194,7 +185,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Foto_Tienda">Foto_Tienda</label>
                                             <input type="text" id="Foto_Tienda" class="form-control"
