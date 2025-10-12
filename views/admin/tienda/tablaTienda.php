@@ -133,7 +133,13 @@
     <?php endif; ?>
 </td>
 
+<style>
+    td {
+  vertical-align: middle;
+  text-align: center;
+}
 
+</style>
                                 <td>
 
                                     <div class="d-flex gap-1">
