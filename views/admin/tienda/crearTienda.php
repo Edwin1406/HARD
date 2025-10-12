@@ -88,7 +88,8 @@
                                         <div class="form-group">
                                             <label for="Nombre_Tienda">Nombre_Tienda</label>
                                             <input type="text" id="Nombre_Tienda" class="form-control"
-                                                placeholder="Nombre_Tienda" name="Nombre_Tienda">
+                                                placeholder="Nombre_Tienda" name="Nombre_Tienda"
+                                                value="<?php echo s($tienda->Nombre_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -97,7 +98,8 @@
                                         <div class="form-group">
                                             <label for="Nombre_Tienda">Nombre_Tienda</label>
                                             <input type="text" id="Nombre_Tienda" class="form-control"
-                                                placeholder="Nombre_Tienda" name="Nombre_Tienda">
+                                                placeholder="Nombre_Tienda" name="Nombre_Tienda"
+                                                value="<?php echo s($tienda->Nombre_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -106,7 +108,8 @@
                                         <div class="form-group">
                                             <label for="Direccion_Tienda">Direccion_Tienda</label>
                                             <input type="text" id="Direccion_Tienda" class="form-control"
-                                                placeholder="Direccion_Tienda" name="Direccion_Tienda">
+                                                placeholder="Direccion_Tienda" name="Direccion_Tienda"
+                                                value="<?php echo s($tienda->Direccion_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -115,7 +118,8 @@
                                         <div class="form-group">
                                             <label for="Telefono_Tienda">Telefono_Tienda</label>
                                             <input type="number" id="Telefono_Tienda" class="form-control"
-                                                placeholder="Telefono_Tienda" name="Telefono_Tienda">
+                                                placeholder="Telefono_Tienda" name="Telefono_Tienda"
+                                                value="<?php echo s($tienda->Telefono_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -124,7 +128,8 @@
                                         <div class="form-group">
                                             <label for="Telefono1_Tienda">Telefono1_Tienda</label>
                                             <input type="number" id="Telefono1_Tienda" class="form-control"
-                                                placeholder="Telefono1_Tienda" name="Telefono1_Tienda">
+                                                placeholder="Telefono1_Tienda" name="Telefono1_Tienda"
+                                                value="<?php echo s($tienda->Telefono1_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -134,7 +139,8 @@
                                         <div class="form-group">
                                             <label for="Fax_Tienda">Fax_Tienda</label>
                                             <input type="text" id="Fax_Tienda" class="form-control"
-                                                placeholder="Fax_Tienda" name="Fax_Tienda">
+                                                placeholder="Fax_Tienda" name="Fax_Tienda"
+                                                value="<?php echo s($tienda->Fax_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -143,7 +149,8 @@
                                         <div class="form-group">
                                             <label for="Email_Tienda">Email_Tienda</label>
                                             <input type="text" id="Email_Tienda" class="form-control"
-                                                placeholder="Email_Tienda" name="Email_Tienda">
+                                                placeholder="Email_Tienda" name="Email_Tienda"
+                                                value="<?php echo s($tienda->Email_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -152,7 +159,8 @@
                                         <div class="form-group">
                                             <label for="Ciudad_Tienda">Ciudad_Tienda</label>
                                             <input type="text" id="Ciudad_Tienda" class="form-control"
-                                                placeholder="Ciudad_Tienda" name="Ciudad_Tienda">
+                                                placeholder="Ciudad_Tienda" name="Ciudad_Tienda"
+                                                value="<?php echo s($tienda->Ciudad_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -161,7 +169,8 @@
                                         <div class="form-group">
                                             <label for="Pais_Tienda">Pais_Tienda</label>
                                             <input type="text" id="Pais_Tienda" class="form-control"
-                                                placeholder="Pais_Tienda" name="Pais_Tienda">
+                                                placeholder="Pais_Tienda" name="Pais_Tienda"
+                                                value="<?php echo s($tienda->Pais_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -171,7 +180,8 @@
                                         <div class="form-group">
                                             <label for="Contacto_Tienda">Contacto_Tienda</label>
                                             <input type="text" id="Contacto_Tienda" class="form-control"
-                                                placeholder="Contacto_Tienda" name="Contacto_Tienda">
+                                                placeholder="Contacto_Tienda" name="Contacto_Tienda"
+                                                value="<?php echo s($tienda->Contacto_Tienda); ?>">
                                         </div>
                                     </div>
 
@@ -181,7 +191,8 @@
                                         <div class="form-group">
                                             <label for="Tipo_Tienda">Tipo_Tienda</label>
                                             <input type="text" id="Tipo_Tienda" class="form-control"
-                                                placeholder="Tipo_Tienda" name="Tipo_Tienda">
+                                                placeholder="Tipo_Tienda" name="Tipo_Tienda"
+                                                value="<?php echo s($tienda->Tipo_Tienda); ?>">
                                         </div>
                                     </div>
 
