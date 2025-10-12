@@ -193,6 +193,107 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="pdf">Subir archivo (PDF o imagen)</label>
+                                            <input type="file" class="form-control" id="pdf" name="pdf" accept="application/pdf,image/*">
+                                            <small class="form-text text-muted">Se permiten archivos PDF o imágenes.</small>
+                                        </div>
+                                    </div>
+
+                                    <?php if (isset($turno->pdf)) : ?>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label>Archivo actual:</label><br>
+
+                                                <a href="<?php echo $_ENV['HOST'] . '/src/turnos/' . $turno->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                    Ver / Descargar archivo
+                                                </a>
+                                                <br><br>
+
+                                                <?php if ($turno->pdf): ?>
+                                                    <div id="archivo-actual">
+                                                        <p>Archivo actual: <?php echo htmlspecialchars($turno->pdf); ?></p>
+                                                        <a href="#"
+                                                            id="btnEliminarArchivo"
+                                                            data-id="<?php echo $turno->id; ?>"
+                                                            class="btn btn-danger btn-sm">
+                                                            Eliminar archivo
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const btnEliminar = document.getElementById('btnEliminarArchivo'); // aquí el mismo ID del HTML
+
+                                            if (btnEliminar) {
+                                                btnEliminar.addEventListener('click', function(e) {
+                                                    e.preventDefault();
+
+                                                    Swal.fire({
+                                                        title: '¿Estás seguro?',
+                                                        text: 'No podrás recuperar este archivo después de eliminarlo.',
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Sí, eliminar',
+                                                        cancelButtonText: 'Cancelar'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            const idTurno = this.dataset.id;
+
+                                                            fetch('/admin/diseno/eliminarPDFturno', {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                                    },
+                                                                    body: 'id=' + encodeURIComponent(idTurno)
+                                                                })
+                                                                .then(res => res.json())
+                                                                .then(data => {
+                                                                    if (data.success) {
+                                                                        Swal.fire({
+                                                                            icon: 'success',
+                                                                            title: '¡Eliminado!',
+                                                                            text: 'El archivo se eliminó correctamente.'
+                                                                        });
+
+                                                                        // Ojo: tu HTML usa id="archivo-actual", no "pdf-actual"
+                                                                        document.getElementById('archivo-actual').innerHTML = '<p>Archivo eliminado correctamente.</p>';
+                                                                    } else {
+                                                                        Swal.fire({
+                                                                            icon: 'error',
+                                                                            title: 'Error',
+                                                                            text: data.error || 'Ocurrió un error al eliminar el archivo.'
+                                                                        });
+                                                                    }
+                                                                })
+                                                                .catch(err => {
+                                                                    console.error('Error AJAX:', err);
+                                                                    Swal.fire({
+                                                                        icon: 'error',
+                                                                        title: 'Error',
+                                                                        text: 'Error en la solicitud. Intenta de nuevo.'
+                                                                    });
+                                                                });
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        });
+                                    </script>
+
+
+
+
+
+
+
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
