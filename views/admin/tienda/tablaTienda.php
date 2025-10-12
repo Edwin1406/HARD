@@ -124,7 +124,7 @@
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
                           <td>
     <?php 
-    if (!empty($tiendaItem->Foto_Tienda) && file_exists(__DIR__ . '/../../../public/src/tiendas/' . $tiendaItem->Foto_Tienda)): ?>
+    if (!empty($tiendaItem->Foto_Tienda) && file_exists(__DIR__ . '/src/tiendas/' . $tiendaItem->Foto_Tienda)): ?>
         <a href="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" target="_blank">
             <img 
                 src="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
