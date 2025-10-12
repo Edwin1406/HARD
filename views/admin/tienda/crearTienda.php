@@ -197,7 +197,6 @@
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label>Archivo actual:</label><br>
-
                                                 <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tienda->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
                                                     Ver / Descargar archivo
                                                 </a>
