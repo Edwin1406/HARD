@@ -6,6 +6,7 @@ use Model\Bodega;
 use Model\Ciudad;
 use Model\Marca;
 use Model\Pais;
+use Model\Tienda;
 use MVC\Router;
 
 class BodegaController
@@ -155,7 +156,7 @@ class BodegaController
 
 
     // crear ciudad
- public static function crearCiudad(Router $router): void
+    public static function crearCiudad(Router $router): void
     {
 
         $alertas = [];
@@ -314,8 +315,8 @@ class BodegaController
 
 
 
-// crear marca
- public static function crearMarca(Router $router): void
+    // crear marca
+    public static function crearMarca(Router $router): void
     {
 
         $alertas = [];
@@ -380,9 +381,9 @@ class BodegaController
             'nombre' => $nombre,
             'email' => $email
         ]);
-    }   
+    }
 
-    
+
     // eliminar marca
     public static function eliminarMarca(): void
     {
@@ -459,8 +460,8 @@ class BodegaController
 
 
 
-// crear origen
- public static function crearPais(Router $router): void
+    // crear origen
+    public static function crearPais(Router $router): void
     {
 
         $alertas = [];
@@ -607,23 +608,52 @@ class BodegaController
 
 
 
+    // crear Tienda
+    public static function crearTienda(Router $router): void
+    {
 
+        $alertas = [];
 
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
 
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
 
+        $bodega = Bodega::all();
 
+        $ciudad = Ciudad::all();
 
+        $tienda = new Tienda;
 
+        // $bodega =  Bodega::all();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $tienda->sincronizar($_POST);
 
+            // debuguear($tienda);
+            $alertas = $tienda->validar();
 
+            if (empty($alertas)) {
+                // Guardar el registro
+                $resultado = $tienda->guardar();
 
+                if ($resultado) {
+                    header('Location: /admin/tienda/tablaTienda?exito=1');
+                }
+            }
+        }
 
-
-
-
-
-
-
-
+        // Render a la vista
+        $router->render('admin/tienda/crearTienda', [
+            'titulo' => 'Crea una Tienda',
+            'alertas' => $alertas,
+            'nombre' => $nombre,
+            'email' => $email,
+            'bodega' => $bodega,
+            'ciudad' => $ciudad
+        ]);
+    }
 }
