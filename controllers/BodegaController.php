@@ -751,7 +751,7 @@ class BodegaController
 // editar tienda
   
 
- public static function editarTurno(Router $router)
+ public static function editarTienda(Router $router)
     {
         session_start();
         if (!isset($_SESSION['email'])) {
