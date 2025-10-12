@@ -666,7 +666,7 @@ class BodegaController
             }
 
 
-            debuguear($tienda);
+            // debuguear($tienda);
 
 
 
