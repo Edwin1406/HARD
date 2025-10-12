@@ -123,23 +123,17 @@
                                 <td><?= $tiendaItem->Nombre_Tienda ?></td>
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
                           <td>
-    <?php if (!empty($tiendaItem->Foto_Tienda)): ?>
+    <?php 
+    if (!empty($tiendaItem->Foto_Tienda) && file_exists(__DIR__ . '/../../../public/src/tiendas/' . $tiendaItem->Foto_Tienda)): ?>
         <a href="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" target="_blank">
-            <img
-                src="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>"
-                alt="Foto Tienda"
+            <img 
+                src="<?= $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
         </a>
     <?php endif; ?>
 </td>
 
-<style>
-    td {
-  vertical-align: middle;
-  text-align: center;
-}
 
-</style>
                                 <td>
 
                                     <div class="d-flex gap-1">
