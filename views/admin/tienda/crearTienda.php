@@ -193,22 +193,22 @@
                                         </div>
                                     </div>
 
-                                    <?php if (isset($turno->pdf)) : ?>
+                                    <?php if (isset($tienda->pdf)) : ?>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
                                                 <label>Archivo actual:</label><br>
 
-                                                <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $turno->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tienda->pdf; ?>" target="_blank" class="btn btn-outline-primary btn-sm">
                                                     Ver / Descargar archivo
                                                 </a>
                                                 <br><br>
 
-                                                <?php if ($turno->pdf): ?>
+                                                <?php if ($tienda->pdf): ?>
                                                     <div id="archivo-actual">
-                                                        <p>Archivo actual: <?php echo htmlspecialchars($turno->pdf); ?></p>
+                                                        <p>Archivo actual: <?php echo htmlspecialchars($tienda->pdf); ?></p>
                                                         <a href="#"
                                                             id="btnEliminarArchivo"
-                                                            data-id="<?php echo $turno->id; ?>"
+                                                            data-id="<?php echo $tienda->id; ?>"
                                                             class="btn btn-danger btn-sm">
                                                             Eliminar archivo
                                                         </a>
