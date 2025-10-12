@@ -123,14 +123,14 @@
                                 <td><?= $tiendaItem->Nombre_Tienda ?></td>
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
                             <td>
-    <?php if ($tiendaItem->Foto_Tienda): ?>
+    <?php if (!empty($tiendaItem->Foto_Tienda)): ?>
         <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
            target="_blank" 
            class="text-primary text-decoration-underline">
            Ver imagen
         </a>
     <?php else: ?>
-        No disponible
+        <span class="text-muted">No disponible</span>
     <?php endif; ?>
 </td>
 
