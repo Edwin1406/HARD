@@ -627,46 +627,7 @@ class BodegaController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $tienda->sincronizar($_POST);
 
-            // === Archivo ===
-            // if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
-            //     $file = $_FILES['Foto_Tienda'];
-
-            //     // Carpeta pública
-            //     $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/tiendas';
-            //     if (!is_dir($carpeta_archivos)) {
-            //         mkdir($carpeta_archivos, 0755, true);
-            //     }
-
-            //     // Validación extensión + MIME real
-            //     $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            //     $permitidos = ['pdf','jpg','jpeg','png','gif','ai'];
-            //     if (!in_array($extension, $permitidos, true)) {
-            //         $alertas[] = "Formato de archivo no permitido ($extension).";
-            //     } else {
-            //         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            //         $mime  = finfo_file($finfo, $file['tmp_name']);
-            //         finfo_close($finfo);
-
-            //         $mimes_ok = [
-            //             'application/pdf','image/jpeg','image/png','image/gif'
-            //         ];
-            //         if (!in_array($mime, $mimes_ok, true) && $extension !== 'ai') {
-            //             $alertas[] = "Tipo MIME inválido ($mime).";
-            //         } else {
-            //             // Nombre único (hash)
-            //             $nombre_archivo = bin2hex(random_bytes(16)).'.'.$extension;
-            //             $ruta_destino   = $carpeta_archivos.'/'.$nombre_archivo;
-
-            //             if (move_uploaded_file($file['tmp_name'], $ruta_destino)) {
-            //                 // Guarda SOLO el nombre, no la ruta absoluta
-            //                 $tienda->Foto_Tienda = $nombre_archivo;
-            //             } else {
-            //                 $alertas[] = "Error al mover el archivo. Revisa permisos de la carpeta.";
-            //             }
-            //         }
-            //     }
-            // }
-
+        
 
 
             // === Archivo ===
@@ -784,6 +745,80 @@ class BodegaController
             'tienda' => $tienda
         ]);
     }
+
+
+
+// editar tienda
+    public static function editarTienda(Router $router): void{
+        $alertas = [];
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email  = $_SESSION['email'];
+
+        $bodega = Bodega::all();
+        $ciudad = Ciudad::all();
+
+        // Validar el ID
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/tienda/tablaTienda');
+        }
+
+        // Obtener los datos de la tienda a editar
+        $tienda = Tienda::find($id);
+
+        if (!$tienda) {
+            header('Location: /admin/tienda/tablaTienda');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $tienda->sincronizar($_POST);
+        }
+
+        $alertas = array_merge($alertas, $tienda->validar());
+
+        if (empty($alertas)) {
+            if ($tienda->guardar()) {
+                header('Location: /admin/tienda/tablaTienda?exito=1');
+                exit;
+            }
+            $alertas[] = "No se pudo guardar el registro.";
+        }
+
+        $router->render('admin/tienda/editarTienda', [
+            'titulo' => 'Editar Tienda',
+            'alertas' => $alertas,
+            'nombre' => $nombre,
+            'email' => $email,
+            'bodega' => $bodega,
+            'ciudad' => $ciudad,
+            'tienda' => $tienda
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // tabla de tienda
