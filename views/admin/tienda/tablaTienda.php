@@ -122,20 +122,17 @@
                                 <td><?= $tiendaItem->id ?></td>
                                 <td><?= $tiendaItem->Nombre_Tienda ?></td>
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
-                            <td>
-    <?php if (!empty($tiendaItem->Foto_Tienda)): ?>
-        <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>" 
-           target="_blank" 
-           class="text-primary text-decoration-underline">
-           Ver imagen
-        </a>
-    <?php else: ?>
-        <span class="text-muted">No disponible</span>
-    <?php endif; ?>
-</td>
-
-
-
+                                <td>
+                                    <?php if (!empty($tiendaItem->Foto_Tienda)): ?>
+                                        <a href="<?php echo $_ENV['HOST'] . '/src/tiendas/' . $tiendaItem->Foto_Tienda; ?>"
+                                            target="_blank"
+                                            class="text-primary text-decoration-underline">
+                                            Ver imagen
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted">No disponible</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
 
                                     <div class="d-flex gap-1">
