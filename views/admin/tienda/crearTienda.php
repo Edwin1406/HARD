@@ -48,11 +48,11 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item"></li>
-                <a class="nav-link active" href="/admin/bodega/crearTienda">Crear Tienda</a>
+                <a class="nav-link active" href="/admin/tienda/crearTienda">Crear Tienda</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/bodega/tablaTienda">Tiendas</a>
+                    <a class="nav-link" href="/admin/tienda/tablaTienda">Tiendas</a>
                 </li>
             </ul>
         </div>
