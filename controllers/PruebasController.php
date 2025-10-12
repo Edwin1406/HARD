@@ -419,7 +419,18 @@ public static function actualizarPruebas()
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
     // $total     = (float)($_POST['total'] ?? 0);
 
+
+
+
     $total     = (float)($cantidad * $precioU);
+    $num_factura = (int)($_POST['num_factura'] ?? 0);
+    $tienda = trim($_POST['tienda'] ?? '');
+    $marca = trim($_POST['marca'] ?? '');
+    $pais = trim($_POST['pais'] ?? '');
+    $num_caja = (int)($_POST['num_caja'] ?? 0);
+    $bodega = $_POST['bodega'] ?? 0;
+
+    
 
     if (!$id) {
       header('Content-Type: application/json');
@@ -443,6 +454,13 @@ public static function actualizarPruebas()
     $carrito->cantidad = $cantidad;
     $carrito->precio_unitario = $precioU;
     $carrito->total = $total;
+    $carrito->num_factura = $num_factura;
+    $carrito->tienda = $tienda;
+    $carrito->marca = $marca;
+    $carrito->pais = $pais;
+    $carrito->num_caja = $num_caja;
+    $carrito->bodega = $bodega;
+    
 
     $ok = $carrito->guardar(); // o ->actualizar()
     header('Content-Type: application/json');
