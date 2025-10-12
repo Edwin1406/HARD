@@ -801,7 +801,7 @@ class BodegaController
         $tienda =  Tienda::all();
 
 
-        debuguear($tienda);
+        // debuguear($tienda);
 
         // Render a la vista
         $router->render('admin/tienda/tablaTienda', [
