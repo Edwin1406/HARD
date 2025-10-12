@@ -78,7 +78,8 @@
                                         <div class="form-group">
                                             <label for="Codigo_Tienda">Codigo_Tienda</label>
                                             <input type="number" id="Codigo_Tienda" class="form-control"
-                                                placeholder="Codigo_Tienda" name="Codigo_Tienda">
+                                                placeholder="Codigo_Tienda" name="Codigo_Tienda"
+                                                value="<?php echo s($tienda->Codigo_Tienda); ?>">
                                         </div>
                                     </div>
 
