@@ -675,7 +675,7 @@ class BodegaController
                 $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                 $permitidos = ['jpg', 'jpeg', 'png', 'gif'];
 
-                $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/tiendas';
+                $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/src/tiendas';
                 if (!is_dir($carpeta_archivos)) {
                     mkdir($carpeta_archivos, 0755, true);
                 }
