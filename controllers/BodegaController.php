@@ -607,103 +607,181 @@ class BodegaController
     }
 
 
-// crear Tienda
-public static function crearTienda(Router $router): void
-{
-    $alertas = [];
-    session_start();
-    if (!isset($_SESSION['email'])) { header('Location: /'); }
+    // crear Tienda
+    public static function crearTienda(Router $router): void
+    {
+        $alertas = [];
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
 
-    $nombre = $_SESSION['nombre'];
-    $email  = $_SESSION['email'];
+        $nombre = $_SESSION['nombre'];
+        $email  = $_SESSION['email'];
 
-    $bodega = Bodega::all();
-    $ciudad = Ciudad::all();
+        $bodega = Bodega::all();
+        $ciudad = Ciudad::all();
 
-    $tienda = new Tienda;
+        $tienda = new Tienda;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $tienda->sincronizar($_POST);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $tienda->sincronizar($_POST);
 
-        // === Archivo ===
-        if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
-            $file = $_FILES['Foto_Tienda'];
+            // === Archivo ===
+            // if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
+            //     $file = $_FILES['Foto_Tienda'];
 
-            // Carpeta pública
-            $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/tiendas';
-            if (!is_dir($carpeta_archivos)) {
-                mkdir($carpeta_archivos, 0755, true);
-            }
+            //     // Carpeta pública
+            //     $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/tiendas';
+            //     if (!is_dir($carpeta_archivos)) {
+            //         mkdir($carpeta_archivos, 0755, true);
+            //     }
 
-            // Validación extensión + MIME real
-            $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            $permitidos = ['pdf','jpg','jpeg','png','gif','ai'];
-            if (!in_array($extension, $permitidos, true)) {
-                $alertas[] = "Formato de archivo no permitido ($extension).";
-            } else {
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mime  = finfo_file($finfo, $file['tmp_name']);
-                finfo_close($finfo);
+            //     // Validación extensión + MIME real
+            //     $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            //     $permitidos = ['pdf','jpg','jpeg','png','gif','ai'];
+            //     if (!in_array($extension, $permitidos, true)) {
+            //         $alertas[] = "Formato de archivo no permitido ($extension).";
+            //     } else {
+            //         $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            //         $mime  = finfo_file($finfo, $file['tmp_name']);
+            //         finfo_close($finfo);
 
-                $mimes_ok = [
-                    'application/pdf','image/jpeg','image/png','image/gif'
-                ];
-                if (!in_array($mime, $mimes_ok, true) && $extension !== 'ai') {
-                    $alertas[] = "Tipo MIME inválido ($mime).";
-                } else {
-                    // Nombre único (hash)
-                    $nombre_archivo = bin2hex(random_bytes(16)).'.'.$extension;
-                    $ruta_destino   = $carpeta_archivos.'/'.$nombre_archivo;
+            //         $mimes_ok = [
+            //             'application/pdf','image/jpeg','image/png','image/gif'
+            //         ];
+            //         if (!in_array($mime, $mimes_ok, true) && $extension !== 'ai') {
+            //             $alertas[] = "Tipo MIME inválido ($mime).";
+            //         } else {
+            //             // Nombre único (hash)
+            //             $nombre_archivo = bin2hex(random_bytes(16)).'.'.$extension;
+            //             $ruta_destino   = $carpeta_archivos.'/'.$nombre_archivo;
 
-                    if (move_uploaded_file($file['tmp_name'], $ruta_destino)) {
-                        // Guarda SOLO el nombre, no la ruta absoluta
+            //             if (move_uploaded_file($file['tmp_name'], $ruta_destino)) {
+            //                 // Guarda SOLO el nombre, no la ruta absoluta
+            //                 $tienda->Foto_Tienda = $nombre_archivo;
+            //             } else {
+            //                 $alertas[] = "Error al mover el archivo. Revisa permisos de la carpeta.";
+            //             }
+            //         }
+            //     }
+            // }
+
+
+
+            // === Archivo ===
+            if (!empty($_FILES['Foto_Tienda']['tmp_name'])) {
+                $file = $_FILES['Foto_Tienda'];
+                $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $permitidos = ['jpg', 'jpeg', 'png', 'gif'];
+
+                $carpeta_archivos = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/tiendas';
+                if (!is_dir($carpeta_archivos)) {
+                    mkdir($carpeta_archivos, 0755, true);
+                }
+
+                if (in_array($extension, $permitidos)) {
+                    // Tamaño deseado
+                    $ancho_final = 800;
+                    $alto_final  = 600;
+
+                    // Crear imagen desde el archivo original
+                    switch ($extension) {
+                        case 'jpg':
+                        case 'jpeg':
+                            $origen = imagecreatefromjpeg($file['tmp_name']);
+                            break;
+                        case 'png':
+                            $origen = imagecreatefrompng($file['tmp_name']);
+                            break;
+                        case 'gif':
+                            $origen = imagecreatefromgif($file['tmp_name']);
+                            break;
+                        default:
+                            $origen = null;
+                    }
+
+                    if ($origen) {
+                        $ancho_orig = imagesx($origen);
+                        $alto_orig  = imagesy($origen);
+
+                        // Crear lienzo con nuevas dimensiones
+                        $imagen_redimensionada = imagecreatetruecolor($ancho_final, $alto_final);
+
+                        // Mantener transparencia en PNG/GIF
+                        if ($extension === 'png' || $extension === 'gif') {
+                            imagecolortransparent(
+                                $imagen_redimensionada,
+                                imagecolorallocatealpha($imagen_redimensionada, 0, 0, 0, 127)
+                            );
+                            imagealphablending($imagen_redimensionada, false);
+                            imagesavealpha($imagen_redimensionada, true);
+                        }
+
+                        // Redimensionar
+                        imagecopyresampled(
+                            $imagen_redimensionada,
+                            $origen,
+                            0,
+                            0,
+                            0,
+                            0,
+                            $ancho_final,
+                            $alto_final,
+                            $ancho_orig,
+                            $alto_orig
+                        );
+
+                        // Nombre único (hash)
+                        $nombre_archivo = bin2hex(random_bytes(16)) . '.' . $extension;
+                        $ruta_destino   = $carpeta_archivos . '/' . $nombre_archivo;
+
+                        // Guardar según tipo
+                        switch ($extension) {
+                            case 'jpg':
+                            case 'jpeg':
+                                imagejpeg($imagen_redimensionada, $ruta_destino, 90);
+                                break;
+                            case 'png':
+                                imagepng($imagen_redimensionada, $ruta_destino);
+                                break;
+                            case 'gif':
+                                imagegif($imagen_redimensionada, $ruta_destino);
+                                break;
+                        }
+
+                        imagedestroy($origen);
+                        imagedestroy($imagen_redimensionada);
+
                         $tienda->Foto_Tienda = $nombre_archivo;
                     } else {
-                        $alertas[] = "Error al mover el archivo. Revisa permisos de la carpeta.";
+                        $alertas[] = "Formato de imagen no soportado para redimensionar.";
                     }
+                } else {
+                    $alertas[] = "Formato de archivo no permitido ($extension).";
                 }
             }
-        }
 
-        $alertas = array_merge($alertas, $tienda->validar());
 
-        if (empty($alertas)) {
-            if ($tienda->guardar()) {
-                header('Location: /admin/tienda/crearTienda?exito=1');
-                exit;
+            $alertas = array_merge($alertas, $tienda->validar());
+
+            if (empty($alertas)) {
+                if ($tienda->guardar()) {
+                    header('Location: /admin/tienda/crearTienda?exito=1');
+                    exit;
+                }
+                $alertas[] = "No se pudo guardar el registro.";
             }
-            $alertas[] = "No se pudo guardar el registro.";
         }
+
+        $router->render('admin/tienda/crearTienda', [
+            'titulo' => 'Crea una Tienda',
+            'alertas' => $alertas,
+            'nombre' => $nombre,
+            'email' => $email,
+            'bodega' => $bodega,
+            'ciudad' => $ciudad,
+            'tienda' => $tienda
+        ]);
     }
-
-    $router->render('admin/tienda/crearTienda', [
-        'titulo' => 'Crea una Tienda',
-        'alertas' => $alertas,
-        'nombre' => $nombre,
-        'email' => $email,
-        'bodega' => $bodega,
-        'ciudad' => $ciudad,
-        'tienda' => $tienda
-    ]);
-}
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
 }
