@@ -65,7 +65,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">REGISTRAR NUEVA BODEGA</h4>
+                        <h4 class="card-title">REGISTRAR NUEVA TIENDA</h4>
                         <?php include_once __DIR__ . '/../../templates/alertas.php'  ?>
                     </div>
                     <div class="card-content">
@@ -183,15 +183,6 @@
                                                 placeholder="Tipo_Tienda" name="Tipo_Tienda">
                                         </div>
                                     </div>
-
-
-                                    <!-- <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label for="Foto_Tienda">Foto_Tienda</label>
-                                            <input type="text" id="Foto_Tienda" class="form-control"
-                                                placeholder="Foto_Tienda" name="Foto_Tienda">
-                                        </div>
-                                    </div> -->
 
 
                                     <div class="col-md-6 col-12">
