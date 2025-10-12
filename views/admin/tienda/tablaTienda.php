@@ -124,11 +124,17 @@
                                 <td><?= $tiendaItem->Ciudad_Tienda ?></td>
                                 <td>
                                     <?php if ($tiendaItem->Foto_Tienda): ?>
-                                        <a href="<?php echo $_ENV['HOST'] . '/public_html/tiendas/' . $tiendaItem->Foto_Tienda; ?>" target="_blank">Ver Foto</a>
+                                        <a href="<?php echo $_ENV['HOST'] . '/tiendas/' . $tiendaItem->Foto_Tienda; ?>" target="_blank">
+                                            <img
+                                                src="<?php echo $_ENV['HOST'] . '/tiendas/' . $tiendaItem->Foto_Tienda; ?>"
+                                                alt="Foto Tienda"
+                                                style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
+                                        </a>
                                     <?php else: ?>
                                         No disponible
                                     <?php endif; ?>
                                 </td>
+
 
                                 <td>
 
