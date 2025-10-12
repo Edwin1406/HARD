@@ -177,7 +177,7 @@ class PruebasController
             $carrito->marca              = $_POST['marca'] ?? '';
             $carrito->pais               = $_POST['pais'] ?? '';
             $carrito->num_caja           = $_POST['num_caja'] ?? 0;
-            $carrito->bodega             = $_POST['bodega'] ?? 0;
+            $carrito->bodega             = $_POST['bodega'] ?? '';
             
             
 
@@ -460,7 +460,7 @@ public static function actualizarPruebas()
     $carrito->pais = $pais;
     $carrito->num_caja = $num_caja;
     $carrito->bodega = $bodega;
-    
+
 
     $ok = $carrito->guardar(); // o ->actualizar()
     header('Content-Type: application/json');

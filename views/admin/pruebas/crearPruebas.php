@@ -1017,13 +1017,13 @@ $selIf    = function ($left, $right) {
         r.marca = r.marca ? String(r.marca).trim() : '';
         r.pais = r.pais ? String(r.pais).trim() : '';
         r.num_caja = Number(r.num_caja) || 0;
-        r.bodega = Number(r.bodega) || 0;
+        r.bodega = String(r.bodega).trim() || '';
 
         hot.render(); // refresca la celda total
     }
 
     function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario) );
     }
 
     // --- Guardar/actualizar
@@ -1043,7 +1043,7 @@ $selIf    = function ($left, $right) {
         fd.append('marca', row.marca ?? '');
         fd.append('pais', row.pais ?? '');
         fd.append('num_caja', row.num_caja ?? 0);
-        fd.append('bodega', row.bodega ?? 0);
+        fd.append('bodega', row.bodega ?? '');
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
