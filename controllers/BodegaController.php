@@ -678,7 +678,7 @@ class BodegaController
                 $resultado = $tienda->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/tienda/tablaTienda?exito=1');
+                    header('Location: /admin/tienda/crearTienda?exito=1');
                 }
             }
         }
