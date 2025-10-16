@@ -727,37 +727,7 @@ $selIf    = function ($left, $right) {
     }
 </style>
 
-<div class="container-xxl my-4">
-    <div class="hot-card">
-        <div class="p-3 p-md-4 border-bottom bg-white">
-            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                <div>
-                    <h5 class="mb-1 d-flex align-items-center gap-2">
-                        Carrito de Pruebas
-                        <span class="badge text-bg-light hot-badge">Handsontable</span>
-                    </h5>
-                    <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
-                </div>
-                <div class="hot-toolbar d-flex align-items-center gap-2">
-                    <div class="form-check form-switch me-2">
-                        <input class="form-check-input" type="checkbox" id="autosave" checked>
-                        <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
-                    </div>
-                    <button id="guardar-nuevas" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
-                    </button>
-                    <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
-                </div>
-            </div>
-        </div>
 
-        <div class="p-2 p-md-3 bg-light-subtle">
-            <div class="table-responsive">
-                <div id="hot-min" class="bg-white rounded-3"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Modal eliminar -->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
@@ -791,388 +761,7 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </div>
-<!-- 
-<script>
-    // ---------- Puentes PHP ----------
-    const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
-    const existentes = <?php
-                        $idUrl = $id_nota ?? null;
-                        $out = [];
-                        if (!empty($carritoTemporal2)) {
-                            foreach ($carritoTemporal2 as $r) {
-                                if ($idUrl != $r->Codigo_Nota_Pedido) continue;
-                                $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
-                                $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-                                $out[] = [
-                                    'id'                 => (int)$r->id,
-                                    'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
-                                    'etiqueta'           => $r->etiqueta,
-                                    'prenda'             => $r->prenda,
-                                    'partida'            => $r->partida,
-                                    'composicion'       => $r->composicion,
-                                    'cantidad'           => $cant,
-                                    'precio_unitario'    => $precio,
-                                    'total'              => round($cant * $precio, 2),
-                                    'num_factura'        => $r->num_factura,
-                                    'tienda'             => $r->tienda,
-                                    'marca'              => $r->marca,
-                                    'pais'               => $r->pais,
-                                    'num_caja'           => $r->num_caja,
-                                    'bodega'             => $r->bodega,
-                                ];
-                            }
-                        }
-                        echo json_encode($out, JSON_UNESCAPED_UNICODE);
-                        ?>;
-
-    // Utils UI
-    const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), {
-        delay: 1800
-    });
-    const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), {
-        delay: 2600
-    });
-    const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
-    let rowPendingDelete = null;
-
-    // Helpers
-    function round(n) {
-        return Math.round((n + Number.EPSILON) * 100) / 100;
-    }
-
-    // ---------- Handsontable ----------
-    const container = document.getElementById('hot-min');
-
-    const hot = new Handsontable(container, {
-        data: existentes.length ? existentes : [],
-        colHeaders: [
-            'id',
-            'codigo_nota_pedido',
-            'etiqueta',
-            'prenda',
-            'partida',
-            'composicion',
-            'cantidad',
-            'precio_unitario',
-            'total',
-            'num_factura',
-            'tienda',
-            'marca',
-            'pais',
-            'num_caja',
-            'bodega',
-            'Acciones'
-        ],
-        columns: [{
-                data: 'id',
-                readOnly: true
-            },
-
-            // codigo_nota_pedido (renderer sin usar variable externa hot)
-            {
-                data: 'codigo_nota_pedido',
-                readOnly: true,
-                renderer: (inst, td, row, col, prop, val) => {
-                    td.textContent = val ?? (ID_NOTA ?? '');
-                }
-            },
-            {
-                data: 'etiqueta'
-            },
-
-            {
-                data: 'prenda'
-            },
-            {
-                data: 'partida'
-            },
-            {
-                data: 'composicion'
-            },
-
-            {
-                data: 'cantidad',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[000]'
-                }
-            },
-
-            {
-                data: 'precio_unitario',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[00]'
-                }
-            },
-
-            // total calculado (renderer usa inst)
-            {
-                data: 'total',
-                readOnly: true,
-                renderer(inst, td, row) {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    const cant = Number(r.cantidad) || 0;
-                    const pu = Number(r.precio_unitario) || 0;
-                    const tot = round(cant * pu);
-                    r.total = tot;
-                    td.classList.add('text-end', 'text-mono');
-                    td.textContent = tot.toFixed(2);
-                }
-            },
-
-            {
-                data: 'num_factura'
-            },
-            {
-                data: 'tienda'
-            },
-            {
-                data: 'marca'
-            },
-            {
-                data: 'pais'
-            },
-            {
-                data: 'num_caja',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0'
-                }
-            },
-            {
-                data: 'bodega'
-            },
-
-
-            // acciones (renderer usa inst)
-            {
-                readOnly: true,
-                renderer(inst, td, row) {
-                    td.classList.add('text-center');
-                    td.innerHTML = `
-            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
-              <i class="bi bi-trash me-1"></i>Eliminar
-            </button>`;
-                }
-            },
-        ],
-
-        rowHeaders: true,
-        stretchH: 'all',
-        height: container.clientHeight,
-        licenseKey: 'non-commercial-and-evaluation',
-
-        filters: true,
-        dropdownMenu: true,
-        columnSorting: true,
-        manualColumnResize: true,
-        manualRowResize: true,
-
-        minSpareRows: 1,
-        allowInsertColumn: false,
-        allowRemoveColumn: false,
-
-        afterChange(changes, source) {
-            if (!changes || source === 'loadData') return;
-
-            // Recalcula y guarda cuando cambian cantidad, precio o prenda
-            const rowsToUpdate = new Set();
-            for (const [row, prop] of changes) {
-                if (['cantidad', 'precio_unitario', 'prenda'].includes(prop)) {
-                    recalcRow(row);
-                    rowsToUpdate.add(row);
-                }
-            }
-            if (rowsToUpdate.size) maybeAutosave([...rowsToUpdate]);
-        },
-
-        afterPaste() {
-            const len = hot.countRows();
-            for (let i = 0; i < len; i++) recalcRow(i);
-            maybeAutosave([...Array(len).keys()]);
-        }
-    });
-
-    // Ajuste de altura responsive
-    window.addEventListener('resize', () => hot.updateSettings({
-        height: container.clientHeight
-    }));
-
-    // --- Lógica de fila
-    function recalcRow(rowIndex) {
-        const r = hot.getSourceDataAtRow(rowIndex);
-        if (!r) return;
-        if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-        if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-        if (typeof r.partida === 'string') r.partida = r.partida.trim();
-        if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
-        r.cantidad = Number(r.cantidad) || 0;
-        r.precio_unitario = Number(r.precio_unitario) || 0;
-        r.total = round(r.cantidad * r.precio_unitario);
-        r.num_factura = Number(r.num_factura) || 0;
-        r.tienda = r.tienda ? String(r.tienda).trim() : '';
-        r.marca = r.marca ? String(r.marca).trim() : '';
-        r.pais = r.pais ? String(r.pais).trim() : '';
-        r.num_caja = Number(r.num_caja) || 0;
-        r.bodega = String(r.bodega).trim() || '';
-
-        hot.render(); // refresca la celda total
-    }
-
-    function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario) );
-    }
-
-    // --- Guardar/actualizar
-    async function saveOrUpdateFila(row) {
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
-        if (row.id) fd.append('id', row.id);
-        fd.append('etiqueta', row.etiqueta ?? '');
-        fd.append('prenda', row.prenda ?? '');
-        fd.append('partida', row.partida ?? 0);
-        fd.append('composicion', row.composicion ?? '');
-        fd.append('cantidad', row.cantidad ?? 0);
-        fd.append('precio_unitario', row.precio_unitario ?? 0);
-        fd.append('total', row.total ?? 0);
-        fd.append('num_factura', row.num_factura ?? 0);
-        fd.append('tienda', row.tienda ?? '');
-        fd.append('marca', row.marca ?? '');
-        fd.append('pais', row.pais ?? '');
-        fd.append('num_caja', row.num_caja ?? 0);
-        fd.append('bodega', row.bodega ?? '');
-
-        const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
-
-        const resp = await fetch(url, {
-            method: 'POST',
-            body: fd,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
-        });
-
-        try {
-            const json = await resp.json();
-            if (json?.ok) {
-                if (json.id) row.id = json.id; // alta
-                row.codigo_nota_pedido = ID_NOTA; // fija la nota
-                return true;
-            }
-        } catch (e) {
-            /* backend podría redirigir; ignoramos aquí */
-        }
-        return false;
-    }
-
-    async function guardarNuevasFilas(btn) {
-        btn?.setAttribute('disabled', 'disabled');
-        btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
-
-        const nuevas = filasNuevas();
-        let ok = true;
-        for (const r of nuevas) {
-            const exito = await saveOrUpdateFila(r);
-            if (!exito) ok = false;
-        }
-
-        btn?.removeAttribute('disabled');
-        btn?.querySelector('.spinner-border')?.remove();
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    async function maybeAutosave(rowIdxList) {
-        if (!document.getElementById('autosave').checked) return;
-
-        let ok = true;
-        if (Array.isArray(rowIdxList) && rowIdxList.length) {
-            for (const idx of rowIdxList) {
-                const r = hot.getSourceDataAtRow(idx);
-                if (!r) continue;
-                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue; // vacía
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        } else {
-            const nuevas = filasNuevas();
-            for (const r of nuevas) {
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        }
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    // Botones top
-    document.getElementById('guardar-nuevas').addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
-    document.getElementById('recargar').addEventListener('click', () => location.reload());
-
-    // Eliminar (con modal)
-    container.addEventListener('click', (ev) => {
-        const btn = ev.target.closest('.btn-del');
-        if (!btn) return;
-
-        const rowIndex = parseInt(btn.dataset.row, 10);
-        const rowData = hot.getSourceDataAtRow(rowIndex);
-
-        if (!rowData?.id) { // sin persistir → borra local
-            hot.alter('remove_row', rowIndex, 1);
-            return;
-        }
-        rowPendingDelete = {
-            rowIndex,
-            rowData
-        };
-        modalDelete.show();
-    });
-
-    document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
-        const info = rowPendingDelete;
-        rowPendingDelete = null;
-        if (!info) return;
-
-        const {
-            rowIndex,
-            rowData
-        } = info;
-
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-        fd.append('id', rowData.id);
-
-        try {
-            const resp = await fetch('/admin/eliminarCarrito', {
-                method: 'POST',
-                body: fd,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            });
-            let ok = false;
-            try {
-                const json = await resp.json();
-                ok = !!json?.ok;
-            } catch {}
-            if (ok) {
-                hot.alter('remove_row', rowIndex, 1);
-                toastOk.show();
-            } else {
-                toastErr.show();
-            }
-        } catch {
-            toastErr.show();
-        } finally {
-            modalDelete.hide();
-        }
-    });
-</script>
-
- -->
 
 
 
@@ -1581,25 +1170,25 @@ $selIf    = function ($left, $right) {
                 <div class="row g-3">
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="fecha">Fecha</label>
-                            <input type="date" id="fecha" class="form-control"
-                                name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                            <label for="via_transporte">Via/Transporte</label>
+                            <input type="text" id="via_transporte" class="form-control"
+                                name="via_transporte" required>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="consumo_papel">C</label>
-                            <input type="number" step="0.01" id="consumo_papel"
-                                class="form-control" placeholder=")" name="consumo_papel" required>
+                            <label for="puerto_embarque">Puerto/embarque</label>
+                            <input type="text" step="0.01" id="puerto_embarque"
+                                class="form-control" placeholder=")" name="puerto_embarque" required>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="n_laminas">N° de</label>
-                            <input type="number" id="n_laminas" class="form-control"
-                                placeholder="N° " name="n_laminas">
+                            <label for="puerto_destino">Puerto/Destino</label>
+                            <input type="text" id="puerto_destino" class="form-control"
+                                placeholder="N° " name="puerto_destino">
                         </div>
                     </div>
 
@@ -1607,8 +1196,8 @@ $selIf    = function ($left, $right) {
                     <div class="col-md-3 col-12">
 
                         <div class="form-group">
-                            <label for="metros_lineales_C">Metros</label>
-                            <input type="number" id="metros_lineales_C" class="form-control"
+                            <label for="metros_lineales_C"></label>
+                            <input type="text" id="metros_lineales_C" class="form-control"
                                 placeholder="Metr" name="metros_lineales_C">
                         </div>
 
