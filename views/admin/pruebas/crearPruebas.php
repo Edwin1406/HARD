@@ -1200,13 +1200,13 @@ $selIf    = function ($left, $right) {
           'composicion'        => $r->composicion,
           'cantidad'           => $cant,
           'precio_unitario'    => $precio,
-          'total'              => round($cant * $precio, 2),
           'num_factura'        => $r->num_factura,
           'tienda'             => $r->tienda,
           'marca'              => $r->marca,
           'pais'               => $r->pais,
           'num_caja'           => $r->num_caja,
           'bodega'             => $r->bodega,
+          'total'              => round($cant * $precio, 2),
         ];
       }
     }
@@ -1251,13 +1251,13 @@ $selIf    = function ($left, $right) {
       'composicion',
       'cantidad',
       'precio_unitario',
-      'total',
       'num_factura',
       'tienda',
       'marca',
       'pais',
       'num_caja',
       'bodega',
+      'total',
       'Acciones'
     ],
     columns: [
