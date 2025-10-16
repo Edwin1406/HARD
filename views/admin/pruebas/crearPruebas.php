@@ -1643,7 +1643,7 @@ $selIf    = function ($left, $right) {
                         <div class="form-group">
                             <label for="total_valor_cif">Total Valor CIF </label>
                             <input type="number" step="0.01" id="total_valor_cif" class="form-control"
-                                placeholder="Co)" name="total_valor_cif">
+                                placeholder="INGRESE TOTAL VALOR CIF" name="total_valor_cif">
                         </div>
                     </div>
 
