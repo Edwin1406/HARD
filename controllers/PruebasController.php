@@ -417,7 +417,7 @@ public static function actualizarPruebas()
     $composicion = trim($_POST['composicion'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-    // $total     = (float)($_POST['total'] ?? 0);
+    $total     = (float)($_POST['total'] ?? 0);
 
 
 
@@ -428,7 +428,7 @@ public static function actualizarPruebas()
     $marca = trim($_POST['marca'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
-    $bodega = $_POST['bodega'] ?? 0;
+    $bodega = $_POST['bodega'] ?? '';
 
     
 
