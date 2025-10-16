@@ -1288,20 +1288,7 @@ $selIf    = function ($left, $right) {
         numericFormat: { pattern: '0.[00]' }
       },
 
-      // total calculado (renderer usa inst)
-      {
-        data: 'total',
-        readOnly: true,
-        renderer(inst, td, row) {
-          const r = inst.getSourceDataAtRow(row) || {};
-          const cant = Number(r.cantidad) || 0;
-          const pu   = Number(r.precio_unitario) || 0;
-          const tot  = round(cant * pu);
-          r.total = tot;
-          td.classList.add('text-end', 'text-mono');
-          td.textContent = tot.toFixed(2);
-        }
-      },
+ 
 
       { data: 'num_factura' },
       { data: 'tienda' },
@@ -1313,6 +1300,21 @@ $selIf    = function ($left, $right) {
         numericFormat: { pattern: '0' }
       },
       { data: 'bodega' },
+
+        // total calculado (renderer usa inst)
+        {
+            data: 'total',
+            readOnly: true,
+            renderer(inst, td, row) {
+            const r = inst.getSourceDataAtRow(row) || {};
+            const cant = Number(r.cantidad) || 0;
+            const pu = Number(r.precio_unitario) || 0;
+            const tot = round(cant * pu);
+            r.total = tot;
+            td.classList.add('text-end', 'text-mono');
+            td.textContent = tot.toFixed(2);
+            }
+        },
 
       // acciones (renderer usa inst)
       {
@@ -1386,13 +1388,13 @@ $selIf    = function ($left, $right) {
 
     r.cantidad         = Number(r.cantidad) || 0;
     r.precio_unitario  = Number(r.precio_unitario) || 0;
-    r.total            = round(r.cantidad * r.precio_unitario);
     r.num_factura      = Number(r.num_factura) || 0;
     r.tienda           = r.tienda ? String(r.tienda).trim() : '';
     r.marca            = r.marca ? String(r.marca).trim() : '';
     r.pais             = r.pais ? String(r.pais).trim() : '';
     r.num_caja         = Number(r.num_caja) || 0;
     r.bodega           = String(r.bodega).trim() || '';
+    r.total            = round(r.cantidad * r.precio_unitario);
 
     hot.render(); // refresca la celda total
   }
@@ -1412,13 +1414,13 @@ $selIf    = function ($left, $right) {
     fd.append('composicion', row.composicion ?? '');
     fd.append('cantidad', row.cantidad ?? 0);
     fd.append('precio_unitario', row.precio_unitario ?? 0);
-    fd.append('total', row.total ?? 0);
     fd.append('num_factura', row.num_factura ?? 0);
     fd.append('tienda', row.tienda ?? '');
     fd.append('marca', row.marca ?? '');
     fd.append('pais', row.pais ?? '');
     fd.append('num_caja', row.num_caja ?? 0);
     fd.append('bodega', row.bodega ?? '');
+    fd.append('total', row.total ?? 0);
 
     const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
