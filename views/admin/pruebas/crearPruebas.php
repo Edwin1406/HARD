@@ -1180,7 +1180,7 @@ $selIf    = function ($left, $right) {
                         <div class="form-group">
                             <label for="puerto_embarque">Puerto/embarque</label>
                             <input type="text" step="0.01" id="puerto_embarque"
-                                class="form-control" placeholder=")" name="puerto_embarque" required>
+                                class="form-control" placeholder="puerto " name="puerto_embarque" required>
                         </div>
                     </div>
 
@@ -1188,7 +1188,7 @@ $selIf    = function ($left, $right) {
                         <div class="form-group">
                             <label for="puerto_destino">Puerto/Destino</label>
                             <input type="text" id="puerto_destino" class="form-control"
-                                placeholder="N° " name="puerto_destino">
+                                placeholder="puerto Destino" name="puerto_destino">
                         </div>
                     </div>
 
@@ -1196,9 +1196,9 @@ $selIf    = function ($left, $right) {
                     <div class="col-md-3 col-12">
 
                         <div class="form-group">
-                            <label for="metros_lineales_C"></label>
-                            <input type="text" id="metros_lineales_C" class="form-control"
-                                placeholder="Metr" name="metros_lineales_C">
+                            <label for="FBO"> FBO</label>
+                            <input type="text" id="FBO" class="form-control"
+                                placeholder="" name="FBO">
                         </div>
 
                     </div>
@@ -1208,24 +1208,31 @@ $selIf    = function ($left, $right) {
                 <div class="row g-3 mt-1">
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="metros_lineales_B">Met</label>
-                            <input type="number" id="metros_lineales_B" class="form-control"
-                                placeholder="Me" name="metros_lineales_B">
+                            <label for="flete">Flete</label>
+                            <input type="number" id="flete" class="form-control"
+                                placeholder="costo" name="flete">
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="metros_lineales">met</label>
-                            <input type="number" id="metros_lineales_E" class="form-control"
-                                placeholder="Met" name="metros_lineales_E">
+                            <label for="costo_flete">Flete</label>
+                            <input type="number" id="costo_flete" class="form-control"
+                                placeholder="costo" name="costo_flete">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label for="seguro">Seguro</label>
+                            <input type="text" id="seguro" class="form-control"
+                                placeholder="Met" name="seguro">
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12 ">
                         <div class="form-group">
-                            <label for="consumo_recubrimiento">Con </label>
-                            <input type="number" step="0.01" id="consumo_recubrimiento" class="form-control"
-                                placeholder="Co)" name="consumo_recubrimiento">
+                            <label for="total_valor_cif">Total Valor CIF </label>
+                            <input type="number" step="0.01" id="total_valor_cif" class="form-control"
+                                placeholder="Co)" name="total_valor_cif">
                         </div>
                     </div>
 
