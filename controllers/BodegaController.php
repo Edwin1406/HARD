@@ -867,12 +867,6 @@ class BodegaController
                     $alertas[] = "Formato de archivo no permitido ($extension).";
                 }
             }
-
-
-
-
-
-
         $router->render('admin/tienda/editarTienda', [
             'titulo'  => 'EDITAR TIENDA',
             'nombre'  => $nombre,

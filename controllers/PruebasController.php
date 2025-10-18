@@ -165,7 +165,7 @@ class PruebasController
             // Mapear POST -> modelo (solo los campos pedidos)
             $carrito->Codigo_Nota_Pedido = $id_nota;  
             $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
-            $carrito->prenda             = $_POST['prenda']   ?? '';
+            $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
             $carrito->partida            = $_POST['partida']   ?? 0;
             $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
@@ -186,6 +186,12 @@ class PruebasController
             $carrito->cantidad = is_numeric($carrito->cantidad) ? (float)$carrito->cantidad : 0.0;
 
             // Validación del modelo (usa tu Carrito2::validar())
+
+            debuguear($carrito);
+
+
+
+
             $alertas = $carrito->validar();
 
 
