@@ -434,7 +434,7 @@ public static function actualizarPruebas()
     $marca = trim($_POST['marca'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
-    $bodega = $_POST['bodega'] ?? 0;
+    $bodega = $_POST['bodega'] ?? '';
 
     
 

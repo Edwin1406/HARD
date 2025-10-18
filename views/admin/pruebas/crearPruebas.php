@@ -791,7 +791,7 @@ $selIf    = function ($left, $right) {
         </div>
     </div>
 </div>
-
+<!-- 
 <script>
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
@@ -1172,8 +1172,383 @@ $selIf    = function ($left, $right) {
     });
 </script>
 
+ -->
 
 
+
+
+
+
+ <script>
+  // ---------- Puentes PHP ----------
+  const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
+
+  const existentes = <?php
+    $idUrl = $id_nota ?? null;
+    $out = [];
+    if (!empty($carritoTemporal2)) {
+      foreach ($carritoTemporal2 as $r) {
+        if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+        $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
+        $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
+        $out[]  = [
+          'id'                 => (int)$r->id,
+          'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
+          'etiqueta'           => $r->etiqueta,
+          'prenda'             => $r->prenda,
+          'partida'            => $r->partida,
+          'composicion'        => $r->composicion,
+          'cantidad'           => $cant,
+          'precio_unitario'    => $precio,
+          'num_factura'        => $r->num_factura,
+          'tienda'             => $r->tienda,
+          'marca'              => $r->marca,
+          'pais'               => $r->pais,
+          'num_caja'           => $r->num_caja,
+          'bodega'             => $r->bodega,
+          'total'              => round($cant * $precio, 2),
+        ];
+      }
+    }
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+  ?>;
+
+  // ---------- Utils UI ----------
+  const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), { delay: 1800 });
+  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
+  const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
+  let rowPendingDelete = null;
+
+  function round(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
+
+  // ---------- Handsontable ----------
+  const container = document.getElementById('hot-min');
+
+  // Campos que disparan autosave (12 columnas; excluye 'total')
+  const AUTOSAVE_PROPS = new Set([
+    'etiqueta',
+    'prenda',
+    'partida',
+    'composicion',
+    'cantidad',
+    'precio_unitario',
+    'num_factura',
+    'tienda',
+    'marca',
+    'pais',
+    'num_caja',
+    'bodega',
+  ]);
+
+  const hot = new Handsontable(container, {
+    data: existentes.length ? existentes : [],
+    colHeaders: [
+      'id',
+      'codigo_nota_pedido',
+      'etiqueta',
+      'prenda',
+      'partida',
+      'composicion',
+      'cantidad',
+      'precio_unitario',
+      'num_factura',
+      'tienda',
+      'marca',
+      'pais',
+      'num_caja',
+      'bodega',
+      'total',
+      'Acciones'
+    ],
+    columns: [
+      { data: 'id', readOnly: true },
+
+      // codigo_nota_pedido (renderer sin usar variable externa hot)
+      {
+        data: 'codigo_nota_pedido',
+        readOnly: true,
+        renderer: (inst, td, row, col, prop, val) => {
+          td.textContent = val ?? (ID_NOTA ?? '');
+        }
+      },
+
+      { data: 'etiqueta' },
+      { data: 'prenda' },
+      { data: 'partida' },
+      { data: 'composicion' },
+
+      {
+        data: 'cantidad',
+        type: 'numeric',
+        numericFormat: { pattern: '0.[000]' }
+      },
+      {
+        data: 'precio_unitario',
+        type: 'numeric',
+        numericFormat: { pattern: '0.[00]' }
+      },
+
+ 
+
+      { data: 'num_factura' },
+      { data: 'tienda' },
+      { data: 'marca' },
+      { data: 'pais' },
+      {
+        data: 'num_caja',
+        type: 'numeric',
+        numericFormat: { pattern: '0' }
+      },
+      { data: 'bodega' },
+
+        // total calculado (renderer usa inst)
+        {
+            data: 'total',
+            readOnly: true,
+            renderer(inst, td, row) {
+            const r = inst.getSourceDataAtRow(row) || {};
+            const cant = Number(r.cantidad) || 0;
+            const pu = Number(r.precio_unitario) || 0;
+            const tot = round(cant * pu);
+            r.total = tot;
+            td.classList.add('text-end', 'text-mono');
+            td.textContent = tot.toFixed(2);
+            }
+        },
+
+      // acciones (renderer usa inst)
+      {
+        readOnly: true,
+        renderer(inst, td, row) {
+          td.classList.add('text-center');
+          td.innerHTML = `
+            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>`;
+        }
+      },
+    ],
+
+    rowHeaders: true,
+    stretchH: 'all',
+    height: container.clientHeight,
+    licenseKey: 'non-commercial-and-evaluation',
+
+    filters: true,
+    dropdownMenu: true,
+    columnSorting: true,
+    manualColumnResize: true,
+    manualRowResize: true,
+
+    minSpareRows: 1,
+    allowInsertColumn: false,
+    allowRemoveColumn: false,
+
+    // AUTOSAVE: 12 columnas (excluye total)
+    afterChange(changes, source) {
+      if (!changes || source === 'loadData') return;
+
+      const rowsToUpdate = new Set();
+
+      for (const [row, prop] of changes) {
+        if (!AUTOSAVE_PROPS.has(prop)) continue; // ignora cambios fuera de las 12
+        if (prop === 'cantidad' || prop === 'precio_unitario') recalcRow(row);
+        rowsToUpdate.add(row);
+      }
+
+      if (rowsToUpdate.size) {
+        // Recalcular por coherencia
+        rowsToUpdate.forEach(r => recalcRow(r));
+        maybeAutosave([...rowsToUpdate]);
+      }
+    },
+
+    afterPaste() {
+      const len = hot.countRows();
+      for (let i = 0; i < len; i++) recalcRow(i);
+      // Guarda todas las filas pegadas (si autosave está activo)
+      maybeAutosave([...Array(len).keys()]);
+    }
+  });
+
+  // Ajuste de altura responsive
+  window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
+
+  // --- Lógica de fila
+  function recalcRow(rowIndex) {
+    const r = hot.getSourceDataAtRow(rowIndex);
+    if (!r) return;
+
+    if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
+
+    if (typeof r.etiqueta === 'string')     r.etiqueta = r.etiqueta.trim();
+    if (typeof r.prenda === 'string')       r.prenda = r.prenda.trim();
+    if (typeof r.partida === 'string')      r.partida = r.partida.trim();
+    if (typeof r.composicion === 'string')  r.composicion = r.composicion.trim();
+
+    r.cantidad         = Number(r.cantidad) || 0;
+    r.precio_unitario  = Number(r.precio_unitario) || 0;
+    r.num_factura      = Number(r.num_factura) || 0;
+    r.tienda           = r.tienda ? String(r.tienda).trim() : '';
+    r.marca            = r.marca ? String(r.marca).trim() : '';
+    r.pais             = r.pais ? String(r.pais).trim() : '';
+    r.num_caja         = Number(r.num_caja) || 0;
+    r.bodega           = String(r.bodega).trim() || '';
+    r.total            = round(r.cantidad * r.precio_unitario);
+
+    hot.render(); // refresca la celda total
+  }
+
+  function filasNuevas() {
+    return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+  }
+
+  // --- Guardar/actualizar
+  async function saveOrUpdateFila(row) {
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
+    if (row.id) fd.append('id', row.id);
+    fd.append('etiqueta', row.etiqueta ?? '');
+    fd.append('prenda', row.prenda ?? '');
+    fd.append('partida', row.partida ?? 0);
+    fd.append('composicion', row.composicion ?? '');
+    fd.append('cantidad', row.cantidad ?? 0);
+    fd.append('precio_unitario', row.precio_unitario ?? 0);
+    fd.append('num_factura', row.num_factura ?? 0);
+    fd.append('tienda', row.tienda ?? '');
+    fd.append('marca', row.marca ?? '');
+    fd.append('pais', row.pais ?? '');
+    fd.append('num_caja', row.num_caja ?? 0);
+    fd.append('bodega', row.bodega ?? '');
+    fd.append('total', row.total ?? 0);
+
+    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      body: fd,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json'
+      },
+      credentials: 'same-origin' // 'include' si es cross-site/subdominio
+    });
+
+    try {
+      const json = await resp.json();
+      if (json?.ok) {
+        if (json.id) row.id = json.id;          // alta
+        row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
+        return true;
+      } else {
+        console.warn('Error en actualización:', json);
+      }
+    } catch {
+      console.warn('Respuesta no JSON:', await resp.text());
+    }
+    return false;
+  }
+
+  async function guardarNuevasFilas(btn) {
+    btn?.setAttribute('disabled', 'disabled');
+    btn?.insertAdjacentHTML('afterbegin',
+      '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>'
+    );
+
+    const nuevas = filasNuevas();
+    let ok = true;
+    for (const r of nuevas) {
+      const exito = await saveOrUpdateFila(r);
+      if (!exito) ok = false;
+    }
+
+    btn?.removeAttribute('disabled');
+    btn?.querySelector('.spinner-border')?.remove();
+    ok ? toastOk.show() : toastErr.show();
+  }
+
+  async function maybeAutosave(rowIdxList) {
+    if (!document.getElementById('autosave')?.checked) return;
+
+    let ok = true;
+    if (Array.isArray(rowIdxList) && rowIdxList.length) {
+      for (const idx of rowIdxList) {
+        const r = hot.getSourceDataAtRow(idx);
+        if (!r) continue;
+        // Evitar disparos vacíos
+        if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    } else {
+      const nuevas = filasNuevas();
+      for (const r of nuevas) {
+        const exito = await saveOrUpdateFila(r);
+        if (!exito) ok = false;
+      }
+    }
+    ok ? toastOk.show() : toastErr.show();
+  }
+
+  // Botones top
+  document.getElementById('guardar-nuevas')?.addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
+  document.getElementById('recargar')?.addEventListener('click', () => location.reload());
+
+  // Eliminar (con modal)
+  container.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.btn-del');
+    if (!btn) return;
+
+    const rowIndex = parseInt(btn.dataset.row, 10);
+    const rowData  = hot.getSourceDataAtRow(rowIndex);
+
+    if (!rowData?.id) { // sin persistir → borra local
+      hot.alter('remove_row', rowIndex, 1);
+      return;
+    }
+    rowPendingDelete = { rowIndex, rowData };
+    modalDelete.show();
+  });
+
+  document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
+    const info = rowPendingDelete;
+    rowPendingDelete = null;
+    if (!info) return;
+
+    const { rowIndex, rowData } = info;
+
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+    fd.append('id', rowData.id);
+
+    try {
+      const resp = await fetch('/admin/eliminarCarrito', {
+        method: 'POST',
+        body: fd,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        },
+        credentials: 'same-origin'
+      });
+      let ok = false;
+      try {
+        const json = await resp.json();
+        ok = !!json?.ok;
+      } catch {}
+      if (ok) {
+        hot.alter('remove_row', rowIndex, 1);
+        toastOk.show();
+      } else {
+        toastErr.show();
+      }
+    } catch {
+      toastErr.show();
+    } finally {
+      modalDelete.hide();
+    }
+  });
+</script>
 
 
 <script>
@@ -1208,25 +1583,25 @@ $selIf    = function ($left, $right) {
                 <div class="row g-3">
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="fecha">Fecha</label>
-                            <input type="date" id="fecha" class="form-control"
-                                name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                            <label for="via_transporte">Via/Transporte</label>
+                            <input type="text" id="via_transporte" class="form-control"
+                                name="via_transporte" required>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="consumo_papel">C</label>
-                            <input type="number" step="0.01" id="consumo_papel"
-                                class="form-control" placeholder=")" name="consumo_papel" required>
+                            <label for="puerto_embarque">Puerto/embarque</label>
+                            <input type="text" step="0.01" id="puerto_embarque"
+                                class="form-control" placeholder="puerto " name="puerto_embarque" required>
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="n_laminas">N° de</label>
-                            <input type="number" id="n_laminas" class="form-control"
-                                placeholder="N° " name="n_laminas">
+                            <label for="puerto_destino">Puerto/Destino</label>
+                            <input type="text" id="puerto_destino" class="form-control"
+                                placeholder="puerto Destino" name="puerto_destino">
                         </div>
                     </div>
 
@@ -1234,9 +1609,9 @@ $selIf    = function ($left, $right) {
                     <div class="col-md-3 col-12">
 
                         <div class="form-group">
-                            <label for="metros_lineales_C">Metros</label>
-                            <input type="number" id="metros_lineales_C" class="form-control"
-                                placeholder="Metr" name="metros_lineales_C">
+                            <label for="FBO"> FBO</label>
+                            <input type="text" id="FBO" class="form-control"
+                                placeholder="" name="FBO">
                         </div>
 
                     </div>
@@ -1246,94 +1621,33 @@ $selIf    = function ($left, $right) {
                 <div class="row g-3 mt-1">
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="metros_lineales_B">Met</label>
-                            <input type="number" id="metros_lineales_B" class="form-control"
-                                placeholder="Me" name="metros_lineales_B">
+                            <label for="flete">Flete</label>
+                            <input type="number" id="flete" class="form-control"
+                                placeholder="costo" name="flete">
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="metros_lineales">met</label>
-                            <input type="number" id="metros_lineales_E" class="form-control"
-                                placeholder="Met" name="metros_lineales_E">
+                            <label for="costo_flete">Flete</label>
+                            <input type="number" id="costo_flete" class="form-control"
+                                placeholder="costo" name="costo_flete">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label for="seguro">Seguro</label>
+                            <input type="text" id="seguro" class="form-control"
+                                placeholder="Met" name="seguro">
                         </div>
                     </div>
 
                     <div class="col-md-3 col-12 ">
                         <div class="form-group">
-                            <label for="consumo_recubrimiento">Con </label>
-                            <input type="number" step="0.01" id="consumo_recubrimiento" class="form-control"
-                                placeholder="Co)" name="consumo_recubrimiento">
+                            <label for="total_valor_cif">Total Valor CIF </label>
+                            <input type="number" step="0.01" id="total_valor_cif" class="form-control"
+                                placeholder="INGRESE TOTAL VALOR CIF" name="total_valor_cif">
                         </div>
                     </div>
-
-                    <!-- NECESITO UN SELECT CON OPERADORES EN EL HTML  -->
-
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="operador"></label>
-                            <select id="operador" class="choices form-control" name="operador">
-                                <option value="" disabled <?php echo !isset($turno) ? 'selected' : ''; ?>>Seleccione </option>
-
-                                <!-- CONTROLABLES -->
-                                <option value="EDWIN" <?php echo (isset($operador) && $operador === 'EDWIN') ? 'selected' : ''; ?>>EDWIN</option>
-
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div class="row g-3 mt-1">
-                        <div class="col-md-3 col-12">
-                            <div class="form-group">
-                                <label for="n_cambios">N° de </label>
-                                <input type="number" id="n_cambios" class="form-control"
-                                    placeholder="N° de " name="n_cambios">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-12">
-                            <div class="form-group">
-                                <label for="turno">fd</label>
-                                <select class="form-select" name="turno" id="turno">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-12 <?php echo (trim(strtolower($email)) !== 'corrugador@megaecuador.com') ? 'd-none' : ''; ?>">
-                            <div class="form-group">
-                                <label for="consumo_almidon"> (Kg)</label>
-                                <input type="number" step="0.01" id="consumo_almidon" class="form-control"
-                                    placeholder="Con)" name="consumo_almidon">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-12 <?php echo (trim(strtolower($email)) !== 'corrugador@megaecuador.com') ? 'd-none' : ''; ?>">
-                            <div class="form-group">
-                                <label for="consumo_resina"> (Kg)</label>
-                                <input type="number" step="0.01" id="consumo_resina" class="form-control"
-                                    placeholder="Con)" name="consumo_resina">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="row g-3 mt-1">
-
-                        <div class="col-md-3 col-12">
-
-                            <div class="form-group">
-                                <label for="metros_lineales">ghgfh</label>
-                                <input type="number" id="metros_lineales" class="form-control"
-                                    placeholder="Me" name="metros_lineales">
-                            </div>
-                        </div>
-
-                    </div>
-
-
 
 
                     <!-- Botón -->
