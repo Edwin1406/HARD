@@ -764,6 +764,67 @@ $selIf    = function ($left, $right) {
 
 
 
+
+
+<script>
+    // Si usas un plugin como Choices, inicialízalo DESPUÉS de que el HTML ya venga
+    // con los <option selected> correctos.
+    function bloquearBoton(form) {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.disabled = true;
+        }
+        return true;
+    }
+
+    // 
+</script>
+
+
+
+
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            Tabla de Pruebas
+        </div>
+
+        <div class="card-body">
+
+            <div class="container-xxl my-4">
+                <div class="hot-card">
+                    <div class="p-3 p-md-4 border-bottom bg-white">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                            <div>
+                                <h5 class="mb-1 d-flex align-items-center gap-2">
+                                    Carrito de Pruebas
+                                    <span class="badge text-bg-light hot-badge">Handsontable</span>
+                                </h5>
+                                <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
+                            </div>
+                            <div class="hot-toolbar d-flex align-items-center gap-2">
+                                <div class="form-check form-switch me-2">
+                                    <input class="form-check-input" type="checkbox" id="autosave" checked>
+                                    <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
+                                </div>
+                                <button id="guardar-nuevas" class="btn btn-primary">
+                                    <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
+                                </button>
+                                <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-2 p-md-3 bg-light-subtle">
+                        <div class="table-responsive">
+                            <div id="hot-min" class="bg-white rounded-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 <script>
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
@@ -1174,67 +1235,6 @@ $selIf    = function ($left, $right) {
         }
     });
 </script>
-
-
-<script>
-    // Si usas un plugin como Choices, inicialízalo DESPUÉS de que el HTML ya venga
-    // con los <option selected> correctos.
-    function bloquearBoton(form) {
-        const btn = form.querySelector('button[type="submit"]');
-        if (btn) {
-            btn.disabled = true;
-        }
-        return true;
-    }
-
-    // 
-</script>
-
-
-
-
-
-<section class="section">
-    <div class="card">
-        <div class="card-header">
-            Tabla de Pruebas
-        </div>
-
-        <div class="card-body">
-
-            <div class="container-xxl my-4">
-                <div class="hot-card">
-                    <div class="p-3 p-md-4 border-bottom bg-white">
-                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                            <div>
-                                <h5 class="mb-1 d-flex align-items-center gap-2">
-                                    Carrito de Pruebas
-                                    <span class="badge text-bg-light hot-badge">Handsontable</span>
-                                </h5>
-                                <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
-                            </div>
-                            <div class="hot-toolbar d-flex align-items-center gap-2">
-                                <div class="form-check form-switch me-2">
-                                    <input class="form-check-input" type="checkbox" id="autosave" checked>
-                                    <label class="form-check-label small" for="autosave">Autosave al pegar/editar</label>
-                                </div>
-                                <button id="guardar-nuevas" class="btn btn-primary">
-                                    <i class="bi bi-save me-1"></i> Guardar <span class="d-none d-sm-inline">NUEVAS filas</span>
-                                </button>
-                                <button id="recargar" class="btn btn-outline-secondary"><i class="bi bi-arrow-repeat me-1"></i> Recargar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-2 p-md-3 bg-light-subtle">
-                        <div class="table-responsive">
-                            <div id="hot-min" class="bg-white rounded-3"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
 
 
 
