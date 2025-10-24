@@ -1312,6 +1312,13 @@ $selIf    = function ($left, $right) {
 }
 
 
+@media (min-width: 992px) {
+  #sidebar {
+    display: none !important;
+  }
+}
+
+
 </style>
 
 </div>
