@@ -6,6 +6,7 @@ use Model\Bodega;
 use Model\Carrito;
 use Model\Carrito2;
 use Model\Ciudad;
+use Model\Compra;
 use Model\DetalleVenta;
 use Model\Marca;
 use Model\NotaPedido;
@@ -607,27 +608,31 @@ public static function actualizarPruebas()
             $via_trasporte = $_POST['via_trasporte'] ?? 0;
             $puerto_embarque = $_POST['puerto_embarque'] ?? 0;
             $puerto_destino = $_POST['puerto_destino'] ?? 0;
+            $Fob_Nota_Pedido = $_POST['Fob_Nota_Pedido'] ?? 0;
+            $Flete_Nota_Pedido = $_POST['Flete_Nota_Pedido'] ?? 0;
+            $Costo_Flete_Nota_Pedido = $_POST['Costo_Flete_Nota_Pedido'] ?? 0;
+            $Seguro_Nota_Pedido = $_POST['Seguro_Nota_Pedido'] ?? 0;
             
+
+
+
         
             // fecha manual
             $fecha = $_POST['fecha'] ?? date('Y-m-d');
 
             // Crear venta
-            $venta = new Ventas;
+            $venta = new Compra;
             $venta->id_usuario = $id_usuario;
-            $venta->total = $total;
-            $venta->consumo_papel = $consumo_papel;
-            $venta->metros_lineales = $metros_lineales;
-            $venta->metros_lineales_C = $metros_lineales_C;
-            $venta->n_laminas = $n_laminas;
-            $venta->n_cambios = $n_cambios;
-            $venta->consumo_almidon = $consumo_almidon;
-            $venta->consumo_resina = $consumo_resina;
-            $venta->consumo_recubrimiento = $consumo_recubrimiento;
-            $venta->metros_lineales_B = $metros_lineales_B;
-            $venta->metros_lineales_E = $metros_lineales_E;
-            $venta->operador = $operador;
-            $venta->turno = $turno;
+            $venta->Total_Nota_Pedido = $total;
+            $venta->via_trasporte = $via_trasporte;
+            $venta->puerto_embarque = $puerto_embarque;
+            $venta->puerto_destino = $puerto_destino;
+            $venta->Fob_Nota_Pedido = $Fob_Nota_Pedido;
+            $venta->Flete_Nota_Pedido = $Flete_Nota_Pedido;
+            $venta->Costo_Flete_Nota_Pedido = $Costo_Flete_Nota_Pedido;
+            $venta->Seguro_Nota_Pedido = $Seguro_Nota_Pedido;
+
+       
             // $venta->fecha = date('Y-m-d H:i:s');
             $venta->fecha = $fecha;
             $venta->guardarCarrito();
