@@ -2,10 +2,14 @@
 
 namespace Controllers;
 
+use Model\Carrito;
+use Model\Carrito2;
+use Model\DetalleVenta;
 use Model\Exportadores;
 use Model\Importadores;
 use Model\NotaPedido;
 use Model\Pais;
+use Model\Ventas;
 use MVC\Router;
 
 class NotaPedidoController
@@ -54,6 +58,7 @@ class NotaPedidoController
 
             if ($resultado) {
                 header('Location: /admin/notaPedido/crearNota?exito=1');
+
             }
         }
     }
@@ -70,5 +75,112 @@ class NotaPedidoController
         'notasPedidos' => $notasPedidos,
     ]);
 }
+
+
+// REGISTRAR UNA NOTA PEDIDO
+
+
+    public static function RegistrarNotaPedido()
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_usuario = $_SESSION['id'];
+            $carritoTemporal = Carrito2::wherenuevo('id_usuario', $id_usuario);
+
+            if (empty($carritoTemporal)) {
+                header('Location: /carrito');
+                exit;
+            }
+
+            // Calcular total
+            $total = 0;
+            foreach ($carritoTemporal as $item) {
+                $total += $item->cantidad;
+            }
+
+            // Obtener consumo de papel del form
+            $etiqueta = $_POST['etiqueta'] ?? 0;
+            $prenda = $_POST['prenda'] ?? 0;
+            $partida = $_POST['partida'] ?? 0;
+
+            $composicion = $_POST['composicion'] ?? 0;
+            $cantidad = $_POST['cantidad'] ?? 0;
+            $precio_unitario = $_POST['precio_unitario'] ?? 0;
+            $total = $cantidad * $precio_unitario;
+            $num_factura = $_POST['num_factura'] ?? '';
+            $tienda = $_POST['tienda'] ?? '';
+            $marca = $_POST['marca'] ?? '';
+            $pais = $_POST['pais'] ?? '';
+            $num_caja = $_POST['num_caja'] ?? 0;
+            $bodega = $_POST['bodega'] ?? '';
+            // fecha manual
+            $fecha = $_POST['fecha'] ?? date('Y-m-d');
+
+            // Crear venta
+            $venta = new Ventas;
+            $venta->total = $total;
+            $venta->etiqueta = $etiqueta;
+            $venta->prenda = $prenda;
+            $venta->partida = $partida;
+            $venta->composicion = $composicion;
+            $venta->cantidad = $cantidad;
+            $venta->precio_unitario = $precio_unitario;
+            $venta->num_factura = $num_factura;
+            $venta->tienda = $tienda;
+            $venta->marca = $marca;
+            $venta->pais = $pais;
+            $venta->num_caja = $num_caja;
+            $venta->bodega = $bodega;
+
+
+            // $venta->fecha = date('Y-m-d H:i:s');
+            $venta->fecha = $fecha;
+            $venta->guardarCarrito();
+
+            $id_venta = $venta->id;
+
+            // Insertar detalles
+            foreach ($carritoTemporal as $item) {
+                $detalle = new DetalleVenta();
+                $detalle->id_venta = $id_venta;
+                $detalle->Codigo_Nota_Pedido = $item->Codigo_Nota_Pedido;
+                $detalle->etiqueta = $item->etiqueta;
+                $detalle->prenda = $item->prenda;
+                $detalle->partida = $item->partida;
+                $detalle->composicion = $item->composicion;
+                $detalle->cantidad = $item->cantidad;
+                $detalle->precio_unitario = $item->precio_unitario;
+
+
+                // fecha
+                // $detalle->fecha = date('Y-m-d H:i:s');
+                $detalle->fecha = $fecha;
+                $detalle->guardarCarrito();
+            }
+
+            Carrito2::eliminarPorColumna('id_usuario', $id_usuario);
+
+            header('Location: /admin/pruebas/crearPruebas?exito=1');
+            exit;
+        } else {
+            header('Location: /carrito');
+            exit;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

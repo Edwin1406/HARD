@@ -4,50 +4,70 @@ namespace Model;
 
 use DateTime;
 
-class Ventas extends ActiveRecord {    
+class Ventas extends ActiveRecord
+{
+    // Table
     protected static $tabla = 'VENTAS';
-    protected static $columnasDB = ['id','id_usuario','consumo_papel','metros_lineales','metros_lineales_C','n_laminas','n_cambios','consumo_almidon','consumo_resina','consumo_recubrimiento','metros_lineales_B','metros_lineales_E','operador','turno','total','fecha'];
 
+    // Columns as they appear in MySQL (respect exact names)
+    protected static $columnasDB = [
+        'id',
+        'Codigo_Nota_Pedido',
+        'Cantidad_Compra',
+        'Etiqueta_Compra',
+        'Estilo_Compra',
+        'Prenda_Compra',
+        'Composicion_Compra',
+        'Tienda_Compra',
+        'Marca_Compra',
+        'Origen_Compra',
+        'Precio_Compra',
+        'Bodega_Compra',
+        'Caja_Compra',
+        'Factura_Compra',
+        'Precio_Total_Compra',   // <- renamed column
+        'fecha'
+    ];
+
+    // Public props (typed as reasonably as possible)
     public ?int $id;
-    public ?int $id_usuario;
-    public ?int $consumo_papel;
-    public $metros_lineales;
-    public $metros_lineales_C;
-    public ?int $n_laminas;
-    public ?int $n_cambios;
-    public $consumo_almidon;
-    public $consumo_resina;
-    public $consumo_recubrimiento;
-    public $metros_lineales_B;
-    public $metros_lineales_E;
-    public $operador;
-    public $turno;
-    public ?float $total;
-    public ?string $fecha;
+    public ?int $Codigo_Nota_Pedido;
+    public ?int $Cantidad_Compra;
+    public ?int $Etiqueta_Compra;
+    public ?string $Estilo_Compra;
+    public ?string $Prenda_Compra;
+    public ?string $Composicion_Compra;
+    public ?string $Tienda_Compra;
+    public ?string $Marca_Compra;
+    public ?string $Origen_Compra;
+    public ?float $Precio_Compra;
+    public ?string $Bodega_Compra;
+    public ?int $Caja_Compra;
+    public ?int $Factura_Compra;
+    public ?float $Precio_Total_Compra; // <- was $total
+    public ?string $fecha;              // column type is DATE (no time)
 
-    public function __construct(array $args = []) {
+    public function __construct(array $args = [])
+    {
+        // If the column is DATE (not DATETIME), save only Y-m-d
         date_default_timezone_set('America/Guayaquil');
-        $fecha = date('Y-m-d H:i:s');
+        $hoy = date('Y-m-d');
 
-        $this->id = $args['id'] ?? null;
-        $this->id_usuario = $args['id_usuario'] ?? null;
-        $this->consumo_papel = $args['consumo_papel'] ?? null;
-        $this->metros_lineales_C = $args['metros_lineales_C'] ?? null;
-        $this->metros_lineales = $args['metros_lineales'] ?? null;
-        $this->n_laminas = $args['n_laminas'] ?? null;
-        $this->n_cambios = $args['n_cambios'] ?? null;
-        $this->consumo_almidon = $args['consumo_almidon'] ?? null;
-        $this->consumo_resina = $args['consumo_resina'] ?? null;
-        $this->consumo_recubrimiento = $args['consumo_recubrimiento'] ?? null;
-        $this->metros_lineales_B = $args['metros_lineales_B'] ?? null;
-        $this->metros_lineales_E = $args['metros_lineales_E'] ?? null;
-        $this->operador = $args['operador'] ?? null;    
-        $this->turno = $args['turno'] ?? null;
-        $this->total = $args['total'] ?? null;
-        $this->fecha = $args['fecha'] ?? $fecha;
-
+        $this->id                   = $args['id']                   ?? null;
+        $this->Codigo_Nota_Pedido   = $args['Codigo_Nota_Pedido']   ?? null;
+        $this->Cantidad_Compra      = $args['Cantidad_Compra']      ?? null;
+        $this->Etiqueta_Compra      = $args['Etiqueta_Compra']      ?? null;
+        $this->Estilo_Compra        = $args['Estilo_Compra']        ?? null;
+        $this->Prenda_Compra        = $args['Prenda_Compra']        ?? null;
+        $this->Composicion_Compra   = $args['Composicion_Compra']   ?? null;
+        $this->Tienda_Compra        = $args['Tienda_Compra']        ?? null;
+        $this->Marca_Compra         = $args['Marca_Compra']         ?? null;
+        $this->Origen_Compra        = $args['Origen_Compra']        ?? null;
+        $this->Precio_Compra        = isset($args['Precio_Compra']) ? (float)$args['Precio_Compra'] : null;
+        $this->Bodega_Compra        = $args['Bodega_Compra']        ?? null;
+        $this->Caja_Compra          = $args['Caja_Compra']          ?? null;
+        $this->Factura_Compra       = $args['Factura_Compra']       ?? null;
+        $this->Precio_Total_Compra  = isset($args['Precio_Total_Compra']) ? (float)$args['Precio_Total_Compra'] : null;
+        $this->fecha                = $args['fecha']                ?? $hoy;
     }
-
 }
-
-
