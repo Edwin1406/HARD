@@ -1319,6 +1319,13 @@ $selIf    = function ($left, $right) {
 }
 
 
+
+#main {
+    margin-left: 0 !important;
+    padding: 2rem;
+}
+
+
 </style>
 
 </div>
