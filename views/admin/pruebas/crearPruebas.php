@@ -880,7 +880,7 @@ $selIf    = function ($left, $right) {
 
       // codigo_nota_pedido (renderer sin usar variable externa hot)
       {
-        data: 'codigo_nota_pedido',
+        data: 'codigo',
         readOnly: true,
         renderer: (inst, td, row, col, prop, val) => {
           td.textContent = val ?? (ID_NOTA ?? '');
