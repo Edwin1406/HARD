@@ -859,7 +859,7 @@ $selIf    = function ($left, $right) {
     data: existentes.length ? existentes : [],
     colHeaders: [
       'id',
-      'codigo_nota_pedido',
+      'codigo',
       'etiqueta',
       'prenda',
       'partida',
@@ -880,7 +880,7 @@ $selIf    = function ($left, $right) {
 
       // codigo_nota_pedido (renderer sin usar variable externa hot)
       {
-        data: 'codigo',
+        data: 'codigo_nota_pedido',
         readOnly: true,
         renderer: (inst, td, row, col, prop, val) => {
           td.textContent = val ?? (ID_NOTA ?? '');
