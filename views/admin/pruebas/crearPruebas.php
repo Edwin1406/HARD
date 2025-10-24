@@ -1242,9 +1242,9 @@ $selIf    = function ($left, $right) {
                     <div class="col-md-3 col-12">
 
                         <div class="form-group">
-                            <label for="FBO"> FBO</label>
-                            <input type="text" id="FBO" class="form-control"
-                                placeholder="" name="FBO">
+                            <label for="Fob_Nota_Pedido"> Fob_Nota_Pedido</label>
+                            <input type="text" id="Fob_Nota_Pedido" class="form-control"
+                                placeholder="" name="Fob_Nota_Pedido">
                         </div>
 
                     </div>
@@ -1254,23 +1254,23 @@ $selIf    = function ($left, $right) {
                 <div class="row g-3 mt-1">
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="flete">Flete</label>
-                            <input type="number" id="flete" class="form-control"
-                                placeholder="costo" name="flete">
+                            <label for="Flete_Nota_Pedido">Flete</label>
+                            <input type="number" id="Flete_Nota_Pedido" class="form-control"
+                                placeholder="costo" name="Flete_Nota_Pedido">
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="costo_flete">Flete</label>
-                            <input type="number" id="costo_flete" class="form-control"
-                                placeholder="costo" name="costo_flete">
+                            <label for="Costo_Flete_Nota_Pedido">Costo Flete</label>
+                            <input type="number" id="Costo_Flete_Nota_Pedido" class="form-control"
+                                placeholder="costo" name="Costo_Flete_Nota_Pedido">
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="seguro">Seguro</label>
-                            <input type="text" id="seguro" class="form-control"
-                                placeholder="Met" name="seguro">
+                            <label for="Seguro_Nota_Pedido">Seguro </label>
+                            <input type="text" id="Seguro_Nota_Pedido" class="form-control"
+                                placeholder="Met" name="Seguro_Nota_Pedido">
                         </div>
                     </div>
 

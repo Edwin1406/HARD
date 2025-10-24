@@ -590,7 +590,7 @@ public static function actualizarPruebas()
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_usuario = $_SESSION['id'];
-            $carritoTemporal = Carrito::wherenuevo('id_usuario', $id_usuario);
+            $carritoTemporal = Carrito2::wherenuevo('id_usuario', $id_usuario);
 
             if (empty($carritoTemporal)) {
                 header('Location: /carrito');
@@ -604,21 +604,11 @@ public static function actualizarPruebas()
             }
 
             // Obtener consumo de papel del form
-            $consumo_papel = $_POST['consumo_papel'] ?? 0;
-            $metros_lineales = $_POST['metros_lineales'] ?? 0;
-            $metros_lineales_C = $_POST['metros_lineales_C'] ?? 0;
-
-            $n_laminas = $_POST['n_laminas'] ?? 0;
-            $n_cambios = $_POST['n_cambios'] ?? 0;
-            $consumo_almidon = $_POST['consumo_almidon'] ?? 0;
-            $consumo_resina = $_POST['consumo_resina'] ?? 0;
-            $consumo_recubrimiento = $_POST['consumo_recubrimiento'] ?? 0;
-            $metros_lineales_B = $_POST['metros_lineales_B'] ?? 0;
-            $metros_lineales_E = $_POST['metros_lineales_E'] ?? 0;
-            // operador
-            $operador = $_POST['operador'] ?? '';
-            $turno = $_POST['turno'] ?? '';
-
+            $via_trasporte = $_POST['via_trasporte'] ?? 0;
+            $puerto_embarque = $_POST['puerto_embarque'] ?? 0;
+            $puerto_destino = $_POST['puerto_destino'] ?? 0;
+            
+        
             // fecha manual
             $fecha = $_POST['fecha'] ?? date('Y-m-d');
 
