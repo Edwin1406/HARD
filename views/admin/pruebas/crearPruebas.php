@@ -1308,7 +1308,7 @@ $selIf    = function ($left, $right) {
 <style>
 
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-    max-width: 100% !important;
+    max-width: 110% !important;
 }
 
 
