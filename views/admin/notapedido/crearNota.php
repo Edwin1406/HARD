@@ -285,6 +285,8 @@
                     <tr>
                         <th class="fs-6" style="min-width: 90px;">Id</th>
                         <th class="fs-6" style="min-width: 93px;">Codigo Nota Pedido</th>
+                        <th class="fs-6" style="min-width: 93px;">Codigo Importacion</th>
+
                         <th class="fs-6" style="min-width: 100px;">Acciones</th>
                     </tr>
                 </thead>
@@ -294,6 +296,8 @@
                         <tr>
                             <td><?= $notaItem->id ?></td>
                             <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
+                            <td><?= $notaItem->Codigo_Importacion ?></td>
+
                             <td>
 
                                 <div class="d-flex gap-1">
