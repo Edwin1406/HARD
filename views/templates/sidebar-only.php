@@ -91,6 +91,9 @@
                          <li class="submenu-item ">
                              <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear #Nota</a>
                          </li>
+                         <li class="submenu-item ">
+                             <a href="/admin/notaPedido/listaNotaPedido"><i class="bi bi-arrow-right"> </i>Lista Notas</a>
+                         </li>
 
                      </ul>
                  </li>
