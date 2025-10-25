@@ -57,7 +57,7 @@ class NotaPedidoController
             $resultado = $notaPedido->guardar();
 
             if ($resultado) {
-                header('Location: /admin/notaPedido/crearNota?exito=1');
+                header('Location: /admin/notaPedido/listaNotaPedido?exito=1');
 
             }
         }
