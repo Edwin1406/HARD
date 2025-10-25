@@ -331,7 +331,7 @@ $selIf    = function ($left, $right) {
                             <div class="row">
 
                                 <!-- # Factura -->
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="etiqueta"># Etiq</label>
                                         <input type="text"
@@ -412,7 +412,7 @@ $selIf    = function ($left, $right) {
 
 
 
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="cantidad">Cantidad</label>
                                         <input type="number"
@@ -424,7 +424,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="precio_unitario">Precio Unitario</label>
                                         <input type="number"
@@ -436,7 +436,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Nombre_Tienda">Tienda</label>
                                         <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
@@ -455,7 +455,7 @@ $selIf    = function ($left, $right) {
 
 
 
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="Nombre_Marca">Marca</label>
                                         <select id="Nombre_Marca" class="choices form-control" name="Nombre_Marca">
@@ -471,7 +471,7 @@ $selIf    = function ($left, $right) {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="pais">Pais</label>
                                         <select id="pais" class="choices form-control" name="pais">
@@ -491,7 +491,7 @@ $selIf    = function ($left, $right) {
 
 
                                 <!-- Ciudad -->
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="ciudad">Ciudad</label>
                                         <select id="ciudad" class="choices form-control" name="ciudad">
@@ -521,7 +521,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="bodega">Bodega</label>
                                         <select id="bodega" class="choices form-control" name="bodega">
