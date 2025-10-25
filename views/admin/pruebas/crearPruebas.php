@@ -342,6 +342,17 @@ $selIf    = function ($left, $right) {
                                             value="<?= $oldVal('etiqueta') ?>">
                                     </div>
                                 </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="num_factura"># Factura</label>
+                                        <input type="text"
+                                            id="num_factura"
+                                            class="form-control"
+                                            placeholder="# Factura"
+                                            name="num_factura"
+                                            value="<?= $oldVal('num_factura') ?>">
+                                    </div>
+                                </div>
 
 
 
