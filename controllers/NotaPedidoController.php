@@ -77,6 +77,33 @@ class NotaPedidoController
 }
 
 
+
+    // Lista de notas pedido
+    public static function listaNotaPedido(Router $router): void
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $notasPedidos = NotaPedido::all();
+
+        // Renderizar la vista
+        $router->render('admin/notapedido/listaNotaPedido', [
+            'titulo' => 'Lista de Notas de Pedido',
+            'nombre' => $nombre,
+            'email' => $email,
+            'notasPedidos' => $notasPedidos,
+        ]);
+    }
+
+
+
+
+
 // REGISTRAR UNA NOTA PEDIDO
 
 

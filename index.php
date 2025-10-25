@@ -151,6 +151,10 @@ $router->get('/admin/notaPedido/crearNota', [NotaPedidoController::class, 'crear
 $router->post('/admin/notaPedido/crearNota', [NotaPedidoController::class, 'crearNota']);
 
 
+// Lista de notas
+$router->get('/admin/notaPedido/listaNotaPedido', [NotaPedidoController::class, 'listaNotaPedido']);
+
+
 
 
 
