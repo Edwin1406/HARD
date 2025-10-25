@@ -1135,8 +1135,8 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4 col-12">
-                                <div class="card" style="background-color: #dacdcdff;">
+                            <div class="col-md-4 col-12">
+                                <!-- <div class="card" style="background-color: #dacdcdff;">
 
                                     <div class="card-content">
                                         <div class="card-body">
@@ -1151,8 +1151,8 @@ $selIf    = function ($left, $right) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> -->
+                                </div> -->
+                            </div>
                             <div class="col-md-4 col-12">
                                 <div class="card" style="background-color: #dacdcdff;">
 
