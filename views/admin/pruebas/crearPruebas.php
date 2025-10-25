@@ -471,22 +471,32 @@ $selIf    = function ($left, $right) {
                                         </select>
                                     </div>
                                 </div>
+
+
+
+                               <!-- pais -->
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
-                                        <label for="pais">Pais</label>
+                                        <label for="pais">País</label>
                                         <select id="pais" class="choices form-control" name="pais">
                                             <option value="" disabled <?= empty($old['pais']) ? 'selected' : '' ?>>
-                                                Seleccione un Pais
+                                                Seleccione
                                             </option>
                                             <?php foreach ($paises as $p) : ?>
-                                                <option value="<?= htmlspecialchars($p->Nombre_Origen) ?>"
-                                                    <?= $selIf(($old['pais'] ?? ''), $p->Nombre_Origen) ?>>
-                                                    <?= htmlspecialchars($p->Nombre_Origen) ?>
+                                                <option value="<?= htmlspecialchars($p->Sigla_Pais) ?>"
+                                                    <?= $selIf(($old['pais'] ?? ''), $p->Sigla_Pais) ?>>
+                                                    <?= htmlspecialchars($p->Sigla_Pais) ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
+                                
+
+
+
+
 
 
 
