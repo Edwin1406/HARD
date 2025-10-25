@@ -1135,7 +1135,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <!-- <div class="col-md-4 col-12">
                                 <div class="card" style="background-color: #dacdcdff;">
 
                                     <div class="card-content">
@@ -1144,19 +1144,7 @@ $selIf    = function ($left, $right) {
                                                 <div class="form-body">
                                                     <div class="row">
 
-                                                        <div class="col-12">
-                                                            <div class="form-group has-icon-left">
-                                                                <label for="Codigo_Exportador">Exportador</label>
-                                                                <div class="position-relative">
-                                                                    <select id="Codigo_Exportador" class="choices form-control" name="Codigo_Exportador">
-                                                                        <option value="" disabled selected>Seleccione un exportador</option>
-                                                                        <?php foreach ($exportadores as $exportador): ?>
-                                                                            <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
-                                                                        <?php endforeach; ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                     
 
                                                     </div>
                                                 </div>
@@ -1164,7 +1152,7 @@ $selIf    = function ($left, $right) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4 col-12">
                                 <div class="card" style="background-color: #dacdcdff;">
 
@@ -1243,7 +1231,7 @@ $selIf    = function ($left, $right) {
                     </section>
                     <div class="col-12 d-flex justify-content-end">
                         <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
-                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                        <!-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button> -->
                     </div>
                 </div>
 
