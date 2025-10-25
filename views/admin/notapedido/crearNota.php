@@ -285,6 +285,8 @@
                     <tr>
                         <th class="fs-6" style="min-width: 93px;"> Nota Pedido</th>
                         <th class="fs-6" style="min-width: 93px;"> Importación</th>
+                        <th class="fs-6" style="min-width: 93px;"> Fecha</th>
+
 
                         <th class="fs-6" style="min-width: 100px;">Acciones</th>
                     </tr>
@@ -295,6 +297,7 @@
                         <tr>
                             <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
                             <td><?= $notaItem->Codigo_Importacion ?></td>
+                            <td><?= $notaItem->Fecha_Nota_Pedido ?></td>
 
                             <td>
 
