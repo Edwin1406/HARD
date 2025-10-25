@@ -615,7 +615,7 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="num_caja">#caja</label>
                                         <input type="number"
