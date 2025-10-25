@@ -137,7 +137,7 @@ class PruebasController
         $marca   = Marca::all();
         $prendas = Prenda::all();
 
-        debuguear($paises);
+        // debuguear($paises);
 
         // Info de la nota (como lo tenías)
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
