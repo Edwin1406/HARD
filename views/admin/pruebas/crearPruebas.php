@@ -474,7 +474,7 @@ $selIf    = function ($left, $right) {
 
 
 
-                               <!-- pais -->
+                                <!-- pais -->
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -483,17 +483,20 @@ $selIf    = function ($left, $right) {
                                             <option value="" disabled <?= empty($old['pais']) ? 'selected' : '' ?>>
                                                 Seleccione
                                             </option>
-                                            <?php foreach ($paises as $p) : ?>
-                                                <option value="<?= htmlspecialchars($p->Sigla_Pais) ?>"
-                                                    <?= $selIf(($old['pais'] ?? ''), $p->Sigla_Pais) ?>>
-                                                    <?= htmlspecialchars($p->Sigla_Pais) ?>
+
+                                            <?php foreach ($paises as $p): ?>
+                                                <?php
+                                                // Verificar que la propiedad exista y evitar null en htmlspecialchars
+                                                $paisOrigen = isset($p->Pais_Origen) ? $p->Pais_Origen : '';
+                                                ?>
+                                                <option value="<?= htmlspecialchars((string)$paisOrigen, ENT_QUOTES, 'UTF-8') ?>"
+                                                    <?= $selIf(($old['pais'] ?? ''), $paisOrigen) ?>>
+                                                    <?= htmlspecialchars((string)$paisOrigen, ENT_QUOTES, 'UTF-8') ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
-                                
-
 
 
 
