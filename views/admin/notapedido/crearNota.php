@@ -274,54 +274,6 @@
     </section>
 </div>
 
-<section class="section">
-    <div class="card">
-        <div class="card-header">
-            Tabla de registros de Notas de Pedido
-        </div>
-        <div class="card-body">
-            <table class="table table-striped" id="table1">
-                <thead>
-                    <tr>
-                        <th class="fs-6" style="min-width: 93px;"> Nota Pedido</th>
-                        <th class="fs-6" style="min-width: 93px;"> Importación</th>
-                        <th class="fs-6" style="min-width: 93px;"> Fecha</th>
-
-
-                        <th class="fs-6" style="min-width: 100px;">Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php foreach ($notasPedidos as $notaItem): ?>
-                        <tr>
-                            <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
-                            <td><?= $notaItem->Codigo_Importacion ?></td>
-                            <td><?= $notaItem->Fecha_Nota_Pedido ?></td>
-
-                            <td>
-
-                                <div class="d-flex gap-1">
-                                    <a href="/admin/pruebas/crearPruebas?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
-                                    <!-- <form action="/admin/eliminarPruebas" method="POST">
-                                            <input type="hidden" name="id" value="<?= $notaItem->id ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                        </form> -->
-                                </div>
-
-                            </td>
-
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-
-
-
 
 
 <script>
@@ -335,19 +287,4 @@
 
 
 
-
-<script>
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        const dataTable = new simpleDatatables.DataTable("#table1", {
-            scrollX: true,
-            columnDefs: [{
-                    width: "110px",
-                    targets: [6, 7, 8]
-                } 
-            ]
-        });
-    });
-
-</script>
 
