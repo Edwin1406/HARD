@@ -435,23 +435,7 @@ $selIf    = function ($left, $right) {
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="Nombre_Marca">Marca</label>
-                                        <select id="Nombre_Marca" class="choices form-control" name="Nombre_Marca">
-                                            <option value="" disabled <?= empty($old['Nombre_Marca']) ? 'selected' : '' ?>>
-                                                Seleccione una Marca
-                                            </option>
-                                            <?php foreach ($marca as $m) : ?>
-                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
-                                                    <?= $selIf(($old['Nombre_Marca'] ?? ''), $m->Nombre_Marca) ?>>
-                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                
+
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="Nombre_Tienda">Tienda</label>
@@ -468,6 +452,43 @@ $selIf    = function ($left, $right) {
                                         </select>
                                     </div>
                                 </div>
+
+
+
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Nombre_Marca">Marca</label>
+                                        <select id="Nombre_Marca" class="choices form-control" name="Nombre_Marca">
+                                            <option value="" disabled <?= empty($old['Nombre_Marca']) ? 'selected' : '' ?>>
+                                                Seleccione una Marca
+                                            </option>
+                                            <?php foreach ($marca as $m) : ?>
+                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
+                                                    <?= $selIf(($old['Nombre_Marca'] ?? ''), $m->Nombre_Marca) ?>>
+                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="pais">Pais</label>
+                                        <select id="pais" class="choices form-control" name="pais">
+                                            <option value="" disabled <?= empty($old['pais']) ? 'selected' : '' ?>>
+                                                Seleccione un Pais
+                                            </option>
+                                            <?php foreach ($paises as $p) : ?>
+                                                <option value="<?= htmlspecialchars($p->Nombre_Pais) ?>"
+                                                    <?= $selIf(($old['pais'] ?? ''), $p->Nombre_Pais) ?>>
+                                                    <?= htmlspecialchars($p->Nombre_Pais) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+
 
                                 <!-- Ciudad -->
                                 <div class="col-md-2 col-12">

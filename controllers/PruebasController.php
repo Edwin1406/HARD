@@ -133,7 +133,7 @@ class PruebasController
         $tiendas = Tienda::all();
         $bodega  = Bodega::all();
         $ciudad  = Ciudad::all();
-        $pais    = Pais::all();
+        $paises    = Pais::all();
         $marca   = Marca::all();
         $prendas = Prenda::all();
 
@@ -274,7 +274,7 @@ class PruebasController
             'tiendas'           => $tiendas,
             'bodega'            => $bodega,
             'ciudad'            => $ciudad,
-            'pais'              => $pais,
+            'paises'            => $paises,
             'marca'             => $marca,
             'old'               => $old,
             'prendas'           => $prendas,
