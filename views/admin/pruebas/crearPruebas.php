@@ -1080,7 +1080,7 @@ $selIf    = function ($left, $right) {
 
 <section class="section">
     <div class="card">
-    
+
 
         <div class="card-body">
 
@@ -1177,65 +1177,61 @@ $selIf    = function ($left, $right) {
 
                                                         <div class="col-12">
                                                             <div class="form-group has-icon-left">
-                                                                <label for="Remitir_Nota_Pedido">Remitir Doc a</label>
+                                                                <label for="Fob_Nota_Pedido">Fob</label>
                                                                 <div class="position-relative">
                                                                     <input type="text" class="form-control"
-                                                                        placeholder="Remitir Doc a"
-                                                                        id="Remitir_Nota_Pedido" name="Remitir_Nota_Pedido">
+                                                                        placeholder="Fob"
+                                                                        id="Fob_Nota_Pedido" name="Fob_Nota_Pedido">
 
                                                                 </div>
                                                             </div>
                                                         </div>
-
-
-                                                        <div class="col-12">
-
-                                                            <div class="form-group has-icon-left">
-                                                                <label for="Pais_Nota_Pedido">Pais/origen</label>
-                                                                <div class="position-relative">
-
-                                                                    <select id="Pais_Nota_Pedido" class="choices form-control" name="Pais_Nota_Pedido">
-                                                                        <option value="" disabled selected>Seleccione un país</option>
-                                                                        <?php foreach ($pais as $paises): ?>
-                                                                            <option value="<?php echo s($paises->Pais_Origen); ?>"><?php echo s($paises->Pais_Origen); ?></option>
-                                                                        <?php endforeach; ?>
-                                                                    </select>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
                                                         <div class="col-12">
                                                             <div class="form-group has-icon-left">
-                                                                <label for="Forma_Pago_Nota_Pedido">Forma de pago</label>
+                                                                <label for="Flete_Nota_Pedido">Flete</label>
                                                                 <div class="position-relative">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Flete"
+                                                                        id="Flete_Nota_Pedido" name="Flete_Nota_Pedido">
 
-                                                                    <select class="form-select" id="Forma_Pago_Nota_Pedido" name="Forma_Pago_Nota_Pedido">
-                                                                        <option value="" disabled selected>Seleccione una forma de pago</option>
-                                                                        <option value="Contado">Contado</option>
-                                                                        <option value="Crédito">Crédito</option>
-                                                                        <option value="Transferencia">Transferencia</option>
-                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-12">
                                                             <div class="form-group has-icon-left">
-                                                                <label for="Moneda_Nota_Pedido">Moneda</label>
+                                                                <label for="Costo_Flete_Nota_Pedido">Costo Flete</label>
                                                                 <div class="position-relative">
-                                                                    <select class="form-select" id="Moneda_Nota_Pedido" name="Moneda_Nota_Pedido">
-                                                                        <option value="">Seleccionar moneda</option>
-                                                                        <option value="USD">USD</option>
-                                                                        <option value="EUR">EUR</option>
-                                                                        <option value="GBP">GBP</option>
-                                                                    </select>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Costo Flete"
+                                                                        id="Costo_Flete_Nota_Pedido" name="Costo_Flete_Nota_Pedido">
+
                                                                 </div>
                                                             </div>
                                                         </div>
 
+                                                        <div class="col-12">
+                                                            <div class="form-group has-icon-left">
+                                                                <label for="Seguro_Nota_Pedido">Seguro</label>
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Seguro"
+                                                                        id="Seguro_Nota_Pedido" name="Seguro_Nota_Pedido">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group has-icon-left">
+                                                                <label for="total_valor_cif">Total Valor CIF</label>
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Total Valor CIF"
+                                                                        id="total_valor_cif" name="total_valor_cif">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1251,102 +1247,13 @@ $selIf    = function ($left, $right) {
                     </div>
                 </div>
 
-
-
-
-
-
-
-
-                <div class="row g-3">
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="via_transporte">Via/Transporte</label>
-                            <input type="text" id="via_transporte" class="form-control"
-                                name="via_transporte" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="puerto_embarque">Puerto/embarque</label>
-                            <input type="text" step="0.01" id="puerto_embarque"
-                                class="form-control" placeholder="puerto " name="puerto_embarque" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="puerto_destino">Puerto/Destino</label>
-                            <input type="text" id="puerto_destino" class="form-control"
-                                placeholder="puerto Destino" name="puerto_destino">
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-3 col-12">
-
-                        <div class="form-group">
-                            <label for="Fob_Nota_Pedido"> Fob_Nota_Pedido</label>
-                            <input type="text" id="Fob_Nota_Pedido" class="form-control"
-                                placeholder="" name="Fob_Nota_Pedido">
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Fila 2 -->
-                <div class="row g-3 mt-1">
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="Flete_Nota_Pedido">Flete</label>
-                            <input type="number" id="Flete_Nota_Pedido" class="form-control"
-                                placeholder="costo" name="Flete_Nota_Pedido">
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="Costo_Flete_Nota_Pedido">Costo Flete</label>
-                            <input type="number" id="Costo_Flete_Nota_Pedido" class="form-control"
-                                placeholder="costo" name="Costo_Flete_Nota_Pedido">
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="form-group">
-                            <label for="Seguro_Nota_Pedido">Seguro </label>
-                            <input type="text" id="Seguro_Nota_Pedido" class="form-control"
-                                placeholder="Met" name="Seguro_Nota_Pedido">
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-12 ">
-                        <div class="form-group">
-                            <label for="total_valor_cif">Total Valor CIF </label>
-                            <input type="number" step="0.01" id="total_valor_cif" class="form-control"
-                                placeholder="INGRESE TOTAL VALOR CIF" name="total_valor_cif">
-                        </div>
-                    </div>
-
-
-                    <!-- Botón -->
-                    <div class="col-12 d-flex justify-content-end mt-3">
-                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar Sucesos</button>
-                    </div>
             </form>
-
-
-
-
-
-
-
-
         </div>
-        <!-- boton de registrar -->
+
     </div>
 </section>
 
-<!-- CSS opcional para evitar que se rompa texto en celdas -->
+
 <style>
     #table1 th,
     #table1 td {
