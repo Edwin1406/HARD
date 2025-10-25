@@ -61,15 +61,15 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
 <?php endif; ?>
 
 
-<!-- <section class="section">
+<section class="section">
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Tabla pruebas</a>
+                    <a class="nav-link active" href="/admin/notaPedido/crearNota">Crear Nota de Pedido</a>
                 </li>
             </ul>
         </div>
-    </section> -->
+    </section>
 
 
 
