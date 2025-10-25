@@ -437,15 +437,32 @@ $selIf    = function ($left, $right) {
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label for="importador">Marca</label>
-                                        <select id="importador" class="choices form-control" name="importador">
-                                            <option value="" disabled <?= empty($old['importador']) ? 'selected' : '' ?>>
+                                        <label for="Nombre_Marca">Marca</label>
+                                        <select id="Nombre_Marca" class="choices form-control" name="Nombre_Marca">
+                                            <option value="" disabled <?= empty($old['Nombre_Marca']) ? 'selected' : '' ?>>
                                                 Seleccione una Marca
                                             </option>
                                             <?php foreach ($marca as $m) : ?>
                                                 <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
-                                                    <?= $selIf(($old['importador'] ?? ''), $m->Nombre_Marca) ?>>
+                                                    <?= $selIf(($old['Nombre_Marca'] ?? ''), $m->Nombre_Marca) ?>>
                                                     <?= htmlspecialchars($m->Nombre_Marca) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="Nombre_Tienda">Tienda</label>
+                                        <select id="Nombre_Tienda" class="choices form-control" name="Nombre_Tienda">
+                                            <option value="" disabled <?= empty($old['Nombre_Tienda']) ? 'selected' : '' ?>>
+                                                Seleccione una tienda
+                                            </option>
+                                            <?php foreach ($tiendas as $t) : ?>
+                                                <option value="<?= htmlspecialchars($t->Nombre_Tienda) ?>"
+                                                    <?= $selIf(($old['Nombre_Tienda'] ?? ''), $t->Nombre_Tienda) ?>>
+                                                    <?= htmlspecialchars($t->Nombre_Tienda) ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
