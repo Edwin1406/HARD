@@ -1110,6 +1110,16 @@ $selIf    = function ($left, $right) {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group has-icon-left">
+                                                                <label for="puerto_embarque">puerto_embarque</label>
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="puerto_embarque"
+                                                                        id="puerto_embarque" name="puerto_embarque">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
