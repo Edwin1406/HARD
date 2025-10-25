@@ -479,9 +479,9 @@ $selIf    = function ($left, $right) {
                                                 Seleccione un Pais
                                             </option>
                                             <?php foreach ($paises as $p) : ?>
-                                                <option value="<?= htmlspecialchars($p->Nombre_Pais) ?>"
-                                                    <?= $selIf(($old['pais'] ?? ''), $p->Nombre_Pais) ?>>
-                                                    <?= htmlspecialchars($p->Nombre_Pais) ?>
+                                                <option value="<?= htmlspecialchars($p->Nombre_Origen) ?>"
+                                                    <?= $selIf(($old['pais'] ?? ''), $p->Nombre_Origen) ?>>
+                                                    <?= htmlspecialchars($p->Nombre_Origen) ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
