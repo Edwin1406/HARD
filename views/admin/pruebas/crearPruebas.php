@@ -1080,9 +1080,7 @@ $selIf    = function ($left, $right) {
 
 <section class="section">
     <div class="card">
-        <div class="card-header">
-            Tabla de Pruebas
-        </div>
+    
 
         <div class="card-body">
 
