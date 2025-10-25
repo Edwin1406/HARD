@@ -426,7 +426,7 @@ $selIf    = function ($left, $right) {
 
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
-                                        <label for="precio_unitario">Precio Unitario</label>
+                                        <label for="precio_unitario">Precio/Un</label>
                                         <input type="number"
                                             id="precio_unitario"
                                             class="form-control"
