@@ -111,6 +111,14 @@ class NotaPedidoController
             header('Location: /');
         }
 
+        // Obtener id de nota pedido
+        $id_nota_pedido = $_GET['id'] ?? 0;
+        
+
+
+
+
+
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
