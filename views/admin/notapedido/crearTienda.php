@@ -90,22 +90,14 @@
                             <?php endforeach; ?>
                             <form class="form" method="POST" action="/admin/" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
-                                    <div class="col-md-2 col-12">
+                                  
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
-                                            <select id="tienda" class="choices form-control" name="tienda">
-                                                <option value="" disabled <?= empty($old['tienda']) ? 'selected' : '' ?>>
-                                                    Seleccione una tienda
-                                                </option>
-                                                <?php foreach ($tiendas as $t) : ?>
-                                                    <option value="<?= htmlspecialchars($t->Nombre_Tienda) ?>"
-                                                        <?= $selIf(($old['tienda'] ?? ''), $t->Nombre_Tienda) ?>>
-                                                        <?= htmlspecialchars($t->Nombre_Tienda) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <input type="text" id="tienda" class="form-control" name="tienda" placeholder="Ingrese el nombre de la tienda" value="<?php echo isset($_POST['tienda']) ? htmlspecialchars($_POST['tienda']) : ''; ?>">
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
