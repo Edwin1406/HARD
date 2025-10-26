@@ -114,7 +114,7 @@
 
                                 <div class="d-flex gap-1">
                                     <!-- <a href="/admin/pruebas/crearPruebas?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a> -->
-                                    <a href="/admin/pruebas/crearTienda?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
+                                    <a href="/admin/notaPedido/CrearTienda?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
                                     <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
