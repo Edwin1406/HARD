@@ -120,6 +120,8 @@ class NotaPedidoController
             header('Location: /admin/notaPedido/crearTienda');
         }
 
+        debuguear($id_nota_pedido);
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
