@@ -88,7 +88,7 @@
                                     </div>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
-                            <form class="form" method="POST" action="/admin/" onsubmit="return bloquearBoton(this)">
+                            <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
                                 <div class="row">
                                   
                                     <div class="col-12">
