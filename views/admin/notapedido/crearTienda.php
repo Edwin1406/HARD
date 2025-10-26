@@ -89,12 +89,13 @@
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
                             <form class="form" method="POST" action="/admin/notaPedido/CrearTienda" onsubmit="return bloquearBoton(this)">
+                                <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
                                 <div class="row">
                                   
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
-                                            <input type="text" id="tienda" class="form-control" name="tienda" placeholder="Ingrese el nombre de la tienda" value="<?php ">
+                                            <input type="text" id="tienda" class="form-control" name="tienda" placeholder="Ingrese el nombre de la tienda" value="<?php echo isset($_POST['tienda']) ? htmlspecialchars($_POST['tienda']) : ''; ?>">
                                         </div>
                                     </div>
 
