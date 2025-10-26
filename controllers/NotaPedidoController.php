@@ -124,6 +124,7 @@ class NotaPedidoController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $tiendaNota = new \Model\TiendaNota($_POST);
+            $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
 
             // Validar los datos
             $alertas = $tiendaNota->validar();
