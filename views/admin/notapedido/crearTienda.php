@@ -89,7 +89,7 @@
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
                             <form class="form" method="POST" action="/admin/notaPedido/CrearTienda" onsubmit="return bloquearBoton(this)">
-                                <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
+                                <input type="hidden" name="Codigo_Nota_Pedido" value="<?php echo $id_nota_pedido; ?>">
                                 <div class="row">
                                   
                                     <div class="col-12">

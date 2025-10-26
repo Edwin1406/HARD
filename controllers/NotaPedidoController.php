@@ -125,6 +125,11 @@ class NotaPedidoController
 
         $tiendaNota = new TiendaNota;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // post tienda
+            $Codigo_Nota_Pedido = $_POST['Codigo_Nota_Pedido'] ?? 0;
+            $Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
+            
+
             $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
             $tiendaNota->sincronizar($_POST);
 
