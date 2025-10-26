@@ -101,6 +101,29 @@ class NotaPedidoController
     }
 
 
+    // Crear Tienda
+    public static function CrearTienda(Router $router): void
+    {
+        $alertas = [];
+
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+        }
+
+        $nombre = $_SESSION['nombre'];
+        $email = $_SESSION['email'];
+
+        $notasPedidos = NotaPedido::all();
+
+        $router->render('admin/notapedido/crearTienda', [
+            'titulo' => 'Crear Tienda para Nota de Pedido',
+            'nombre' => $nombre,
+            'email' => $email,
+            'alertas' => $alertas,
+            'notasPedidos' => $notasPedidos,
+        ]);
+    }
 
 
 

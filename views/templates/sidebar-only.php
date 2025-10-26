@@ -95,7 +95,7 @@
                              <a href="/admin/notaPedido/listaNotaPedido"><i class="bi bi-arrow-right"> </i>Lista Notas</a>
                          </li>
                          <li class="submenu-item ">
-                             <a href="/admin/notaPedido/tiendas"><i class="bi bi-arrow-right"> </i>Tiendas</a>
+                             <a href="/admin/notaPedido/CrearTienda"><i class="bi bi-arrow-right"> </i>Tiendas</a>
                          </li>
 
                      </ul>
