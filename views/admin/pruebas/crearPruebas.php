@@ -424,6 +424,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
+                                
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="precio_unitario">Precio/Un</label>
@@ -435,6 +436,7 @@ $selIf    = function ($left, $right) {
                                             value="<?= $oldVal('precio_unitario', '0.00') ?>">
                                     </div>
                                 </div>
+
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -452,7 +454,6 @@ $selIf    = function ($left, $right) {
                                         </select>
                                     </div>
                                 </div>
-
 
 
                                 <div class="col-md-2 col-12">
@@ -631,7 +632,7 @@ $selIf    = function ($left, $right) {
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                 <div>
                     <h5 class="mb-1 d-flex align-items-center gap-2">
-                        Carrito de Pruebas
+                        Administrar prendas para Nota de Pedido N° <?= htmlspecialchars($id_nota) ?>
                         <span class="badge text-bg-light hot-badge">Handsontable</span>
                     </h5>
                     <div class="text-secondary small">Pega desde Excel: selecciona A1 y usa <kbd>Ctrl/⌘ + V</kbd></div>
