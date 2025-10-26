@@ -9,6 +9,7 @@ use Model\Exportadores;
 use Model\Importadores;
 use Model\NotaPedido;
 use Model\Pais;
+use Model\TiendaNota;
 use Model\Ventas;
 use MVC\Router;
 
@@ -120,13 +121,14 @@ class NotaPedidoController
             header('Location: /admin/notaPedido/crearTienda');
         }
 
-        debuguear($id_nota_pedido);
+        // debuguear($id_nota_pedido);
 
-
+        $tiendaNota = new TiendaNota;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $tiendaNota = new \Model\TiendaNota($_POST);
             $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
+            $tiendaNota->sincronizar($_POST);
+
+            debuguear($tiendaNota);
 
             // Validar los datos
             $alertas = $tiendaNota->validar();
@@ -136,7 +138,7 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
+                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
                 }
             }
         }

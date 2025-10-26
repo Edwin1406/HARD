@@ -94,7 +94,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
-                                            <input type="text" id="tienda" class="form-control" name="tienda" placeholder="Ingrese el nombre de la tienda" value="<?php echo isset($_POST['tienda']) ? htmlspecialchars($_POST['tienda']) : ''; ?>">
+                                            <input type="text" id="tienda" class="form-control" name="tienda" placeholder="Ingrese el nombre de la tienda" value="<?php ">
                                         </div>
                                     </div>
 
