@@ -145,7 +145,7 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
+                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
                 }
             }
         }
