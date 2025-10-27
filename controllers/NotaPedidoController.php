@@ -115,7 +115,7 @@ class NotaPedidoController
         // Obtener id de nota pedido
         $id_nota_pedido = $_GET['id'] ?? 0;
 
-        debuguear($id_nota_pedido);
+        // debuguear($id_nota_pedido);
 
         // if (!$id_nota_pedido) {
         //     header('Location: /admin/notaPedido/crearTienda');
