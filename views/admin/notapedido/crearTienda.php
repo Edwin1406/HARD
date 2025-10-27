@@ -143,11 +143,8 @@
                             <td>
 
                                 <div class="d-flex gap-1">
-                                    <a href="/admin/bodega/editarBodega?id=<?= $tiendaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
-                                    <form action="/admin/eliminarBodega" method="POST">
-                                        <input type="hidden" name="id" value="<?= $tiendaItem->id ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                    </form>
+                                    <a href="/admin/pruebas/crearPruebas?id=<?= $tiendaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">idnota</a>
+                                  
                                 </div>
 
                             </td>
