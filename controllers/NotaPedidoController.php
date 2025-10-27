@@ -126,6 +126,10 @@ class NotaPedidoController
 
         $tiendaNota = new TiendaNota;
 
+
+
+        $tiendaNotas = TiendaNota::where('Codigo_Nota_Pedido', $id_nota_pedido);
+
         
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -160,6 +164,7 @@ class NotaPedidoController
             'alertas' => $alertas,
             'tiendaNota' => $tiendaNota,
             'id_nota_pedido' => $id_nota_pedido,
+            'tiendaNotas' => $tiendaNotas,
         ]);
     }
 
