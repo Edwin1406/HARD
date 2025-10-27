@@ -115,9 +115,9 @@ class NotaPedidoController
         // Obtener id de nota pedido
         $id_nota_pedido = $_GET['id'] ?? 0;
 
-        if (!$id_nota_pedido) {
-            header('Location: /admin/notaPedido/crearTienda');
-        }
+        // if (!$id_nota_pedido) {
+        //     header('Location: /admin/notaPedido/crearTienda');
+        // }
 
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
