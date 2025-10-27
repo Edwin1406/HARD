@@ -96,6 +96,8 @@
                     <tr>
                         <th class="fs-6" style="min-width: 93px;"> Nota Pedido</th>
                         <th class="fs-6" style="min-width: 93px;"> Importación</th>
+                        <th class="fs-6" style="min-width: 93px;"> Exportación</th>
+                        <th class="fs-6" style="min-width: 150px;"> Remitir A</th>
                         <th class="fs-6" style="min-width: 93px;"> Fecha</th>
 
 
@@ -108,6 +110,9 @@
                         <tr>
                             <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
                             <td><?= $notaItem->Codigo_Importacion ?></td>
+                            <td><?= $notaItem->Codigo_Exportacion ?></td>
+                            <td><?= $notaItem->Remitir_nota_Pedido ?></td>
+
                             <td><?= $notaItem->Fecha_Nota_Pedido ?></td>
 
                             <td>
