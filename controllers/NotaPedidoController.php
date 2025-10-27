@@ -130,7 +130,7 @@ class NotaPedidoController
 
         $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', $id_nota_pedido);
 
-        debuguear($tiendaNotas);
+        // debuguear($tiendaNotas);
 
         
         
