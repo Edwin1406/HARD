@@ -135,17 +135,17 @@
                 </thead>
 
                 <tbody>
-                    <?php foreach ($tiendaNotas as $bodegaItem): ?>
+                    <?php foreach ($tiendaNotas as $tiendaItem): ?>
                         <tr>
-                            <td><?= $bodegaItem->id ?></td>
-                            <td><?= $bodegaItem->Codigo_Nota_Pedido?></td>
-                            <td><?= $bodegaItem->tienda ?></td>
+                            <td><?= $tiendaItem->id ?></td>
+                            <td><?= $tiendaItem->Codigo_Nota_Pedido?></td>
+                            <td><?= $tiendaItem->tienda ?></td>
                             <td>
 
                                 <div class="d-flex gap-1">
-                                    <a href="/admin/bodega/editarBodega?id=<?= $bodegaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="/admin/bodega/editarBodega?id=<?= $tiendaItem->id ?>" class="btn btn-primary btn-sm">Editar</a>
                                     <form action="/admin/eliminarBodega" method="POST">
-                                        <input type="hidden" name="id" value="<?= $bodegaItem->id ?>">
+                                        <input type="hidden" name="id" value="<?= $tiendaItem->id ?>">
                                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                     </form>
                                 </div>
