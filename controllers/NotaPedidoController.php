@@ -126,6 +126,9 @@ class NotaPedidoController
 
         $tiendaNota = new TiendaNota;
 
+        $id_nota_pedido = $_POST['id_nota_pedido'] ?? 0;  // Usar POST para obtener el id
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Crea una nueva instancia

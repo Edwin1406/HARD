@@ -74,6 +74,7 @@
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
+    <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
 
 
                                 <div class="row">
