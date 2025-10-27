@@ -111,6 +111,14 @@ class NotaPedidoController
             header('Location: /');
         }
 
+
+        // Obtener id de nota pedido
+        $id_nota_pedido = $_GET['id'] ?? 0;
+
+        if (!$id_nota_pedido) {
+            header('Location: /admin/notaPedido/crearTienda');
+        }
+
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
@@ -120,6 +128,7 @@ class NotaPedidoController
 
             // Crea una nueva instancia
             $tiendaNota = new TiendaNota($_POST);
+            $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
 
             // Sincronizar objeto con los datos del formulario
             $tiendaNota->sincronizar($_POST);
@@ -132,7 +141,7 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?exito=1');
+                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
                 }
             }
         }
