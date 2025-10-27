@@ -128,8 +128,8 @@
                 <thead>
                     <tr>
                         <th class="fs-6" style="min-width: 90px;">Id</th>
-                        <th class="fs-6" style="min-width: 93px;">Nombre Bodega</th>
-                        <th class="fs-6" style="min-width: 80px;">Siglas Bodega</th>
+                        <th class="fs-6" style="min-width: 93px;">Codigo Nota</th>
+                        <th class="fs-6" style="min-width: 80px;">Tienda</th>
                         <th class="fs-6" style="min-width: 100px;">Acciones</th>
                     </tr>
                 </thead>
