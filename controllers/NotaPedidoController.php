@@ -102,7 +102,7 @@ class NotaPedidoController
 
 
     // Crear Tienda
-    public static function CrearTienda(Router $router): void
+    public static function crearTienda(Router $router): void
     {
         $alertas = [];
 
@@ -118,7 +118,7 @@ class NotaPedidoController
         $id_nota_pedido = $_GET['id'] ?? 0;
 
         if (!$id_nota_pedido) {
-            header('Location: /admin/notaPedido/CrearTienda');
+            header('Location: /admin/notaPedido/crearTienda');
         }
 
         // debuguear($id_nota_pedido);
@@ -145,12 +145,12 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/CrearTienda?id=' . $id_nota_pedido);
+                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
                 }
             }
         }
 
-        $router->render('admin/notapedido/CrearTienda', [
+        $router->render('admin/notapedido/crearTienda', [
             'titulo' => 'Crear Tienda para Nota de Pedido',
             'nombre' => $nombre,
             'email' => $email,
