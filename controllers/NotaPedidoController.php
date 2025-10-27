@@ -114,28 +114,15 @@ class NotaPedidoController
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
-        // Obtener id de nota pedido
-        $id_nota_pedido = $_GET['id'] ?? 0;
-
-        if (!$id_nota_pedido) {
-            header('Location: /admin/notaPedido/crearTienda');
-        }
-
-        // debuguear($id_nota_pedido);
-
         $tiendaNota = new TiendaNota;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // post tienda
-            $Codigo_Nota_Pedido = $_POST['Codigo_Nota_Pedido'] ?? 0;
-            $Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
 
+            // Crea una nueva instancia
+            $tiendaNota = new TiendaNota($_POST);
 
-            // debuguear($Codigo_Nota_Pedido);
-
-            // $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
+            // Sincronizar objeto con los datos del formulario
             $tiendaNota->sincronizar($_POST);
-
-            // debuguear($tiendaNota);
 
             // Validar los datos
             $alertas = $tiendaNota->validar();
@@ -145,19 +132,20 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
+                    header('Location: /admin/notaPedido/crearTienda?exito=1');
                 }
             }
         }
 
+        // Renderizar la vista
         $router->render('admin/notapedido/crearTienda', [
             'titulo' => 'Crear Tienda para Nota de Pedido',
             'nombre' => $nombre,
             'email' => $email,
             'alertas' => $alertas,
+            'tiendaNota' => $tiendaNota,
         ]);
     }
-
 
 
     // REGISTRAR UNA NOTA PEDIDO
