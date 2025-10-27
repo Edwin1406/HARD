@@ -118,7 +118,7 @@ class NotaPedidoController
         $id_nota_pedido = $_GET['id'] ?? 0;
 
         if (!$id_nota_pedido) {
-            header('Location: /admin/notaPedido/crearTienda');
+            header('Location: /admin/notaPedido/CrearTienda');
         }
 
         // debuguear($id_nota_pedido);
@@ -131,7 +131,6 @@ class NotaPedidoController
 
 
             debuguear('Codigo Nota Pedido: ' . $Codigo_Nota_Pedido);
-
 
             $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
             $tiendaNota->sincronizar($_POST);
@@ -146,7 +145,7 @@ class NotaPedidoController
                 $resultado = $tiendaNota->guardar();
 
                 if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
+                    header('Location: /admin/notaPedido/CrearTienda?id=' . $id_nota_pedido);
                 }
             }
         }
