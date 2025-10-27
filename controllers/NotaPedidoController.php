@@ -130,7 +130,7 @@ class NotaPedidoController
             $Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
 
 
-            debuguear('Codigo Nota Pedido: ' . $Codigo_Nota_Pedido);
+            debuguear($Codigo_Nota_Pedido);
 
             $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
             $tiendaNota->sincronizar($_POST);
@@ -150,7 +150,7 @@ class NotaPedidoController
             }
         }
 
-        $router->render('admin/notapedido/crearTienda', [
+        $router->render('admin/notapedido/CrearTienda', [
             'titulo' => 'Crear Tienda para Nota de Pedido',
             'nombre' => $nombre,
             'email' => $email,
