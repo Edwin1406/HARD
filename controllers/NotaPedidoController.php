@@ -130,12 +130,12 @@ class NotaPedidoController
             $Nombre_Tienda = $_POST['Nombre_Tienda'] ?? '';
 
 
-            debuguear($Codigo_Nota_Pedido);
+            // debuguear($Codigo_Nota_Pedido);
 
-            $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
+            // $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
             $tiendaNota->sincronizar($_POST);
 
-            debuguear($tiendaNota);
+            // debuguear($tiendaNota);
 
             // Validar los datos
             $alertas = $tiendaNota->validar();
