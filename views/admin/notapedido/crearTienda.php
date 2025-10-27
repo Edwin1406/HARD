@@ -86,24 +86,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label for="Codigo_Importacion"></label>
-                                            <input type="text" id="Codigo_Importacion" class="form-control"
-                                                placeholder="# Importación" name="Codigo_Importacion">
-                                        </div>
-                                    </div>
-
-                                    <!-- fecha -->
-                                    <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label for="Fecha_Nota_Pedido">Fecha</label>
-                                            <input type="date" id="Fecha_Nota_Pedido" class="form-control"
-                                                name="Fecha_Nota_Pedido" value="<?php echo date('Y-m-d'); ?>" required>
-                                        </div>
-                                    </div>
-
-
+                                  
 
 
                                     <div class="col-12 d-flex justify-content-end">
