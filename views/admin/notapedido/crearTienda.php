@@ -68,18 +68,18 @@
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
-                                    <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
 
 
                                 <div class="row">
-<!-- 
+
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
                                             <input type="number" id="Codigo_Nota_Pedido" class="form-control"
-                                                placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido">
+                                                placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido"
+                                                value="<?php echo $id_nota_pedido; ?>" readonly>
                                         </div>
-                                    </div> -->
+                                    </div>
 
 
                                     <div class="col-md-3 col-12">
