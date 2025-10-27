@@ -155,6 +155,7 @@ class NotaPedidoController
             'email' => $email,
             'alertas' => $alertas,
             'tiendaNota' => $tiendaNota,
+            'id_nota_pedido' => $id_nota_pedido,
         ]);
     }
 
