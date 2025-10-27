@@ -110,7 +110,7 @@
                         <tr>
                             <td><?= $notaItem->Codigo_Nota_Pedido ?></td>
                             <td><?= $notaItem->Codigo_Importacion ?></td>
-                            <td><?= $notaItem->Codigo_Exportacion ?></td>
+                            <td><?= $notaItem->Codigo_Exportador ?></td>
                             <td><?= $notaItem->Remitir_Nota_Pedido ?></td>
 
                             <td><?= $notaItem->Fecha_Nota_Pedido ?></td>
