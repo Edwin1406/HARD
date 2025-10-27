@@ -80,9 +80,9 @@
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
-                                            <label for="Numero_Nota_Pedido"></label>
-                                            <input type="number" id="Numero_Nota_Pedido" class="form-control"
-                                                placeholder="# Pedido" name="Numero_Nota_Pedido">
+                                            <label for="tienda">Tienda</label>
+                                            <input type="text" id="tienda" class="form-control"
+                                                placeholder="Tienda" name="tienda">
                                         </div>
                                     </div>
 
