@@ -134,7 +134,7 @@ class NotaPedidoController
             $tiendaNota = new TiendaNota($_POST);
             $id_nota_pedido = $_POST['id_nota_pedido'] ?? 0;  // Usar POST para obtener el id
             $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
-            debuguear($tiendaNota);
+            // debuguear($tiendaNota);
 
             // Sincronizar objeto con los datos del formulario
             $tiendaNota->sincronizar($_POST);
