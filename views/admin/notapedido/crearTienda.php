@@ -72,14 +72,14 @@
 
 
                                 <div class="row">
-
+<!-- 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
                                             <input type="number" id="Codigo_Nota_Pedido" class="form-control"
                                                 placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido">
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-md-3 col-12">
