@@ -89,10 +89,10 @@
                      <ul class="submenu ">
 
                          <li class="submenu-item ">
-                             <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear #Nota</a>
+                             <a href="/admin/notaPedido/crearNota"><i class="bi bi-arrow-right"> </i>Crear Pedido</a>
                          </li>
                          <li class="submenu-item ">
-                             <a href="/admin/notaPedido/listaNotaPedido"><i class="bi bi-arrow-right"> </i>Pedidos Tienda</a>
+                             <a href="/admin/notaPedido/listaNotaPedido"><i class="bi bi-arrow-right"> </i>Pedidos-Tienda</a>
                          </li>
                          <li class="submenu-item ">
                              <a href="/admin/notaPedido/CrearTienda"><i class="bi bi-arrow-right"> </i>Tiendas</a>
