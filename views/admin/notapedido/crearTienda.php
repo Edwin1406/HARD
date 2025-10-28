@@ -134,7 +134,7 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-3 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
                                             <input type="number" id="Codigo_Nota_Pedido" class="form-control"
@@ -144,7 +144,7 @@
                                     </div>
 
 
-                                    <div class="col-md-3 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
                                             <input type="text" id="tienda" class="form-control"
@@ -152,7 +152,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="ciudad">Ciudad</label>
                                             <input type="text" id="ciudad" class="form-control"
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="pais">Pais</label>
                                             <input type="text" id="pais" class="form-control"
@@ -169,7 +169,7 @@
                                     </div>
 
 
-                                    <div class="col-md-3 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="fecha">Fecha</label>
                                             <input type="date" id="fecha" class="form-control"
