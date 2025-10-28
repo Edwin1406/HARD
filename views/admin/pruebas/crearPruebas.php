@@ -406,7 +406,7 @@ $selIf    = function ($left, $right) {
                                             class="form-control"
                                             placeholder="# Factura"
                                             name="num_factura"
-                                            value="<?= $oldVal('num_factura') ?>">
+                                            value="<? echo $tienda_nota->num_factura ?>">
                                     </div>
                                 </div>
 
