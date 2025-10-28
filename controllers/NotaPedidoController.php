@@ -36,7 +36,7 @@ class NotaPedidoController
 $ultimoCodigo = NotaPedido::ultimoCodigo();
 
 // Depurar el valor
-debuguear($ultimoCodigo);
+// debuguear($ultimoCodigo);
 
 
         $notaPedido = new NotaPedido;
