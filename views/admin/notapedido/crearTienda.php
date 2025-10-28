@@ -183,8 +183,8 @@
                                             <select id="pais" class="form-select" name="pais">
                                                 <option value="" selected disabled>Seleccione Pais</option>
                                                 <?php foreach ($paises as $paisOption) : ?>
-                                                    <option value="<?php echo $paisOption->Nombre_Pais; ?>">
-                                                        <?php echo $paisOption->Nombre_Pais; ?>
+                                                    <option value="<?php echo $paisOption->Pais_Origen; ?>">
+                                                        <?php echo $paisOption->Pais_Origen; ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -208,7 +208,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
 
 
 
