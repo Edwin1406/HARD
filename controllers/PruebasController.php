@@ -132,7 +132,7 @@ class PruebasController
         $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
 
 
-        debuguear($id_nota);
+        // debuguear($id_nota);
 
 
 

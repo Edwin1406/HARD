@@ -289,7 +289,7 @@
                             <td>
 
                                 <div class="d-flex gap-1">
-                                    <a href="/admin/pruebas/crearPruebas?id=<?= $tiendaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">idnota</a>
+                                    <a href="/admin/pruebas/crearPruebas?id=<?= $tiendaItem->id ?>" class="btn btn-primary btn-sm">idnota</a>
 
                                 </div>
 
