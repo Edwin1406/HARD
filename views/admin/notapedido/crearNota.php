@@ -166,7 +166,7 @@
                                                                                         <select id="Codigo_Exportador" class="choices form-control" name="Codigo_Exportador">
                                                                                             <option value="" disabled selected>Seleccione un exportador</option>
                                                                                             <?php foreach ($exportadores as $exportador): ?>
-                                                                                                <option value="<?php echo s($exportador->id); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
+                                                                                                <option value="<?php echo s($exportador->Nombre_Exportador); ?>"><?php echo s($exportador->Nombre_Exportador); ?></option>
                                                                                             <?php endforeach; ?>
                                                                                         </select>
                                                                                     </div>
