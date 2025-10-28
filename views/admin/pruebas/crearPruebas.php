@@ -385,7 +385,7 @@ $selIf    = function ($left, $right) {
                             enctype="multipart/form-data"
                             onsubmit="return bloquearBoton(this)">
 
-                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota) ?>">
+                            <input type="hidden" name="id_nota" value="<?= htmlspecialchars($tienda_nota->Codigo_Nota_Pedido ?? '') ?>">
 
                             <div class="row">
 
