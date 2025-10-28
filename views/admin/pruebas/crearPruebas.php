@@ -948,7 +948,11 @@ $selIf    = function ($left, $right) {
 
 
             {
-                data: 'num_factura'
+                data: 'num_factura',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.num_factura || num_factura || '';
+                }
             },
             {
                 data: 'tienda',
@@ -1072,7 +1076,9 @@ $selIf    = function ($left, $right) {
         r.cantidad = Number(r.cantidad) || 0;
         r.precio_unitario = Number(r.precio_unitario) || 0;
         r.num_factura = Number(r.num_factura) || 0;
+
         r.tienda = r.tienda ? String(r.tienda).trim() : '';
+
         r.marca = r.marca ? String(r.marca).trim() : '';
         r.pais = r.pais ? String(r.pais).trim() : '';
         r.num_caja = Number(r.num_caja) || 0;
@@ -1122,6 +1128,11 @@ $selIf    = function ($left, $right) {
             if (json?.ok) {
                 if (json.id) row.id = json.id; // alta
                 row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
+                row.tienda = row.tienda || tienda;
+                row.marca = row.marca || marca;
+                row.pais = row.pais || pais;
+                row.num_factura = row.num_factura || num_factura;
+                
                 return true;
             } else {
                 console.warn('Error en actualización:', json);
