@@ -878,24 +878,6 @@ $selIf    = function ($left, $right) {
 
     const hot = new Handsontable(container, {
         data: existentes.length ? existentes : [],
-        // colHeaders: [
-        //   'id',
-        //   'codigo_nota_pedido',
-        //   'etiqueta',
-        //   'prenda',
-        //   'partida',
-        //   'composicion',
-        //   'cantidad',
-        //   'precio_unitario',
-        //   'num_factura',
-        //   'tienda',
-        //   'marca',
-        //   'pais',
-        //   'num_caja',
-        //   'bodega',
-        //   'total',
-        //   'Acciones'
-        // ],
         colHeaders: [
             'id',
             'cod',
@@ -1315,22 +1297,7 @@ $selIf    = function ($left, $right) {
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
-                                <!-- <div class="card" style="background-color: #dacdcdff;">
-
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="form form-vertical">
-                                                <div class="form-body">
-                                                    <div class="row">
-
-                                                     
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
+                       
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="card" style="background-color: #dacdcdff;">
@@ -1410,7 +1377,7 @@ $selIf    = function ($left, $right) {
                     </section>
                     <div class="col-12 d-flex justify-content-end">
                         <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
-                        <!-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button> -->
+                        
                     </div>
                 </div>
 
