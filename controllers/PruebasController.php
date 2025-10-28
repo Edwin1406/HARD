@@ -228,6 +228,7 @@ class PruebasController
             $carrito->pais               = $_POST['pais'] ?? '';
             $carrito->num_caja           = $_POST['num_caja'] ?? 0;
             $carrito->bodega             = $_POST['bodega'] ?? '';
+            $carrito->id_tienda          = $id_tienda ?? null;
         
 
             // Saneos mínimos
