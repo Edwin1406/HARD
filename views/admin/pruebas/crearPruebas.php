@@ -386,6 +386,7 @@ $selIf    = function ($left, $right) {
                             onsubmit="return bloquearBoton(this)">
 
                             <input type="hidden" name="id_nota" value="<?= htmlspecialchars($id_nota ?? '') ?>">
+                            <input type="hidden" name="id_tienda" value="<?= htmlspecialchars($_GET['id'] ?? '') ?>">
 
                             <div class="row">
 
