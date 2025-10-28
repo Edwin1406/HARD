@@ -8,6 +8,7 @@ class TiendaNota extends ActiveRecord {
         'id',
         'Codigo_Nota_Pedido',
         'tienda',
+        'marca',
         'ciudad',
         'pais',
         'fecha',
@@ -17,6 +18,7 @@ class TiendaNota extends ActiveRecord {
     public $id;
     public $Codigo_Nota_Pedido;
     public $tienda;
+    public $marca;
     public $ciudad;
     public $pais;
     public $fecha;
@@ -29,6 +31,7 @@ class TiendaNota extends ActiveRecord {
         $this->id               = $args['id'] ?? null;
         $this->Codigo_Nota_Pedido= $args['Codigo_Nota_Pedido'] ?? null;
         $this->tienda           = $args['tienda'] ?? '';
+        $this->marca            = $args['marca'] ?? '';
         $this->ciudad          = $args['ciudad'] ?? '';
         $this->pais            = $args['pais'] ?? '';
         $this->fecha          = $args['fecha'] ?? '';
@@ -51,7 +54,7 @@ class TiendaNota extends ActiveRecord {
         if(!$this->fecha) {
             self::$alertas['error'][] = 'El Campo Fecha es Obligatorio';
         }
-        
+
 
 
 
