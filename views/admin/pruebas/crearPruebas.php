@@ -153,7 +153,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                                 <span class="fw-bold"><?php echo date("d/m/Y", strtotime($tienda_nota->fecha)) ?></span>
                             </div>
 
-                            <div class="col-md-3 col-12">
+                            <div class="col-md-2 col-12">
                                 <small class="text-muted"><b>Num_Factura</b></small><br>
                                 <span class="fw-bold"><?php echo $tienda_nota->num_factura ?? '-'; ?></span>
                             </div>
