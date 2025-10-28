@@ -19,7 +19,8 @@ class Carrito2 extends ActiveRecord {
         'marca',
         'pais',
         'num_caja',
-        'bodega'
+        'bodega',
+        'id_tienda'
     ];
 
     public $id;
@@ -37,7 +38,7 @@ class Carrito2 extends ActiveRecord {
     public $pais;
     public $num_caja;
     public $bodega;
-    
+    public $id_tienda;
 
     public function __construct($args = [])
     {
@@ -56,6 +57,7 @@ class Carrito2 extends ActiveRecord {
         $this->pais = $args['pais'] ?? null;
         $this->num_caja = $args['num_caja'] ?? null;
         $this->bodega = $args['bodega'] ?? null;
+        $this->id_tienda = $args['id_tienda'] ?? null;
 
     }
 }
