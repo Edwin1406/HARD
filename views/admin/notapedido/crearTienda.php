@@ -46,7 +46,7 @@
 
                                 <div class="col-md-2 col-6">
                                     <small class="text-muted"><b>Fecha</b></small><br>
-                                    <span class="fw-bold"><?php echo date("d/m/Y", strtotime($fecha)); ?></span>
+                                    <span class="fw-bold"><?php echo date("d/m/Y", strtotime($informacionNota->Fecha)) ?></span>
                                 </div>
 
                                 <div class="col-md-3 col-12">
