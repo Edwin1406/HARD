@@ -84,6 +84,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
             'exportadores' => $exportadores,
             'pais' => $pais,
             'notasPedidos' => $notasPedidos,
+            'ultimoCodigo' => $ultimoCodigo,
         ]);
     }
 
