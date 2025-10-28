@@ -161,7 +161,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                                 <span class="fw-bold"><?php echo $tienda_nota->num_factura ?? '-'; ?></span>
                             </div>
 
-
+                          
 
                         </div>
                     </div>
@@ -410,7 +410,7 @@ $selIf    = function ($left, $right) {
                                             class="form-control"
                                             placeholder="# Factura"
                                             name="num_factura"
-                                            value="<?php echo $tienda_nota->num_factura ?>" readonly>
+                                            value="<?php  echo $tienda_nota->num_factura ?>" readonly>
                                     </div>
                                 </div>
 
@@ -532,7 +532,7 @@ $selIf    = function ($left, $right) {
 
 
 
-                                <!-- 
+<!-- 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="marca">Marca</label>
@@ -819,11 +819,10 @@ $selIf    = function ($left, $right) {
     const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
     const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
     const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
-
+    
 
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
-                        $tienda = isset($_GET['id']) ? $_GET['id'] : null;  // Obtener el ID de la tienda desde la URL
                         $out = [];
                         if (!empty($carritoTemporal2)) {
                             foreach ($carritoTemporal2 as $r) {
@@ -840,7 +839,7 @@ $selIf    = function ($left, $right) {
                                     'cantidad'           => $cant,
                                     'precio_unitario'    => $precio,
                                     'num_factura'        => $r->num_factura,
-                                    'tienda'             => $tienda,  // Usar el ID de la tienda directamente
+                                    'tienda'             => $r->tienda,
                                     'marca'              => $r->marca,
                                     'pais'               => $r->pais,
                                     'num_caja'           => $r->num_caja,
@@ -1329,7 +1328,7 @@ $selIf    = function ($left, $right) {
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
-
+                       
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="card" style="background-color: #dacdcdff;">
@@ -1409,7 +1408,7 @@ $selIf    = function ($left, $right) {
                     </section>
                     <div class="col-12 d-flex justify-content-end">
                         <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
-
+                        
                     </div>
                 </div>
 
