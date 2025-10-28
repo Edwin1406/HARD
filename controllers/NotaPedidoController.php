@@ -141,7 +141,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         $email = $_SESSION['email'];
 
 
-        $notaPedido = NotaPedido::find("1047");
+        $notaPedido = NotaPedido::find(1047);
         debuguear($notaPedido);
 
         $tiendaNota = new TiendaNota;
