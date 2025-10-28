@@ -138,12 +138,12 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                                 <span class="fw-bold"><?php echo $tienda_nota->tienda ?? '-'; ?></span>
                             </div>
 
-                            <div class="col-md-1 col-6">
+                            <div class="col-md-2 col-6">
                                 <small class="text-muted"><b>Marca</b></small><br>
                                 <span class="fw-bold"><?php echo $tienda_nota->marca ?? '-'; ?></span>
                             </div>
 
-                            <div class="col-md-1 col-6">
+                            <div class="col-md-2 col-6">
                                 <small class="text-muted"><b>Pais</b></small><br>
                                 <span class="fw-bold"><?php echo $tienda_nota->pais ?? '-'; ?></span>
                             </div>
