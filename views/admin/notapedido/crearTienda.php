@@ -151,8 +151,8 @@
                                             <select id="tienda" class="form-select" name="tienda">
                                                 <option value="" selected disabled>Seleccione Tienda</option>
                                                 <?php foreach ($tiendas as $tiendaOption) : ?>
-                                                    <option value="<?php echo $tiendaOption->nombre; ?>">
-                                                        <?php echo $tiendaOption->nombre; ?>
+                                                    <option value="<?php echo $tiendaOption->Nombre_Tienda; ?>">
+                                                        <?php echo $tiendaOption->Nombre_Tienda; ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
