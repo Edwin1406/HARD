@@ -208,7 +208,7 @@ class PruebasController
 
             $id_tienda = $_POST['id_tienda'] ?? null;
 
-            debuguear($id_tienda);
+            // debuguear($id_tienda);
 
 
             $id_nota = $_POST['id_nota'] ?? 0;
@@ -282,7 +282,7 @@ class PruebasController
                     // Rama FORM tradicional: redirect como siempre
                     $_SESSION['old'] = $old;
 
-                    header("Location: /admin/pruebas/crearPruebas?id=$id_tienda_nota&exito=1");
+                    header("Location: /admin/pruebas/crearPruebas?id=$id_tienda&exito=1");
                     
                     // cargo de nuevo la página para evitar reenvío de formulario
 
