@@ -132,7 +132,7 @@
                                 <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
 
 
-                                < class="row">
+                                <div class="row">
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
@@ -167,18 +167,18 @@
                                                 placeholder="Pais" name="pais">
                                         </div>
                                     </div>
-                  
 
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label for="fecha">Fecha</label>
-                                        <input type="date" id="fecha" class="form-control"
-                                            placeholder="Fecha" name="fecha">
+
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="fecha">Fecha</label>
+                                            <input type="date" id="fecha" class="form-control"
+                                                placeholder="Fecha" name="fecha">
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                  <div class="col-md-3 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="num_factura">Num_Factura</label>
                                             <input type="text" id="num_factura" class="form-control"
@@ -186,13 +186,13 @@
                                         </div>
                                     </div>
 
+                                </div>
 
 
-
-                                    <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
-                                    </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" id="btnRegistrar" class="btn btn-primary me-1 mb-1">Registrar</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                                </div>
 
                             </form>
 
@@ -222,7 +222,7 @@
                         <th class="fs-6" style="min-width: 80px;">Ciudad</th>
                         <th class="fs-6" style="min-width: 80px;">Pais</th>
                         <th class="fs-6" style="min-width: 80px;">Fecha</th>
-                    
+
                         <th class="fs-6" style="min-width: 100px;">Num_Factura</th>
 
                         <th class="fs-6" style="min-width: 100px;">Acciones</th>
