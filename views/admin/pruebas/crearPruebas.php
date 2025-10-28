@@ -813,6 +813,13 @@ $selIf    = function ($left, $right) {
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($_GET['id'] ?? null)) ?>;
 
+    const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
+    const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
+    const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
+    const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
+    const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
+    
+
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
                         $out = [];
@@ -944,13 +951,25 @@ $selIf    = function ($left, $right) {
                 data: 'num_factura'
             },
             {
-                data: 'tienda'
+                data: 'tienda',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.tienda || '';
+                }
             },
             {
-                data: 'marca'
+                data: 'marca',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.marca || '';
+                }
             },
             {
-                data: 'pais'
+                data: 'pais',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.pais || '';
+                }
             },
             {
                 data: 'num_caja',
