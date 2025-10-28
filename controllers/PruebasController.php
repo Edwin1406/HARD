@@ -201,8 +201,12 @@ class PruebasController
             $old = $_POST;
 
             // Mapear POST -> modelo (solo los campos pedidos)
+            // $carrito->Codigo_Nota_Pedido = $id_nota;  
+
+
+            $id_nota = $_POST['id_nota'] ?? 0;
+
             $carrito->Codigo_Nota_Pedido = $id_nota;  
-            // $carrito->Codigo_Nota_Pedido = $_POST['id_nota'] ?? 0;  
             $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
             $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
             $carrito->partida            = $_POST['partida']   ?? 0;
