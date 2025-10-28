@@ -141,14 +141,14 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         $email = $_SESSION['email'];
 
 
-        $notaPedido = NotaPedido::find($id_nota_pedido);
+        $notaPedido = NotaPedido::find("1047");
         debuguear($notaPedido);
 
         $tiendaNota = new TiendaNota;
 
 
 
-        $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', "1047");
+        $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', $id_nota_pedido);
 
         debuguear($notaPedido);
 
