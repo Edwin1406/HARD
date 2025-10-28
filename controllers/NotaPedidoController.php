@@ -141,7 +141,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         $email = $_SESSION['email'];
 
 
-        $notaPedido = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
+        $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
         // debuguear($notaPedido);
 
         $tiendaNota = new TiendaNota;
@@ -189,7 +189,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
             'tiendaNota' => $tiendaNota,
             'id_nota_pedido' => $id_nota_pedido,
             'tiendaNotas' => $tiendaNotas,
-            'notaPedido' => $notaPedido,
+            'informacionNota' => $informacionNota,
         ]);
     }
 
