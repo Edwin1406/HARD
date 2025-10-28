@@ -127,7 +127,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         // Obtener id de nota pedido
         $id_nota_pedido = $_GET['id'] ?? 0;
         // sanitize
-        $id_nota_pedido = filter_var($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
+        $id_nota_pedido = intval($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
 
         debuguear($id_nota_pedido);
 
