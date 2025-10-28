@@ -26,7 +26,7 @@
                 <!-- <div class="card"> -->
                 <div class="card-content mt-0">
                     <div class="card-body">
-                        <div class="alert alert-info py-2">
+                        <div class="alert alert-warning py-2">
                             <div class="row align-items-center">
 
                                 <div class="col-md-2 col-6">
