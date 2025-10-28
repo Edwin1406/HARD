@@ -182,6 +182,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
             'tiendaNota' => $tiendaNota,
             'id_nota_pedido' => $id_nota_pedido,
             'tiendaNotas' => $tiendaNotas,
+            'notaPedido' => $notaPedido,
         ]);
     }
 
