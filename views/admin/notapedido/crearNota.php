@@ -73,7 +73,8 @@
                                         <div class="form-group">
                                             <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
                                             <input type="number" id="Codigo_Nota_Pedido" class="form-control"
-                                                placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido">
+                                                placeholder="Nota de pedido N°" name="Codigo_Nota_Pedido"
+                                                value="<?php echo s($notaPedido->Codigo_Nota_Pedido+1); ?>">
                                         </div>
                                     </div>
 
