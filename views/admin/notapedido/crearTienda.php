@@ -144,7 +144,7 @@
                                     </div>
 
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
                                             <!-- select -->
@@ -194,7 +194,7 @@
 
                                     <!-- marca -->
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-3 col-12">
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
                                             <!-- select -->
