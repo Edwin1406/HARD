@@ -823,10 +823,12 @@ $selIf    = function ($left, $right) {
 
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
+                        $id_tienda = $_GET['id'] ?? null;
+
                         $out = [];
                         if (!empty($carritoTemporal2)) {
                             foreach ($carritoTemporal2 as $r) {
-                                if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+                                if ($idUrl != $r->Codigo_Nota_Pedido || $id_tienda != $r->id_tienda) continue;
                                 $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
                                 $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
                                 $out[]  = [
