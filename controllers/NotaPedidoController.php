@@ -129,7 +129,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         // sanitize
         $id_nota_pedido = filter_var($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
 
-        debuguear($id_nota_pedido);
+        // debuguear($id_nota_pedido);
 
         // debuguear($id_nota_pedido);
 
@@ -142,6 +142,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
 
 
         $notaPedido = NotaPedido::find($id_nota_pedido);
+        debuguear($notaPedido);
 
         $tiendaNota = new TiendaNota;
 
