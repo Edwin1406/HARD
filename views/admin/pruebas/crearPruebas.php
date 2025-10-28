@@ -958,21 +958,21 @@ $selIf    = function ($left, $right) {
                 data: 'tienda',
                 renderer: (inst, td, row) => {
                     const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.tienda || '';
+                    td.textContent = r.tienda || tienda || '';
                 }
             },
             {
                 data: 'marca',
                 renderer: (inst, td, row) => {
                     const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.marca || '';
+                    td.textContent = r.marca || marca || '';
                 }
             },
             {
                 data: 'pais',
                 renderer: (inst, td, row) => {
                     const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.pais || '';
+                    td.textContent = r.pais || pais || '';
                 }
             },
             {
@@ -1132,7 +1132,7 @@ $selIf    = function ($left, $right) {
                 row.marca = row.marca || marca;
                 row.pais = row.pais || pais;
                 row.num_factura = row.num_factura || num_factura;
-                
+
                 return true;
             } else {
                 console.warn('Error en actualización:', json);
