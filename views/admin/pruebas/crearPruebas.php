@@ -494,7 +494,7 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                                <div class="col-md-2 col-12">
+                                <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="tienda">Tienda</label>
                                         <select id="tienda" class="choices form-control" name="tienda">
@@ -509,7 +509,24 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                </div> -->
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="tienda">Tienda</label>
+                                        <input type="text"
+                                            id="tienda"
+                                            class="form-control"
+                                            placeholder="Tienda"
+                                            name="tienda"
+                                            value="<?php echo $tienda_nota->tienda ?>" readonly>
+                                    </div>
                                 </div>
+                                
+
+
+
 
 <!-- 
                                 <div class="col-md-2 col-12">
