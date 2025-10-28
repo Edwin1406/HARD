@@ -128,6 +128,17 @@ class ActiveRecord
         return $atributos;
     }
 
+
+
+    // maximo valor de la ultima columna
+    public static function max($columna) {
+        $query = "SELECT MAX($columna) as maximo FROM " . static::$tabla;
+        $resultado = self::$db->query($query);
+        $registro = $resultado->fetch_assoc();
+        return $registro['maximo'];
+    }
+
+
     // protected function sanitizarAtributos(): array {
     //     $atributos = [];
     //     foreach (static::$columnasDB as $columna) {

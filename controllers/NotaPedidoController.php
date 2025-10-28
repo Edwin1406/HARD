@@ -32,7 +32,19 @@ class NotaPedidoController
         $pais = Pais::all();
         $notasPedidos = NotaPedido::all();
 
+        // sacar el ultimo codigo de nota pedido
+        $ultimoCodigo = NotaPedido::max('Codigo_Nota_Pedido');
+        $ultimoCodigo->Codigo_Nota_Pedido = $ultimoCodigo + 1;
+
+
+debuguear($ultimoCodigo);
+
+
         $notaPedido = new NotaPedido;
+
+
+
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
