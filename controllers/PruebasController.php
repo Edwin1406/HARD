@@ -129,16 +129,16 @@ class PruebasController
 
         $id_tienda_nota = $_GET['id'] ?? null;
 
-        
+         if (!$id_tienda_nota) {
+            header('Location: /admin/notaPedido/crearNota');
+            exit;
+        }
+
         
         // obtener el id_nota a partir del id_tienda_nota
         $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
 
-        if (!$id_tienda_nota) {
-            header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota);
-            exit;
-        }
-
+       
         // obtengo la información de la tienda nota
         // $informacionNota = TiendaNota::where('id', $id_tienda_nota);
         // debuguear($informacionNota);
