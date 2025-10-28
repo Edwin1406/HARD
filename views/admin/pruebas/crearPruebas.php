@@ -823,32 +823,33 @@ $selIf    = function ($left, $right) {
 
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
-                        $out = [];
-                        if (!empty($carritoTemporal2)) {
-                            foreach ($carritoTemporal2 as $r) {
-                                if ($idUrl != $r->Codigo_Nota_Pedido) continue;
-                                $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
-                                $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-                                $out[]  = [
-                                    'id'                 => (int)$r->id,
-                                    'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
-                                    'etiqueta'           => $r->etiqueta,
-                                    'prenda'             => $r->prenda,
-                                    'partida'            => $r->partida,
-                                    'composicion'        => $r->composicion,
-                                    'cantidad'           => $cant,
-                                    'precio_unitario'    => $precio,
-                                    'num_factura'        => $r->num_factura,
-                                    'tienda'             => $r->tienda,
-                                    'marca'              => $r->marca,
-                                    'pais'               => $r->pais,
-                                    'num_caja'           => $r->num_caja,
-                                    'bodega'             => $r->bodega,
-                                    'total'              => round($cant * $precio, 2),
-                                ];
-                            }
-                        }
-                        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    $tiendaId = isset($_GET['id']) ? (int)$_GET['id'] : null;  // Obtener ID de tienda desde la URL
+    $out = [];
+    if (!empty($carritoTemporal2)) {
+        foreach ($carritoTemporal2 as $r) {
+            if ($idUrl != $r->Codigo_Nota_Pedido) continue;
+            $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
+            $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
+            $out[]  = [
+                'id'                 => (int)$r->id,
+                'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
+                'etiqueta'           => $r->etiqueta,
+                'prenda'             => $r->prenda,
+                'partida'            => $r->partida,
+                'composicion'        => $r->composicion,
+                'cantidad'           => $cant,
+                'precio_unitario'    => $precio,
+                'num_factura'        => $r->num_factura,
+                'tienda_id'          => $tiendaId,  // Usar el ID de la tienda
+                'marca'              => $r->marca,
+                'pais'               => $r->pais,
+                'num_caja'           => $r->num_caja,
+                'bodega'             => $r->bodega,
+                'total'              => round($cant * $precio, 2),
+            ];
+        }
+    }
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
                         ?>;
 
     // ---------- Utils UI ----------
