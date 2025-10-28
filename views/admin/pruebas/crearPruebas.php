@@ -133,7 +133,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                     <div class="alert alert-info py-2">
                         <div class="row align-items-center">
 
-                            <div class="col-md-2 col-6">
+                            <div class="col-md-3 col-6">
                                 <small class="text-muted"><b>Tienda</b></small><br>
                                 <span class="fw-bold"><?php echo $tienda_nota->tienda ?? '-'; ?></span>
                             </div>
