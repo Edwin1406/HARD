@@ -229,7 +229,7 @@ class PruebasController
 
             // Validación del modelo (usa tu Carrito2::validar())
 
-            debuguear($carrito);
+            // debuguear($carrito);
 
 
 
