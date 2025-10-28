@@ -13,6 +13,7 @@ use Model\NotaPedido;
 use Model\Pais;
 use Model\Prenda;
 use Model\Tienda;
+use Model\TiendaNota;
 use Model\Ventas;
 use MVC\Router;
 
@@ -137,10 +138,17 @@ class PruebasController
         $marca   = Marca::all();
         $prendas = Prenda::all();
 
+        
+
         // debuguear($paises);
 
         // Info de la nota (como lo tenías)
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+
+
+        //tienda_nota
+        $tienda_nota = TiendaNota::where('Codigo_Nota_Pedido', $id_nota);
+
         $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido ?? date('Y-m-d');
 
         // Datos de sesión
@@ -278,6 +286,7 @@ class PruebasController
             'marca'             => $marca,
             'old'               => $old,
             'prendas'           => $prendas,
+            'tienda_nota'      => $tienda_nota,
         ]);
     }
 

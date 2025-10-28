@@ -121,6 +121,62 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
         </div>
     </div>
 </section>
+
+
+
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <!-- <div class="card"> -->
+            <div class="card-content mt-0">
+                <div class="card-body">
+                    <div class="alert alert-info py-2">
+                        <div class="row align-items-center">
+
+                            <div class="col-md-2 col-6">
+                                <small class="text-muted"><b>Tienda</b></small><br>
+                                <span class="fw-bold"><?php echo $tienda_nota->Codigo_Nota_Pedido; ?></span>
+                            </div>
+
+                            <div class="col-md-1 col-6">
+                                <small class="text-muted"><b>Marca</b></small><br>
+                                <span class="fw-bold"><?php echo $tienda_nota->marca ?? '-'; ?></span>
+                            </div>
+
+                            <div class="col-md-1 col-6">
+                                <small class="text-muted"><b>Pais</b></small><br>
+                                <span class="fw-bold"><?php echo $tienda_nota->pais ?? '-'; ?></span>
+                            </div>
+
+                            <div class="col-md-2 col-6">
+                                <small class="text-muted"><b>Fecha</b></small><br>
+                                <span class="fw-bold"><?php echo date("d/m/Y", strtotime($tienda_nota->fecha)) ?></span>
+                            </div>
+
+                            <div class="col-md-3 col-12">
+                                <small class="text-muted"><b>Num_Factura</b></small><br>
+                                <span class="fw-bold"><?php echo $tienda_nota->num_factura ?? '-'; ?></span>
+                            </div>
+
+                          
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
 <?php
 // Helper para “old values”
 $old      = $old ?? [];
@@ -424,7 +480,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="precio_unitario">Precio/Un</label>
