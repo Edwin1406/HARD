@@ -219,6 +219,12 @@
                         <th class="fs-6" style="min-width: 90px;">Id</th>
                         <th class="fs-6" style="min-width: 93px;">Codigo Nota</th>
                         <th class="fs-6" style="min-width: 80px;">Tienda</th>
+                        <th class="fs-6" style="min-width: 80px;">Ciudad</th>
+                        <th class="fs-6" style="min-width: 80px;">Pais</th>
+                        <th class="fs-6" style="min-width: 80px;">Fecha</th>
+                    
+                        <th class="fs-6" style="min-width: 100px;">Num_Factura</th>
+
                         <th class="fs-6" style="min-width: 100px;">Acciones</th>
                     </tr>
                 </thead>
@@ -229,6 +235,10 @@
                             <td><?= $tiendaItem->id ?></td>
                             <td><?= $tiendaItem->Codigo_Nota_Pedido ?></td>
                             <td><?= $tiendaItem->tienda ?></td>
+                            <td><?= $tiendaItem->ciudad ?></td>
+                            <td><?= $tiendaItem->pais ?></td>
+                            <td><?= $tiendaItem->fecha ?></td>
+                            <td><?= $tiendaItem->num_factura ?></td>
                             <td>
 
                                 <div class="d-flex gap-1">
