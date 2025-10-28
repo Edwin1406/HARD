@@ -169,7 +169,7 @@ class PruebasController
 
 
         //tienda_nota
-        $tienda_nota = TiendaNota::where('Codigo_Nota_Pedido', $id_nota);
+        $tienda_nota = TiendaNota::where('id', $id_tienda_nota);
 
         $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido ?? date('Y-m-d');
 
