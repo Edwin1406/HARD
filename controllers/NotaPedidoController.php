@@ -136,6 +136,9 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
+
+        $notaPedido = NotaPedido::find($id_nota_pedido);
+
         $tiendaNota = new TiendaNota;
 
 

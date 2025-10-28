@@ -18,6 +18,61 @@
         </div>
     </div>
 
+
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <!-- <div class="card"> -->
+                <div class="card-content mt-0">
+                    <div class="card-body">
+                        <div class="alert alert-info py-2">
+                            <div class="row align-items-center">
+
+                                <div class="col-md-2 col-6">
+                                    <small class="text-muted"><b>Nota de pedido N°</b></small><br>
+                                    <span class="fw-bold"><?php echo $id_nota; ?></span>
+                                </div>
+
+                                <div class="col-md-1 col-6">
+                                    <small class="text-muted"><b># Pedido</b></small><br>
+                                    <span class="fw-bold"><?php echo $informacionNota->Numero_Nota_Pedido; ?></span>
+                                </div>
+
+                                <div class="col-md-1 col-6">
+                                    <small class="text-muted"><b># Import</b></small><br>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Importacion ?? '-'; ?></span>
+                                </div>
+
+                                <div class="col-md-2 col-6">
+                                    <small class="text-muted"><b>Fecha</b></small><br>
+                                    <span class="fw-bold"><?php echo date("d/m/Y", strtotime($fecha)); ?></span>
+                                </div>
+
+                                <div class="col-md-3 col-12">
+                                    <small class="text-muted"><b>Importador</b></small><br>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Importador ?? '-'; ?></span>
+                                </div>
+
+                                <div class="col-md-3 col-12">
+                                    <small class="text-muted"><b>Exportador</b></small><br>
+                                    <span class="fw-bold"><?php echo $informacionNota->Codigo_Exportador ?? '-'; ?></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="toastExito" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -138,13 +193,13 @@
                     <?php foreach ($tiendaNotas as $tiendaItem): ?>
                         <tr>
                             <td><?= $tiendaItem->id ?></td>
-                            <td><?= $tiendaItem->Codigo_Nota_Pedido?></td>
+                            <td><?= $tiendaItem->Codigo_Nota_Pedido ?></td>
                             <td><?= $tiendaItem->tienda ?></td>
                             <td>
 
                                 <div class="d-flex gap-1">
                                     <a href="/admin/pruebas/crearPruebas?id=<?= $tiendaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm">idnota</a>
-                                  
+
                                 </div>
 
                             </td>
