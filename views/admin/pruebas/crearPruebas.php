@@ -130,7 +130,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
             <!-- <div class="card"> -->
             <div class="card-content mt-0">
                 <div class="card-body">
-                    <div class="alert alert-info py-2">
+                    <div class="alert alert-secondary py-2">
                         <div class="row align-items-center">
 
                             <div class="col-md-3 col-6">
