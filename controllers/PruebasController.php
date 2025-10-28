@@ -203,6 +203,9 @@ class PruebasController
             // Mapear POST -> modelo (solo los campos pedidos)
             // $carrito->Codigo_Nota_Pedido = $id_nota;  
 
+            $id_tienda_nota = $_POST['id_tienda_nota'] ?? 0;
+            debuguear($id_tienda_nota);
+
 
             $id_nota = $_POST['id_nota'] ?? 0;
 
