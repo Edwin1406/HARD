@@ -132,7 +132,7 @@
                                 <input type="hidden" name="id_nota_pedido" value="<?php echo $id_nota_pedido; ?>">
 
 
-                                <div class="row">
+                                < class="row">
 
                                     <div class="col-md-3 col-12">
                                         <div class="form-group">
@@ -149,6 +149,40 @@
                                             <label for="tienda">Tienda</label>
                                             <input type="text" id="tienda" class="form-control"
                                                 placeholder="Tienda" name="tienda">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="ciudad">Ciudad</label>
+                                            <input type="text" id="ciudad" class="form-control"
+                                                placeholder="Ciudad" name="ciudad">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="pais">Pais</label>
+                                            <input type="text" id="pais" class="form-control"
+                                                placeholder="Pais" name="pais">
+                                        </div>
+                                    </div>
+                  
+
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label for="fecha">Fecha</label>
+                                        <input type="date" id="fecha" class="form-control"
+                                            placeholder="Fecha" name="fecha">
+                                    </div>
+                                </div>
+
+
+                                  <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="num_factura">Num_Factura</label>
+                                            <input type="text" id="num_factura" class="form-control"
+                                                placeholder="Num_Factura" name="num_factura">
                                         </div>
                                     </div>
 
