@@ -823,9 +823,7 @@ $selIf    = function ($left, $right) {
 
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
-                        // $tienda_nota = $tienda_nota ?? null;
-                        $tiendaId = isset($_GET['id']) ? (int)$_GET['id'] : null;  // Obtener ID de tienda desde la URL
-
+                        $tienda = isset($_GET['id']) ? $_GET['id'] : null;  // Obtener el ID de la tienda desde la URL
                         $out = [];
                         if (!empty($carritoTemporal2)) {
                             foreach ($carritoTemporal2 as $r) {
@@ -842,7 +840,7 @@ $selIf    = function ($left, $right) {
                                     'cantidad'           => $cant,
                                     'precio_unitario'    => $precio,
                                     'num_factura'        => $r->num_factura,
-                                    'tienda_id'          => $tiendaId,  // Usar el ID de la tienda
+                                    'tienda'             => $tienda,  // Usar el ID de la tienda directamente
                                     'marca'              => $r->marca,
                                     'pais'               => $r->pais,
                                     'num_caja'           => $r->num_caja,
