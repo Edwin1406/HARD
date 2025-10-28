@@ -134,7 +134,7 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-1 col-12">
                                         <div class="form-group">
                                             <label for="Codigo_Nota_Pedido">Nota de pedido N°</label>
                                             <input type="number" id="Codigo_Nota_Pedido" class="form-control"
