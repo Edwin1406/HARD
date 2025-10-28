@@ -67,6 +67,9 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
             <li class="nav-item">
                 <a class="nav-link active" href="/admin/notaPedido/crearNota">Crear Nota de Pedido</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/notaPedido/crearTienda?id=<?php echo $informacionNota->id_tienda; ?>">Lista de Tiendas</a>
+            </li>
         </ul>
     </div>
 </section>
@@ -523,7 +526,7 @@ $selIf    = function ($left, $right) {
                                             value="<?php echo $tienda_nota->tienda ?>" readonly>
                                     </div>
                                 </div>
-                                
+
 
 
 
