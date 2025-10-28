@@ -136,7 +136,8 @@ public static function ultimoCodigo() {
     $query = "SELECT Codigo_Nota_Pedido FROM " . static::$tabla . " ORDER BY id DESC LIMIT 1";
     $resultado = self::$db->query($query);
     $registro = $resultado->fetch_assoc();
-    return $registro['Codigo_Nota_Pedido'];
+    // sumar 1 al codigo
+    return $registro['Codigo_Nota_Pedido'] + 1;
 }
 
 
