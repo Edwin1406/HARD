@@ -131,12 +131,13 @@ class ActiveRecord
 
 
     // maximo valor de la ultima columna
-    public static function max($columna) {
-        $query = "SELECT MAX($columna) as maximo FROM " . static::$tabla;
-        $resultado = self::$db->query($query);
-        $registro = $resultado->fetch_assoc();
-        return $registro['maximo'];
-    }
+  // Método para obtener el último código de nota pedido
+public static function ultimoCodigo() {
+    $query = "SELECT Codigo_Nota_Pedido FROM " . static::$tabla . " ORDER BY id DESC LIMIT 1";
+    $resultado = self::$db->query($query);
+    $registro = $resultado->fetch_assoc();
+    return $registro['Codigo_Nota_Pedido'];
+}
 
 
     // protected function sanitizarAtributos(): array {

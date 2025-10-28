@@ -32,11 +32,10 @@ class NotaPedidoController
         $pais = Pais::all();
         $notasPedidos = NotaPedido::all();
 
-        // sacar el ultimo codigo de nota pedido
-        $ultimoCodigo = NotaPedido::max('Codigo_Nota_Pedido');
-        $ultimoCodigo->Codigo_Nota_Pedido = $ultimoCodigo + 1;
+       // Obtener el último código de nota pedido del último registro
+$ultimoCodigo = NotaPedido::ultimoCodigo();
 
-
+// Depurar el valor
 debuguear($ultimoCodigo);
 
 
