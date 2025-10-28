@@ -134,6 +134,9 @@ class PruebasController
         //     exit;
         // }
 
+
+
+        debuguear($id_tienda_nota);
         
         // obtener el id_nota a partir del id_tienda_nota
         $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
