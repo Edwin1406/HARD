@@ -68,7 +68,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
                 <a class="nav-link active" href="/admin/notaPedido/crearNota">Crear Nota de Pedido</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="/admin/notaPedido/crearTienda?id=<?php echo $tienda_nota->Codigo_Tienda ?>">Lista de Tiendas</a>
+                <a class="nav-link " href="/admin/notaPedido/crearTienda?id=<?php echo $_GET['id'] ?>">Lista de Tiendas</a>
             </li>
         </ul>
     </div>
