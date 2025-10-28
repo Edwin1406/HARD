@@ -162,18 +162,56 @@
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="ciudad">Ciudad</label>
-                                            <input type="text" id="ciudad" class="form-control"
-                                                placeholder="Ciudad" name="ciudad">
+                                            <!-- select -->
+                                            <select id="ciudad" class="form-select" name="ciudad">
+                                                <option value="" selected disabled>Seleccione Ciudad</option>
+                                                <?php foreach ($ciudad as $ciudadOption) : ?>
+                                                    <option value="<?php echo $ciudadOption->Nombre_Ciudad; ?>">
+                                                        <?php echo $ciudadOption->Nombre_Ciudad; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+
+                                            
                                         </div>
                                     </div>
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="pais">Pais</label>
-                                            <input type="text" id="pais" class="form-control"
-                                                placeholder="Pais" name="pais">
+                                            <!-- select -->
+                                            <select id="pais" class="form-select" name="pais">
+                                                <option value="" selected disabled>Seleccione Pais</option>
+                                                <?php foreach ($paises as $paisOption) : ?>
+                                                    <option value="<?php echo $paisOption->Nombre_Pais; ?>">
+                                                        <?php echo $paisOption->Nombre_Pais; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+
                                         </div>
                                     </div>
+
+                                    <!-- marca -->
+
+                                    <div class="col-md-2 col-12">
+                                        <div class="form-group">
+                                            <label for="marca">Marca</label>
+                                            <!-- select -->
+                                            <select id="marca" class="form-select" name="marca">
+                                                <option value="" selected disabled>Seleccione Marca</option>
+                                                <?php foreach ($marca as $marcaOption) : ?>
+                                                    <option value="<?php echo $marcaOption->Nombre_Marca; ?>">
+                                                        <?php echo $marcaOption->Nombre_Marca; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+
+
+
 
 
                                     <div class="col-md-2 col-12">
