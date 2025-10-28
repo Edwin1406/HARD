@@ -85,7 +85,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == '1') {
 
                             <div class="col-md-2 col-6">
                                 <small class="text-muted"><b>Nota de pedido N°</b></small><br>
-                                <span class="fw-bold"><?php echo $id_nota; ?></span>
+                                <span class="fw-bold"><?php echo $informacionNota->Codigo_Nota_Pedido; ?></span>
                             </div>
 
                             <div class="col-md-1 col-6">
