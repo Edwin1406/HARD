@@ -132,9 +132,9 @@ class PruebasController
         // obtener el id_nota a partir del id_tienda_nota
         $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
 
-        // obtengo la información de la nota a partir del id_nota
+        // obtengo la información de la tienda nota
         $informacionNota = TiendaNota::where('id', $id_tienda_nota);
-        debuguear($informacionNota);
+        // debuguear($informacionNota);
 
 
         // debuguear($id_nota);
@@ -165,7 +165,7 @@ class PruebasController
         // debuguear($paises);
 
         // Info de la nota (como lo tenías)
-        $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+        // $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
 
 
         //tienda_nota
