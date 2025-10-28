@@ -119,11 +119,28 @@ class PruebasController
         }
 
         // id_nota puede venir por GET o por POST
-        $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
-        if (!$id_nota) {
-            header('Location: /admin/notaPedido/crearNota');
-            exit;
-        }
+        // $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+        // if (!$id_nota) {
+        //     header('Location: /admin/notaPedido/crearNota');
+        //     exit;
+        // }
+
+
+
+        $id_tienda_nota = $_GET['id'] ?? null;
+
+        $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
+
+
+        debuguear($id_nota);
+
+
+
+
+
+
+
+
 
         // Detectar si el cliente quiere JSON (AJAX)
         $isAjax      = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
