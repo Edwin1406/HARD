@@ -811,7 +811,7 @@ $selIf    = function ($left, $right) {
 
 <script>
     // ---------- Puentes PHP ----------
-    const ID_NOTA = <?= json_encode($id_nota ?? ($tienda_nota->Codigo_Nota_Pedido ?? null)) ?>;
+    const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
 
     const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
     const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
