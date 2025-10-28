@@ -406,7 +406,7 @@ $selIf    = function ($left, $right) {
                                             class="form-control"
                                             placeholder="# Factura"
                                             name="num_factura"
-                                            value="<?php  echo $tienda_nota->num_factura ?>">
+                                            value="<?php  echo $tienda_nota->num_factura ?>" readonly>
                                     </div>
                                 </div>
 
@@ -511,7 +511,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-
+<!-- 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="marca">Marca</label>
@@ -527,13 +527,24 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                </div> -->
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="marca">Marca</label>
+                                        <input type="text"
+                                            id="marca"
+                                            class="form-control"
+                                            placeholder="Marca"
+                                            name="marca"
+                                            value="<?php echo $tienda_nota->marca ?>" readonly>
+                                    </div>
                                 </div>
 
 
 
                                 <!-- pais -->
 
-                                <div class="col-md-2 col-12">
+                                <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="pais">País</label>
                                         <select id="pais" class="choices form-control" name="pais">
@@ -553,6 +564,18 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                </div> -->
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="pais">País</label>
+                                        <input type="text"
+                                            id="pais"
+                                            class="form-control"
+                                            placeholder="País"
+                                            name="pais"
+                                            value="<?php echo $tienda_nota->pais ?>" readonly>
+                                    </div>
                                 </div>
 
 
@@ -561,7 +584,7 @@ $selIf    = function ($left, $right) {
 
 
                                 <!-- Ciudad -->
-                                <div class="col-md-2 col-12">
+                                <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="ciudad">Ciudad</label>
                                         <select id="ciudad" class="choices form-control" name="ciudad">
@@ -576,7 +599,24 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                </div> -->
+
+
+
+
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group">
+                                        <label for="ciudad">Ciudad</label>
+                                        <input type="text"
+                                            id="ciudad"
+                                            class="form-control"
+                                            placeholder="Ciudad"
+                                            name="ciudad"
+                                            value="<?php echo $tienda_nota->ciudad ?>" readonly>
+                                    </div>
                                 </div>
+
+
 
 
                                 <div class="col-md-1 col-12">
