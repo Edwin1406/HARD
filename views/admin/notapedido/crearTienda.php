@@ -147,8 +147,15 @@
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
-                                            <input type="text" id="tienda" class="form-control"
-                                                placeholder="Tienda" name="tienda">
+                                            <!-- select -->
+                                            <select id="tienda" class="form-select" name="tienda">
+                                                <option value="" selected disabled>Seleccione Tienda</option>
+                                                <?php foreach ($tiendas as $tiendaOption) : ?>
+                                                    <option value="<?php echo $tiendaOption->nombre; ?>">
+                                                        <?php echo $tiendaOption->nombre; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
 

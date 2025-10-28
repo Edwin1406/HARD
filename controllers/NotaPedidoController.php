@@ -4,11 +4,14 @@ namespace Controllers;
 
 use Model\Carrito;
 use Model\Carrito2;
+use Model\Ciudad;
 use Model\DetalleVenta;
 use Model\Exportadores;
 use Model\Importadores;
+use Model\Marca;
 use Model\NotaPedido;
 use Model\Pais;
+use Model\Tienda;
 use Model\TiendaNota;
 use Model\Ventas;
 use MVC\Router;
@@ -140,6 +143,14 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
         $nombre = $_SESSION['nombre'];
         $email = $_SESSION['email'];
 
+        $tiendas = Tienda::all();
+        $ciudad  = Ciudad::all();
+        $paises    = Pais::all();
+        $marca   = Marca::all();
+
+
+
+
 
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
         // debuguear($notaPedido);
@@ -190,6 +201,10 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
             'id_nota_pedido' => $id_nota_pedido,
             'tiendaNotas' => $tiendaNotas,
             'informacionNota' => $informacionNota,
+            'tiendas' => $tiendas,
+            'ciudad' => $ciudad,
+            'paises' => $paises,
+            'marca' => $marca,
         ]);
     }
 
