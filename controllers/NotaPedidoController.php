@@ -142,7 +142,7 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
 
 
         $notaPedido = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
-        debuguear($notaPedido);
+        // debuguear($notaPedido);
 
         $tiendaNota = new TiendaNota;
 
