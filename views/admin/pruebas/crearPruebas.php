@@ -807,7 +807,7 @@ $selIf    = function ($left, $right) {
 
 
 <script>
-// ---------- Puentes PHP ----------
+ // ---------- Puentes PHP ----------
 const ID_NOTA = <?= json_encode($id_nota ?? null) ?>;
 const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
 const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
@@ -892,7 +892,14 @@ const hot = new Handsontable(container, {
                 td.textContent = r.num_factura || num_factura || '';
             },
         },
-        { data: 'prenda' },
+        {
+            data: 'prenda',
+            renderer(inst, td, row) {
+                const r = inst.getSourceDataAtRow(row) || {};
+                // Validación de datos vacíos o nulos
+                td.textContent = r.prenda || "Sin prenda asignada";
+            }
+        },
         { data: 'composicion' },
         {
             data: 'precio_unitario',
@@ -994,7 +1001,6 @@ function recalcRow(rowIndex) {
 }
 
 // ---------- Funciones de Guardar y Autosave ----------
-
 async function saveOrUpdateFila(row) {
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
