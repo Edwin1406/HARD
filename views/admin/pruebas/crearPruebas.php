@@ -1121,19 +1121,32 @@ $selIf    = function ($left, $right) {
         fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
         if (row.id) fd.append('id', row.id);
         fd.append('cantidad', row.cantidad ?? 0);
+        console.log('Cantidad a enviar:', row.cantidad);
         fd.append('etiqueta', row.etiqueta ?? '');
+        console.log('Etiqueta a enviar:', row.etiqueta);
         fd.append('saldo', row.saldo ?? 0);
+        console.log('Saldo a enviar:', row.saldo);
         fd.append('num_factura', row.num_factura ?? 0);
+        console.log('Número de factura a enviar:', row.num_factura);
         fd.append('prenda', row.prenda ?? '');
         console.log('Composición a enviar:', row.prenda);
         fd.append('composicion', row.composicion ?? '');
+        console.log('Composición a enviar:', row.composicion);
+
         fd.append('precio_unitario', row.precio_unitario ?? 0);
+        console.log('Precio unitario a enviar:', row.precio_unitario);
         fd.append('tienda', row.tienda ?? '');
+        console.log('Tienda a enviar:', row.tienda);
         fd.append('marca', row.marca ?? '');
+        console.log('Marca a enviar:', row.marca);
         fd.append('pais', row.pais ?? '');
+        console.log('País a enviar:', row.pais);
         fd.append('num_caja', row.num_caja ?? 0);
+        console.log('Número de caja a enviar:', row.num_caja);
         fd.append('bodega', row.bodega ?? '');
+        console.log('Bodega a enviar:', row.bodega);
         fd.append('total', row.total ?? 0);
+        console.log('Total a enviar:', row.total);
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
