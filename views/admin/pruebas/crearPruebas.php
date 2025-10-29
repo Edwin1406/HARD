@@ -1070,7 +1070,7 @@ $selIf    = function ($left, $right) {
     }));
 
     // --- Lógica de fila
-    function recalcRow(rowIndex) {
+     function recalcRow(rowIndex) {
         const r = hot.getSourceDataAtRow(rowIndex);
         if (!r) return;
 
@@ -1096,10 +1096,17 @@ $selIf    = function ($left, $right) {
 
         hot.render(); // refresca la celda total
     }
-
     function filasNuevas() {
         return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
     }
+
+
+
+    // Ajuste de altura responsive
+    window.addEventListener('resize', () => hot.updateSettings({
+        height: container.clientHeight
+    }));
+
 
     // --- Guardar/actualizar
     async function saveOrUpdateFila(row) {
