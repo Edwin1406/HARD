@@ -552,11 +552,11 @@ $selIf    = function ($left, $right) {
                                         total.value = (cant * precioUni).toFixed(2);
                                     }
 
-                                    precio_unitario.addEventListener('input', actualizarPrecioTotal);
                                     
-
+                                    
                                     cantidad.addEventListener('input', actualizarSaldo);
                                     etiqueta.addEventListener('input', actualizarSaldo);
+                                    precio_unitario.addEventListener('input', actualizarPrecioTotal);
                                 </script>
 
                                 <!-- <div class="col-md-2 col-12">
