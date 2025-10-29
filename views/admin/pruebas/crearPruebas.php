@@ -805,22 +805,18 @@ $selIf    = function ($left, $right) {
 </div>
 
 
-
 <script>
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
-
     const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
     const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
     const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
     const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
     const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
 
-
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
-
                         $out = [];
                         if (!empty($carritoTemporal2)) {
                             foreach ($carritoTemporal2 as $r) {
@@ -906,8 +902,6 @@ $selIf    = function ($left, $right) {
                 data: 'id',
                 readOnly: true
             },
-
-            // codigo_nota_pedido (renderer sin usar variable externa hot)
             {
                 data: 'codigo_nota_pedido',
                 readOnly: true,
@@ -922,11 +916,9 @@ $selIf    = function ($left, $right) {
                     pattern: '0.[000]'
                 }
             },
-
             {
                 data: 'etiqueta'
             },
-
             {
                 data: 'saldo',
                 readOnly: true,
@@ -947,15 +939,12 @@ $selIf    = function ($left, $right) {
                     td.textContent = r.num_factura || num_factura || '';
                 }
             },
-
             {
                 data: 'prenda'
             },
-
             {
                 data: 'composicion'
             },
-
             {
                 data: 'precio_unitario',
                 type: 'numeric',
@@ -963,7 +952,6 @@ $selIf    = function ($left, $right) {
                     pattern: '0.[00]'
                 }
             },
-
             {
                 data: 'tienda',
                 renderer: (inst, td, row) => {
@@ -995,8 +983,6 @@ $selIf    = function ($left, $right) {
             {
                 data: 'bodega'
             },
-
-            // total calculado (renderer usa inst)
             {
                 data: 'total',
                 readOnly: true,
@@ -1010,20 +996,17 @@ $selIf    = function ($left, $right) {
                     td.textContent = tot.toFixed(2);
                 }
             },
-
-            // acciones (renderer usa inst)
             {
                 readOnly: true,
                 renderer(inst, td, row) {
                     td.classList.add('text-center');
                     td.innerHTML = `
-            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
-              <i class="bi bi-trash me-1"></i>Eliminar
-            </button>`;
+                    <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+                        <i class="bi bi-trash me-1"></i>Eliminar
+                    </button>`;
                 }
             },
         ],
-
         rowHeaders: true,
         stretchH: 'all',
         height: container.clientHeight,
@@ -1039,20 +1022,18 @@ $selIf    = function ($left, $right) {
         allowInsertColumn: false,
         allowRemoveColumn: false,
 
-        // AUTOSAVE: 12 columnas (excluye total)
         afterChange(changes, source) {
             if (!changes || source === 'loadData') return;
 
             const rowsToUpdate = new Set();
 
             for (const [row, prop] of changes) {
-                if (!AUTOSAVE_PROPS.has(prop)) continue; // ignora cambios fuera de las 12
+                if (!AUTOSAVE_PROPS.has(prop)) continue;
                 if (prop === 'cantidad' || prop === 'precio_unitario') recalcRow(row);
                 rowsToUpdate.add(row);
             }
 
             if (rowsToUpdate.size) {
-                // Recalcular por coherencia
                 rowsToUpdate.forEach(r => recalcRow(r));
                 maybeAutosave([...rowsToUpdate]);
             }
@@ -1060,8 +1041,14 @@ $selIf    = function ($left, $right) {
 
         afterPaste() {
             const len = hot.countRows();
-            for (let i = 0; i < len; i++) recalcRow(i);
-            // Guarda todas las filas pegadas (si autosave está activo)
+            for (let i = 0; i < len; i++) {
+                const row = hot.getSourceDataAtRow(i);
+                if (row) {
+                    // Eliminar espacios en el campo prenda
+                    row.prenda = row.prenda ? row.prenda.trim() : '';
+                    recalcRow(i);
+                }
+            }
             maybeAutosave([...Array(len).keys()]);
         }
     });
@@ -1071,7 +1058,6 @@ $selIf    = function ($left, $right) {
         height: container.clientHeight
     }));
 
-    // --- Lógica de fila
     function recalcRow(rowIndex) {
         const r = hot.getSourceDataAtRow(rowIndex);
         if (!r) return;
@@ -1096,14 +1082,31 @@ $selIf    = function ($left, $right) {
         r.bodega = String(r.bodega).trim() || '';
         r.total = round(r.cantidad * r.precio_unitario);
 
-        hot.render(); // refresca la celda total
+        hot.render();
     }
 
-    function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+    async function maybeAutosave(rowIdxList) {
+        if (!document.getElementById('autosave')?.checked) return;
+
+        let ok = true;
+        if (Array.isArray(rowIdxList) && rowIdxList.length) {
+            for (const idx of rowIdxList) {
+                const r = hot.getSourceDataAtRow(idx);
+                if (!r) continue;
+                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        } else {
+            const nuevas = filasNuevas();
+            for (const r of nuevas) {
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        }
+        ok ? toastOk.show() : toastErr.show();
     }
 
-    // --- Guardar/actualizar
     async function saveOrUpdateFila(row) {
         const fd = new FormData();
         fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
@@ -1132,14 +1135,14 @@ $selIf    = function ($left, $right) {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json'
             },
-            credentials: 'same-origin' // 'include' si es cross-site/subdominio
+            credentials: 'same-origin'
         });
 
         try {
             const json = await resp.json();
             if (json?.ok) {
                 if (json.id) row.id = json.id; // alta
-                row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
+                row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido;
                 row.num_factura = row.num_factura || num_factura;
                 row.tienda = row.tienda || tienda;
                 row.marca = row.marca || marca;
@@ -1154,130 +1157,6 @@ $selIf    = function ($left, $right) {
         }
         return false;
     }
-
-    async function guardarNuevasFilas(btn) {
-        btn?.setAttribute('disabled', 'disabled');
-        btn?.insertAdjacentHTML('afterbegin',
-            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>'
-        );
-
-        const nuevas = filasNuevas();
-        let ok = true;
-        for (const r of nuevas) {
-            const exito = await saveOrUpdateFila(r);
-            if (!exito) ok = false;
-        }
-
-        btn?.removeAttribute('disabled');
-        btn?.querySelector('.spinner-border')?.remove();
-        ok ? toastOk.show() : toastErr.show();
-        // Refresca la pagina para evitar duplicados visuales
-        if (ok) setTimeout(() => location.reload(), 800);
-    }
-
-    async function maybeAutosave(rowIdxList) {
-        if (!document.getElementById('autosave')?.checked) return;
-
-        let ok = true;
-        if (Array.isArray(rowIdxList) && rowIdxList.length) {
-            for (const idx of rowIdxList) {
-                const r = hot.getSourceDataAtRow(idx);
-                if (!r) continue;
-                // Evitar disparos vacíos
-                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        } else {
-            const nuevas = filasNuevas();
-            for (const r of nuevas) {
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        }
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    // Botones top
-    document.getElementById('guardar-nuevas')?.addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
-    document.getElementById('recargar')?.addEventListener('click', () => location.reload());
-
-    // Eliminar (con modal)
-    container.addEventListener('click', (ev) => {
-        const btn = ev.target.closest('.btn-del');
-        if (!btn) return;
-
-        const rowIndex = parseInt(btn.dataset.row, 10);
-        const rowData = hot.getSourceDataAtRow(rowIndex);
-
-        if (!rowData?.id) { // sin persistir → borra local
-            hot.alter('remove_row', rowIndex, 1);
-            return;
-        }
-        rowPendingDelete = {
-            rowIndex,
-            rowData
-        };
-        modalDelete.show();
-    });
-
-    document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
-        const info = rowPendingDelete;
-        rowPendingDelete = null;
-        if (!info) return;
-
-        const {
-            rowIndex,
-            rowData
-        } = info;
-
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-        fd.append('id', rowData.id);
-
-        try {
-            const resp = await fetch('/admin/eliminarCarrito', {
-                method: 'POST',
-                body: fd,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin'
-            });
-            let ok = false;
-            try {
-                const json = await resp.json();
-                ok = !!json?.ok;
-            } catch {}
-            if (ok) {
-                hot.alter('remove_row', rowIndex, 1);
-                toastOk.show();
-            } else {
-                toastErr.show();
-            }
-        } catch {
-            toastErr.show();
-        } finally {
-            modalDelete.hide();
-        }
-    });
-
-afterPaste() {
-    const len = hot.countRows();
-    for (let i = 0; i < len; i++) {
-        const row = hot.getSourceDataAtRow(i);
-        if (row) {
-            // Eliminar espacios en los campos
-            row.prenda = row.prenda ? row.prenda.trim() : '';
-            recalcRow(i);
-        }
-    }
-    maybeAutosave([...Array(len).keys()]);
-}
-
-
-
 </script>
 
 
