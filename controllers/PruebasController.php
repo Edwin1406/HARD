@@ -214,20 +214,20 @@ class PruebasController
             $id_nota = $_POST['id_nota'] ?? 0;
 
             $carrito->Codigo_Nota_Pedido = $id_nota;  
-            $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
-            $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
-            $carrito->saldo              = $_POST['saldo']   ?? 0;
-            $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
+            $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
+            $carrito->saldo              = $_POST['saldo']   ?? 0;
+            $carrito->num_factura        = $_POST['num_factura'] ?? 0;
+            $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
+            $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
             // $carrito->total              = $_POST['total'] ?? 0;
-            $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
-            $carrito->num_factura        = $_POST['num_factura'] ?? 0;
             $carrito->tienda             = $_POST['tienda'] ?? '';
             $carrito->marca              = $_POST['marca'] ?? '';
             $carrito->pais               = $_POST['pais'] ?? '';
             $carrito->num_caja           = $_POST['num_caja'] ?? 0;
             $carrito->bodega             = $_POST['bodega'] ?? '';
+            $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
             $carrito->id_tienda          = $id_tienda ?? null;
         
 
@@ -261,19 +261,19 @@ class PruebasController
                                 'id'                  => $carrito->id ?? null,
                                 // nombres que usa el frontend en Handsontable
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
-                                'etiqueta'            => $carrito->etiqueta,
-                                'prenda'              => $carrito->prenda,
-                                'saldo'               => $carrito->saldo,
-                                'composicion'         => $carrito->composicion,
                                 'cantidad'            => (float)$carrito->cantidad,
-                                'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
-                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
+                                'etiqueta'            => $carrito->etiqueta,
+                                'saldo'               => $carrito->saldo,
                                 'num_factura'         => $carrito->num_factura,
+                                'prenda'              => $carrito->prenda,
+                                'composicion'         => $carrito->composicion,
+                                'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
                                 'tienda'              => $carrito->tienda,
                                 'marca'               => $carrito->marca,
                                 'pais'                => $carrito->pais,
                                 'num_caja'            => $carrito->num_caja,
                                 'bodega'              => $carrito->bodega,
+                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
 
                             ],
                         ], JSON_UNESCAPED_UNICODE);
@@ -468,24 +468,24 @@ public static function actualizarPruebas()
 
     $id        = $_POST['id'] ?? null;
     $idNota    = $_POST['id_nota'] ?? null;
-    $etiqueta   = trim($_POST['etiqueta'] ?? '');
-    $prenda    = trim($_POST['prenda'] ?? '');
-    $saldo   = trim($_POST['saldo'] ?? '');
-    $composicion = trim($_POST['composicion'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
+    $etiqueta   = trim($_POST['etiqueta'] ?? '');
+    $saldo   = trim($_POST['saldo'] ?? '');
+    $num_factura = (int)($_POST['num_factura'] ?? 0);
+    $prenda    = trim($_POST['prenda'] ?? '');
+    $composicion = trim($_POST['composicion'] ?? '');
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
     // $total     = (float)($_POST['total'] ?? 0);
 
 
 
 
-    $total     = (float)($cantidad * $precioU);
-    $num_factura = (int)($_POST['num_factura'] ?? 0);
     $tienda = trim($_POST['tienda'] ?? '');
     $marca = trim($_POST['marca'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
     $bodega = $_POST['bodega'] ?? '';
+    $total     = (float)($cantidad * $precioU);
 
     
 
@@ -504,14 +504,14 @@ public static function actualizarPruebas()
 
     // Actualiza campos
     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
-    $carrito->etiqueta = $etiqueta;
-    $carrito->prenda = $prenda;
-    $carrito->saldo = $saldo;
-    $carrito->composicion = $composicion;
     $carrito->cantidad = $cantidad;
+    $carrito->etiqueta = $etiqueta;
+    $carrito->saldo = $saldo;
+    $carrito->num_factura = $num_factura;
+    $carrito->prenda = $prenda;
+    $carrito->composicion = $composicion;
     $carrito->precio_unitario = $precioU;
     $carrito->total = $total;
-    $carrito->num_factura = $num_factura;
     $carrito->tienda = $tienda;
     $carrito->marca = $marca;
     $carrito->pais = $pais;
