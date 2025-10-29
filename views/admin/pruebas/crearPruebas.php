@@ -1098,13 +1098,13 @@ $selIf    = function ($left, $right) {
         const fd = new FormData();
         fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
         if (row.id) fd.append('id', row.id);
-        fd.append('etiqueta', row.etiqueta ?? '');
-        fd.append('prenda', row.prenda ?? '');
-        fd.append('partida', row.partida ?? 0);
-        fd.append('composicion', row.composicion ?? '');
         fd.append('cantidad', row.cantidad ?? 0);
-        fd.append('precio_unitario', row.precio_unitario ?? 0);
+        fd.append('etiqueta', row.etiqueta ?? '');
+        fd.append('partida', row.partida ?? 0);
         fd.append('num_factura', row.num_factura ?? 0);
+        fd.append('prenda', row.prenda ?? '');
+        fd.append('composicion', row.composicion ?? '');
+        fd.append('precio_unitario', row.precio_unitario ?? 0);
         fd.append('tienda', row.tienda ?? '');
         fd.append('marca', row.marca ?? '');
         fd.append('pais', row.pais ?? '');
