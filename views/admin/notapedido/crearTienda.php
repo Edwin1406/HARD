@@ -218,7 +218,8 @@
                                         <div class="form-group">
                                             <label for="fecha">Fecha</label>
                                             <input type="date" id="fecha" class="form-control"
-                                                placeholder="Fecha" name="fecha">
+                                                placeholder="Fecha" name="fecha"
+                                                value="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
