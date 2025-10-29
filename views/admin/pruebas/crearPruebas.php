@@ -1170,6 +1170,8 @@ $selIf    = function ($left, $right) {
         btn?.removeAttribute('disabled');
         btn?.querySelector('.spinner-border')?.remove();
         ok ? toastOk.show() : toastErr.show();
+        // Refresca la tabla para mostrar IDs
+        hot.render();
     }
 
     async function maybeAutosave(rowIdxList) {
