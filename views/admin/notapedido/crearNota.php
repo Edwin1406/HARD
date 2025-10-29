@@ -46,6 +46,18 @@
 
 
 
+    <section class="section">
+        <div class="card">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/notaPedido/crearNota">Crear Nota de Pedido</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/notaPedido/listaNotaPedido">Lista de Notas de Pedido</a>
+                </li>
+            </ul>
+        </div>
+    </section>
 
 
     <section id="multiple-column-form">
