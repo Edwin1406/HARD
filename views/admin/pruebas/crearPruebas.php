@@ -616,7 +616,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                             
+
 
 
 
@@ -870,11 +870,11 @@ $selIf    = function ($left, $right) {
     const AUTOSAVE_PROPS = new Set([
         'cantidad',
         'etiqueta',
-        'prenda',
         'partida',
+        'num_factura',
+        'prenda',
         'composicion',
         'precio_unitario',
-        'num_factura',
         'tienda',
         'marca',
         'pais',
@@ -889,11 +889,11 @@ $selIf    = function ($left, $right) {
             'cod',
             'cantid',
             'etq',
-            'prenda',
             'partida',
+            'num_fact',
+            'prenda',
             'composicion',
             'precio_u',
-            'num_fact',
             'tienda',
             'marca',
             'pais',
@@ -915,20 +915,6 @@ $selIf    = function ($left, $right) {
                     td.textContent = val ?? (ID_NOTA ?? '');
                 }
             },
-
-            {
-                data: 'etiqueta'
-            },
-            {
-                data: 'prenda'
-            },
-            {
-                data: 'partida'
-            },
-            {
-                data: 'composicion'
-            },
-
             {
                 data: 'cantidad',
                 type: 'numeric',
@@ -936,6 +922,30 @@ $selIf    = function ($left, $right) {
                     pattern: '0.[000]'
                 }
             },
+
+            {
+                data: 'etiqueta'
+            },
+
+            {
+                data: 'partida'
+            },
+            {
+                data: 'num_factura',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.num_factura || num_factura || '';
+                }
+            },
+
+            {
+                data: 'prenda'
+            },
+
+            {
+                data: 'composicion'
+            },
+
             {
                 data: 'precio_unitario',
                 type: 'numeric',
@@ -944,15 +954,6 @@ $selIf    = function ($left, $right) {
                 }
             },
 
-
-
-            {
-                data: 'num_factura',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.num_factura || num_factura || '';
-                }
-            },
             {
                 data: 'tienda',
                 renderer: (inst, td, row) => {
@@ -1067,14 +1068,15 @@ $selIf    = function ($left, $right) {
 
         if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
 
+        r.cantidad = Number(r.cantidad) || 0;
+
         if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
         if (typeof r.partida === 'string') r.partida = r.partida.trim();
+        r.num_factura = Number(r.num_factura) || 0;
+        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
         if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
 
-        r.cantidad = Number(r.cantidad) || 0;
         r.precio_unitario = Number(r.precio_unitario) || 0;
-        r.num_factura = Number(r.num_factura) || 0;
 
         r.tienda = r.tienda ? String(r.tienda).trim() : '';
 
