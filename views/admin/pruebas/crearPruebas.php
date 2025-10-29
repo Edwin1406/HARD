@@ -518,6 +518,18 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
+                                  <div class="col-md-1 col-12">
+                                    <div class="form-group">
+                                        <label for="total">Total</label>
+                                        <input type="number"
+                                            id="total"
+                                            class="form-control"
+                                            name="total"
+                                            step="0.01"
+                                            value="<?= $oldVal('total', '0.00') ?>">
+                                    </div>
+                                </div>
+
 
                                 <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
