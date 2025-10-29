@@ -429,32 +429,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <script>
-                                    // cada vez que cambien cantidad o etiqueta
-                                    const cantidad = document.getElementById('cantidad');
-                                    const precio_unitario = document.getElementById('precio_unitario');
-                                    const etiqueta = document.getElementById('etiqueta');
-                                    const saldo = document.getElementById('saldo');
-                                    const total = document.getElementById('total');
-
-                                    function actualizarSaldo() {
-                                        const cant = parseFloat(cantidad.value) || 0;
-                                        const etiq = parseFloat(etiqueta.value) || 0;
-                                        saldo.value = cant - etiq; // o usa la fórmula que necesites
-                                    }
-
-                                    function actualizarPrecioTotal() {
-                                        const cant = parseFloat(cantidad.value) || 0;
-                                        const precioUni = parseFloat(precio_unitario.value) || 0;
-                                        total.value = (cant * precioUni).toFixed(2);
-                                    }
-
-                                    precio_unitario.addEventListener('input', actualizarPrecioTotal);
-                                    
-
-                                    cantidad.addEventListener('input', actualizarSaldo);
-                                    etiqueta.addEventListener('input', actualizarSaldo);
-                                </script>
+                         
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -557,6 +532,32 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
+                                       <script>
+                                    // cada vez que cambien cantidad o etiqueta
+                                    const cantidad = document.getElementById('cantidad');
+                                    const precio_unitario = document.getElementById('precio_unitario');
+                                    const etiqueta = document.getElementById('etiqueta');
+                                    const saldo = document.getElementById('saldo');
+                                    const total = document.getElementById('total');
+
+                                    function actualizarSaldo() {
+                                        const cant = parseFloat(cantidad.value) || 0;
+                                        const etiq = parseFloat(etiqueta.value) || 0;
+                                        saldo.value = cant - etiq; // o usa la fórmula que necesites
+                                    }
+
+                                    function actualizarPrecioTotal() {
+                                        const cant = parseFloat(cantidad.value) || 0;
+                                        const precioUni = parseFloat(precio_unitario.value) || 0;
+                                        total.value = (cant * precioUni).toFixed(2);
+                                    }
+
+                                    precio_unitario.addEventListener('input', actualizarPrecioTotal);
+                                    
+
+                                    cantidad.addEventListener('input', actualizarSaldo);
+                                    etiqueta.addEventListener('input', actualizarSaldo);
+                                </script>
 
                                 <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
