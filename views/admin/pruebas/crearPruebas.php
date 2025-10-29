@@ -1058,12 +1058,24 @@ $selIf    = function ($left, $right) {
             }
         },
 
+        // afterPaste() {
+        //     const len = hot.countRows();
+        //     for (let i = 0; i < len; i++) recalcRow(i);
+        //     // Guarda todas las filas pegadas (si autosave está activo)
+        //     maybeAutosave([...Array(len).keys()]);
+        // }
+
         afterPaste() {
             const len = hot.countRows();
-            for (let i = 0; i < len; i++) recalcRow(i);
-            // Guarda todas las filas pegadas (si autosave está activo)
+            for (let i = 0; i < len; i++) {
+                const row = hot.getSourceDataAtRow(i);
+                console.log('Fila pegada:', row);
+                recalcRow(i);
+            }
             maybeAutosave([...Array(len).keys()]);
         }
+
+
     });
 
     // Ajuste de altura responsive
@@ -1136,7 +1148,7 @@ $selIf    = function ($left, $right) {
 
         try {
             const json = await resp.json();
-                console.log('Respuesta del servidor:', json);  // Añadir esta línea para depuración
+            console.log('Respuesta del servidor:', json); // Añadir esta línea para depuración
 
             if (json?.ok) {
                 if (json.id) row.id = json.id; // alta
