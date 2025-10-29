@@ -1128,7 +1128,7 @@ $selIf    = function ($left, $right) {
         console.log('Saldo a enviar:', row.saldo);
         fd.append('num_factura', row.num_factura ?? 0);
         console.log('Número de factura a enviar:', row.num_factura);
-        fd.append('prenda', row.prenda ?? '');
+        fd.append('prenda', row.prenda ?? 'Valor predeterminado');  // Asigna un valor por defecto
         console.log('Composición a enviar:', row.prenda);
         fd.append('composicion', row.composicion ?? '');
         console.log('Composición a enviar:', row.composicion);
