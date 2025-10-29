@@ -403,7 +403,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                 <!-- # Factura -->
+                                <!-- # Factura -->
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="etiqueta"># Etiq</label>
@@ -429,6 +429,22 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
+                                <script>
+                                    // cada vez que cambien cantidad o etiqueta
+                                    const cantidad = document.getElementById('cantidad');
+                                    const etiqueta = document.getElementById('etiqueta');
+                                    const saldo = document.getElementById('saldo');
+
+                                    function actualizarSaldo() {
+                                        const cant = parseFloat(cantidad.value) || 0;
+                                        const etiq = parseFloat(etiqueta.value) || 0;
+                                        saldo.value = cant + etiq; // o usa la fórmula que necesites
+                                    }
+
+                                    cantidad.addEventListener('input', actualizarSaldo);
+                                    etiqueta.addEventListener('input', actualizarSaldo);
+                                </script>
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="num_factura"># Factura</label>
@@ -442,7 +458,7 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-                                
+
                                 <div class="col-md-3 col-12">
                                     <div class="form-group d-flex align-items-end">
                                         <div class="flex-grow-1">
@@ -467,13 +483,13 @@ $selIf    = function ($left, $right) {
 
 
 
-                               
 
 
 
 
 
-<!-- 
+
+                                <!-- 
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -518,7 +534,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                  <div class="col-md-1 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="total">Total</label>
                                         <input type="number"
@@ -618,7 +634,7 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
