@@ -391,7 +391,7 @@ $selIf    = function ($left, $right) {
                             <div class="row">
 
 
-                                 <div class="col-md-1 col-12">
+                                <div class="col-md-1 col-12">
                                     <div class="form-group">
                                         <label for="cantidad">Cantidad</label>
                                         <input type="number"
@@ -403,19 +403,18 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-
-                                <!-- # Factura -->
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
-                                        <label for="etiqueta"># Etiq</label>
-                                        <input type="text"
-                                            id="etiqueta"
+                                        <label for="saldo">Saldo</label>
+                                        <input type="number"
+                                            id="saldo"
                                             class="form-control"
-                                            placeholder="# Etiq"
-                                            name="etiqueta"
-                                            value="<?= $oldVal('etiqueta') ?>">
+                                            name="saldo"
+                                            step="1"
+                                            value="<?= $oldVal('saldo', '0') ?>">
                                     </div>
                                 </div>
+
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="num_factura"># Factura</label>
@@ -429,7 +428,7 @@ $selIf    = function ($left, $right) {
                                 </div>
 
 
-
+                                
                                 <div class="col-md-3 col-12">
                                     <div class="form-group d-flex align-items-end">
                                         <div class="flex-grow-1">
@@ -451,6 +450,23 @@ $selIf    = function ($left, $right) {
                                         </button>
                                     </div>
                                 </div>
+
+
+
+                                <!-- # Factura -->
+                                <div class="col-md-1 col-12">
+                                    <div class="form-group">
+                                        <label for="etiqueta"># Etiq</label>
+                                        <input type="text"
+                                            id="etiqueta"
+                                            class="form-control"
+                                            placeholder="# Etiq"
+                                            name="etiqueta"
+                                            value="<?= $oldVal('etiqueta') ?>">
+                                    </div>
+                                </div>
+
+
 
 
 
@@ -486,7 +502,7 @@ $selIf    = function ($left, $right) {
 
 
 
-                           
+
 
                                 <div class="col-md-1 col-12">
                                     <div class="form-group">
