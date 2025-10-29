@@ -1262,6 +1262,22 @@ $selIf    = function ($left, $right) {
             modalDelete.hide();
         }
     });
+
+afterPaste() {
+    const len = hot.countRows();
+    for (let i = 0; i < len; i++) {
+        const row = hot.getSourceDataAtRow(i);
+        if (row) {
+            // Eliminar espacios en los campos
+            row.prenda = row.prenda ? row.prenda.trim() : '';
+            recalcRow(i);
+        }
+    }
+    maybeAutosave([...Array(len).keys()]);
+}
+
+
+
 </script>
 
 
