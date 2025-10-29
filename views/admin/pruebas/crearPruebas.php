@@ -928,7 +928,17 @@ $selIf    = function ($left, $right) {
             },
 
             {
-                data: 'saldo'
+                data: 'saldo',
+                readOnly: true,
+                renderer(inst, td, row) {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    const cant = Number(r.cantidad) || 0;
+                    const etiqueta = Number(r.etiqueta) || 0;
+                    const tot = round(cant - etiqueta);
+                    r.saldo = tot;
+                    td.classList.add('text-end', 'text-mono');
+                    td.textContent = tot.toFixed(2);
+                }
             },
             {
                 data: 'num_factura',
