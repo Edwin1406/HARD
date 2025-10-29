@@ -832,7 +832,7 @@ $selIf    = function ($left, $right) {
                                     'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
                                     'etiqueta'           => $r->etiqueta,
                                     'prenda'             => $r->prenda,
-                                    'partida'            => $r->partida,
+                                    'saldo'              => $r->saldo,
                                     'composicion'        => $r->composicion,
                                     'cantidad'           => $cant,
                                     'precio_unitario'    => $precio,
@@ -870,7 +870,7 @@ $selIf    = function ($left, $right) {
     const AUTOSAVE_PROPS = new Set([
         'cantidad',
         'etiqueta',
-        'partida',
+        'saldo',
         'num_factura',
         'prenda',
         'composicion',
@@ -889,7 +889,7 @@ $selIf    = function ($left, $right) {
             'cod',
             'cantid',
             'etq',
-            'partida',
+            'saldo',
             'num_fact',
             'prenda',
             'composicion',
@@ -928,7 +928,7 @@ $selIf    = function ($left, $right) {
             },
 
             {
-                data: 'partida'
+                data: 'saldo'
             },
             {
                 data: 'num_factura',
@@ -1071,7 +1071,7 @@ $selIf    = function ($left, $right) {
         r.cantidad = Number(r.cantidad) || 0;
 
         if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-        if (typeof r.partida === 'string') r.partida = r.partida.trim();
+        if (typeof r.saldo === 'string') r.saldo = r.saldo.trim();
         r.num_factura = Number(r.num_factura) || 0;
         if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
         if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
@@ -1100,7 +1100,7 @@ $selIf    = function ($left, $right) {
         if (row.id) fd.append('id', row.id);
         fd.append('cantidad', row.cantidad ?? 0);
         fd.append('etiqueta', row.etiqueta ?? '');
-        fd.append('partida', row.partida ?? 0);
+        fd.append('saldo', row.saldo ?? 0);
         fd.append('num_factura', row.num_factura ?? 0);
         fd.append('prenda', row.prenda ?? '');
         fd.append('composicion', row.composicion ?? '');

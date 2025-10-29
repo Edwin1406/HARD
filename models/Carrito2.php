@@ -9,7 +9,7 @@ class Carrito2 extends ActiveRecord {
         'Codigo_Nota_Pedido',
         'etiqueta',
         'prenda',
-        'partida',
+        'saldo',
         'composicion',
         'cantidad',
         'precio_unitario',
@@ -27,7 +27,7 @@ class Carrito2 extends ActiveRecord {
     public $Codigo_Nota_Pedido;
     public $etiqueta;
     public $prenda;
-    public $partida;
+    public $saldo;
     public $composicion;
     public $cantidad;
     public $precio_unitario;
@@ -46,7 +46,7 @@ class Carrito2 extends ActiveRecord {
         $this->Codigo_Nota_Pedido = $args['Codigo_Nota_Pedido'] ?? null;
         $this->etiqueta = $args['etiqueta'] ?? null;
         $this->prenda = $args['prenda'] ?? null;
-        $this->partida = $args['partida'] ?? null;
+        $this->saldo = $args['saldo'] ?? null;
         $this->composicion = $args['composicion'] ?? null;
         $this->cantidad = $args['cantidad'] ?? 0;
         $this->precio_unitario = $args['precio_unitario'] ?? 0.0;

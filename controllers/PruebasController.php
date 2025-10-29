@@ -216,7 +216,7 @@ class PruebasController
             $carrito->Codigo_Nota_Pedido = $id_nota;  
             $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
             $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
-            $carrito->partida            = $_POST['partida']   ?? 0;
+            $carrito->saldo              = $_POST['saldo']   ?? 0;
             $carrito->composicion        = $_POST['composicion']   ?? '';
             $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
@@ -263,7 +263,7 @@ class PruebasController
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
                                 'etiqueta'            => $carrito->etiqueta,
                                 'prenda'              => $carrito->prenda,
-                                'partida'             => $carrito->partida,
+                                'saldo'               => $carrito->saldo,
                                 'composicion'         => $carrito->composicion,
                                 'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
@@ -470,7 +470,7 @@ public static function actualizarPruebas()
     $idNota    = $_POST['id_nota'] ?? null;
     $etiqueta   = trim($_POST['etiqueta'] ?? '');
     $prenda    = trim($_POST['prenda'] ?? '');
-    $partida   = trim($_POST['partida'] ?? '');
+    $saldo   = trim($_POST['saldo'] ?? '');
     $composicion = trim($_POST['composicion'] ?? '');
     $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
@@ -506,7 +506,7 @@ public static function actualizarPruebas()
     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
     $carrito->etiqueta = $etiqueta;
     $carrito->prenda = $prenda;
-    $carrito->partida = $partida;
+    $carrito->saldo = $saldo;
     $carrito->composicion = $composicion;
     $carrito->cantidad = $cantidad;
     $carrito->precio_unitario = $precioU;
