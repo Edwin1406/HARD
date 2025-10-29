@@ -473,7 +473,7 @@ $selIf    = function ($left, $right) {
 
 
 
-
+<!-- 
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -485,11 +485,11 @@ $selIf    = function ($left, $right) {
                                             name="partida"
                                             value="<?= $oldVal('partida') ?>">
                                     </div>
-                                </div>
+                                </div> -->
 
 
 
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label for="composicion">Composicion</label>
                                         <input type="text"
