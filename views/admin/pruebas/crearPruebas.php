@@ -833,8 +833,8 @@ $selIf    = function ($left, $right) {
                                     'etiqueta'           => $r->etiqueta,
                                     'prenda'             => $r->prenda,
                                     'partida'            => $r->partida,
-                                    'cantidad'           => $cant,
                                     'composicion'        => $r->composicion,
+                                    'cantidad'           => $cant,
                                     'precio_unitario'    => $precio,
                                     'num_factura'        => $r->num_factura,
                                     'tienda'             => $r->tienda,
@@ -868,11 +868,11 @@ $selIf    = function ($left, $right) {
 
     // Campos que disparan autosave (12 columnas; excluye 'total')
     const AUTOSAVE_PROPS = new Set([
+        'cantidad',
         'etiqueta',
         'prenda',
         'partida',
         'composicion',
-        'cantidad',
         'precio_unitario',
         'num_factura',
         'tienda',
@@ -887,11 +887,11 @@ $selIf    = function ($left, $right) {
         colHeaders: [
             'id',
             'cod',
+            'cantid',
             'etq',
             'prenda',
             'partida',
             'composicion',
-            'cantid',
             'precio_u',
             'num_fact',
             'tienda',
