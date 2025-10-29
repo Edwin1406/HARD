@@ -986,66 +986,7 @@ $selIf    = function ($left, $right) {
         hot.render(); // Refresh the total cell
     }
 
-    // Guardar/Actualizar filas
-    async function saveOrUpdateFila(row) {
-        const fd = new FormData();
-        const fields = ['id_nota', 'id', 'cantidad', 'etiqueta', 'saldo', 'num_factura', 'prenda', 'composicion', 'precio_unitario', 'tienda', 'marca', 'pais', 'num_caja', 'bodega', 'total', 'id_tienda'];
-
-        fields.forEach(field => {
-            fd.append(field, row[field] ?? dataFromPHP[field] ?? '');
-        });
-
-        const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
-        const resp = await fetch(url, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, credentials: 'same-origin' });
-
-        try {
-            const json = await resp.json();
-            if (json?.ok) {
-                if (json.id) row.id = json.id; // Set the id if it's a new row
-                return true;
-            } else {
-                console.warn('Error en actualización:', json);
-            }
-        } catch {
-            console.warn('Respuesta no JSON:', await resp.text());
-        }
-        return false;
-    }
-
-    async function maybeAutosave(rowIdxList) {
-        if (!document.getElementById('autosave')?.checked) return;
-        const ok = await Promise.all(rowIdxList.map(idx => saveOrUpdateFila(hot.getSourceDataAtRow(idx))));
-        ok.includes(false) ? toastErr.show() : toastOk.show();
-    }
-
-    // Botón de guardar nuevas filas
-    document.getElementById('guardar-nuevas')?.addEventListener('click', async (e) => {
-        await guardarNuevasFilas(e.currentTarget);
-    });
-
-    async function guardarNuevasFilas(btn) {
-        btn?.setAttribute('disabled', 'disabled');
-        btn?.insertAdjacentHTML('afterbegin', '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>');
-
-        const nuevas = filasNuevas();
-        let ok = true;
-        for (const r of nuevas) {
-            const exito = await saveOrUpdateFila(r);
-            if (!exito) ok = false;
-        }
-
-        btn?.removeAttribute('disabled');
-        btn?.querySelector('.spinner-border')?.remove();
-        ok ? toastOk.show() : toastErr.show();
-        if (ok) setTimeout(() => location.reload(), 800);
-    }
-
-    // Función para filtrar nuevas filas
-    function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
-    }
-
-    // Evento para el botón de eliminar
+    // Eliminar filas
     container.addEventListener('click', (ev) => {
         const btn = ev.target.closest('.btn-del');
         if (!btn) return;  // Si no es un botón de eliminar, no hace nada
@@ -1075,7 +1016,7 @@ $selIf    = function ($left, $right) {
         const { rowIndex, rowData } = info;
 
         const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+        fd.append('id_nota', dataFromPHP.ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
         fd.append('id', rowData.id);
 
         try {
