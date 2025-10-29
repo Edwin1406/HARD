@@ -1136,6 +1136,8 @@ $selIf    = function ($left, $right) {
 
         try {
             const json = await resp.json();
+                console.log('Respuesta del servidor:', json);  // Añadir esta línea para depuración
+
             if (json?.ok) {
                 if (json.id) row.id = json.id; // alta
                 row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
