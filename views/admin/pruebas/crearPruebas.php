@@ -1028,7 +1028,7 @@ $selIf    = function ($left, $right) {
         height: container.clientHeight,
         theme: '',  // Tema minimalista
         rowHeights: 25,     // Filas más delgadas
-        colWidths: [40, 40, 40, 80, 100, 100, 120, 100, 100, 100, 120, 120, 100, 100, 150, 120], // Anchos de columnas ajustados
+        colWidths: [40, 45, 45, 80, 100, 100, 120, 100, 100, 100, 100, 100, 100, 100, 130, 100], // Anchos de columnas ajustados
         filters: true,
         dropdownMenu: true,
         columnSorting: true,
