@@ -805,26 +805,17 @@ $selIf    = function ($left, $right) {
 </div>
 
 
-<!-- Incluye el CSS de Handsontable con el nuevo tema 'material' -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.min.css">
-
-<!-- Incluye el JavaScript de Handsontable -->
-<script src="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.js"></script>
-
-<!-- Si usas Bootstrap 5 para las clases de estilo como botones, carga también el CSS de Bootstrap -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
-<!-- Cargar JavaScript de Bootstrap -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <script>
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
+
     const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
     const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
     const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
     const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
     const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
+
 
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
@@ -1269,7 +1260,6 @@ $selIf    = function ($left, $right) {
         }
     });
 </script>
-
 
 
 <script>
