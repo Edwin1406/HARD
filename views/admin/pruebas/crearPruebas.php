@@ -1044,6 +1044,69 @@ $selIf    = function ($left, $right) {
     function filasNuevas() {
         return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
     }
+
+    // Evento para el botón de eliminar
+    container.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('.btn-del');
+        if (!btn) return;  // Si no es un botón de eliminar, no hace nada
+
+        const rowIndex = parseInt(btn.dataset.row, 10);  // Obtener el índice de la fila
+        const rowData = hot.getSourceDataAtRow(rowIndex);  // Obtener los datos de la fila
+
+        if (!rowData?.id) {  // Si no tiene ID (no está guardado), eliminar localmente
+            hot.alter('remove_row', rowIndex, 1);
+            return;
+        }
+        
+        // Si tiene un ID, mostrar el modal de confirmación
+        rowPendingDelete = {
+            rowIndex,
+            rowData
+        };
+        modalDelete.show();  // Mostrar el modal de confirmación
+    });
+
+    // Confirmar la eliminación
+    document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
+        const info = rowPendingDelete;
+        rowPendingDelete = null;
+        if (!info) return;
+
+        const { rowIndex, rowData } = info;
+
+        const fd = new FormData();
+        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+        fd.append('id', rowData.id);
+
+        try {
+            const resp = await fetch('/admin/eliminarCarrito', {
+                method: 'POST',
+                body: fd,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin'
+            });
+
+            let ok = false;
+            try {
+                const json = await resp.json();
+                ok = !!json?.ok;
+            } catch {}
+
+            if (ok) {
+                hot.alter('remove_row', rowIndex, 1);  // Eliminar la fila de Handsontable
+                toastOk.show();  // Mostrar mensaje de éxito
+            } else {
+                toastErr.show();  // Mostrar mensaje de error
+            }
+        } catch {
+            toastErr.show();  // En caso de error en la petición
+        } finally {
+            modalDelete.hide();  // Cerrar el modal
+        }
+    });
 </script>
 
 
