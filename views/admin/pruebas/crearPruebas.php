@@ -598,7 +598,7 @@ $selIf    = function ($left, $right) {
 
                                 <!-- pais -->
 
-                                <!-- <div class="col-md-2 col-12">
+                                <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="pais">País</label>
                                         <select id="pais" class="choices form-control" name="pais">
@@ -618,9 +618,9 @@ $selIf    = function ($left, $right) {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                </div> -->
+                                </div> 
 
-                                <div class="col-md-2 col-12">
+                                <!-- <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="pais">País</label>
                                         <input type="text"
@@ -630,7 +630,7 @@ $selIf    = function ($left, $right) {
                                             name="pais"
                                             value="<?php echo $tienda_nota->pais ?>" readonly>
                                     </div>
-                                </div>
+                                </div> -->
 
 
 
