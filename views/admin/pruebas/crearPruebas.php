@@ -429,7 +429,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                         
+
 
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
@@ -528,54 +528,38 @@ $selIf    = function ($left, $right) {
                                             class="form-control"
                                             name="total"
                                             step="0.01"
-                                            value="<?= $oldVal('total', '0.00') ?>">
+                                            value="<?= $oldVal('total', '0.00') ?>" readonly>
                                     </div>
                                 </div>
 
-                                  <script>
-    // cada vez que cambien cantidad o etiqueta
-    const cantidad = document.getElementById('cantidad');
-    const precio_unitario = document.getElementById('precio_unitario');
-    const etiqueta = document.getElementById('etiqueta');
-    const saldo = document.getElementById('saldo');
-    const total = document.getElementById('total');
+                                <script>
+                                    // cada vez que cambien cantidad o etiqueta
+                                    const cantidad = document.getElementById('cantidad');
+                                    const precio_unitario = document.getElementById('precio_unitario');
+                                    const etiqueta = document.getElementById('etiqueta');
+                                    const saldo = document.getElementById('saldo');
+                                    const total = document.getElementById('total');
 
-    function actualizarSaldo() {
-        const cant = parseFloat(cantidad.value) || 0;
-        const etiq = parseFloat(etiqueta.value) || 0;
-        saldo.value = cant - etiq; // o usa la fórmula que necesites
-    }
+                                    function actualizarSaldo() {
+                                        const cant = parseFloat(cantidad.value) || 0;
+                                        const etiq = parseFloat(etiqueta.value) || 0;
+                                        saldo.value = cant - etiq; // o usa la fórmula que necesites
+                                    }
 
-    function actualizarPrecioTotal() {
-        const cant = parseFloat(cantidad.value) || 0;
-        const precioUni = parseFloat(precio_unitario.value) || 0;
-        total.value = (cant * precioUni).toFixed(2);
-    }
+                                    function actualizarPrecioTotal() {
+                                        const cant = parseFloat(cantidad.value) || 0;
+                                        const precioUni = parseFloat(precio_unitario.value) || 0;
+                                        total.value = (cant * precioUni).toFixed(2);
+                                    }
 
-    cantidad.addEventListener('input', function() {
-        actualizarSaldo();
-        actualizarPrecioTotal(); // Trigger total update when quantity changes
-    });
-    etiqueta.addEventListener('input', actualizarSaldo);
-    precio_unitario.addEventListener('input', actualizarPrecioTotal);
-</script>
+                                    cantidad.addEventListener('input', function() {
+                                        actualizarSaldo();
+                                        actualizarPrecioTotal(); // Trigger total update when quantity changes
+                                    });
+                                    etiqueta.addEventListener('input', actualizarSaldo);
+                                    precio_unitario.addEventListener('input', actualizarPrecioTotal);
+                                </script>
 
-                                <!-- <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="tienda">Tienda</label>
-                                        <select id="tienda" class="choices form-control" name="tienda">
-                                            <option value="" disabled <?= empty($old['tienda']) ? 'selected' : '' ?>>
-                                                Seleccione una tienda
-                                            </option>
-                                            <?php foreach ($tiendas as $t) : ?>
-                                                <option value="<?= htmlspecialchars($t->Nombre_Tienda) ?>"
-                                                    <?= $selIf(($old['tienda'] ?? ''), $t->Nombre_Tienda) ?>>
-                                                    <?= htmlspecialchars($t->Nombre_Tienda) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div> -->
 
 
                                 <div class="col-md-2 col-12">
@@ -594,23 +578,6 @@ $selIf    = function ($left, $right) {
 
 
 
-                                <!-- 
-                                <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="marca">Marca</label>
-                                        <select id="marca" class="choices form-control" name="marca">
-                                            <option value="" disabled <?= empty($old['marca']) ? 'selected' : '' ?>>
-                                                Seleccione una Marca
-                                            </option>
-                                            <?php foreach ($marca as $m) : ?>
-                                                <option value="<?= htmlspecialchars($m->Nombre_Marca) ?>"
-                                                    <?= $selIf(($old['marca'] ?? ''), $m->Nombre_Marca) ?>>
-                                                    <?= htmlspecialchars($m->Nombre_Marca) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="col-md-2 col-12">
                                     <div class="form-group">
                                         <label for="marca">Marca</label>
@@ -649,40 +616,7 @@ $selIf    = function ($left, $right) {
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="pais">País</label>
-                                        <input type="text"
-                                            id="pais"
-                                            class="form-control"
-                                            placeholder="País"
-                                            name="pais"
-                                            value="<?php echo $tienda_nota->pais ?>" readonly>
-                                    </div>
-                                </div> -->
-
-
-
-
-
-
-                                <!-- Ciudad -->
-                                <!-- <div class="col-md-2 col-12">
-                                    <div class="form-group">
-                                        <label for="ciudad">Ciudad</label>
-                                        <select id="ciudad" class="choices form-control" name="ciudad">
-                                            <option value="" disabled <?= empty($old['ciudad']) ? 'selected' : '' ?>>
-                                                Seleccione
-                                            </option>
-                                            <?php foreach ($ciudad as $c) : ?>
-                                                <option value="<?= htmlspecialchars($c->Sigla_Ciudad) ?>"
-                                                    <?= $selIf(($old['ciudad'] ?? ''), $c->Sigla_Ciudad) ?>>
-                                                    <?= htmlspecialchars($c->Sigla_Ciudad) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div> -->
+                             
 
 
 
