@@ -812,7 +812,7 @@ $selIf    = function ($left, $right) {
 <script src="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.js"></script>
 
 <!-- Si usas Bootstrap 5 para las clases de estilo como botones, carga también el CSS de Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
 <!-- Cargar JavaScript de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
