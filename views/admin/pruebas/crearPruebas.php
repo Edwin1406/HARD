@@ -1037,6 +1037,7 @@ $selIf    = function ($left, $right) {
         minSpareRows: 1,
         allowInsertColumn: false,
         allowRemoveColumn: false,
+        licenseKey: 'non-commercial-and-evaluation', // para uso no comercial
         // AUTOSAVE: 12 columnas (excluye total)
         afterChange(changes, source) {
             if (!changes || source === 'loadData') return;
