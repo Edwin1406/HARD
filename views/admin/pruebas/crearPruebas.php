@@ -1023,22 +1023,20 @@ $selIf    = function ($left, $right) {
                 }
             },
         ],
-
-        rowHeaders: true,
+ rowHeaders: true,
         stretchH: 'all',
         height: container.clientHeight,
-        licenseKey: 'non-commercial-and-evaluation',
-
+        theme: 'material',  // Tema minimalista
+        rowHeights: 25,     // Filas más delgadas
+        colWidths: [80, 80, 100, 80, 100, 100, 120, 100, 100, 100, 120, 120, 100, 100, 150, 120], // Anchos de columnas ajustados
         filters: true,
         dropdownMenu: true,
         columnSorting: true,
         manualColumnResize: true,
         manualRowResize: true,
-
         minSpareRows: 1,
         allowInsertColumn: false,
         allowRemoveColumn: false,
-
         // AUTOSAVE: 12 columnas (excluye total)
         afterChange(changes, source) {
             if (!changes || source === 'loadData') return;
