@@ -425,7 +425,7 @@ $selIf    = function ($left, $right) {
                                             class="form-control"
                                             name="saldo"
                                             step="1"
-                                            value="<?= $oldVal('saldo', '0') ?>">
+                                            value="<?= $oldVal('saldo', '0') ?>" readonly>
                                     </div>
                                 </div>
 
@@ -438,7 +438,7 @@ $selIf    = function ($left, $right) {
                                     function actualizarSaldo() {
                                         const cant = parseFloat(cantidad.value) || 0;
                                         const etiq = parseFloat(etiqueta.value) || 0;
-                                        saldo.value = cant + etiq; // o usa la fórmula que necesites
+                                        saldo.value = cant - etiq; // o usa la fórmula que necesites
                                     }
 
                                     cantidad.addEventListener('input', actualizarSaldo);
