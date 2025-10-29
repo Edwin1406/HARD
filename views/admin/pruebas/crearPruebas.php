@@ -1140,10 +1140,10 @@ $selIf    = function ($left, $right) {
             if (json?.ok) {
                 if (json.id) row.id = json.id; // alta
                 row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
+                row.num_factura = row.num_factura || num_factura;
                 row.tienda = row.tienda || tienda;
                 row.marca = row.marca || marca;
                 row.pais = row.pais || pais;
-                row.num_factura = row.num_factura || num_factura;
 
                 return true;
             } else {
