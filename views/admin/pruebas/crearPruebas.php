@@ -435,6 +435,7 @@ $selIf    = function ($left, $right) {
                                     const precio_unitario = document.getElementById('precio_unitario');
                                     const etiqueta = document.getElementById('etiqueta');
                                     const saldo = document.getElementById('saldo');
+                                    const total = document.getElementById('total');
 
                                     function actualizarSaldo() {
                                         const cant = parseFloat(cantidad.value) || 0;
@@ -445,8 +446,7 @@ $selIf    = function ($left, $right) {
                                     function actualizarPrecioTotal() {
                                         const cant = parseFloat(cantidad.value) || 0;
                                         const precioUni = parseFloat(precio_unitario.value) || 0;
-                                        const totalField = document.getElementById('total');
-                                        totalField.value = (cant * precioUni).toFixed(2);
+                                        total.value = (cant * precioUni).toFixed(2);
                                     }
 
 
