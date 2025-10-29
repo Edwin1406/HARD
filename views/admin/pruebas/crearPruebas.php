@@ -1125,6 +1125,7 @@ $selIf    = function ($left, $right) {
         fd.append('saldo', row.saldo ?? 0);
         fd.append('num_factura', row.num_factura ?? 0);
         fd.append('prenda', row.prenda ?? '');
+        console.log('Composición a enviar:', row.prenda);
         fd.append('composicion', row.composicion ?? '');
         fd.append('precio_unitario', row.precio_unitario ?? 0);
         fd.append('tienda', row.tienda ?? '');
