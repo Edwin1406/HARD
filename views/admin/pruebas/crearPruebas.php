@@ -1132,6 +1132,9 @@ $selIf    = function ($left, $right) {
         fd.append('pais', row.pais ?? '');
         fd.append('num_caja', row.num_caja ?? 0);
         fd.append('bodega', row.bodega ?? '');
+        fd.append('id_tienda', <?= json_encode($_GET['id'] ?? '') ?>);
+
+        console.log("ID Tienda (FD):", <?= json_encode($_GET['id'] ?? '') ?>);
         
         fd.append('total', row.total ?? 0);
 
