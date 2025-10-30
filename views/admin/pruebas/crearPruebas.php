@@ -1098,9 +1098,11 @@ $selIf    = function ($left, $right) {
         r.pais = r.pais ? String(r.pais).trim() : '';
         r.num_caja = Number(r.num_caja) || 0;
         r.bodega = String(r.bodega).trim() || '';
-        r.id_tienda = Number(r.id_tienda) || 0;
+        r.id_tienda = <?= json_encode($_GET['id'] ?? '') ?>;
 
-        console.log('Recalc fila', r.id_tienda, rowIndex, r);
+        console.log("ID Tienda:", r.id_tienda);
+
+        
 
         
         r.total = round(r.cantidad * r.precio_unitario);
