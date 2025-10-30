@@ -821,7 +821,9 @@ $selIf    = function ($left, $right) {
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
 
-                        echo "<!-- Debug: idUrl=$idUrl, id_tienda=$id_tienda -->";
+                        var_dump($id_tienda);
+
+                        
                         
 
                         $out = [];
