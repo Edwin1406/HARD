@@ -1097,7 +1097,7 @@ $selIf    = function ($left, $right) {
         r.num_caja = Number(r.num_caja) || 0;
         r.bodega = String(r.bodega).trim() || '';
 
-        r.id_tienda = <?= json_encode($_GET['id'] ?? '') ?>;
+        
         r.total = round(r.cantidad * r.precio_unitario);
         
 
@@ -1125,6 +1125,7 @@ $selIf    = function ($left, $right) {
         fd.append('pais', row.pais ?? '');
         fd.append('num_caja', row.num_caja ?? 0);
         fd.append('bodega', row.bodega ?? '');
+        fd.append('id_tienda', <?= json_encode($_GET['id'] ?? '') ?>;);
         fd.append('total', row.total ?? 0);
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
