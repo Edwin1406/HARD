@@ -820,6 +820,8 @@ $selIf    = function ($left, $right) {
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
+
+                        echo "<!-- Debug: idUrl=$idUrl, id_tienda=$id_tienda -->";
                         
 
                         $out = [];
