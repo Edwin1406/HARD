@@ -1023,21 +1023,22 @@ $selIf    = function ($left, $right) {
                 }
             },
         ],
- rowHeaders: true,
+
+        rowHeaders: true,
         stretchH: 'all',
         height: container.clientHeight,
-        theme: '',  // Tema minimalista
-        rowHeights: 25,     // Filas más delgadas
-        colWidths: [40, 45, 45, 80, 100, 100, 120, 100, 100, 100, 100, 100, 100, 100, 130, 100], // Anchos de columnas ajustados
+        licenseKey: 'non-commercial-and-evaluation',
+
         filters: true,
         dropdownMenu: true,
         columnSorting: true,
         manualColumnResize: true,
         manualRowResize: true,
+
         minSpareRows: 1,
         allowInsertColumn: false,
         allowRemoveColumn: false,
-        licenseKey: 'non-commercial-and-evaluation', // para uso no comercial
+
         // AUTOSAVE: 12 columnas (excluye total)
         afterChange(changes, source) {
             if (!changes || source === 'loadData') return;
@@ -1071,7 +1072,7 @@ $selIf    = function ($left, $right) {
     }));
 
     // --- Lógica de fila
-     function recalcRow(rowIndex) {
+    function recalcRow(rowIndex) {
         const r = hot.getSourceDataAtRow(rowIndex);
         if (!r) return;
 
@@ -1097,17 +1098,10 @@ $selIf    = function ($left, $right) {
 
         hot.render(); // refresca la celda total
     }
+
     function filasNuevas() {
         return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
     }
-
-
-
-    // Ajuste de altura responsive
-    window.addEventListener('resize', () => hot.updateSettings({
-        height: container.clientHeight
-    }));
-
 
     // --- Guardar/actualizar
     async function saveOrUpdateFila(row) {
