@@ -820,8 +820,7 @@ $selIf    = function ($left, $right) {
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
-
-                        debuguear($idUrl, 'ID Nota Pedido para JS');
+                        
 
                         $out = [];
                         if (!empty($carritoTemporal2)) {
@@ -883,6 +882,7 @@ $selIf    = function ($left, $right) {
         'pais',
         'num_caja',
         'bodega',
+        'id_tienda',
     ]);
 
     const hot = new Handsontable(container, {
@@ -902,6 +902,7 @@ $selIf    = function ($left, $right) {
             'pais',
             'num_caja',
             'bodega',
+            'id_tienda',
             'total',
             'Acciones'
         ],
