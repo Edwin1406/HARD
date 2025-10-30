@@ -843,6 +843,7 @@ $selIf    = function ($left, $right) {
                                     'pais'               => $r->pais,
                                     'num_caja'           => $r->num_caja,
                                     'bodega'             => $r->bodega,
+                                    'id_tienda'          => $r->id_tienda,
                                     'total'              => round($cant * $precio, 2),
 
                                 ];
