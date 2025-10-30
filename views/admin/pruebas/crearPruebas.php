@@ -806,11 +806,6 @@ $selIf    = function ($left, $right) {
 
 
 <script>
-    // Función para redondear números a dos decimales
-    function round(n) {
-        return Math.round((n + Number.EPSILON) * 100) / 100;
-    }
-
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
     const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
@@ -1079,6 +1074,30 @@ $selIf    = function ($left, $right) {
         }
     }
 
+    // Función para guardar filas automáticamente si está habilitado el auto-guardado
+    async function maybeAutosave(rowIdxList) {
+        if (!document.getElementById('autosave')?.checked) return; // Verificar si el autosave está activado
+
+        let ok = true;
+        if (Array.isArray(rowIdxList) && rowIdxList.length) {
+            for (const idx of rowIdxList) {
+                const r = hot.getSourceDataAtRow(idx);
+                if (!r) continue;
+                // Evitar disparos vacíos
+                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        } else {
+            const nuevas = hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
+            for (const r of nuevas) {
+                const exito = await saveOrUpdateFila(r);
+                if (!exito) ok = false;
+            }
+        }
+        ok ? toastOk.show() : toastErr.show();
+    }
+
     // Guardar nuevas filas
     async function guardarNuevasFilas(btn) {
         const nuevas = hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
@@ -1093,7 +1112,6 @@ $selIf    = function ($left, $right) {
 
     // Botón de guardar nuevas filas
     document.getElementById('guardar-nuevas')?.addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
-
 </script>
 
 
