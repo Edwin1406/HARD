@@ -820,8 +820,6 @@ $selIf    = function ($left, $right) {
     const existentes = <?php
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
-                        
-
 
                         $out = [];
                         if (!empty($carritoTemporal2)) {
@@ -1123,7 +1121,6 @@ $selIf    = function ($left, $right) {
         fd.append('num_caja', row.num_caja ?? 0);
         fd.append('bodega', row.bodega ?? '');
         fd.append('total', row.total ?? 0);
-        fd.append('id_tienda', row.id_tienda ?? '');
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
