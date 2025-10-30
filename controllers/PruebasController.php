@@ -487,6 +487,7 @@ public static function actualizarPruebas()
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
     $bodega = $_POST['bodega'] ?? '';
+    $id_tienda = (int)($_POST['id_tienda'] ?? 0);
 
     
 
@@ -518,6 +519,7 @@ public static function actualizarPruebas()
     $carrito->pais = $pais;
     $carrito->num_caja = $num_caja;
     $carrito->bodega = $bodega;
+    $carrito->id_tienda = $id_tienda;
 
 
     $ok = $carrito->guardar(); // o ->actualizar()
