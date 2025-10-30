@@ -467,6 +467,9 @@ public static function actualizarPruebas()
         return;
     }
 
+    $id_tienda = $_GET['id'] ?? null;
+
+
     $id        = $_POST['id'] ?? null;
     $idNota    = $_POST['id_nota'] ?? null;
     $etiqueta   = trim($_POST['etiqueta'] ?? '');
@@ -487,7 +490,7 @@ public static function actualizarPruebas()
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
     $bodega = $_POST['bodega'] ?? '';
-    $id_tienda = (int)($_POST['id_tienda'] ?? 0);
+    $id_tienda = $id_tienda ?? null;
 
     
 
