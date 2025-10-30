@@ -452,6 +452,83 @@ class PruebasController
     }
 
 
+// public static function actualizarPruebas()
+// {
+//     session_start();
+//     if (!isset($_SESSION['email'])) {
+//         header('Content-Type: application/json');
+//         echo json_encode(['ok' => false, 'error' => 'no-auth']);
+//         return;
+//     }
+
+//     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+//         header('Content-Type: application/json');
+//         echo json_encode(['ok' => false, 'error' => 'bad-method']);
+//         return;
+//     }
+
+
+
+//     $id        = $_POST['id'] ?? null;
+//     $idNota    = $_POST['id_nota'] ?? null;
+//     $etiqueta   = trim($_POST['etiqueta'] ?? '');
+//     $prenda    = trim($_POST['prenda'] ?? '');
+//     $saldo   = trim($_POST['saldo'] ?? '');
+//     $composicion = trim($_POST['composicion'] ?? '');
+//     $cantidad  = (float)($_POST['cantidad'] ?? 0);
+//     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+//     // $total     = (float)($_POST['total'] ?? 0);
+
+
+
+
+//     $total     = (float)($cantidad * $precioU);
+//     $num_factura = (int)($_POST['num_factura'] ?? 0);
+//     $tienda = trim($_POST['tienda'] ?? '');
+//     $marca = trim($_POST['marca'] ?? '');
+//     $pais = trim($_POST['pais'] ?? '');
+//     $num_caja = (int)($_POST['num_caja'] ?? 0);
+//     $bodega = $_POST['bodega'] ?? '';
+//     $id_tienda = $_POST['id_tienda'] ?? null;
+
+    
+
+//     if (!$id) {
+//       header('Content-Type: application/json');
+//       echo json_encode(['ok' => false, 'error' => 'missing-id']);
+//       return;
+//     }
+
+//     $carrito = Carrito2::find($id);
+//     if (!$carrito) {
+//       header('Content-Type: application/json');
+//       echo json_encode(['ok' => false, 'error' => 'not-found']);
+//       return;
+//     }
+
+//     // Actualiza campos
+//     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
+//     $carrito->etiqueta = $etiqueta;
+//     $carrito->prenda = $prenda;
+//     $carrito->saldo = $saldo;
+//     $carrito->composicion = $composicion;
+//     $carrito->cantidad = $cantidad;
+//     $carrito->precio_unitario = $precioU;
+//     $carrito->total = $total;
+//     $carrito->num_factura = $num_factura;
+//     $carrito->tienda = $tienda;
+//     $carrito->marca = $marca;
+//     $carrito->pais = $pais;
+//     $carrito->num_caja = $num_caja;
+//     $carrito->bodega = $bodega;
+//     $carrito->id_tienda = $id_tienda;
+
+
+//     $ok = $carrito->guardar(); // o ->actualizar()
+//     header('Content-Type: application/json');
+//     echo json_encode(['ok' => (bool)$ok]);
+// }
+
 public static function actualizarPruebas()
 {
     session_start();
@@ -467,22 +544,16 @@ public static function actualizarPruebas()
         return;
     }
 
-
-
-    $id        = $_POST['id'] ?? null;
-    $idNota    = $_POST['id_nota'] ?? null;
-    $etiqueta   = trim($_POST['etiqueta'] ?? '');
-    $prenda    = trim($_POST['prenda'] ?? '');
-    $saldo   = trim($_POST['saldo'] ?? '');
+    // Obtención de datos
+    $id = $_POST['id'] ?? null;
+    $idNota = $_POST['id_nota'] ?? null;
+    $etiqueta = trim($_POST['etiqueta'] ?? '');
+    $prenda = trim($_POST['prenda'] ?? '');
+    $saldo = trim($_POST['saldo'] ?? '');
     $composicion = trim($_POST['composicion'] ?? '');
-    $cantidad  = (float)($_POST['cantidad'] ?? 0);
-    $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-    // $total     = (float)($_POST['total'] ?? 0);
-
-
-
-
-    $total     = (float)($cantidad * $precioU);
+    $cantidad = (float)($_POST['cantidad'] ?? 0);
+    $precioU = (float)($_POST['precio_unitario'] ?? 0);
+    $total = (float)($cantidad * $precioU);
     $num_factura = (int)($_POST['num_factura'] ?? 0);
     $tienda = trim($_POST['tienda'] ?? '');
     $marca = trim($_POST['marca'] ?? '');
@@ -491,22 +562,14 @@ public static function actualizarPruebas()
     $bodega = $_POST['bodega'] ?? '';
     $id_tienda = $_POST['id_tienda'] ?? null;
 
-    
-
-    if (!$id) {
-      header('Content-Type: application/json');
-      echo json_encode(['ok' => false, 'error' => 'missing-id']);
-      return;
-    }
-
+    // Verificar si el id existe
     $carrito = Carrito2::find($id);
     if (!$carrito) {
-      header('Content-Type: application/json');
-      echo json_encode(['ok' => false, 'error' => 'not-found']);
-      return;
+        // Si no existe, creamos un nuevo registro
+        $carrito = new Carrito2();
     }
 
-    // Actualiza campos
+    // Actualizar datos
     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
     $carrito->etiqueta = $etiqueta;
     $carrito->prenda = $prenda;
@@ -523,116 +586,12 @@ public static function actualizarPruebas()
     $carrito->bodega = $bodega;
     $carrito->id_tienda = $id_tienda;
 
-
-    $ok = $carrito->guardar(); // o ->actualizar()
+    // Guardar o actualizar
+    $ok = $carrito->guardar();  // Si existe, actualiza, si no, crea
     header('Content-Type: application/json');
     echo json_encode(['ok' => (bool)$ok]);
 }
 
-
-
-
-
-
-
-    // public static function eliminarCarrito()
-    // {
-    //     session_start();
-    //     if (!isset($_SESSION['email'])) {
-    //         header('Location: /');
-    //     }
-
-
-    //     $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
-
-
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $id = $_POST['id'];
-    //         $carrito = Carrito::find($id);
-
-    //         if ($carrito) {
-    //             $carrito->eliminar();
-    //             // header('Location: /admin/pruebas/crearPruebas?exito=1');
-    //             header("Location: /admin/pruebas/crearPruebas?id=$id_nota&eliminado=3");
-    //             exit;
-    //         } else {
-    //             // Manejar el caso en que no se encuentra el registro
-    //             // header('Location: /admin/pruebas/crearPruebas?error=1');
-    //             header("Location: /admin/pruebas/crearPruebas?id=$id_nota&error=1");
-    //             exit;
-    //         }
-    //     }
-    // }
-
-
-    // public static function registrarVenta()
-    // {
-    //     session_start();
-    //     if (!isset($_SESSION['email'])) {
-    //         header('Location: /');
-    //         exit;
-    //     }
-
-    //     // ✅ Solo continuar si la petición es POST
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    //         $id_usuario = $_SESSION['id'];
-    //         $carritoTemporal = Carrito::wherenuevo('id_usuario', $id_usuario);
-
-    //         if (empty($carritoTemporal)) {
-    //             header('Location: /carrito');
-    //             exit;
-    //         }
-
-    //         // Calcular total
-    //         $total = 0;
-    //         foreach ($carritoTemporal as $item) {
-    //             $total += $item->cantidad;
-    //         }
-
-
-    //         // Obtener ID generado
-    //         // Crear venta
-    //         $venta = new Ventas;
-    //         $venta->id_usuario = $id_usuario;
-    //         // id_venta
-    //         // $venta->id_venta = null;
-    //         $venta->total = $total;
-    //         $venta->fecha = date('Y-m-d H:i:s');
-    //         $venta->guardarCarrito();
-
-    //         $id_venta = $venta->id; // Asegúrate que ActiveRecord actualiza esta propiedad
-
-
-    //         // Insertar detalles
-    //         foreach ($carritoTemporal as $item) {
-    //             $detalle = new DetalleVenta;
-    //             $detalle->id_venta = $id_venta;
-    //             $detalle->tipo_maquina = $item->tipo_maquina;
-    //             $detalle->cantidad = $item->cantidad;
-    //             $detalle->casos = $item->casos;
-    //             $detalle->metros_lineales = $item->metros_lineales;
-    //             $detalle->n_laminas = $item->n_laminas;
-    //             $detalle->n_cambios = $item->n_cambios;
-    //             $detalle->consumo_almidon = $item->consumo_almidon;
-    //             $detalle->consumo_resina = $item->consumo_resina;
-    //             $detalle->consumo_recubrimiento = $item->consumo_recubrimiento;
-    //             // $detalle->fecha = date('Y-m-d H:i:s');
-    //             $detalle->guardarCarrito();
-    //         }
-
-    //         // Vaciar carrito
-    //         Carrito::eliminarPorColumna('id_usuario', $id_usuario);
-
-    //         // Redirigir o mostrar mensaje de éxito
-    //         header('Location: /admin/pruebas/crearPruebas?exito=1');
-    //         exit;
-    //     } else {
-    //         // Si no es POST, redirige o muestra un error
-    //         header('Location: /carrito');
-    //         exit;
-    //     }
-    // }
 
 
 
