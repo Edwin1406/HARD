@@ -1059,6 +1059,8 @@ $selIf    = function ($left, $right) {
         fd.append('bodega', row.bodega ?? '');
         fd.append('id_tienda', <?php echo json_encode($_GET['id'] ?? '') ?>, row.id_tienda ?? '');
 
+        console.log('ID Tienda:', row.id_tienda);
+
         fd.append('total', row.total ?? 0);
 
         const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
