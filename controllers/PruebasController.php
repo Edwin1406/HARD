@@ -274,6 +274,7 @@ class PruebasController
                                 'pais'                => $carrito->pais,
                                 'num_caja'            => $carrito->num_caja,
                                 'bodega'              => $carrito->bodega,
+                                'id_tienda'           => $carrito->id_tienda,
 
                             ],
                         ], JSON_UNESCAPED_UNICODE);
