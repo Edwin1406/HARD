@@ -208,7 +208,7 @@ class PruebasController
 
             $id_tienda = $_POST['id_tienda'] ?? null;
 
-            debuguear($id_tienda);
+            // debuguear($id_tienda);
 
 
             $id_nota = $_POST['id_nota'] ?? 0;
@@ -467,7 +467,6 @@ public static function actualizarPruebas()
         return;
     }
 
-    $id_tienda = $_GET['id'] ?? null;
 
 
     $id        = $_POST['id'] ?? null;
@@ -490,7 +489,7 @@ public static function actualizarPruebas()
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
     $bodega = $_POST['bodega'] ?? '';
-    $id_tienda = $id_tienda ?? null;
+    $id_tienda = $_POST['id_tienda'] ?? null;
 
     
 
