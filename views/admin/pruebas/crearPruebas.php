@@ -806,6 +806,11 @@ $selIf    = function ($left, $right) {
 
 
 <script>
+
+     // Función para redondear números a dos decimales
+    function round(n) {
+        return Math.round((n + Number.EPSILON) * 100) / 100;
+    }
     // ---------- Puentes PHP ----------
     const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
     const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
