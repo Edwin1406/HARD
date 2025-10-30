@@ -845,6 +845,7 @@ $selIf    = function ($left, $right) {
                                     'pais'               => $r->pais,
                                     'num_caja'           => $r->num_caja,
                                     'bodega'             => $r->bodega,
+                                    'id_tienda'          => $r->id_tienda,
                                     'total'              => round($cant * $precio, 2),
 
                                 ];
@@ -1098,6 +1099,7 @@ $selIf    = function ($left, $right) {
         r.pais = r.pais ? String(r.pais).trim() : '';
         r.num_caja = Number(r.num_caja) || 0;
         r.bodega = String(r.bodega).trim() || '';
+        r.id_tienda = <?= json_encode($_GET['id'] ?? '') ?>;
 
 
         
