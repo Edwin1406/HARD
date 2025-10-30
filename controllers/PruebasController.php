@@ -21,6 +21,95 @@ use MVC\Router;
 class PruebasController
 {
 
+    // public static function crearPruebas(Router $router)
+    // {
+    //     session_start();
+    //     if (!isset($_SESSION['email'])) {
+    //         header('Location: /');
+    //         exit;
+    //     }
+
+    //     // id_nota puede venir por GET o por POST
+    //     $id_nota = $_GET['id'] ?? ($_POST['id_nota'] ?? null);
+    //     if (!$id_nota) {
+    //         header('Location: /admin/notaPedido/crearNota');
+    //         exit;
+    //     }
+
+    //     // Catálogos
+    //     $tiendas = Tienda::all();
+    //     $bodega  = Bodega::all();
+    //     $ciudad  = Ciudad::all();
+    //     $pais    = Pais::all();
+    //     $marca   = Marca::all();
+
+    //     // Info de la nota
+    //     $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+    //     $fecha = NotaPedido::where('Codigo_Nota_Pedido', $id_nota)->Fecha_Nota_Pedido ?? date('Y-m-d');
+
+    //     // Datos de sesión
+    //     $nombre = $_SESSION['nombre'];
+    //     $email  = $_SESSION['email'];
+
+    //     // Auxiliares
+    //     $carritoTemporal = Carrito::all();
+    //     $carrito = new Carrito;
+    //     $alertas = [];
+
+    //     // 1) Recuperar “old” de sesión (flash) si vienes de un redirect
+    //     $old = $_SESSION['old'] ?? [];
+    //     if (isset($_SESSION['old'])) {
+    //         unset($_SESSION['old']); // flash: se usa una vez
+    //     }
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         // 2) Guardar lo recibido como “old”
+    //         $old = $_POST;
+
+    //         // Mapear POST al modelo
+    //         $carrito->Codigo_Nota_Pedido       = $id_nota;
+    //         $carrito->Nombre_Tienda            = $_POST['Nombre_Tienda'] ?? '';
+    //         $carrito->Fecha_Tienda_Nota_Pedido = $_POST['Fecha_Tienda_Nota_Pedido'] ?? null;
+    //         $carrito->Factura_Nota_Pedido      = $_POST['Factura_Nota_Pedido'] ?? null;
+    //         $carrito->Total_Tienda_Nota_Pedido = $_POST['Total_Tienda_Nota_Pedido'] ?? 0.00;
+    //         $carrito->cantidad                 = $_POST['cantidad'] ?? 0;
+
+    //         // Validación del modelo
+    //         $alertas = $carrito->validar();
+
+    //         if (empty($alertas)) {
+    //             $resultado = $carrito->guardar();
+    //             if ($resultado) {
+    //                 // 3) Guardar “old” en sesión antes del redirect
+    //                 $_SESSION['old'] = $old;
+    //                 header("Location: /admin/pruebas/crearPruebas?id=$id_nota&exito=1");
+    //                 exit;
+    //             } else {
+    //                 $alertas['error'][] = 'Error al guardar el registro';
+    //             }
+    //         }
+    //         // Si hay errores, seguimos al render con $old ya cargado
+    //     }
+
+    //     // Renderizar la vista
+    //     $router->render('admin/pruebas/crearPruebas', [
+    //         'titulo'          => 'Crear Pruebas',
+    //         'alertas'         => $alertas,
+    //         'nombre'          => $nombre,
+    //         'email'           => $email,
+    //         'carritoTemporal' => $carritoTemporal,
+    //         'id_nota'         => $id_nota,
+    //         'informacionNota' => $informacionNota,
+    //         'fecha'           => $fecha,
+    //         'tiendas'         => $tiendas,
+    //         'bodega'          => $bodega,
+    //         'ciudad'          => $ciudad,
+    //         'pais'            => $pais,
+    //         'marca'           => $marca,
+    //         'old'             => $old,
+    //     ]);
+    // }
+
     public static function crearPruebas(Router $router)
     {
         session_start();
@@ -125,20 +214,20 @@ class PruebasController
             $id_nota = $_POST['id_nota'] ?? 0;
 
             $carrito->Codigo_Nota_Pedido = $id_nota;  
-            $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
-            $carrito->saldo              = $_POST['saldo']   ?? 0;
-            $carrito->num_factura        = $_POST['num_factura'] ?? 0;
             $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
+            $carrito->saldo              = $_POST['saldo']   ?? 0;
             $carrito->composicion        = $_POST['composicion']   ?? '';
+            $carrito->cantidad           = $_POST['cantidad'] ?? 0;
             $carrito->precio_unitario    = $_POST['precio_unitario'] ?? 0;
             // $carrito->total              = $_POST['total'] ?? 0;
+            $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
+            $carrito->num_factura        = $_POST['num_factura'] ?? 0;
             $carrito->tienda             = $_POST['tienda'] ?? '';
             $carrito->marca              = $_POST['marca'] ?? '';
             $carrito->pais               = $_POST['pais'] ?? '';
             $carrito->num_caja           = $_POST['num_caja'] ?? 0;
             $carrito->bodega             = $_POST['bodega'] ?? '';
-            $carrito->total              = (float)($carrito->cantidad * $carrito->precio_unitario);
             $carrito->id_tienda          = $id_tienda ?? null;
         
 
@@ -172,19 +261,19 @@ class PruebasController
                                 'id'                  => $carrito->id ?? null,
                                 // nombres que usa el frontend en Handsontable
                                 'codigo_nota_pedido'  => $carrito->Codigo_Nota_Pedido,
-                                'cantidad'            => (float)$carrito->cantidad,
                                 'etiqueta'            => $carrito->etiqueta,
-                                'saldo'               => $carrito->saldo,
-                                'num_factura'         => $carrito->num_factura,
                                 'prenda'              => $carrito->prenda,
+                                'saldo'               => $carrito->saldo,
                                 'composicion'         => $carrito->composicion,
+                                'cantidad'            => (float)$carrito->cantidad,
                                 'precio_unitario'     => number_format((float)$carrito->precio_unitario, 2, '.', ''),
+                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
+                                'num_factura'         => $carrito->num_factura,
                                 'tienda'              => $carrito->tienda,
                                 'marca'               => $carrito->marca,
                                 'pais'                => $carrito->pais,
                                 'num_caja'            => $carrito->num_caja,
                                 'bodega'              => $carrito->bodega,
-                                'total'               => number_format((float)$carrito->total, 2, '.', ''),
 
                             ],
                         ], JSON_UNESCAPED_UNICODE);
@@ -379,24 +468,24 @@ public static function actualizarPruebas()
 
     $id        = $_POST['id'] ?? null;
     $idNota    = $_POST['id_nota'] ?? null;
-    $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $etiqueta   = trim($_POST['etiqueta'] ?? '');
-    $saldo   = trim($_POST['saldo'] ?? '');
-    $num_factura = (int)($_POST['num_factura'] ?? 0);
     $prenda    = trim($_POST['prenda'] ?? '');
+    $saldo   = trim($_POST['saldo'] ?? '');
     $composicion = trim($_POST['composicion'] ?? '');
+    $cantidad  = (float)($_POST['cantidad'] ?? 0);
     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
     // $total     = (float)($_POST['total'] ?? 0);
 
 
 
 
+    $total     = (float)($cantidad * $precioU);
+    $num_factura = (int)($_POST['num_factura'] ?? 0);
     $tienda = trim($_POST['tienda'] ?? '');
     $marca = trim($_POST['marca'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
     $num_caja = (int)($_POST['num_caja'] ?? 0);
     $bodega = $_POST['bodega'] ?? '';
-    $total     = (float)($cantidad * $precioU);
 
     
 
@@ -415,14 +504,14 @@ public static function actualizarPruebas()
 
     // Actualiza campos
     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
-    $carrito->cantidad = $cantidad;
     $carrito->etiqueta = $etiqueta;
-    $carrito->saldo = $saldo;
-    $carrito->num_factura = $num_factura;
     $carrito->prenda = $prenda;
+    $carrito->saldo = $saldo;
     $carrito->composicion = $composicion;
+    $carrito->cantidad = $cantidad;
     $carrito->precio_unitario = $precioU;
     $carrito->total = $total;
+    $carrito->num_factura = $num_factura;
     $carrito->tienda = $tienda;
     $carrito->marca = $marca;
     $carrito->pais = $pais;
