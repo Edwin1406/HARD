@@ -821,8 +821,6 @@ $selIf    = function ($left, $right) {
                         $idUrl = $id_nota ?? null;
                         $id_tienda = $_GET['id'] ?? null;
 
-                        var_dump($id_tienda);
-
                         
                         
 
