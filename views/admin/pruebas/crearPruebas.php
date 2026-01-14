@@ -806,477 +806,6 @@ $selIf    = function ($left, $right) {
 
 
 <!-- 
-<script>
-    // ---------- Puentes PHP ----------
-    const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
-
-    const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
-    const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
-    const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
-    const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
-    const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
-
-
-    const existentes = <?php
-                        $idUrl = $id_nota ?? null;
-                        $id_tienda = $_GET['id'] ?? null;
-
-                        
-                        
-
-                        $out = [];
-                        if (!empty($carritoTemporal2)) {
-                            foreach ($carritoTemporal2 as $r) {
-                                if ($idUrl != $r->Codigo_Nota_Pedido || $id_tienda != $r->id_tienda) continue;
-                                $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
-                                $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-                                $out[]  = [
-                                    'id'                 => (int)$r->id,
-                                    'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
-                                    'etiqueta'           => $r->etiqueta,
-                                    'prenda'             => $r->prenda,
-                                    'saldo'              => $r->saldo,
-                                    'composicion'        => $r->composicion,
-                                    'cantidad'           => $cant,
-                                    'precio_unitario'    => $precio,
-                                    'num_factura'        => $r->num_factura,
-                                    'tienda'             => $r->tienda,
-                                    'marca'              => $r->marca,
-                                    'pais'               => $r->pais,
-                                    'num_caja'           => $r->num_caja,
-                                    'bodega'             => $r->bodega,
-                                    'id_tienda'          => $r->id_tienda,
-                                    'total'              => round($cant * $precio, 2),
-
-                                ];
-                            }
-                        }
-                        echo json_encode($out, JSON_UNESCAPED_UNICODE);
-                        ?>;
-
-    // ---------- Utils UI ----------
-    const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), {
-        delay: 1800
-    });
-    const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), {
-        delay: 2600
-    });
-    const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
-    let rowPendingDelete = null;
-
-    function round(n) {
-        return Math.round((n + Number.EPSILON) * 100) / 100;
-    }
-
-    // ---------- Handsontable ----------
-    const container = document.getElementById('hot-min');
-
-    // Campos que disparan autosave (12 columnas; excluye 'total')
-    const AUTOSAVE_PROPS = new Set([
-        'cantidad',
-        'etiqueta',
-        'saldo',
-        'num_factura',
-        'prenda',
-        'composicion',
-        'precio_unitario',
-        'tienda',
-        'marca',
-        'pais',
-        'num_caja',
-        'bodega',
-    ]);
-
-    const hot = new Handsontable(container, {
-        data: existentes.length ? existentes : [],
-        colHeaders: [
-            'id',
-            'cod',
-            'cantid',
-            'etq',
-            'saldo',
-            'num_fact',
-            'prenda',
-            'composicion',
-            'precio_u',
-            'tienda',
-            'marca',
-            'pais',
-            'num_caja',
-            'bodega',
-            'total',
-            'Acciones'
-        ],
-        columns: [{
-                data: 'id',
-                readOnly: true
-            },
-
-            // codigo_nota_pedido (renderer sin usar variable externa hot)
-            {
-                data: 'codigo_nota_pedido',
-                readOnly: true,
-                renderer: (inst, td, row, col, prop, val) => {
-                    td.textContent = val ?? (ID_NOTA ?? '');
-                }
-            },
-            {
-                data: 'cantidad',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[000]'
-                }
-            },
-
-            {
-                data: 'etiqueta'
-            },
-
-            {
-                data: 'saldo',
-                readOnly: true,
-                renderer(inst, td, row) {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    const cant = Number(r.cantidad) || 0;
-                    const etiqueta = Number(r.etiqueta) || 0;
-                    const tot = round(cant - etiqueta);
-                    r.saldo = tot;
-                    td.classList.add('text-end', 'text-mono');
-                    td.textContent = tot.toFixed(2);
-                }
-            },
-            {
-                data: 'num_factura',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.num_factura || num_factura || '';
-                }
-            },
-
-            {
-                data: 'prenda'
-            },
-
-            {
-                data: 'composicion'
-            },
-
-            {
-                data: 'precio_unitario',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[00]'
-                }
-            },
-
-            {
-                data: 'tienda',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.tienda || tienda || '';
-                }
-            },
-            {
-                data: 'marca',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.marca || marca || '';
-                }
-            },
-            {
-                data: 'pais',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.pais || pais || '';
-                }
-            },
-            {
-                data: 'num_caja',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0'
-                }
-            },
-            {
-                data: 'bodega'
-            },
-
-            // total calculado (renderer usa inst)
-            {
-                data: 'total',
-                readOnly: true,
-                renderer(inst, td, row) {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    const cant = Number(r.cantidad) || 0;
-                    const pu = Number(r.precio_unitario) || 0;
-                    const tot = round(cant * pu);
-                    r.total = tot;
-                    td.classList.add('text-end', 'text-mono');
-                    td.textContent = tot.toFixed(2);
-                }
-            },
-
-            // acciones (renderer usa inst)
-            {
-                readOnly: true,
-                renderer(inst, td, row) {
-                    td.classList.add('text-center');
-                    td.innerHTML = `
-            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
-              <i class="bi bi-trash me-1"></i>Eliminar
-            </button>`;
-                }
-            },
-        ],
-
-        rowHeaders: true,
-        stretchH: 'all',
-        height: container.clientHeight,
-        licenseKey: 'non-commercial-and-evaluation',
-
-        filters: true,
-        dropdownMenu: true,
-        columnSorting: true,
-        manualColumnResize: true,
-        manualRowResize: true,
-
-        minSpareRows: 1,
-        allowInsertColumn: false,
-        allowRemoveColumn: false,
-
-        // AUTOSAVE: 12 columnas (excluye total)
-        afterChange(changes, source) {
-            if (!changes || source === 'loadData') return;
-
-            const rowsToUpdate = new Set();
-
-            for (const [row, prop] of changes) {
-                if (!AUTOSAVE_PROPS.has(prop)) continue; // ignora cambios fuera de las 12
-                if (prop === 'cantidad' || prop === 'precio_unitario') recalcRow(row);
-                rowsToUpdate.add(row);
-            }
-
-            if (rowsToUpdate.size) {
-                // Recalcular por coherencia
-                rowsToUpdate.forEach(r => recalcRow(r));
-                maybeAutosave([...rowsToUpdate]);
-            }
-        },
-
-        afterPaste() {
-            const len = hot.countRows();
-            for (let i = 0; i < len; i++) recalcRow(i);
-            // Guarda todas las filas pegadas (si autosave está activo)
-            maybeAutosave([...Array(len).keys()]);
-        }
-    });
-
-    // Ajuste de altura responsive
-    window.addEventListener('resize', () => hot.updateSettings({
-        height: container.clientHeight
-    }));
-
-    // --- Lógica de fila
-    function recalcRow(rowIndex) {
-        const r = hot.getSourceDataAtRow(rowIndex);
-        if (!r) return;
-
-        if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-
-        r.cantidad = Number(r.cantidad) || 0;
-
-        if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-        if (typeof r.saldo === 'string') r.saldo = r.saldo.trim();
-        r.num_factura = Number(r.num_factura) || 0;
-        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-        if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
-
-        r.precio_unitario = Number(r.precio_unitario) || 0;
-
-        r.tienda = r.tienda ? String(r.tienda).trim() : '';
-
-        r.marca = r.marca ? String(r.marca).trim() : '';
-        r.pais = r.pais ? String(r.pais).trim() : '';
-        r.num_caja = Number(r.num_caja) || 0;
-        r.bodega = String(r.bodega).trim() || '';
-        r.id_tienda = <?= json_encode($_GET['id'] ?? '') ?>;
-
-
-        
-
-        
-        r.total = round(r.cantidad * r.precio_unitario);
-        
-
-        hot.render(); // refresca la celda total
-    }
-
-    function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
-    }
-
-    // --- Guardar/actualizar
-    async function saveOrUpdateFila(row) {
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
-        if (row.id) fd.append('id', row.id);
-        fd.append('cantidad', row.cantidad ?? 0);
-        fd.append('etiqueta', row.etiqueta ?? '');
-        fd.append('saldo', row.saldo ?? 0);
-        fd.append('num_factura', row.num_factura ?? 0);
-        fd.append('prenda', row.prenda ?? '');
-        fd.append('composicion', row.composicion ?? '');
-        fd.append('precio_unitario', row.precio_unitario ?? 0);
-        fd.append('tienda', row.tienda ?? '');
-        fd.append('marca', row.marca ?? '');
-        fd.append('pais', row.pais ?? '');
-        fd.append('num_caja', row.num_caja ?? 0);
-        fd.append('bodega', row.bodega ?? '');
-        fd.append('id_tienda', <?= json_encode($_GET['id'] ?? '') ?>);
-
-        console.log("ID Tienda (FD):", <?= json_encode($_GET['id'] ?? '') ?>);
-        
-        fd.append('total', row.total ?? 0);
-
-        const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
-
-        const resp = await fetch(url, {
-            method: 'POST',
-            body: fd,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            credentials: 'same-origin' // 'include' si es cross-site/subdominio
-        });
-
-        try {
-            const json = await resp.json();
-            if (json?.ok) {
-                if (json.id) row.id = json.id; // alta
-                row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
-                row.tienda = row.tienda || tienda;
-                row.marca = row.marca || marca;
-                row.pais = row.pais || pais;
-                row.num_factura = row.num_factura || num_factura;
-
-                return true;
-            } else {
-                console.warn('Error en actualización:', json);
-            }
-        } catch {
-            console.warn('Respuesta no JSON:', await resp.text());
-        }
-        return false;
-    }
-
-    async function guardarNuevasFilas(btn) {
-        btn?.setAttribute('disabled', 'disabled');
-        btn?.insertAdjacentHTML('afterbegin',
-            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>'
-        );
-
-        const nuevas = filasNuevas();
-        let ok = true;
-        for (const r of nuevas) {
-            const exito = await saveOrUpdateFila(r);
-            if (!exito) ok = false;
-        }
-
-        btn?.removeAttribute('disabled');
-        btn?.querySelector('.spinner-border')?.remove();
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    async function maybeAutosave(rowIdxList) {
-        if (!document.getElementById('autosave')?.checked) return;
-
-        let ok = true;
-        if (Array.isArray(rowIdxList) && rowIdxList.length) {
-            for (const idx of rowIdxList) {
-                const r = hot.getSourceDataAtRow(idx);
-                if (!r) continue;
-                // Evitar disparos vacíos
-                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        } else {
-            const nuevas = filasNuevas();
-            for (const r of nuevas) {
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        }
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    // Botones top
-    document.getElementById('guardar-nuevas')?.addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
-    document.getElementById('recargar')?.addEventListener('click', () => location.reload());
-
-    // Eliminar (con modal)
-    container.addEventListener('click', (ev) => {
-        const btn = ev.target.closest('.btn-del');
-        if (!btn) return;
-
-        const rowIndex = parseInt(btn.dataset.row, 10);
-        const rowData = hot.getSourceDataAtRow(rowIndex);
-
-        if (!rowData?.id) { // sin persistir → borra local
-            hot.alter('remove_row', rowIndex, 1);
-            return;
-        }
-        rowPendingDelete = {
-            rowIndex,
-            rowData
-        };
-        modalDelete.show();
-    });
-
-    document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
-        const info = rowPendingDelete;
-        rowPendingDelete = null;
-        if (!info) return;
-
-        const {
-            rowIndex,
-            rowData
-        } = info;
-
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-        fd.append('id', rowData.id);
-
-        try {
-            const resp = await fetch('/admin/eliminarCarrito', {
-                method: 'POST',
-                body: fd,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin'
-            });
-            let ok = false;
-            try {
-                const json = await resp.json();
-                ok = !!json?.ok;
-            } catch {}
-            if (ok) {
-                hot.alter('remove_row', rowIndex, 1);
-                toastOk.show();
-            } else {
-                toastErr.show();
-            }
-        } catch {
-            toastErr.show();
-        } finally {
-            modalDelete.hide();
-        }
-    });
-</script> -->
-
 
 <script>
   // ---------- Puentes PHP ----------
@@ -1682,7 +1211,428 @@ async function refreshTabla(){
     }
   });
 </script>
+ -->
+<script>
+  // ---------- Puentes PHP ----------
+  const ID_NOTA = <?= json_encode($id_nota ?? null) ?>;
 
+  const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
+  const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
+  const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
+  const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
+  const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
+
+  const ID_TIENDA = <?= json_encode($_GET['id'] ?? '') ?>;
+
+  const existentes = <?php
+    $idUrl = $id_nota ?? null;
+    $id_tienda = $_GET['id'] ?? null;
+
+    $out = [];
+    if (!empty($carritoTemporal2)) {
+      foreach ($carritoTemporal2 as $r) {
+        if ($idUrl != $r->Codigo_Nota_Pedido || $id_tienda != $r->id_tienda) continue;
+        $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
+        $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
+        $out[]  = [
+          'id'                 => (int)$r->id,
+          'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
+          'etiqueta'           => $r->etiqueta,
+          'prenda'             => $r->prenda,
+          'saldo'              => $r->saldo,
+          'composicion'        => $r->composicion,
+          'cantidad'           => $cant,
+          'precio_unitario'    => $precio,
+          'num_factura'        => $r->num_factura,
+          'tienda'             => $r->tienda,
+          'marca'              => $r->marca,
+          'pais'               => $r->pais,
+          'num_caja'           => $r->num_caja,
+          'bodega'             => $r->bodega,
+          'id_tienda'          => $r->id_tienda,
+          'total'              => round($cant * $precio, 2),
+        ];
+      }
+    }
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+  ?>;
+
+  console.log('GLOBAL num_factura:', num_factura);
+
+  // ---------- Utils UI ----------
+  const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), { delay: 1800 });
+  const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), { delay: 2600 });
+  const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
+  let rowPendingDelete = null;
+
+  function round(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
+  function str(v){ return (v ?? '').toString().trim(); }
+
+  // ---------- 🔄 Refresco de tabla desde BD ----------
+  // ✅ IMPORTANTE: crea en tu backend esta ruta y devuelve JSON así:
+  // { ok:true, data:[ {id, codigo_nota_pedido, cantidad, etiqueta, saldo, num_factura, ...} ] }
+  const LIST_URL = `/admin/pruebas/listarPruebasAjax?id_nota=${encodeURIComponent(ID_NOTA ?? '')}&id_tienda=${encodeURIComponent(ID_TIENDA ?? '')}`;
+
+  let refreshTimer = null;
+  async function refreshTabla(){
+    try{
+      const resp = await fetch(LIST_URL, {
+        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+        credentials: 'same-origin'
+      });
+
+      const json = await resp.json().catch(()=>null);
+
+      if (json?.ok && Array.isArray(json.data)) {
+        hot.loadData(json.data);
+        hot.render();
+        return true;
+      }
+
+      console.warn('refreshTabla: respuesta inesperada', json);
+      return false;
+    }catch(e){
+      console.warn('refreshTabla error:', e);
+      return false;
+    }
+  }
+
+  // Para no refrescar 20 veces si pegas muchas filas
+  function scheduleRefreshTabla(ms = 400){
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(()=>refreshTabla(), ms);
+  }
+
+  // ---------- Handsontable ----------
+  const container = document.getElementById('hot-min');
+
+  const AUTOSAVE_PROPS = new Set([
+    'cantidad','etiqueta','saldo','num_factura','prenda','composicion',
+    'precio_unitario','tienda','marca','pais','num_caja','bodega',
+  ]);
+
+  // ✅ Regla: para crear una fila nueva, debe tener “clave”
+  function hasKeyData(r){
+    return str(r?.etiqueta) !== '' || str(r?.prenda) !== '';
+  }
+
+  function isEmptySpareRow(r){
+    if (!r) return true;
+    return !r.id && !hasKeyData(r) && !(Number(r.cantidad)||0) && !(Number(r.precio_unitario)||0);
+  }
+
+  const hot = new Handsontable(container, {
+    data: existentes.length ? existentes : [],
+    colHeaders: [
+      'id','cod','cantid','etq','saldo','num_fact','prenda','composicion',
+      'precio_u','tienda','marca','pais','num_caja','bodega','total','Acciones'
+    ],
+    columns: [
+      { data:'id', readOnly:true },
+
+      { data:'codigo_nota_pedido', readOnly:true,
+        renderer:(inst, td, row, col, prop, val)=>{
+          td.textContent = val ?? (ID_NOTA ?? '');
+        }
+      },
+
+      { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+
+      { data:'etiqueta' },
+
+      { data:'saldo', readOnly:true,
+        renderer(inst, td, row){
+          const r = inst.getSourceDataAtRow(row) || {};
+          const cant = Number(r.cantidad)||0;
+          const etqN = Number(r.etiqueta)||0;
+          const tot = round(cant - etqN);
+          r.saldo = tot;
+          td.classList.add('text-end','text-mono');
+          td.textContent = tot.toFixed(2);
+        }
+      },
+
+      // ✅ num_factura: mostrar lo pegado si existe; si está vacío, usar el default de la nota
+      { data:'num_factura',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          const v = str(r.num_factura);
+          td.textContent = (v !== '') ? v : (num_factura ?? '');
+        }
+      },
+
+      { data:'prenda' },
+      { data:'composicion' },
+
+      { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
+
+      { data:'tienda',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = str(r.tienda) || tienda || '';
+        }
+      },
+
+      { data:'marca',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = str(r.marca) || marca || '';
+        }
+      },
+
+      { data:'pais',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = str(r.pais) || pais || '';
+        }
+      },
+
+      { data:'num_caja', type:'numeric', numericFormat:{ pattern:'0' } },
+      { data:'bodega' },
+
+      { data:'total', readOnly:true,
+        renderer(inst, td, row){
+          const r = inst.getSourceDataAtRow(row) || {};
+          const cant = Number(r.cantidad)||0;
+          const pu = Number(r.precio_unitario)||0;
+          const tot = round(cant * pu);
+          r.total = tot;
+          td.classList.add('text-end','text-mono');
+          td.textContent = tot.toFixed(2);
+        }
+      },
+
+      { readOnly:true,
+        renderer(inst, td, row){
+          td.classList.add('text-center');
+          td.innerHTML = `
+            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>`;
+        }
+      },
+    ],
+
+    rowHeaders:true,
+    stretchH:'all',
+    height: container.clientHeight,
+    licenseKey:'non-commercial-and-evaluation',
+
+    filters:true,
+    dropdownMenu:true,
+    columnSorting:true,
+    manualColumnResize:true,
+    manualRowResize:true,
+
+    minSpareRows:1,
+    allowInsertColumn:false,
+    allowRemoveColumn:false,
+
+    afterChange(changes, source){
+      if (!changes || source === 'loadData') return;
+
+      const rowsToUpdate = new Set();
+      for (const [row, prop] of changes) {
+        if (!AUTOSAVE_PROPS.has(prop)) continue;
+        rowsToUpdate.add(row);
+      }
+      if (rowsToUpdate.size) {
+        rowsToUpdate.forEach(r => recalcRow(r));
+        maybeAutosave([...rowsToUpdate]);
+      }
+    },
+
+    afterPaste(){
+      const len = hot.countRows();
+      for (let i=0; i<len; i++) recalcRow(i);
+      maybeAutosave([...Array(len).keys()]);
+    }
+  });
+
+  window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
+
+  function recalcRow(rowIndex){
+    const r = hot.getSourceDataAtRow(rowIndex);
+    if (!r) return;
+
+    if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
+
+    r.cantidad = Number(r.cantidad) || 0;
+    r.etiqueta = (typeof r.etiqueta === 'string') ? r.etiqueta.trim() : r.etiqueta;
+    r.prenda = (typeof r.prenda === 'string') ? r.prenda.trim() : r.prenda;
+    r.composicion = (typeof r.composicion === 'string') ? r.composicion.trim() : r.composicion;
+
+    // ✅ num_factura como TEXTO para respetar 00123, F-123, etc.
+    r.num_factura = str(r.num_factura);
+
+    r.precio_unitario = Number(r.precio_unitario) || 0;
+
+    r.tienda = str(r.tienda) || tienda || '';
+    r.marca  = str(r.marca)  || marca || '';
+    r.pais   = str(r.pais)   || pais || '';
+
+    r.num_caja = Number(r.num_caja) || 0;
+    r.bodega = str(r.bodega) || '';
+    r.id_tienda = ID_TIENDA;
+
+    r.total = round(r.cantidad * r.precio_unitario);
+
+    hot.render();
+  }
+
+  function filasNuevas(){
+    return hot.getSourceData().filter(r => r && !r.id && hasKeyData(r));
+  }
+
+  async function saveOrUpdateFila(row){
+    if (!row.id && !hasKeyData(row)) return true;
+
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
+    if (row.id) fd.append('id', row.id);
+
+    fd.append('cantidad', row.cantidad ?? 0);
+    fd.append('etiqueta', row.etiqueta ?? '');
+    fd.append('saldo', row.saldo ?? 0);
+
+    // ✅ Enviar lo pegado (row.num_factura) y si está vacío, el default (num_factura)
+    fd.append('num_factura', str(row.num_factura) || (num_factura ?? ''));
+
+    fd.append('prenda', row.prenda ?? '');
+    fd.append('composicion', row.composicion ?? '');
+    fd.append('precio_unitario', row.precio_unitario ?? 0);
+    fd.append('tienda', row.tienda ?? '');
+    fd.append('marca', row.marca ?? '');
+    fd.append('pais', row.pais ?? '');
+    fd.append('num_caja', row.num_caja ?? 0);
+    fd.append('bodega', row.bodega ?? '');
+    fd.append('id_tienda', ID_TIENDA);
+    fd.append('total', row.total ?? 0);
+
+    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebasAjax';
+
+    const resp = await fetch(url, {
+      method:'POST',
+      body: fd,
+      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+      credentials:'same-origin'
+    });
+
+    let json = null;
+    try { json = await resp.json(); } catch {}
+
+    if (json?.ok) {
+      if (json.id) row.id = json.id;
+      row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido;
+
+      // ✅ después de guardar/actualizar, refresca desde BD (pero “debounced”)
+      scheduleRefreshTabla(400);
+      return true;
+    }
+
+    console.warn('saveOrUpdateFila error:', json);
+    return false;
+  }
+
+  async function guardarNuevasFilas(btn){
+    btn?.setAttribute('disabled','disabled');
+    btn?.insertAdjacentHTML('afterbegin',
+      '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>'
+    );
+
+    const nuevas = filasNuevas();
+    let ok = true;
+
+    for (const r of nuevas) {
+      recalcRow(hot.getSourceData().indexOf(r));
+      const exito = await saveOrUpdateFila(r);
+      if (!exito) ok = false;
+    }
+
+    btn?.removeAttribute('disabled');
+    btn?.querySelector('.spinner-border')?.remove();
+
+    ok ? toastOk.show() : toastErr.show();
+
+    // ✅ fuerza un refresh final por si hubo varios inserts
+    if (ok) await refreshTabla();
+  }
+
+  async function maybeAutosave(rowIdxList){
+    if (!document.getElementById('autosave')?.checked) return;
+
+    let ok = true;
+
+    for (const idx of rowIdxList) {
+      const r = hot.getSourceDataAtRow(idx);
+      if (!r) continue;
+      if (!r.id && !hasKeyData(r)) continue;
+      if (isEmptySpareRow(r)) continue;
+
+      const exito = await saveOrUpdateFila(r);
+      if (!exito) ok = false;
+    }
+
+    ok ? toastOk.show() : toastErr.show();
+    // ✅ No hacemos refreshTabla aquí para no “parpadear” en cada tecla;
+    // ya se agenda con scheduleRefreshTabla() cuando json.ok.
+  }
+
+  document.getElementById('guardar-nuevas')?.addEventListener('click', (e)=>guardarNuevasFilas(e.currentTarget));
+  document.getElementById('recargar')?.addEventListener('click', ()=>location.reload());
+
+  // ---------- Delete ----------
+  container.addEventListener('click', (ev)=>{
+    const btn = ev.target.closest('.btn-del');
+    if (!btn) return;
+
+    const rowIndex = parseInt(btn.dataset.row, 10);
+    const rowData = hot.getSourceDataAtRow(rowIndex);
+
+    if (!rowData?.id) {
+      hot.alter('remove_row', rowIndex, 1);
+      return;
+    }
+    rowPendingDelete = { rowIndex, rowData };
+    modalDelete.show();
+  });
+
+  document.getElementById('btnConfirmDelete')?.addEventListener('click', async ()=>{
+    const info = rowPendingDelete;
+    rowPendingDelete = null;
+    if (!info) return;
+
+    const { rowIndex, rowData } = info;
+
+    const fd = new FormData();
+    fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
+    fd.append('id', rowData.id);
+
+    try {
+      const resp = await fetch('/admin/eliminarCarrito', {
+        method:'POST',
+        body: fd,
+        headers:{ 'X-Requested-With':'XMLHttpRequest','Accept':'application/json' },
+        credentials:'same-origin'
+      });
+
+      let json = null;
+      try { json = await resp.json(); } catch {}
+
+      if (json?.ok) {
+        hot.alter('remove_row', rowIndex, 1);
+        toastOk.show();
+        scheduleRefreshTabla(300);
+      } else {
+        toastErr.show();
+      }
+    } catch {
+      toastErr.show();
+    } finally {
+      modalDelete.hide();
+    }
+  });
+</script>
 
 
 <script>
