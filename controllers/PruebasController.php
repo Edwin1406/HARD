@@ -733,8 +733,10 @@ public static function crearPruebasAjax()
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id_usuario = $_SESSION['id'];
-            $carritoTemporal = Carrito2::wherenuevo('id_usuario', $id_usuario);
+            // $id_usuario = $_SESSION['id'];
+            // $carritoTemporal = Carrito2::wherenuevo('id_usuario', $id_usuario);
+
+            debuguear($carritoTemporal);
 
             if (empty($carritoTemporal)) {
                 header('Location: /carrito');
