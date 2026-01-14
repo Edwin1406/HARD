@@ -1570,6 +1570,21 @@ $selIf    = function ($left, $right) {
     return false;
   }
 
+async function refreshTabla(){
+  const resp = await fetch(`/admin/pruebas/listarPruebasAjax?id_nota=${encodeURIComponent(ID_NOTA)}&id_tienda=${encodeURIComponent(ID_TIENDA)}`, {
+    headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+    credentials: 'same-origin'
+  });
+
+  const json = await resp.json();
+  if (json?.ok && Array.isArray(json.data)) {
+    hot.loadData(json.data);
+    hot.render();
+  }
+}
+
+
+
   async function guardarNuevasFilas(btn){
     btn?.setAttribute('disabled','disabled');
     btn?.insertAdjacentHTML('afterbegin',
