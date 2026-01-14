@@ -485,7 +485,8 @@ class PruebasController
         $idNota      = $_POST['id_nota'] ?? null;
         $etiqueta    = trim($_POST['etiqueta'] ?? '');
         $prenda      = trim($_POST['prenda'] ?? '');
-        $saldo       = (float)($_POST['saldo'] ?? 0);
+        // cantidad - eitqueta es saldo
+        $saldo     = (float)($_POST['saldo'] ?? 0);
         $composicion = trim($_POST['composicion'] ?? '');
         $cantidad    = (float)($_POST['cantidad'] ?? 0);
         $precioU     = (float)($_POST['precio_unitario'] ?? 0);

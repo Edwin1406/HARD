@@ -1489,6 +1489,7 @@ $selIf    = function ($left, $right) {
     r.cantidad = Number(r.cantidad) || 0;
     r.etiqueta = (typeof r.etiqueta === 'string') ? r.etiqueta.trim() : r.etiqueta;
     r.prenda = (typeof r.prenda === 'string') ? r.prenda.trim() : r.prenda;
+    r.saldo = Number(r.saldo) || 0;
     r.composicion = (typeof r.composicion === 'string') ? r.composicion.trim() : r.composicion;
 
     r.num_factura = Number(r.num_factura) || 0;
