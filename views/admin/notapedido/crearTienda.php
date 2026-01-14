@@ -29,7 +29,7 @@
                         <div class="alert alert-warning py-2">
                             <div class="row align-items-center">
 
-                                <div class="col-md-2 col-6">
+                                <div class="col-md-3 col-6">
                                     <small class="text-muted"><b>Nota de pedido N°</b></small><br>
                                     <span class="fw-bold"><?php echo $informacionNota->Codigo_Nota_Pedido; ?></span>
                                 </div>
