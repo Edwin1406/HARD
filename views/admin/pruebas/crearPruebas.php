@@ -1271,31 +1271,56 @@ async function refreshTabla(){
   // ---------- 🔄 Refresco de tabla desde BD ----------
   // ✅ IMPORTANTE: crea en tu backend esta ruta y devuelve JSON así:
   // { ok:true, data:[ {id, codigo_nota_pedido, cantidad, etiqueta, saldo, num_factura, ...} ] }
-  const LIST_URL = `/admin/pruebas/listarPruebasAjax?id_nota=${encodeURIComponent(ID_NOTA ?? '')}&id_tienda=${encodeURIComponent(ID_TIENDA ?? '')}`;
+// ✅ URL del endpoint que devolverá JSON (la creamos en el backend abajo)
+const LIST_URL = `/admin/pruebas/listarPruebasAjax?id_nota=${encodeURIComponent(ID_NOTA ?? '')}&id_tienda=${encodeURIComponent(ID_TIENDA ?? '')}`;
 
-  let refreshTimer = null;
-  async function refreshTabla(){
-    try{
-      const resp = await fetch(LIST_URL, {
-        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
-        credentials: 'same-origin'
-      });
+let refreshTimer = null;
 
-      const json = await resp.json().catch(()=>null);
+function scheduleRefreshTabla(ms = 400){
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(()=>refreshTabla(), ms);
+}
 
-      if (json?.ok && Array.isArray(json.data)) {
-        hot.loadData(json.data);
-        hot.render();
-        return true;
-      }
+async function refreshTabla(){
+  try{
+    const resp = await fetch(LIST_URL, {
+      method: 'GET',
+      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+      credentials: 'same-origin'
+    });
 
-      console.warn('refreshTabla: respuesta inesperada', json);
-      return false;
-    }catch(e){
-      console.warn('refreshTabla error:', e);
+    // ✅ Si hay redirect (login) o error, lo verás aquí
+    const ct = resp.headers.get('content-type') || '';
+    if (!resp.ok) {
+      const txt = await resp.text();
+      console.warn('refreshTabla HTTP', resp.status, 'CT:', ct, 'BODY:', txt.slice(0, 300));
       return false;
     }
+
+    // ✅ Si NO es JSON, seguro te devolvió HTML
+    if (!ct.includes('application/json')) {
+      const txt = await resp.text();
+      console.warn('refreshTabla NO JSON. CT:', ct, 'BODY:', txt.slice(0, 300));
+      return false;
+    }
+
+    const json = await resp.json();
+
+    if (json?.ok && Array.isArray(json.data)) {
+      hot.loadData(json.data);
+      hot.render();
+      return true;
+    }
+
+    console.warn('refreshTabla JSON inesperado:', json);
+    return false;
+
+  }catch(e){
+    console.warn('refreshTabla error:', e);
+    return false;
   }
+}
+
 
   // Para no refrescar 20 veces si pegas muchas filas
   function scheduleRefreshTabla(ms = 400){
