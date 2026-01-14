@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\ActiveRecord;
 use Model\Bodega;
 use Model\Carrito;
 use Model\Carrito2;
