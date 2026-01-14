@@ -797,7 +797,7 @@ public static function crearPruebasAjax()
                 $detalle->guardarCarrito();
             }
 
-            Carrito::eliminarPorColumna('id_usuario', $id_usuario);
+            // Carrito::eliminarPorColumna('id_usuario', $id_usuario);
 
             header('Location: /admin/pruebas/crearPruebas?exito=1');
             exit;
