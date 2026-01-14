@@ -765,7 +765,7 @@ public static function crearPruebasAjax()
 
             // Crear venta
             $venta = new Compra;
-            $venta->id_usuario = $id_usuario;
+            // $venta->id_usuario = $id_usuario;
             $venta->Total_Nota_Pedido = $total;
             $venta->via_trasporte = $via_trasporte;
             $venta->puerto_embarque = $puerto_embarque;
