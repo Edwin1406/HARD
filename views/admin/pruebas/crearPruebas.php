@@ -1580,8 +1580,7 @@ $selIf    = function ($left, $right) {
     btn?.removeAttribute('disabled');
     btn?.querySelector('.spinner-border')?.remove();
     ok ? toastOk.show() : toastErr.show();
-      if (ok) scheduleReload(3000); // ✅ recarga en 3 segundos
-
+    relocation.reload();
   }
 
   async function maybeAutosave(rowIdxList){
