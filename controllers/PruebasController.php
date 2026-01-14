@@ -518,6 +518,87 @@ class PruebasController
     }
 
 
+public static function crearPruebasAjax()
+{
+    session_start();
+    header('Content-Type: application/json');
+
+    if (!isset($_SESSION['email'])) {
+        echo json_encode(['ok' => false, 'error' => 'no-auth']);
+        return;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode(['ok' => false, 'error' => 'bad-method']);
+        return;
+    }
+
+    $idNota    = $_POST['id_nota'] ?? null;
+    $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
+
+    $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
+    $prenda    = trim((string)($_POST['prenda'] ?? ''));
+    $cantidad  = (float)($_POST['cantidad'] ?? 0);
+    $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+
+    // ✅ Solo evita filas vacías (NO es “duplicado”, es evitar basura)
+    $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
+    if (!$idNota || $id_tienda <= 0 || $isEmpty) {
+        echo json_encode(['ok' => false, 'error' => 'empty-or-missing']);
+        return;
+    }
+
+    $carrito = new Carrito2();
+
+    $carrito->Codigo_Nota_Pedido = $idNota;
+    $carrito->id_tienda          = $id_tienda;
+
+    $carrito->etiqueta           = $etiqueta;
+    $carrito->prenda             = $prenda;
+    $carrito->saldo              = (float)($_POST['saldo'] ?? 0);
+    $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
+    $carrito->cantidad           = $cantidad;
+    $carrito->precio_unitario    = $precioU;
+    $carrito->total              = (float)($cantidad * $precioU);
+
+    $carrito->num_factura        = (int)($_POST['num_factura'] ?? 0);
+    $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
+    $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
+    $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
+    $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
+    $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
+
+    $alertas = $carrito->validar();
+    if (!empty($alertas)) {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
+    $ok = $carrito->guardar();
+    if (!$ok) {
+        echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
+        return;
+    }
+
+    echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

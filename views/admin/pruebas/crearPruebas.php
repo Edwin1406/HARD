@@ -1535,7 +1535,7 @@ $selIf    = function ($left, $right) {
     fd.append('id_tienda', ID_TIENDA);
     fd.append('total', row.total ?? 0);
 
-    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
+    const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebasAjax';
 
     const resp = await fetch(url, {
       method:'POST',

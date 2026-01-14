@@ -169,6 +169,10 @@ $router->post('/admin/notaPedido/crearTienda', [NotaPedidoController::class, 'cr
 $router->get('/admin/pruebas/crearPruebas', [PruebasController::class, 'crearPruebas']);
 $router->post('/admin/pruebas/crearPruebas', [PruebasController::class, 'crearPruebas']);
 
+
+// crearPruebasAjax
+$router->post('/admin/pruebas/crearPruebasAjax', [PruebasController::class, 'crearPruebasAjax']);
+
 // CREAR PRENDA
 $router->post('/admin/prenda/crearPrenda', [PruebasController::class, 'crearPrenda']);
 
