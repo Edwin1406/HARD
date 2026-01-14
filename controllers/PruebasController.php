@@ -485,6 +485,7 @@ class PruebasController
         $idNota      = $_POST['id_nota'] ?? null;
         $etiqueta    = trim($_POST['etiqueta'] ?? '');
         $prenda      = trim($_POST['prenda'] ?? '');
+        $saldo       = (float)($_POST['saldo'] ?? 0);
         $composicion = trim($_POST['composicion'] ?? '');
         $cantidad    = (float)($_POST['cantidad'] ?? 0);
         $precioU     = (float)($_POST['precio_unitario'] ?? 0);
@@ -501,6 +502,7 @@ class PruebasController
         $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
         $carrito->etiqueta           = $etiqueta;
         $carrito->prenda             = $prenda;
+        $carrito->saldo              = $saldo;
         $carrito->composicion        = $composicion;
         $carrito->cantidad           = $cantidad;
         $carrito->precio_unitario    = $precioU;
@@ -576,12 +578,14 @@ public static function crearPruebasAjax()
     }
 
     $ok = $carrito->guardar();
+
     if (!$ok) {
         echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
         return;
     }
 
     echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
+
 }
 
 
