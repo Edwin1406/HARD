@@ -1308,7 +1308,7 @@ $selIf    = function ($left, $right) {
           'saldo'              => $r->saldo,
           'composicion'        => $r->composicion,
           'cantidad'           => $cant,
-          'precio_unitario'    =>  number_format($precio, 2),
+          'precio_unitario'    => $precio,
           'num_factura'        => $r->num_factura,
           'tienda'             => $r->tienda,
           'marca'              => $r->marca,
@@ -1556,6 +1556,11 @@ $selIf    = function ($left, $right) {
       row.pais = row.pais || pais;
       row.num_factura = row.num_factura || num_factura;
       return true;
+        // cargar a un pagina distinta despues de guardar
+        window.location.href = '/admin/pruebas/otraPagina';
+    
+
+
     }
 
     console.warn('saveOrUpdateFila error:', json);
