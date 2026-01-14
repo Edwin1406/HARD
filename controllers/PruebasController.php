@@ -656,7 +656,7 @@ public static function crearPruebasAjax()
     $carrito->total              = (float)($cantidad * $precioU);
 
     // Otros campos
-    $carrito->num_factura        = "12345"; // o: trim((string)($_POST['num_factura'] ?? ''))
+    $carrito->num_factura        = trim((string)($_POST['num_factura'] ?? ''));
     $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
     $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
     $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
