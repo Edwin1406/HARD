@@ -495,7 +495,7 @@ class PruebasController
         $tienda      = trim($_POST['tienda'] ?? '');
         $marca       = trim($_POST['marca'] ?? '');
         $pais        = trim($_POST['pais'] ?? '');
-        $num_caja    = (int)($_POST['num_caja'] ?? 0);
+        $num_caja    = ($_POST['num_caja'] ?? 0);
         $bodega      = trim($_POST['bodega'] ?? '');
         $id_tienda   = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : null;
 
