@@ -1597,7 +1597,11 @@ async function refreshTabla(){
     for (const r of nuevas) {
       recalcRow(hot.getSourceData().indexOf(r));
       const exito = await saveOrUpdateFila(r);
-      if (!exito) ok = false;
+    //   if (!exito) ok = false;
+        // refreshTabla();
+        refreshTabla().then(() => {
+            console.log("Tabla actualizada después de guardar una nueva fila.");
+        });
     }
 
     btn?.removeAttribute('disabled');
