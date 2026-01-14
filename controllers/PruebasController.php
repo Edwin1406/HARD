@@ -564,7 +564,7 @@ class PruebasController
         $carrito->precio_unitario    = $precioU;
         $carrito->total              = (float)($cantidad * $precioU);
 
-        $carrito->num_factura        = (int)($_POST['num_factura'] ?? 0);
+        $carrito->num_factura        = "12345"; // (int)($_POST['num_factura'] ?? 0);""
         $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
         $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
         $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
