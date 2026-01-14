@@ -987,9 +987,9 @@ $selIf    = function ($left, $right) {
 
             {
                 data: 'num_caja',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0'
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.num_caja || '';
                 }
             },
             {
