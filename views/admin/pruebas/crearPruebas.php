@@ -1288,6 +1288,8 @@ $selIf    = function ($left, $right) {
   const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
   const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
 
+  console.log(num_factura)
+
   const ID_TIENDA = <?= json_encode($_GET['id'] ?? '') ?>;
 
   const existentes = <?php
