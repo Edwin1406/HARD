@@ -491,7 +491,7 @@ class PruebasController
         $cantidad    = (float)($_POST['cantidad'] ?? 0);
         $precioU     = (float)($_POST['precio_unitario'] ?? 0);
         $total       = (float)($cantidad * $precioU);
-        $num_factura = (int)($_POST['num_factura'] ?? 0);
+        $num_factura = ($_POST['num_factura'] ?? 0);
         $tienda      = trim($_POST['tienda'] ?? '');
         $marca       = trim($_POST['marca'] ?? '');
         $pais        = trim($_POST['pais'] ?? '');
