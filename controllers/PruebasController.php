@@ -486,7 +486,7 @@ class PruebasController
         $etiqueta    = trim($_POST['etiqueta'] ?? '');
         $prenda      = trim($_POST['prenda'] ?? '');
         // cantidad - eitqueta es saldo
-        // $saldo     = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
+        $saldo     = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
         $composicion = trim($_POST['composicion'] ?? '');
         $cantidad    = (float)($_POST['cantidad'] ?? 0);
         $precioU     = (float)($_POST['precio_unitario'] ?? 0);
@@ -503,7 +503,7 @@ class PruebasController
         $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
         $carrito->etiqueta           = $etiqueta;
         $carrito->prenda             = $prenda;
-        // $carrito->saldo              = $saldo;
+        $carrito->saldo              = $saldo;
         $carrito->composicion        = $composicion;
         $carrito->cantidad           = $cantidad;
         $carrito->precio_unitario    = $precioU;
@@ -558,7 +558,7 @@ class PruebasController
 
         $carrito->etiqueta           = $etiqueta;
         $carrito->prenda             = $prenda;
-        // $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
+        $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
         $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
         $carrito->cantidad           = $cantidad;
         $carrito->precio_unitario    = $precioU;
@@ -571,6 +571,20 @@ class PruebasController
         $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
         $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
 
+
+        // si esta duplicado no lo guarda
+        $duplicados =Carrito2:: whereArray(
+            [
+                'cantidad' => $carrito->cantidad,
+                'etiqueta'           => $carrito->etiqueta,
+                'prenda'             => $carrito->prenda,
+                'composicion'        => $carrito->composicion,
+                'cantidad'           => $carrito->cantidad,
+                'precio_unitario'    => $carrito->precio_unitario,
+                'id_tienda'          => $carrito->id_tienda,
+            ]
+        );
+
         $alertas = $carrito->validar();
         if (!empty($alertas)) {
             http_response_code(422);
@@ -578,7 +592,10 @@ class PruebasController
             return;
         }
 
-        $ok = $carrito->guardar();
+        if (!empty($duplicados)) {
+        
+            $ok = $carrito->guardar();
+        }
 
         if (!$ok) {
             echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
