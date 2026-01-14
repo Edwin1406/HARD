@@ -521,73 +521,191 @@ class PruebasController
     }
 
 
-    public static function crearPruebasAjax()
-    {
-        session_start();
-        header('Content-Type: application/json');
+    // public static function crearPruebasAjax()
+    // {
+    //     session_start();
+    //     header('Content-Type: application/json');
 
-        if (!isset($_SESSION['email'])) {
-            echo json_encode(['ok' => false, 'error' => 'no-auth']);
-            return;
-        }
+    //     if (!isset($_SESSION['email'])) {
+    //         echo json_encode(['ok' => false, 'error' => 'no-auth']);
+    //         return;
+    //     }
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            echo json_encode(['ok' => false, 'error' => 'bad-method']);
-            return;
-        }
+    //     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    //         echo json_encode(['ok' => false, 'error' => 'bad-method']);
+    //         return;
+    //     }
 
-        $idNota    = $_POST['id_nota'] ?? null;
-        $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
+    //     $idNota    = $_POST['id_nota'] ?? null;
+    //     $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
 
-        $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
-        $prenda    = trim((string)($_POST['prenda'] ?? ''));
-        $cantidad  = (float)($_POST['cantidad'] ?? 0);
-        $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+    //     $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
+    //     $prenda    = trim((string)($_POST['prenda'] ?? ''));
+    //     $cantidad  = (float)($_POST['cantidad'] ?? 0);
+    //     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
 
-        // ✅ Solo evita filas vacías (NO es “duplicado”, es evitar basura)
-        $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
-        if (!$idNota || $id_tienda <= 0 || $isEmpty) {
-            echo json_encode(['ok' => false, 'error' => 'empty-or-missing']);
-            return;
-        }
+    //     // ✅ Solo evita filas vacías (NO es “duplicado”, es evitar basura)
+    //     $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
+    //     if (!$idNota || $id_tienda <= 0 || $isEmpty) {
+    //         echo json_encode(['ok' => false, 'error' => 'empty-or-missing']);
+    //         return;
+    //     }
 
-        $carrito = new Carrito2();
+    //     $carrito = new Carrito2();
 
-        $carrito->Codigo_Nota_Pedido = $idNota;
-        $carrito->id_tienda          = $id_tienda;
+    //     $carrito->Codigo_Nota_Pedido = $idNota;
+    //     $carrito->id_tienda          = $id_tienda;
 
-        $carrito->etiqueta           = $etiqueta;
-        $carrito->prenda             = $prenda;
-        $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
-        $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
-        $carrito->cantidad           = $cantidad;
-        $carrito->precio_unitario    = $precioU;
-        $carrito->total              = (float)($cantidad * $precioU);
+    //     $carrito->etiqueta           = $etiqueta;
+    //     $carrito->prenda             = $prenda;
+    //     $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
+    //     $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
+    //     $carrito->cantidad           = $cantidad;
+    //     $carrito->precio_unitario    = $precioU;
+    //     $carrito->total              = (float)($cantidad * $precioU);
 
-        $carrito->num_factura        = (int)($_POST['num_factura'] ?? 0);
-        $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
-        $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
-        $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
-        $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
-        $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
+    //     $carrito->num_factura        = (int)($_POST['num_factura'] ?? 0);
+    //     $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
+    //     $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
+    //     $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
+    //     $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
+    //     $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
 
-        $alertas = $carrito->validar();
-        if (!empty($alertas)) {
-            http_response_code(422);
-            echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
-            return;
-        }
+    //     $alertas = $carrito->validar();
+    //     if (!empty($alertas)) {
+    //         http_response_code(422);
+    //         echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
+    //         return;
+    //     }
 
-        $ok = $carrito->guardar();
+    //     $ok = $carrito->guardar();
 
-        if (!$ok) {
-            echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
-            return;
-        }
+    //     if (!$ok) {
+    //         echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
+    //         return;
+    //     }
 
-        echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
+    //     echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
+    // }
+
+public static function crearPruebasAjax()
+{
+    session_start();
+    header('Content-Type: application/json');
+
+    if (!isset($_SESSION['email'])) {
+        echo json_encode(['ok' => false, 'error' => 'no-auth']);
+        return;
     }
 
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode(['ok' => false, 'error' => 'bad-method']);
+        return;
+    }
+
+    // Conexión (ajusta a tu proyecto)
+    $db = ActiveRecord::$db;
+
+    $idNota    = $_POST['id_nota'] ?? null;
+    $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
+
+    $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
+    $prenda    = trim((string)($_POST['prenda'] ?? '')); // en JS envías 'prenda'
+    $composicion = trim((string)($_POST['composicion'] ?? ''));
+
+    $cantidad  = (float)($_POST['cantidad'] ?? 0);
+    $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+
+    // Evitar fila vacía (no es duplicado, es basura)
+    $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
+    if (!$idNota || $id_tienda <= 0 || $isEmpty) {
+        echo json_encode(['ok' => false, 'error' => 'empty-or-missing']);
+        return;
+    }
+
+    // Normaliza números para comparación estable
+    $cantidadN = round($cantidad, 3);
+    $precioUN  = round($precioU, 2);
+
+    $num_factura = (int)($_POST['num_factura'] ?? 0);
+    $tienda      = trim((string)($_POST['tienda'] ?? ''));
+    $marca       = trim((string)($_POST['marca'] ?? ''));
+    $pais        = trim((string)($_POST['pais'] ?? ''));
+    $num_caja    = (int)($_POST['num_caja'] ?? 0);
+    $bodega      = trim((string)($_POST['bodega'] ?? ''));
+
+    // ✅ 1) DETECTAR DUPLICADO EXACTO (misma fila)
+    $sqlDup = "
+      SELECT id
+      FROM carrito2
+      WHERE Codigo_Nota_Pedido = ?
+        AND id_tienda          = ?
+        AND etiqueta           = ?
+        AND prenda             = ?
+        AND composicion        = ?
+        AND cantidad           = ?
+        AND precio_unitario    = ?
+        AND num_factura        = ?
+        AND tienda             = ?
+        AND marca              = ?
+        AND pais               = ?
+        AND num_caja           = ?
+        AND bodega             = ?
+      LIMIT 1
+    ";
+
+    $st = $db->prepare($sqlDup);
+    $st->execute([
+        $idNota, $id_tienda, $etiqueta, $prenda, $composicion,
+        $cantidadN, $precioUN, $num_factura, $tienda, $marca, $pais, $num_caja, $bodega
+    ]);
+
+    $existingId = $st->fetchColumn();
+
+    if ($existingId) {
+        // Ya existe esa fila exacta -> NO insertar
+        echo json_encode(['ok' => true, 'duplicated' => true, 'id' => (int)$existingId]);
+        return;
+    }
+
+    // ✅ 2) INSERT NORMAL (se permiten duplicados parciales)
+    $carrito = new Carrito2();
+
+    $carrito->Codigo_Nota_Pedido = $idNota;
+    $carrito->id_tienda          = $id_tienda;
+    $carrito->etiqueta           = $etiqueta;
+    $carrito->prenda             = $prenda;
+    $carrito->composicion        = $composicion;
+
+    $carrito->cantidad           = $cantidadN;
+    $carrito->precio_unitario    = $precioUN;
+    $carrito->total              = (float)($cantidadN * $precioUN);
+
+    // Si saldo lo calculas en frontend, puedes aceptarlo; si no, calcúlalo aquí
+    $carrito->saldo              = (float)($_POST['saldo'] ?? 0);
+
+    $carrito->num_factura        = $num_factura;
+    $carrito->tienda             = $tienda;
+    $carrito->marca              = $marca;
+    $carrito->pais               = $pais;
+    $carrito->num_caja           = $num_caja;
+    $carrito->bodega             = $bodega;
+
+    $alertas = $carrito->validar();
+    if (!empty($alertas)) {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
+    $ok = $carrito->guardar();
+    if (!$ok) {
+        echo json_encode(['ok' => false, 'error' => 'db-save-failed']);
+        return;
+    }
+
+    echo json_encode(['ok' => true, 'duplicated' => false, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
+}
 
 
 
