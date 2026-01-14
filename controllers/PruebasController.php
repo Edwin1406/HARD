@@ -137,11 +137,11 @@ class PruebasController
 
 
         // debuguear($id_tienda_nota);
-        
+
         // obtener el id_nota a partir del id_tienda_nota
         $id_nota = TiendaNota::where('id', $id_tienda_nota)->Codigo_Nota_Pedido ?? null;
 
-       
+
         // obtengo la información de la tienda nota
         // $informacionNota = TiendaNota::where('id', $id_tienda_nota);
         // debuguear($informacionNota);
@@ -170,7 +170,7 @@ class PruebasController
         $marca   = Marca::all();
         $prendas = Prenda::all();
 
-        
+
 
         // debuguear($paises);
 
@@ -213,7 +213,7 @@ class PruebasController
 
             $id_nota = $_POST['id_nota'] ?? 0;
 
-            $carrito->Codigo_Nota_Pedido = $id_nota;  
+            $carrito->Codigo_Nota_Pedido = $id_nota;
             $carrito->etiqueta           = $_POST['etiqueta']   ?? 0;
             $carrito->prenda             = $_POST['Prenda_Partida']   ?? '';
             $carrito->saldo              = $_POST['saldo']   ?? 0;
@@ -229,7 +229,7 @@ class PruebasController
             $carrito->num_caja           = $_POST['num_caja'] ?? 0;
             $carrito->bodega             = $_POST['bodega'] ?? '';
             $carrito->id_tienda          = $id_tienda ?? null;
-        
+
 
             // Saneos mínimos
             $carrito->prenda   = trim((string)$carrito->prenda);
@@ -285,10 +285,10 @@ class PruebasController
                     $_SESSION['old'] = $old;
 
                     header("Location: /admin/pruebas/crearPruebas?id=$id_tienda&exito=1");
-                    
+
                     // cargo de nuevo la página para evitar reenvío de formulario
 
-                    
+
 
 
 
@@ -334,58 +334,58 @@ class PruebasController
 
 
 
- public static function crearPrenda()
-{
-    session_start();
-    if (!isset($_SESSION['email'])) {
-        http_response_code(401);
+    public static function crearPrenda()
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            http_response_code(401);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['ok' => false, 'error' => 'No autorizado']);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['ok' => false, 'error' => 'Método no permitido']);
+            return;
+        }
+
+        // Campos (mismos nombres)
+        $prenda = new Prenda;
+        $prenda->Prenda_Partida      = trim($_POST['Prenda_Partida'] ?? '');
+        $prenda->Partida_Partida     = trim($_POST['Partida_Partida'] ?? '');
+        $prenda->Composicion_Partida = trim($_POST['Composicion_Partida'] ?? '');
+
+        // Validación mínima
+        if ($prenda->Prenda_Partida === '') {
+            http_response_code(422);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['ok' => false, 'error' => 'El campo "Prenda" es obligatorio.']);
+            return;
+        }
+
+        // Guardar
+        $ok = $prenda->guardar(); // ideal: setea $prenda->id o retorna el ID
+        if (!$ok) {
+            http_response_code(500);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['ok' => false, 'error' => 'No se pudo guardar.']);
+            return;
+        }
+
+        // Respuesta JSON simple
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['ok' => false, 'error' => 'No autorizado']);
-        return;
+        echo json_encode([
+            'ok' => true,
+            'prenda' => [
+                'id'                  => $prenda->id ?? null,
+                'Prenda_Partida'      => $prenda->Prenda_Partida,
+                'Partida_Partida'     => $prenda->Partida_Partida,
+                'Composicion_Partida' => $prenda->Composicion_Partida,
+            ],
+        ], JSON_UNESCAPED_UNICODE);
     }
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['ok' => false, 'error' => 'Método no permitido']);
-        return;
-    }
-
-    // Campos (mismos nombres)
-    $prenda = new Prenda;
-    $prenda->Prenda_Partida      = trim($_POST['Prenda_Partida'] ?? '');
-    $prenda->Partida_Partida     = trim($_POST['Partida_Partida'] ?? '');
-    $prenda->Composicion_Partida = trim($_POST['Composicion_Partida'] ?? '');
-
-    // Validación mínima
-    if ($prenda->Prenda_Partida === '') {
-        http_response_code(422);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['ok' => false, 'error' => 'El campo "Prenda" es obligatorio.']);
-        return;
-    }
-
-    // Guardar
-    $ok = $prenda->guardar(); // ideal: setea $prenda->id o retorna el ID
-    if (!$ok) {
-        http_response_code(500);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['ok' => false, 'error' => 'No se pudo guardar.']);
-        return;
-    }
-
-    // Respuesta JSON simple
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([
-        'ok' => true,
-        'prenda' => [
-            'id'                  => $prenda->id ?? null,
-            'Prenda_Partida'      => $prenda->Prenda_Partida,
-            'Partida_Partida'     => $prenda->Partida_Partida,
-            'Composicion_Partida' => $prenda->Composicion_Partida,
-        ],
-    ], JSON_UNESCAPED_UNICODE);
-}
 
 
 
@@ -452,145 +452,71 @@ class PruebasController
     }
 
 
-// public static function actualizarPruebas()
-// {
-//     session_start();
-//     if (!isset($_SESSION['email'])) {
-//         header('Content-Type: application/json');
-//         echo json_encode(['ok' => false, 'error' => 'no-auth']);
-//         return;
-//     }
-
-//     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-//         header('Content-Type: application/json');
-//         echo json_encode(['ok' => false, 'error' => 'bad-method']);
-//         return;
-//     }
 
 
-
-//     $id        = $_POST['id'] ?? null;
-//     $idNota    = $_POST['id_nota'] ?? null;
-//     $etiqueta   = trim($_POST['etiqueta'] ?? '');
-//     $prenda    = trim($_POST['prenda'] ?? '');
-//     $saldo   = trim($_POST['saldo'] ?? '');
-//     $composicion = trim($_POST['composicion'] ?? '');
-//     $cantidad  = (float)($_POST['cantidad'] ?? 0);
-//     $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-//     // $total     = (float)($_POST['total'] ?? 0);
-
-
-
-
-//     $total     = (float)($cantidad * $precioU);
-//     $num_factura = (int)($_POST['num_factura'] ?? 0);
-//     $tienda = trim($_POST['tienda'] ?? '');
-//     $marca = trim($_POST['marca'] ?? '');
-//     $pais = trim($_POST['pais'] ?? '');
-//     $num_caja = (int)($_POST['num_caja'] ?? 0);
-//     $bodega = $_POST['bodega'] ?? '';
-//     $id_tienda = $_POST['id_tienda'] ?? null;
-
-    
-
-//     if (!$id) {
-//       header('Content-Type: application/json');
-//       echo json_encode(['ok' => false, 'error' => 'missing-id']);
-//       return;
-//     }
-
-//     $carrito = Carrito2::find($id);
-//     if (!$carrito) {
-//       header('Content-Type: application/json');
-//       echo json_encode(['ok' => false, 'error' => 'not-found']);
-//       return;
-//     }
-
-//     // Actualiza campos
-//     $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
-//     $carrito->etiqueta = $etiqueta;
-//     $carrito->prenda = $prenda;
-//     $carrito->saldo = $saldo;
-//     $carrito->composicion = $composicion;
-//     $carrito->cantidad = $cantidad;
-//     $carrito->precio_unitario = $precioU;
-//     $carrito->total = $total;
-//     $carrito->num_factura = $num_factura;
-//     $carrito->tienda = $tienda;
-//     $carrito->marca = $marca;
-//     $carrito->pais = $pais;
-//     $carrito->num_caja = $num_caja;
-//     $carrito->bodega = $bodega;
-//     $carrito->id_tienda = $id_tienda;
-
-
-//     $ok = $carrito->guardar(); // o ->actualizar()
-//     header('Content-Type: application/json');
-//     echo json_encode(['ok' => (bool)$ok]);
-// }
-
-public static function actualizarPruebas()
-{
-    session_start();
-    if (!isset($_SESSION['email'])) {
+    public static function actualizarPruebas()
+    {
+        session_start();
         header('Content-Type: application/json');
-        echo json_encode(['ok' => false, 'error' => 'no-auth']);
-        return;
+
+        if (!isset($_SESSION['email'])) {
+            echo json_encode(['ok' => false, 'error' => 'no-auth']);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['ok' => false, 'error' => 'bad-method']);
+            return;
+        }
+
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        if ($id <= 0) {
+            echo json_encode(['ok' => false, 'error' => 'missing-id']);
+            return;
+        }
+
+        $carrito = Carrito2::find($id);
+        if (!$carrito) {
+            echo json_encode(['ok' => false, 'error' => 'not-found']);
+            return;
+        }
+
+        // Datos
+        $idNota      = $_POST['id_nota'] ?? null;
+        $etiqueta    = trim($_POST['etiqueta'] ?? '');
+        $prenda      = trim($_POST['prenda'] ?? '');
+        $composicion = trim($_POST['composicion'] ?? '');
+        $cantidad    = (float)($_POST['cantidad'] ?? 0);
+        $precioU     = (float)($_POST['precio_unitario'] ?? 0);
+        $total       = (float)($cantidad * $precioU);
+        $num_factura = (int)($_POST['num_factura'] ?? 0);
+        $tienda      = trim($_POST['tienda'] ?? '');
+        $marca       = trim($_POST['marca'] ?? '');
+        $pais        = trim($_POST['pais'] ?? '');
+        $num_caja    = (int)($_POST['num_caja'] ?? 0);
+        $bodega      = trim($_POST['bodega'] ?? '');
+        $id_tienda   = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : null;
+
+        // Actualizar
+        $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
+        $carrito->etiqueta           = $etiqueta;
+        $carrito->prenda             = $prenda;
+        $carrito->composicion        = $composicion;
+        $carrito->cantidad           = $cantidad;
+        $carrito->precio_unitario    = $precioU;
+        $carrito->total              = $total;
+        $carrito->num_factura        = $num_factura;
+        $carrito->tienda             = $tienda;
+        $carrito->marca              = $marca;
+        $carrito->pais               = $pais;
+        $carrito->num_caja           = $num_caja;
+        $carrito->bodega             = $bodega;
+        $carrito->id_tienda          = $id_tienda;
+
+        $ok = $carrito->guardar();
+        echo json_encode(['ok' => (bool)$ok, 'id' => $carrito->id]);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Content-Type: application/json');
-        echo json_encode(['ok' => false, 'error' => 'bad-method']);
-        return;
-    }
-
-    // Obtención de datos
-    $id = $_POST['id'] ?? null;
-    $idNota = $_POST['id_nota'] ?? null;
-    $etiqueta = trim($_POST['etiqueta'] ?? '');
-    $prenda = trim($_POST['prenda'] ?? '');
-    $saldo = trim($_POST['saldo'] ?? '');
-    $composicion = trim($_POST['composicion'] ?? '');
-    $cantidad = (float)($_POST['cantidad'] ?? 0);
-    $precioU = (float)($_POST['precio_unitario'] ?? 0);
-    $total = (float)($cantidad * $precioU);
-    $num_factura = (int)($_POST['num_factura'] ?? 0);
-    $tienda = trim($_POST['tienda'] ?? '');
-    $marca = trim($_POST['marca'] ?? '');
-    $pais = trim($_POST['pais'] ?? '');
-    $num_caja = (int)($_POST['num_caja'] ?? 0);
-    $bodega = $_POST['bodega'] ?? '';
-    $id_tienda = $_POST['id_tienda'] ?? null;
-
-    // Verificar si el id existe
-    $carrito = Carrito2::find($id);
-    if (!$carrito) {
-        // Si no existe, creamos un nuevo registro
-        $carrito = new Carrito2();
-    }
-
-    // Actualizar datos
-    $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
-    $carrito->etiqueta = $etiqueta;
-    $carrito->prenda = $prenda;
-    $carrito->saldo = $saldo;
-    $carrito->composicion = $composicion;
-    $carrito->cantidad = $cantidad;
-    $carrito->precio_unitario = $precioU;
-    $carrito->total = $total;
-    $carrito->num_factura = $num_factura;
-    $carrito->tienda = $tienda;
-    $carrito->marca = $marca;
-    $carrito->pais = $pais;
-    $carrito->num_caja = $num_caja;
-    $carrito->bodega = $bodega;
-    $carrito->id_tienda = $id_tienda;
-
-    // Guardar o actualizar
-    $ok = $carrito->guardar();  // Si existe, actualiza, si no, crea
-    header('Content-Type: application/json');
-    echo json_encode(['ok' => (bool)$ok]);
-}
 
 
 
@@ -626,11 +552,11 @@ public static function actualizarPruebas()
             $Flete_Nota_Pedido = $_POST['Flete_Nota_Pedido'] ?? 0;
             $Costo_Flete_Nota_Pedido = $_POST['Costo_Flete_Nota_Pedido'] ?? 0;
             $Seguro_Nota_Pedido = $_POST['Seguro_Nota_Pedido'] ?? 0;
-            
 
 
 
-        
+
+
             // fecha manual
             $fecha = $_POST['fecha'] ?? date('Y-m-d');
 
@@ -646,7 +572,7 @@ public static function actualizarPruebas()
             $venta->Costo_Flete_Nota_Pedido = $Costo_Flete_Nota_Pedido;
             $venta->Seguro_Nota_Pedido = $Seguro_Nota_Pedido;
 
-       
+
             // $venta->fecha = date('Y-m-d H:i:s');
             $venta->fecha = $fecha;
             $venta->guardarCarrito();
