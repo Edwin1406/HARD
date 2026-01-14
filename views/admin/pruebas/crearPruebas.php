@@ -1494,7 +1494,8 @@ $selIf    = function ($left, $right) {
     r.saldo = Number(r.saldo) || 0;
     r.composicion = (typeof r.composicion === 'string') ? r.composicion.trim() : r.composicion;
 
-    r.num_factura = Number(r.num_factura) || 0;
+    if(!r.num_factura && num_factura) r.num_factura = num_factura;
+    // r.num_factura = Number(r.num_factura) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
 
     r.tienda = str(r.tienda) || tienda || '';
