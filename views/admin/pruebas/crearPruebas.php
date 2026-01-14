@@ -805,477 +805,7 @@ $selIf    = function ($left, $right) {
 </div>
 
 
-<!-- 
-<script>
-    // ---------- Puentes PHP ----------
-    const ID_NOTA = <?= json_encode($id_nota ?? ($id_nota ?? null)) ?>;
 
-    const tienda = <?= json_encode($tienda_nota->tienda ?? '') ?>;
-    const marca = <?= json_encode($tienda_nota->marca ?? '') ?>;
-    const pais = <?= json_encode($tienda_nota->pais ?? '') ?>;
-    const ciudad = <?= json_encode($tienda_nota->ciudad ?? '') ?>;
-    const num_factura = <?= json_encode($tienda_nota->num_factura ?? '') ?>;
-
-
-    const existentes = <?php
-                        $idUrl = $id_nota ?? null;
-                        $id_tienda = $_GET['id'] ?? null;
-
-                        
-                        
-
-                        $out = [];
-                        if (!empty($carritoTemporal2)) {
-                            foreach ($carritoTemporal2 as $r) {
-                                if ($idUrl != $r->Codigo_Nota_Pedido || $id_tienda != $r->id_tienda) continue;
-                                $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
-                                $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-                                $out[]  = [
-                                    'id'                 => (int)$r->id,
-                                    'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
-                                    'etiqueta'           => $r->etiqueta,
-                                    'prenda'             => $r->prenda,
-                                    'saldo'              => $r->saldo,
-                                    'composicion'        => $r->composicion,
-                                    'cantidad'           => $cant,
-                                    'precio_unitario'    => $precio,
-                                    'num_factura'        => $r->num_factura,
-                                    'tienda'             => $r->tienda,
-                                    'marca'              => $r->marca,
-                                    'pais'               => $r->pais,
-                                    'num_caja'           => $r->num_caja,
-                                    'bodega'             => $r->bodega,
-                                    'id_tienda'          => $r->id_tienda,
-                                    'total'              => round($cant * $precio, 2),
-
-                                ];
-                            }
-                        }
-                        echo json_encode($out, JSON_UNESCAPED_UNICODE);
-                        ?>;
-
-    // ---------- Utils UI ----------
-    const toastOk = new bootstrap.Toast(document.getElementById('toastOk'), {
-        delay: 1800
-    });
-    const toastErr = new bootstrap.Toast(document.getElementById('toastErr'), {
-        delay: 2600
-    });
-    const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
-    let rowPendingDelete = null;
-
-    function round(n) {
-        return Math.round((n + Number.EPSILON) * 100) / 100;
-    }
-
-    // ---------- Handsontable ----------
-    const container = document.getElementById('hot-min');
-
-    // Campos que disparan autosave (12 columnas; excluye 'total')
-    const AUTOSAVE_PROPS = new Set([
-        'cantidad',
-        'etiqueta',
-        'saldo',
-        'num_factura',
-        'prenda',
-        'composicion',
-        'precio_unitario',
-        'tienda',
-        'marca',
-        'pais',
-        'num_caja',
-        'bodega',
-    ]);
-
-    const hot = new Handsontable(container, {
-        data: existentes.length ? existentes : [],
-        colHeaders: [
-            'id',
-            'cod',
-            'cantid',
-            'etq',
-            'saldo',
-            'num_fact',
-            'prenda',
-            'composicion',
-            'precio_u',
-            'tienda',
-            'marca',
-            'pais',
-            'num_caja',
-            'bodega',
-            'total',
-            'Acciones'
-        ],
-        columns: [{
-                data: 'id',
-                readOnly: true
-            },
-
-            // codigo_nota_pedido (renderer sin usar variable externa hot)
-            {
-                data: 'codigo_nota_pedido',
-                readOnly: true,
-                renderer: (inst, td, row, col, prop, val) => {
-                    td.textContent = val ?? (ID_NOTA ?? '');
-                }
-            },
-            {
-                data: 'cantidad',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[000]'
-                }
-            },
-
-            {
-                data: 'etiqueta'
-            },
-
-            {
-                data: 'saldo',
-                readOnly: true,
-                renderer(inst, td, row) {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    const cant = Number(r.cantidad) || 0;
-                    const etiqueta = Number(r.etiqueta) || 0;
-                    const tot = round(cant - etiqueta);
-                    r.saldo = tot;
-                    td.classList.add('text-end', 'text-mono');
-                    td.textContent = tot.toFixed(2);
-                }
-            },
-            {
-                data: 'num_factura',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.num_factura || num_factura || '';
-                }
-            },
-
-            {
-                data: 'prenda'
-            },
-
-            {
-                data: 'composicion'
-            },
-
-            {
-                data: 'precio_unitario',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0.[00]'
-                }
-            },
-
-            {
-                data: 'tienda',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.tienda || tienda || '';
-                }
-            },
-            {
-                data: 'marca',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.marca || marca || '';
-                }
-            },
-            {
-                data: 'pais',
-                renderer: (inst, td, row) => {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    td.textContent = r.pais || pais || '';
-                }
-            },
-            {
-                data: 'num_caja',
-                type: 'numeric',
-                numericFormat: {
-                    pattern: '0'
-                }
-            },
-            {
-                data: 'bodega'
-            },
-
-            // total calculado (renderer usa inst)
-            {
-                data: 'total',
-                readOnly: true,
-                renderer(inst, td, row) {
-                    const r = inst.getSourceDataAtRow(row) || {};
-                    const cant = Number(r.cantidad) || 0;
-                    const pu = Number(r.precio_unitario) || 0;
-                    const tot = round(cant * pu);
-                    r.total = tot;
-                    td.classList.add('text-end', 'text-mono');
-                    td.textContent = tot.toFixed(2);
-                }
-            },
-
-            // acciones (renderer usa inst)
-            {
-                readOnly: true,
-                renderer(inst, td, row) {
-                    td.classList.add('text-center');
-                    td.innerHTML = `
-            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
-              <i class="bi bi-trash me-1"></i>Eliminar
-            </button>`;
-                }
-            },
-        ],
-
-        rowHeaders: true,
-        stretchH: 'all',
-        height: container.clientHeight,
-        licenseKey: 'non-commercial-and-evaluation',
-
-        filters: true,
-        dropdownMenu: true,
-        columnSorting: true,
-        manualColumnResize: true,
-        manualRowResize: true,
-
-        minSpareRows: 1,
-        allowInsertColumn: false,
-        allowRemoveColumn: false,
-
-        // AUTOSAVE: 12 columnas (excluye total)
-        afterChange(changes, source) {
-            if (!changes || source === 'loadData') return;
-
-            const rowsToUpdate = new Set();
-
-            for (const [row, prop] of changes) {
-                if (!AUTOSAVE_PROPS.has(prop)) continue; // ignora cambios fuera de las 12
-                if (prop === 'cantidad' || prop === 'precio_unitario') recalcRow(row);
-                rowsToUpdate.add(row);
-            }
-
-            if (rowsToUpdate.size) {
-                // Recalcular por coherencia
-                rowsToUpdate.forEach(r => recalcRow(r));
-                maybeAutosave([...rowsToUpdate]);
-            }
-        },
-
-        afterPaste() {
-            const len = hot.countRows();
-            for (let i = 0; i < len; i++) recalcRow(i);
-            // Guarda todas las filas pegadas (si autosave está activo)
-            maybeAutosave([...Array(len).keys()]);
-        }
-    });
-
-    // Ajuste de altura responsive
-    window.addEventListener('resize', () => hot.updateSettings({
-        height: container.clientHeight
-    }));
-
-    // --- Lógica de fila
-    function recalcRow(rowIndex) {
-        const r = hot.getSourceDataAtRow(rowIndex);
-        if (!r) return;
-
-        if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-
-        r.cantidad = Number(r.cantidad) || 0;
-
-        if (typeof r.etiqueta === 'string') r.etiqueta = r.etiqueta.trim();
-        if (typeof r.saldo === 'string') r.saldo = r.saldo.trim();
-        r.num_factura = Number(r.num_factura) || 0;
-        if (typeof r.prenda === 'string') r.prenda = r.prenda.trim();
-        if (typeof r.composicion === 'string') r.composicion = r.composicion.trim();
-
-        r.precio_unitario = Number(r.precio_unitario) || 0;
-
-        r.tienda = r.tienda ? String(r.tienda).trim() : '';
-
-        r.marca = r.marca ? String(r.marca).trim() : '';
-        r.pais = r.pais ? String(r.pais).trim() : '';
-        r.num_caja = Number(r.num_caja) || 0;
-        r.bodega = String(r.bodega).trim() || '';
-        r.id_tienda = <?= json_encode($_GET['id'] ?? '') ?>;
-
-
-        
-
-        
-        r.total = round(r.cantidad * r.precio_unitario);
-        
-
-        hot.render(); // refresca la celda total
-    }
-
-    function filasNuevas() {
-        return hot.getSourceData().filter(r => r && !r.id && (r.prenda || r.cantidad || r.precio_unitario));
-    }
-
-    // --- Guardar/actualizar
-    async function saveOrUpdateFila(row) {
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
-        if (row.id) fd.append('id', row.id);
-        fd.append('cantidad', row.cantidad ?? 0);
-        fd.append('etiqueta', row.etiqueta ?? '');
-        fd.append('saldo', row.saldo ?? 0);
-        fd.append('num_factura', row.num_factura ?? 0);
-        fd.append('prenda', row.prenda ?? '');
-        fd.append('composicion', row.composicion ?? '');
-        fd.append('precio_unitario', row.precio_unitario ?? 0);
-        fd.append('tienda', row.tienda ?? '');
-        fd.append('marca', row.marca ?? '');
-        fd.append('pais', row.pais ?? '');
-        fd.append('num_caja', row.num_caja ?? 0);
-        fd.append('bodega', row.bodega ?? '');
-        fd.append('id_tienda', <?= json_encode($_GET['id'] ?? '') ?>);
-
-        console.log("ID Tienda (FD):", <?= json_encode($_GET['id'] ?? '') ?>);
-        
-        fd.append('total', row.total ?? 0);
-
-        const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
-
-        const resp = await fetch(url, {
-            method: 'POST',
-            body: fd,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            credentials: 'same-origin' // 'include' si es cross-site/subdominio
-        });
-
-        try {
-            const json = await resp.json();
-            if (json?.ok) {
-                if (json.id) row.id = json.id; // alta
-                row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido; // fija la nota
-                row.tienda = row.tienda || tienda;
-                row.marca = row.marca || marca;
-                row.pais = row.pais || pais;
-                row.num_factura = row.num_factura || num_factura;
-
-                return true;
-            } else {
-                console.warn('Error en actualización:', json);
-            }
-        } catch {
-            console.warn('Respuesta no JSON:', await resp.text());
-        }
-        return false;
-    }
-
-    async function guardarNuevasFilas(btn) {
-        btn?.setAttribute('disabled', 'disabled');
-        btn?.insertAdjacentHTML('afterbegin',
-            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>'
-        );
-
-        const nuevas = filasNuevas();
-        let ok = true;
-        for (const r of nuevas) {
-            const exito = await saveOrUpdateFila(r);
-            if (!exito) ok = false;
-        }
-
-        btn?.removeAttribute('disabled');
-        btn?.querySelector('.spinner-border')?.remove();
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    async function maybeAutosave(rowIdxList) {
-        if (!document.getElementById('autosave')?.checked) return;
-
-        let ok = true;
-        if (Array.isArray(rowIdxList) && rowIdxList.length) {
-            for (const idx of rowIdxList) {
-                const r = hot.getSourceDataAtRow(idx);
-                if (!r) continue;
-                // Evitar disparos vacíos
-                if (!r.id && !r.prenda && !r.cantidad && !r.precio_unitario) continue;
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        } else {
-            const nuevas = filasNuevas();
-            for (const r of nuevas) {
-                const exito = await saveOrUpdateFila(r);
-                if (!exito) ok = false;
-            }
-        }
-        ok ? toastOk.show() : toastErr.show();
-    }
-
-    // Botones top
-    document.getElementById('guardar-nuevas')?.addEventListener('click', (e) => guardarNuevasFilas(e.currentTarget));
-    document.getElementById('recargar')?.addEventListener('click', () => location.reload());
-
-    // Eliminar (con modal)
-    container.addEventListener('click', (ev) => {
-        const btn = ev.target.closest('.btn-del');
-        if (!btn) return;
-
-        const rowIndex = parseInt(btn.dataset.row, 10);
-        const rowData = hot.getSourceDataAtRow(rowIndex);
-
-        if (!rowData?.id) { // sin persistir → borra local
-            hot.alter('remove_row', rowIndex, 1);
-            return;
-        }
-        rowPendingDelete = {
-            rowIndex,
-            rowData
-        };
-        modalDelete.show();
-    });
-
-    document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
-        const info = rowPendingDelete;
-        rowPendingDelete = null;
-        if (!info) return;
-
-        const {
-            rowIndex,
-            rowData
-        } = info;
-
-        const fd = new FormData();
-        fd.append('id_nota', ID_NOTA ?? rowData.codigo_nota_pedido ?? '');
-        fd.append('id', rowData.id);
-
-        try {
-            const resp = await fetch('/admin/eliminarCarrito', {
-                method: 'POST',
-                body: fd,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin'
-            });
-            let ok = false;
-            try {
-                const json = await resp.json();
-                ok = !!json?.ok;
-            } catch {}
-            if (ok) {
-                hot.alter('remove_row', rowIndex, 1);
-                toastOk.show();
-            } else {
-                toastErr.show();
-            }
-        } catch {
-            toastErr.show();
-        } finally {
-            modalDelete.hide();
-        }
-    });
-</script> -->
 <script>
   // ---------- Puentes PHP ----------
   const ID_NOTA = <?= json_encode($id_nota ?? null) ?>;
@@ -1296,20 +826,17 @@ $selIf    = function ($left, $right) {
     if (!empty($carritoTemporal2)) {
       foreach ($carritoTemporal2 as $r) {
         if ($idUrl != $r->Codigo_Nota_Pedido || $id_tienda != $r->id_tienda) continue;
-
         $precio = isset($r->precio_unitario) ? (float)$r->precio_unitario : 0.0;
         $cant   = isset($r->cantidad) ? (float)$r->cantidad : 0.0;
-
         $out[]  = [
           'id'                 => (int)$r->id,
           'codigo_nota_pedido' => $r->Codigo_Nota_Pedido,
           'etiqueta'           => $r->etiqueta,
           'prenda'             => $r->prenda,
-          'saldo'              => (float)($r->saldo ?? 0),
+          'saldo'              => $r->saldo,
           'composicion'        => $r->composicion,
           'cantidad'           => $cant,
           'precio_unitario'    => $precio,
-          'total'              => round($cant * $precio, 2),
           'num_factura'        => $r->num_factura,
           'tienda'             => $r->tienda,
           'marca'              => $r->marca,
@@ -1317,6 +844,7 @@ $selIf    = function ($left, $right) {
           'num_caja'           => $r->num_caja,
           'bodega'             => $r->bodega,
           'id_tienda'          => $r->id_tienda,
+          'total'              => round($cant * $precio, 2),
         ];
       }
     }
@@ -1329,180 +857,118 @@ $selIf    = function ($left, $right) {
   const modalDelete = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
   let rowPendingDelete = null;
 
-  function round(n) { return Math.round((Number(n) + Number.EPSILON) * 100) / 100; }
-  function str(v){ return (v ?? '').toString().trim(); }
-  function num(v){ const n = Number(v); return Number.isFinite(n) ? n : 0; }
+  function round(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
 
   // ---------- Handsontable ----------
   const container = document.getElementById('hot-min');
 
-  // ✅ autosave solo para estas props (excluye total/saldo/codigo_nota_pedido/id_tienda)
   const AUTOSAVE_PROPS = new Set([
-    'etiqueta','prenda','composicion','cantidad','precio_unitario',
-    'num_factura','tienda','marca','pais','num_caja','bodega'
+    'cantidad','etiqueta','saldo','num_factura','prenda','composicion',
+    'precio_unitario','tienda','marca','pais','num_caja','bodega',
   ]);
 
-  // ✅ Regla para considerar una fila "creable" (ajusta si tu clave real es otra)
+  function str(v){ return (v ?? '').toString().trim(); }
+
+  // ✅ Regla: para crear una fila nueva, debe tener “clave”
   function hasKeyData(r){
+    // Cambia esta regla si tu clave real es otra
     return str(r?.etiqueta) !== '' || str(r?.prenda) !== '';
   }
 
   function isEmptySpareRow(r){
     if (!r) return true;
-    return !r.id && !hasKeyData(r) && num(r.cantidad) === 0 && num(r.precio_unitario) === 0;
+    return !r.id && !hasKeyData(r) && !(Number(r.cantidad)||0) && !(Number(r.precio_unitario)||0);
   }
 
-  // =========================
-  // ✅ ORDEN EXACTO COMO BD
-  // =========================
-  const colHeaders = [
-    'id',
-    'Codigo_Nota_Pedido',
-    'etiqueta',
-    'prenda',
-    'saldo',
-    'composicion',
-    'cantidad',
-    'precio_unitario',
-    'total',
-    'num_factura',
-    'tienda',
-    'marca',
-    'pais',
-    'num_caja',
-    'bodega',
-    'id_tienda',
-    'Acciones'
-  ];
-
-  const columns = [
-    // id
-    { data:'id', readOnly:true },
-
-    // Codigo_Nota_Pedido
-    {
-      data:'codigo_nota_pedido',
-      readOnly:true,
-      renderer:(inst, td, row, col, prop, val)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        // si viene vacío al pegar, fijamos ID_NOTA
-        td.textContent = val ?? r.codigo_nota_pedido ?? (ID_NOTA ?? '');
-      }
-    },
-
-    // etiqueta
-    { data:'etiqueta' },
-
-    // prenda
-    { data:'prenda' },
-
-    // saldo (calculado)
-    {
-      data:'saldo',
-      readOnly:true,
-      renderer(inst, td, row){
-        const r = inst.getSourceDataAtRow(row) || {};
-        const cant = num(r.cantidad);
-        const etqN = num(r.etiqueta); // si tu etiqueta NO es numérica, cambia esta lógica
-        const s = round(cant - etqN);
-        r.saldo = s;
-        td.classList.add('text-end','text-mono');
-        td.textContent = s.toFixed(2);
-      }
-    },
-
-    // composicion
-    { data:'composicion' },
-
-    // cantidad
-    { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
-
-    // precio_unitario
-    { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
-
-    // total (calculado)
-    {
-      data:'total',
-      readOnly:true,
-      renderer(inst, td, row){
-        const r = inst.getSourceDataAtRow(row) || {};
-        const tot = round(num(r.cantidad) * num(r.precio_unitario));
-        r.total = tot;
-        td.classList.add('text-end','text-mono');
-        td.textContent = tot.toFixed(2);
-      }
-    },
-
-    // num_factura (si viene vacío, usa el de la nota)
-    {
-      data:'num_factura',
-      renderer:(inst, td, row)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        td.textContent = r.num_factura || num_factura || '';
-      }
-    },
-
-    // tienda (default)
-    {
-      data:'tienda',
-      renderer:(inst, td, row)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        td.textContent = r.tienda || tienda || '';
-      }
-    },
-
-    // marca (default)
-    {
-      data:'marca',
-      renderer:(inst, td, row)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        td.textContent = r.marca || marca || '';
-      }
-    },
-
-    // pais (default)
-    {
-      data:'pais',
-      renderer:(inst, td, row)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        td.textContent = r.pais || pais || '';
-      }
-    },
-
-    // num_caja
-    { data:'num_caja', type:'numeric', numericFormat:{ pattern:'0' } },
-
-    // bodega
-    { data:'bodega' },
-
-    // id_tienda (si viene vacío, fija el de la URL)
-    {
-      data:'id_tienda',
-      readOnly:true,
-      renderer:(inst, td, row)=>{
-        const r = inst.getSourceDataAtRow(row) || {};
-        td.textContent = r.id_tienda ?? ID_TIENDA ?? '';
-      }
-    },
-
-    // acciones
-    {
-      readOnly:true,
-      renderer(inst, td, row){
-        td.classList.add('text-center');
-        td.innerHTML = `
-          <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
-            <i class="bi bi-trash me-1"></i>Eliminar
-          </button>`;
-      }
-    }
-  ];
-
-  // ---------- Crear HOT ----------
   const hot = new Handsontable(container, {
     data: existentes.length ? existentes : [],
-    colHeaders,
-    columns,
+    colHeaders: [
+      'id','cod','cantid','etq','saldo','num_fact','prenda','composicion',
+      'precio_u','tienda','marca','pais','num_caja','bodega','total','Acciones'
+    ],
+    columns: [
+      { data:'id', readOnly:true },
+
+      { data:'codigo_nota_pedido', readOnly:true,
+        renderer:(inst, td, row, col, prop, val)=>{
+          td.textContent = val ?? (ID_NOTA ?? '');
+        }
+      },
+
+      { data:'cantidad', type:'numeric', numericFormat:{ pattern:'0.[000]' } },
+
+      { data:'etiqueta' },
+
+      { data:'saldo', readOnly:true,
+        renderer(inst, td, row){
+          const r = inst.getSourceDataAtRow(row) || {};
+          const cant = Number(r.cantidad)||0;
+          const etqN = Number(r.etiqueta)||0; // si etiqueta es número
+          const tot = round(cant - etqN);
+          r.saldo = tot;
+          td.classList.add('text-end','text-mono');
+          td.textContent = tot.toFixed(2);
+        }
+      },
+
+      { data:'num_factura',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = r.num_factura || num_factura || '';
+        }
+      },
+
+      { data:'prenda' },
+      { data:'composicion' },
+
+      { data:'precio_unitario', type:'numeric', numericFormat:{ pattern:'0.[00]' } },
+
+      { data:'tienda',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = r.tienda || tienda || '';
+        }
+      },
+
+      { data:'marca',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = r.marca || marca || '';
+        }
+      },
+
+      { data:'pais',
+        renderer:(inst, td, row)=>{
+          const r = inst.getSourceDataAtRow(row) || {};
+          td.textContent = r.pais || pais || '';
+        }
+      },
+
+      { data:'num_caja', type:'numeric', numericFormat:{ pattern:'0' } },
+      { data:'bodega' },
+
+      { data:'total', readOnly:true,
+        renderer(inst, td, row){
+          const r = inst.getSourceDataAtRow(row) || {};
+          const cant = Number(r.cantidad)||0;
+          const pu = Number(r.precio_unitario)||0;
+          const tot = round(cant * pu);
+          r.total = tot;
+          td.classList.add('text-end','text-mono');
+          td.textContent = tot.toFixed(2);
+        }
+      },
+
+      { readOnly:true,
+        renderer(inst, td, row){
+          td.classList.add('text-center');
+          td.innerHTML = `
+            <button class="btn btn-outline-danger btn-sm btn-del" data-row="${row}">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>`;
+        }
+      },
+    ],
 
     rowHeaders:true,
     stretchH:'all',
@@ -1515,71 +981,21 @@ $selIf    = function ($left, $right) {
     manualColumnResize:true,
     manualRowResize:true,
 
-    minSpareRows: 1,
+    minSpareRows:1,
     allowInsertColumn:false,
     allowRemoveColumn:false,
 
-    // ✅ Recalcular/normalizar + autosave cuando cambian ciertas props
     afterChange(changes, source){
       if (!changes || source === 'loadData') return;
 
       const rowsToUpdate = new Set();
-
       for (const [row, prop] of changes) {
         if (!AUTOSAVE_PROPS.has(prop)) continue;
         rowsToUpdate.add(row);
       }
-
       if (rowsToUpdate.size) {
         rowsToUpdate.forEach(r => recalcRow(r));
         maybeAutosave([...rowsToUpdate]);
-      }
-    },
-
-    // ✅ SOPORTE PEGADO: si tu Excel no trae columnas técnicas, lo mapeamos
-    // Casos soportados:
-    // - Pegas 16 columnas = orden BD (sin Acciones) -> OK directo
-    // - Pegas 11 columnas = (etiqueta, prenda, composicion, cantidad, precio_unitario, num_factura, tienda, marca, pais, num_caja, bodega)
-    beforePaste(data, coords){
-      try {
-        if (!data || !data.length || !data[0]) return;
-
-        const pastedCols = data[0].length;
-        const startCol = coords?.[0]?.startCol ?? 0;
-
-        // Caso 11 cols (sin técnicas)
-        if (pastedCols === 11) {
-          // Si el usuario pega desde la col 0 (id), lo expandimos para que caiga en el orden BD
-          // Construimos una fila con 16 cols (sin Acciones)
-          const expanded = data.map(row => ([
-            '',                 // id
-            ID_NOTA ?? '',      // Codigo_Nota_Pedido
-            row[0],             // etiqueta
-            row[1],             // prenda
-            '',                 // saldo (calc)
-            row[2],             // composicion
-            row[3],             // cantidad
-            row[4],             // precio_unitario
-            '',                 // total (calc)
-            row[5] ?? num_factura ?? '', // num_factura
-            row[6] ?? tienda ?? '',      // tienda
-            row[7] ?? marca ?? '',       // marca
-            row[8] ?? pais ?? '',        // pais
-            row[9],             // num_caja
-            row[10],            // bodega
-            ID_TIENDA ?? ''     // id_tienda
-          ]));
-
-          // Reemplazamos el data pegado por el expandido.
-          data.length = 0;
-          expanded.forEach(r => data.push(r));
-
-          // OJO: Esto asume que el usuario pega empezando en la columna 0 (id).
-          // Si pega empezando en "etiqueta" (col 2), también se verá correcto porque la data ya incluye id/cod al inicio.
-          // Si quieres forzar que siempre pegue en col 0, ahí sí habría que controlar UX, pero con esto ya no se desordena.
-        }
-      } catch(e) {
-        console.warn('beforePaste error:', e);
       }
     },
 
@@ -1592,76 +1008,67 @@ $selIf    = function ($left, $right) {
 
   window.addEventListener('resize', () => hot.updateSettings({ height: container.clientHeight }));
 
-  // ---------- Normalización de fila ----------
   function recalcRow(rowIndex){
     const r = hot.getSourceDataAtRow(rowIndex);
     if (!r) return;
 
     if (!r.codigo_nota_pedido && ID_NOTA) r.codigo_nota_pedido = ID_NOTA;
-    if (!r.id_tienda && ID_TIENDA) r.id_tienda = ID_TIENDA;
 
-    // Normaliza tipos
+    r.cantidad = Number(r.cantidad) || 0;
     r.etiqueta = (typeof r.etiqueta === 'string') ? r.etiqueta.trim() : r.etiqueta;
     r.prenda = (typeof r.prenda === 'string') ? r.prenda.trim() : r.prenda;
     r.composicion = (typeof r.composicion === 'string') ? r.composicion.trim() : r.composicion;
 
-    r.cantidad = num(r.cantidad);
-    r.precio_unitario = num(r.precio_unitario);
-    r.num_factura = num(r.num_factura) || num(num_factura);
+    r.num_factura = Number(r.num_factura) || 0;
+    r.precio_unitario = Number(r.precio_unitario) || 0;
 
-    // defaults
     r.tienda = str(r.tienda) || tienda || '';
     r.marca  = str(r.marca)  || marca || '';
     r.pais   = str(r.pais)   || pais || '';
 
-    r.num_caja = num(r.num_caja);
+    r.num_caja = Number(r.num_caja) || 0;
     r.bodega = str(r.bodega) || '';
+    r.id_tienda = ID_TIENDA;
 
-    // calculados
     r.total = round(r.cantidad * r.precio_unitario);
-
-    // saldo se calcula en renderer, pero lo dejamos consistente si lo envías al backend
-    const etqN = num(r.etiqueta);
-    r.saldo = round(r.cantidad - etqN);
 
     hot.render();
   }
 
-  // ---------- Guardar/actualizar ----------
+  function filasNuevas(){
+    // ✅ Solo filas sin id y con “clave” (no por solo cantidad)
+    return hot.getSourceData().filter(r => r && !r.id && hasKeyData(r));
+  }
+
   async function saveOrUpdateFila(row){
-    // ✅ Si no tiene id, NO crear filas sin clave
+    // ✅ Si no tiene id, NO crear si no hay clave
     if (!row.id && !hasKeyData(row)) return true;
 
     const fd = new FormData();
     fd.append('id_nota', ID_NOTA ?? row.codigo_nota_pedido ?? '');
     if (row.id) fd.append('id', row.id);
 
+    fd.append('cantidad', row.cantidad ?? 0);
     fd.append('etiqueta', row.etiqueta ?? '');
+    fd.append('saldo', row.saldo ?? 0);
+    fd.append('num_factura', row.num_factura ?? 0);
     fd.append('prenda', row.prenda ?? '');
     fd.append('composicion', row.composicion ?? '');
-
-    fd.append('cantidad', row.cantidad ?? 0);
     fd.append('precio_unitario', row.precio_unitario ?? 0);
-
-    fd.append('saldo', row.saldo ?? 0);
-    fd.append('total', row.total ?? 0);
-
-    fd.append('num_factura', row.num_factura ?? 0);
     fd.append('tienda', row.tienda ?? '');
     fd.append('marca', row.marca ?? '');
     fd.append('pais', row.pais ?? '');
-
     fd.append('num_caja', row.num_caja ?? 0);
     fd.append('bodega', row.bodega ?? '');
-
-    fd.append('id_tienda', row.id_tienda ?? ID_TIENDA ?? '');
+    fd.append('id_tienda', ID_TIENDA);
+    fd.append('total', row.total ?? 0);
 
     const url = row.id ? '/admin/pruebas/actualizarPruebas' : '/admin/pruebas/crearPruebas';
 
     const resp = await fetch(url, {
       method:'POST',
       body: fd,
-      headers:{ 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+      headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
       credentials:'same-origin'
     });
 
@@ -1669,10 +1076,8 @@ $selIf    = function ($left, $right) {
     try { json = await resp.json(); } catch {}
 
     if (json?.ok) {
-      if (json.id) row.id = json.id;
-      // fija valores por seguridad
+      if (json.id) row.id = json.id; // si fue insert o upsert
       row.codigo_nota_pedido = ID_NOTA || row.codigo_nota_pedido;
-      row.id_tienda = ID_TIENDA || row.id_tienda;
       row.tienda = row.tienda || tienda;
       row.marca = row.marca || marca;
       row.pais = row.pais || pais;
@@ -1682,32 +1087,6 @@ $selIf    = function ($left, $right) {
 
     console.warn('saveOrUpdateFila error:', json);
     return false;
-  }
-
-  async function maybeAutosave(rowIdxList){
-    if (!document.getElementById('autosave')?.checked) return;
-
-    let ok = true;
-    for (const idx of rowIdxList) {
-      const r = hot.getSourceDataAtRow(idx);
-      if (!r) continue;
-
-      // ✅ no guardar fila vacía
-      if (isEmptySpareRow(r)) continue;
-
-      // ✅ si no tiene id, solo si tiene clave
-      if (!r.id && !hasKeyData(r)) continue;
-
-      const exito = await saveOrUpdateFila(r);
-      if (!exito) ok = false;
-    }
-
-    ok ? toastOk.show() : toastErr.show();
-  }
-
-  // Guardar nuevas filas (manual)
-  function filasNuevas(){
-    return hot.getSourceData().filter(r => r && !r.id && hasKeyData(r));
   }
 
   async function guardarNuevasFilas(btn){
@@ -1720,10 +1099,7 @@ $selIf    = function ($left, $right) {
     let ok = true;
 
     for (const r of nuevas) {
-      // asegura recalculo antes de enviar
-      const idx = hot.getSourceData().indexOf(r);
-      if (idx >= 0) recalcRow(idx);
-
+      recalcRow(hot.getSourceData().indexOf(r));
       const exito = await saveOrUpdateFila(r);
       if (!exito) ok = false;
     }
@@ -1733,11 +1109,29 @@ $selIf    = function ($left, $right) {
     ok ? toastOk.show() : toastErr.show();
   }
 
-  // Botones top
+  async function maybeAutosave(rowIdxList){
+    if (!document.getElementById('autosave')?.checked) return;
+
+    let ok = true;
+
+    for (const idx of rowIdxList) {
+      const r = hot.getSourceDataAtRow(idx);
+      if (!r) continue;
+
+      // ✅ No guardes la spare row ni filas sin “clave”
+      if (!r.id && !hasKeyData(r)) continue;
+      if (isEmptySpareRow(r)) continue;
+
+      const exito = await saveOrUpdateFila(r);
+      if (!exito) ok = false;
+    }
+
+    ok ? toastOk.show() : toastErr.show();
+  }
+
   document.getElementById('guardar-nuevas')?.addEventListener('click', (e)=>guardarNuevasFilas(e.currentTarget));
   document.getElementById('recargar')?.addEventListener('click', ()=>location.reload());
 
-  // ---------- Eliminar (con modal) ----------
   container.addEventListener('click', (ev)=>{
     const btn = ev.target.closest('.btn-del');
     if (!btn) return;
@@ -1768,7 +1162,7 @@ $selIf    = function ($left, $right) {
       const resp = await fetch('/admin/eliminarCarrito', {
         method:'POST',
         body: fd,
-        headers:{ 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+        headers:{ 'X-Requested-With':'XMLHttpRequest','Accept':'application/json' },
         credentials:'same-origin'
       });
 
