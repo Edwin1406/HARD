@@ -767,9 +767,9 @@ public static function crearPruebasAjax()
             $venta = new Compra;
             // $venta->id_usuario = $id_usuario;
             $venta->Total_Nota_Pedido = $total;
-            $venta->via_trasporte = $via_trasporte;
-            $venta->puerto_embarque = $puerto_embarque;
-            $venta->puerto_destino = $puerto_destino;
+            $venta->via_trasporte = $_POST['via_trasporte'];
+            $venta->puerto_embarque = $_POST['puerto_embarque'];
+            $venta->puerto_destino = $_POST['puerto_destino'];
             $venta->Fob_Nota_Pedido = $Fob_Nota_Pedido;
             $venta->Flete_Nota_Pedido = $Flete_Nota_Pedido;
             $venta->Costo_Flete_Nota_Pedido = $Costo_Flete_Nota_Pedido;
