@@ -1494,7 +1494,15 @@ $selIf    = function ($left, $right) {
     r.saldo = Number(r.saldo) || 0;
     r.composicion = (typeof r.composicion === 'string') ? r.composicion.trim() : r.composicion;
 
-    if(!r.num_factura && num_factura) r.num_factura = num_factura;
+    if( r.num_factura === undefined || r.num_factura === null || r.num_factura === '' ){
+
+        r.num_factura = num_factura;
+
+    }else{
+
+        r.num_factura = Number(r.num_factura) || 0;
+
+    }
     // r.num_factura = Number(r.num_factura) || 0;
     r.precio_unitario = Number(r.precio_unitario) || 0;
 
@@ -1527,6 +1535,9 @@ $selIf    = function ($left, $right) {
     fd.append('cantidad', row.cantidad ?? 0);
     fd.append('etiqueta', row.etiqueta ?? '');
     fd.append('saldo', row.saldo ?? 0);
+
+
+    // cambios realizados aquí para num_factura
     if(row.num_factura === undefined || row.num_factura === null || row.num_factura === ''){
         
         fd.append('num_factura', row.num_factura ?? 0);
