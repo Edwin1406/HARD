@@ -486,7 +486,7 @@ class PruebasController
         $etiqueta    = trim($_POST['etiqueta'] ?? '');
         $prenda      = trim($_POST['prenda'] ?? '');
         // cantidad - eitqueta es saldo
-        $saldo     = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
+        // $saldo     = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
         $composicion = trim($_POST['composicion'] ?? '');
         $cantidad    = (float)($_POST['cantidad'] ?? 0);
         $precioU     = (float)($_POST['precio_unitario'] ?? 0);
@@ -558,7 +558,7 @@ class PruebasController
 
         $carrito->etiqueta           = $etiqueta;
         $carrito->prenda             = $prenda;
-        $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
+        // $carrito->saldo              = (float)($_POST['cantidad'] ?? 0) - (float)($_POST['etiqueta'] ?? 0);
         $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
         $carrito->cantidad           = $cantidad;
         $carrito->precio_unitario    = $precioU;
