@@ -993,7 +993,11 @@ $selIf    = function ($left, $right) {
                 }
             },
             {
-                data: 'bodega'
+                data: 'bodega',
+                renderer: (inst, td, row) => {
+                    const r = inst.getSourceDataAtRow(row) || {};
+                    td.textContent = r.bodega || '';
+                }
             },
 
             {
@@ -1106,7 +1110,7 @@ $selIf    = function ($left, $right) {
         r.marca = str(r.marca) || marca || '';
         r.pais = str(r.pais) || pais || '';
 
-        r.num_caja = Number(r.num_caja) || 0;
+        r.num_caja = str(r.num_caja) || '';
         r.bodega = str(r.bodega) || '';
         r.id_tienda = ID_TIENDA;
 
@@ -1140,7 +1144,7 @@ $selIf    = function ($left, $right) {
         fd.append('tienda', row.tienda ?? '');
         fd.append('marca', row.marca ?? '');
         fd.append('pais', row.pais ?? '');
-        fd.append('num_caja', row.num_caja ?? 0);
+        fd.append('num_caja', str(row.num_caja) || '');
         fd.append('bodega', row.bodega ?? '');
         fd.append('id_tienda', ID_TIENDA);
         fd.append('total', row.total ?? 0);
