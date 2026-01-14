@@ -503,7 +503,7 @@ class PruebasController
         $carrito->Codigo_Nota_Pedido = $idNota ?: $carrito->Codigo_Nota_Pedido;
         $carrito->etiqueta           = $etiqueta;
         $carrito->prenda             = $prenda;
-        $carrito->saldo              = $saldo;
+        // $carrito->saldo              = $saldo;
         $carrito->composicion        = $composicion;
         $carrito->cantidad           = $cantidad;
         $carrito->precio_unitario    = $precioU;
