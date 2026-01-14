@@ -1556,11 +1556,6 @@ $selIf    = function ($left, $right) {
       row.pais = row.pais || pais;
       row.num_factura = row.num_factura || num_factura;
       return true;
-        // cargar a un pagina distinta despues de guardar
-        window.location.href = '/admin/pruebas/otraPagina';
-    
-
-
     }
 
     console.warn('saveOrUpdateFila error:', json);
@@ -1585,6 +1580,8 @@ $selIf    = function ($left, $right) {
     btn?.removeAttribute('disabled');
     btn?.querySelector('.spinner-border')?.remove();
     ok ? toastOk.show() : toastErr.show();
+      if (ok) scheduleReload(3000); // ✅ recarga en 3 segundos
+
   }
 
   async function maybeAutosave(rowIdxList){
