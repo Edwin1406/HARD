@@ -106,6 +106,22 @@
 
 
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      document.querySelectorAll('.alert').forEach(function (el) {
+        // Si Bootstrap está cargado, usa su componente para cerrar con animación
+        if (window.bootstrap) {
+          const alert = bootstrap.Alert.getOrCreateInstance(el);
+          alert.close();
+        } else {
+          // Fallback si no está Bootstrap JS
+          el.remove();
+        }
+      });
+    }, 5000);
+  });
+</script>
 
 
 
