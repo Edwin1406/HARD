@@ -138,14 +138,36 @@
                             <?php endforeach; ?>
 
                             <script>
-                                // Desaparecer alertas después de 5 segundos
+                                // Desaparecer alertas después de 5 segundos y cargar con la url y id nota pedido
                                 setTimeout(function() {
-                                    var alertList = document.querySelectorAll('.alert');
-                                    alertList.forEach(function(alert) {
+                                    var alertElements = document.querySelectorAll('.alert');
+                                    alertElements.forEach(function(alert) {
                                         var bsAlert = new bootstrap.Alert(alert);
                                         bsAlert.close();
                                     });
-                                }, 5000); // 5000 milisegundos = 5 segundos
+                                }, 5000
+                            );
+
+
+                            // Mantener el parámetro 'id' en la URL al recargar la página
+                            window.addEventListener('DOMContentLoaded', function() {
+                                const url = new URL(window.location);
+                                const idNotaPedido = url.searchParams.get('id');
+                                if (idNotaPedido) {
+                                    url.searchParams.set('id', idNotaPedido);
+                                    window.history.replaceState({}, document.title, url.toString());
+                                }
+                            });
+                            
+
+
+
+
+
+
+
+
+
                             </script>
 
 
