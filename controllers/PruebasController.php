@@ -728,7 +728,7 @@ public static function crearPruebasAjax()
 
 
     // pdf
-use TCPDF;
+// use TCPDF;
 
 public static function pdf(Router $router)
 {
