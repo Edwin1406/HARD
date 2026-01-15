@@ -1047,7 +1047,7 @@ class PruebasController
             'etq'   => 10,
             'sald'  => 12,
             'prenda' => 20,
-            'comp'  => 20,
+            'comp'  => 23,
             'cant'  => 12,
             'punit' => 18,
             'total' => 18,
