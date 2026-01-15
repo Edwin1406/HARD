@@ -137,24 +137,20 @@
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
 
-
-
                             <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    setTimeout(function() {
-                                        document.querySelectorAll('.alert').forEach(function(el) {
-                                            // Si Bootstrap está cargado, usa su componente para cerrar con animación
-                                            if (window.bootstrap) {
-                                                const alert = bootstrap.Alert.getOrCreateInstance(el);
-                                                alert.close();
-                                            } else {
-                                                // Fallback si no está Bootstrap JS
-                                                el.remove();
-                                            }
-                                        });
-                                    }, 5000);
-                                });
+                                // Desaparecer alertas después de 5 segundos
+                                setTimeout(function() {
+                                    var alertList = document.querySelectorAll('.alert');
+                                    alertList.forEach(function(alert) {
+                                        var bsAlert = new bootstrap.Alert(alert);
+                                        bsAlert.close();
+                                    });
+                                }, 5000); // 5000 milisegundos = 5 segundos
                             </script>
+
+
+
+                  
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
