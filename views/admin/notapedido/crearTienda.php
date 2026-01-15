@@ -138,41 +138,18 @@
                             <?php endforeach; ?>
 
                             <script>
-                                // Desaparecer alertas después de 5 segundos y cargar con la url y id nota pedido
-                                setTimeout(function() {
-                                    var alertElements = document.querySelectorAll('.alert');
-                                    alertElements.forEach(function(alert) {
-                                        var bsAlert = new bootstrap.Alert(alert);
-                                        bsAlert.close();
-                                    });
-                                }, 5000
-                            );
-
-
-                            // Mantener el parámetro 'id' en la URL al recargar la página
-                            window.addEventListener('DOMContentLoaded', function() {
-                                const url = new URL(window.location);
-                                const idNotaPedido = url.searchParams.get('id');
-                                if (idNotaPedido) {
-                                    url.searchParams.set('id', idNotaPedido);
-                                    window.history.replaceState({}, document.title, url.toString());
-                                }
-                            });
-                            
-
-
-
-
-
-
-
-
+                            //    mantener la url y evitar resubmission al recargar y quitar las alertas de error 
+                                 if (window.history.replaceState) {
+                                      window.history.replaceState(null, null, window.location.href.split('?')[0]);
+                                 }
+                                    
+                                 
 
                             </script>
 
 
 
-                  
+
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
@@ -192,7 +169,7 @@
 
 
 
-                                      <div class="col-md-2 col-12">
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
 
@@ -215,7 +192,7 @@
                                         </div>
                                     </div>
 
-                              
+
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
