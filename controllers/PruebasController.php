@@ -727,149 +727,207 @@ public static function crearPruebasAjax()
     }
 
 
-    // pdf
-// use TCPDF;
 
-public static function pdf(Router $router)
-{
-    session_start();
-    if (!isset($_SESSION['email'])) {
-        header('Location: /');
+    public static function pdf(Router $router)
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+            exit;
+        }
+
+        $id_nota = $_GET['id'] ?? null;
+        if (!$id_nota) {
+            http_response_code(400);
+            echo "Falta el id de la nota";
+            exit;
+        }
+
+        // Si tu TCPDF no está por composer, descomenta y ajusta:
+        // require_once __DIR__ . '/../tcpdf/tcpdf.php';
+
+        $nota  = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+        $items = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
+
+        if (!$nota) {
+            http_response_code(404);
+            echo "No existe la nota {$id_nota}";
+            exit;
+        }
+
+        // ====== PDF ======
+        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+
+        // Info documento
+        $pdf->SetCreator('Sistema');
+        $pdf->SetAuthor('Importadora');
+        $pdf->SetTitle("Nota de Pedido {$id_nota}");
+
+        // Márgenes + saltos
+        $pdf->SetMargins(10, 10, 10);
+        $pdf->SetAutoPageBreak(true, 12);
+
+        // Quitar header/footer por defecto de TCPDF (para que no estorbe)
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+
+        $pdf->AddPage();
+
+        // ====== HEADER BONITO (Logo + Título + Línea) ======
+        self::renderHeader($pdf, $nota);
+
+        // ====== BLOQUE DATOS (2 columnas alineadas) ======
+        self::renderMetaBox($pdf, $nota);
+
+        // ====== TABLA ITEMS + TOTAL ======
+        self::renderItemsTable($pdf, $items);
+
+        // Mostrar en navegador (I) o descargar (D)
+        $pdf->Output("nota_pedido_{$id_nota}.pdf", 'I');
         exit;
     }
 
-    $id_nota = $_GET['id'] ?? null;
-    if (!$id_nota) {
-        http_response_code(400);
-        echo "Falta el id";
-        exit;
+    private static function renderHeader(TCPDF $pdf, $nota): void
+    {
+        // Línea superior (tipo documento)
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->Line(10, 10, 287, 10);
+
+        // Logo (izquierda)
+        // AJUSTA ESTA RUTA:
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/img/logo.png'; // ejemplo: public/img/logo.png
+        if (file_exists($logoPath)) {
+            // x=10 y=12 w=28mm
+            $pdf->Image($logoPath, 10, 12, 28, 0, '', '', '', false, 300);
+        }
+
+        // Título centrado
+        $pdf->SetY(12);
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Cell(0, 8, 'Importadora R M y Cia.', 0, 1, 'C');
+
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Cell(0, 6, 'NOTA DE PEDIDO: ' . (string)$nota->Codigo_Nota_Pedido, 0, 1, 'C');
+
+        // Línea inferior del encabezado
+        $pdf->Ln(1);
+        $pdf->Line(10, $pdf->GetY(), 287, $pdf->GetY());
+        $pdf->Ln(4);
     }
 
-    $nota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
-    $items = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
+    private static function renderMetaBox(TCPDF $pdf, $nota): void
+    {
+        $leftW  = 190;
+        $rightW = 90;
+        $rowH   = 6;
 
-    // IMPORTANTE: NO debuguear aquí (rompe el PDF)
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetFillColor(245, 245, 245);
 
-    // 1) Crear PDF
-    $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-    $pdf->SetCreator('Sistema');
-    $pdf->SetAuthor('Importadora');
-    $pdf->SetTitle("Nota de Pedido {$id_nota}");
-    $pdf->SetMargins(8, 8, 8);
-    $pdf->SetAutoPageBreak(true, 10);
-    $pdf->AddPage();
+        // Títulos de sección
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->Cell($leftW, 7, 'Datos principales', 1, 0, 'L', true);
+        $pdf->Cell($rightW, 7, 'Información', 1, 1, 'L', true);
 
-    // 2) Estilos básicos
-    $pdf->SetFont('helvetica', '', 9);
+        $pdf->SetFont('helvetica', '', 9);
 
-    // 3) Construir HTML (encabezado + tabla)
-    $html = self::buildHtmlNotaPedido($nota, $items);
+        $pdf->Cell($leftW, $rowH, 'Importador: ' . (string)$nota->Codigo_Importador, 1, 0, 'L');
+        $pdf->Cell($rightW, $rowH, 'Fecha: ' . (string)$nota->Fecha_Nota_Pedido, 1, 1, 'L');
 
-    // 4) Pintar HTML
-    $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Cell($leftW, $rowH, 'Exportador: ' . (string)$nota->Codigo_Exportador, 1, 0, 'L');
+        $pdf->Cell($rightW, $rowH, 'País / Origen: ' . (string)$nota->Pais_Nota_Pedido, 1, 1, 'L');
 
-    // 5) Mostrar en navegador (I) o descargar (D)
-    $pdf->Output("nota_pedido_{$id_nota}.pdf", 'I');
-    exit;
-}
+        $pdf->Cell($leftW, $rowH, 'Remitir documentos a: ' . (string)$nota->Remitir_Nota_Pedido, 1, 0, 'L');
+        $pdf->Cell($rightW, $rowH, 'Forma de pago: ' . (string)$nota->Forma_Pago_Nota_Pedido, 1, 1, 'L');
 
-private static function buildHtmlNotaPedido($nota, $items): string
-{
-    // Helpers
-    $f = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
-    $money = fn($v) => number_format((float)$v, 2, '.', '');
+        $pdf->Cell($leftW, $rowH, 'Moneda: ' . (string)$nota->Moneda_Nota_Pedido, 1, 0, 'L');
+        $pdf->Cell($rightW, $rowH, 'Número Nota: ' . (string)$nota->Numero_Nota_Pedido, 1, 1, 'L');
 
-    // Totales (si quieres recalcular desde items)
-    $totalGeneral = 0;
-    foreach ($items as $it) {
-        $totalGeneral += (float)$it->total;
+        $pdf->Ln(6);
     }
 
-    $html = '
-    <style>
-        .title { font-size: 16px; font-weight: bold; text-align:center; }
-        .sub { font-size: 11px; text-align:center; margin-bottom:6px; }
-        .box { border:1px solid #000; padding:6px; }
-        .tbl { width:100%; border-collapse:collapse; }
-        .tbl th { border:1px solid #000; background:#f2f2f2; font-weight:bold; font-size:9px; padding:4px; }
-        .tbl td { border:1px solid #000; font-size:9px; padding:4px; }
-        .meta td { font-size:10px; padding:2px 4px; }
-        .right { text-align:right; }
-        .center { text-align:center; }
-    </style>
+    private static function renderItemsTable(TCPDF $pdf, array $items): void
+    {
+        // Anchos de columnas (suma aprox. <= 277)
+        $w = [
+            'etq'   => 12,
+            'sald'  => 14,
+            'prenda'=> 34,
+            'comp'  => 52,
+            'cant'  => 16,
+            'punit' => 22,
+            'total' => 22,
+            'fact'  => 28,
+            'marca' => 24,
+            'orig'  => 22,
+        ];
 
-    <div class="title">Importadora R M y Cia.</div>
-    <div class="sub">NOTA DE PEDIDO: <b>'.$f($nota->Codigo_Nota_Pedido).'</b></div>
+        $pdf->SetDrawColor(0, 0, 0);
 
-    <table class="tbl meta" cellpadding="2">
-        <tr>
-            <td width="55%"><b>Importador:</b> '.$f($nota->Codigo_Importador).'</td>
-            <td width="45%"><b>Fecha de pedido:</b> '.$f($nota->Fecha_Nota_Pedido).'</td>
-        </tr>
-        <tr>
-            <td width="55%"><b>Exportador:</b> '.$f($nota->Codigo_Exportador).'</td>
-            <td width="45%"><b>País / Origen:</b> '.$f($nota->Pais_Nota_Pedido).'</td>
-        </tr>
-        <tr>
-            <td width="55%"><b>Remitir documentos a:</b> '.$f($nota->Remitir_Nota_Pedido).'</td>
-            <td width="45%"><b>Forma de pago:</b> '.$f($nota->Forma_Pago_Nota_Pedido).'</td>
-        </tr>
-        <tr>
-            <td width="55%"><b>Moneda:</b> '.$f($nota->Moneda_Nota_Pedido).'</td>
-            <td width="45%"><b>Número Nota:</b> '.$f($nota->Numero_Nota_Pedido).'</td>
-        </tr>
-    </table>
+        // Header tabla
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->SetFillColor(230, 230, 230);
 
-    <br>
+        $pdf->Cell($w['etq'], 7, 'ETQ', 1, 0, 'C', true);
+        $pdf->Cell($w['sald'], 7, 'SALD', 1, 0, 'C', true);
+        $pdf->Cell($w['prenda'], 7, 'PRENDA', 1, 0, 'C', true);
+        $pdf->Cell($w['comp'], 7, 'COMPOSICIÓN', 1, 0, 'C', true);
+        $pdf->Cell($w['cant'], 7, 'CANT', 1, 0, 'C', true);
+        $pdf->Cell($w['punit'], 7, 'P. UNIT', 1, 0, 'C', true);
+        $pdf->Cell($w['total'], 7, 'TOTAL', 1, 0, 'C', true);
+        $pdf->Cell($w['fact'], 7, 'FACTURA', 1, 0, 'C', true);
+        $pdf->Cell($w['marca'], 7, 'MARCA', 1, 0, 'C', true);
+        $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 1, 'C', true);
 
-    <table class="tbl" cellpadding="2">
-        <thead>
-            <tr>
-                <th width="6%" class="center">ETQ</th>
-                <th width="8%" class="center">SALD</th>
-                <th width="12%" class="center">PRENDA</th>
-                <th width="16%" class="center">COMPOSICIÓN</th>
-                <th width="8%" class="center">CANT</th>
-                <th width="10%" class="center">P. UNIT</th>
-                <th width="10%" class="center">TOTAL</th>
-                <th width="12%" class="center">FACTURA</th>
-                <th width="10%" class="center">MARCA</th>
-                <th width="8%" class="center">ORIGEN</th>
-            </tr>
-        </thead>
-        <tbody>';
+        $pdf->SetFont('helvetica', '', 9);
 
-    foreach ($items as $it) {
-        $html .= '
-        <tr>
-            <td class="center">'.$f($it->etiqueta).'</td>
-            <td class="center">'.$f($it->saldo).'</td>
-            <td>'.$f($it->prenda).'</td>
-            <td>'.$f($it->composicion).'</td>
-            <td class="center">'.$f($it->cantidad).'</td>
-            <td class="right">'.$money($it->precio_unitario).'</td>
-            <td class="right">'.$money($it->total).'</td>
-            <td class="center">'.$f($it->num_factura).'</td>
-            <td class="center">'.$f($it->marca).'</td>
-            <td class="center">'.$f($it->pais).'</td>
-        </tr>';
+        $totalGeneral = 0.0;
+
+        foreach ($items as $it) {
+            // Si vienen como objetos, funciona igual:
+            $etq   = $it->etiqueta ?? '';
+            $sald  = $it->saldo ?? '';
+            $prend = $it->prenda ?? '';
+            $comp  = $it->composicion ?? '';
+            $cant  = $it->cantidad ?? 0;
+            $punit = (float)($it->precio_unitario ?? 0);
+            $tot   = (float)($it->total ?? ($punit * (float)$cant));
+            $fact  = $it->num_factura ?? '';
+            $marca = $it->marca ?? '';
+            $orig  = $it->pais ?? '';
+
+            $totalGeneral += $tot;
+
+            // filas
+            $pdf->Cell($w['etq'], 6, (string)$etq, 1, 0, 'C');
+            $pdf->Cell($w['sald'], 6, (string)$sald, 1, 0, 'C');
+            $pdf->Cell($w['prenda'], 6, (string)$prend, 1, 0, 'L');
+
+            // MultiCell para composición si es larga (manteniendo alineación)
+            $x = $pdf->GetX();
+            $y = $pdf->GetY();
+            $pdf->MultiCell($w['comp'], 6, (string)$comp, 1, 'L', false, 0, '', '', true, 0, false, true, 6, 'M');
+
+            $pdf->Cell($w['cant'], 6, (string)$cant, 1, 0, 'C'); 
+            $pdf->Cell($w['punit'], 6, number_format($punit, 2, '.', ''), 1, 0, 'R');
+            $pdf->Cell($w['total'], 6, number_format($tot, 2, '.', ''), 1, 0, 'R');
+            $pdf->Cell($w['fact'], 6, (string)$fact, 1, 0, 'C');
+            $pdf->Cell($w['marca'], 6, (string)$marca, 1, 0, 'C');
+            $pdf->Cell($w['orig'], 6, (string)$orig, 1, 1, 'C');
+        }
+
+        // Total general
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', 'B', 10);
+        $pdf->SetFillColor(245,245,245);
+
+        $tableWidth = array_sum($w);
+        $labelW = $tableWidth - 30;
+
+        $pdf->Cell($labelW, 8, 'TOTAL GENERAL:', 1, 0, 'R', true);
+        $pdf->Cell(30, 8, number_format($totalGeneral, 2, '.', ''), 1, 1, 'R', true);
     }
 
-    $html .= '
-        </tbody>
-    </table>
-
-    <br>
-    <table class="tbl" cellpadding="2">
-        <tr>
-            <td width="80%" class="right"><b>TOTAL GENERAL:</b></td>
-            <td width="20%" class="right"><b>'.$money($totalGeneral).'</b></td>
-        </tr>
-    </table>
-    ';
-
-    return $html;
-}
 
 
 
