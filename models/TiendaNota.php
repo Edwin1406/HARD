@@ -39,6 +39,29 @@ class TiendaNota extends ActiveRecord {
     }
 
     public function validar() {
+
+        if($this->Codigo_Nota_Pedido == null) {
+            self::$alertas['error'][] = 'El Campo Codigo Nota Pedido es Obligatorio';
+
+        }
+
+
+
+        if(!$this->tienda) {
+            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+
+        }
+
+        if(!$this->ciudad) {
+            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+
+        }
+
+        if(!$this->pais) {
+            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+
+        }
+
         if(!$this->tienda) {
             self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
 
@@ -54,6 +77,7 @@ class TiendaNota extends ActiveRecord {
         if(!$this->fecha) {
             self::$alertas['error'][] = 'El Campo Fecha es Obligatorio';
         }
+
 
 
 
