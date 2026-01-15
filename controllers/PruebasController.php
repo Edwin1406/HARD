@@ -1047,13 +1047,14 @@ class PruebasController
             'etq'   => 10,
             'sald'  => 12,
             'prenda' => 20,
-            'comp'  => 23,
+            'comp'  => 25,
             'cant'  => 12,
             'punit' => 18,
             'total' => 18,
             'fact'  => 22,
             'marca' => 16,
             'orig'  => 16,
+            'caja'  => 16,
         ];
 
         $pdf->SetDrawColor(0, 0, 0);
