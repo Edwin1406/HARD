@@ -117,100 +117,198 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
 
 
     // Crear Tienda
-    public static function crearTienda(Router $router): void
-    {
-        $alertas = [];
+    // public static function crearTienda(Router $router): void
+    // {
+    //     $alertas = [];
 
-        session_start();
-        if (!isset($_SESSION['email'])) {
-            header('Location: /');
-        }
+    //     session_start();
+    //     if (!isset($_SESSION['email'])) {
+    //         header('Location: /');
+    //     }
 
 
-        // Obtener id de nota pedido
-        $id_nota_pedido = $_GET['id'] ?? 0;
-        // sanitize
-        $id_nota_pedido = filter_var($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
+    //     // Obtener id de nota pedido
+    //     $id_nota_pedido = $_GET['id'] ?? 0;
+    //     // sanitize
+    //     $id_nota_pedido = filter_var($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
 
-        // debuguear($id_nota_pedido);
+      
+    //     $nombre = $_SESSION['nombre'];
+    //     $email = $_SESSION['email'];
 
-        // debuguear($id_nota_pedido);
-
-        // if (!$id_nota_pedido) {
-        //     header('Location: /admin/notaPedido/crearTienda');
-        // }
-
-        $nombre = $_SESSION['nombre'];
-        $email = $_SESSION['email'];
-
-        $tiendas = Tienda::all();
-        $ciudad  = Ciudad::all();
-        $paises    = Pais::all();
-        $marca   = Marca::all();
+    //     $tiendas = Tienda::all();
+    //     $ciudad  = Ciudad::all();
+    //     $paises    = Pais::all();
+    //     $marca   = Marca::all();
 
 
 
 
 
-        $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
-        // debuguear($notaPedido);
+    //     $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
+    //     // debuguear($notaPedido);
 
-        $tiendaNota = new TiendaNota;
+    //     $tiendaNota = new TiendaNota;
 
-
-
-        $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', $id_nota_pedido);
-
-        // debuguear($notaPedido);
-
-        // debuguear($tiendaNotas);
+    //     $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', $id_nota_pedido);
 
         
         
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
-            // Crea una nueva instancia
-            $tiendaNota = new TiendaNota($_POST);
-            $id_nota_pedido = $_POST['id_nota_pedido'] ?? 0;  // Usar POST para obtener el id
-            $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
-            // debuguear($tiendaNota);
+    //         // Crea una nueva instancia
+    //         $tiendaNota = new TiendaNota($_POST);
+    //         $id_nota_pedido = $_POST['id_nota_pedido'] ?? 0;  // Usar POST para obtener el id
+    //         $tiendaNota->Codigo_Nota_Pedido = $id_nota_pedido;
+    //         // debuguear($tiendaNota);
 
-            // Sincronizar objeto con los datos del formulario
-            $tiendaNota->sincronizar($_POST);
+    //         // Sincronizar objeto con los datos del formulario
+    //         $tiendaNota->sincronizar($_POST);
 
-            // Validar los datos
-            $alertas = $tiendaNota->validar();
+    //         // Validar los datos
+    //         $alertas = $tiendaNota->validar();
 
-            if (empty($alertas)) {
-                // Guardar el registro
-                $resultado = $tiendaNota->guardar();
+    //         if (empty($alertas)) {
+    //             // Guardar el registro
+    //             $resultado = $tiendaNota->guardar();
 
-                if ($resultado) {
-                    header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
-                }
-            }else{
-                            $alertas = $tiendaNota->validar();
+    //             if ($resultado) {
+    //                 header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
+    //             }
+    //         }
+    //     }
 
-                 header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
-            }
+    //     // Renderizar la vista
+    //     $router->render('admin/notapedido/crearTienda', [
+    //         'titulo' => 'Crear Tienda para Nota de Pedido',
+    //         'nombre' => $nombre,
+    //         'email' => $email,
+    //         'alertas' => $alertas,
+    //         'tiendaNota' => $tiendaNota,
+    //         'id_nota_pedido' => $id_nota_pedido,
+    //         'tiendaNotas' => $tiendaNotas,
+    //         'informacionNota' => $informacionNota,
+    //         'tiendas' => $tiendas,
+    //         'ciudad' => $ciudad,
+    //         'paises' => $paises,
+    //         'marca' => $marca,
+    //     ]);
+    // }
+
+
+
+public static function crearTienda(Router $router): void
+{
+    session_start();
+
+    // Si no hay sesión, redirigir
+    if (!isset($_SESSION['email'])) {
+        header('Location: /');
+        exit;
+    }
+
+    // 1) Obtener ID de forma robusta (GET primero, si no, POST)
+    $id_nota_pedido = $_GET['id'] ?? ($_POST['id_nota_pedido'] ?? 0);
+    $id_nota_pedido = filter_var($id_nota_pedido, FILTER_SANITIZE_NUMBER_INT);
+
+    // Si no viene ID válido, manda a un lugar seguro
+    if (!$id_nota_pedido) {
+        header('Location: /admin/notaPedido');
+        exit;
+    }
+
+    $nombre = $_SESSION['nombre'] ?? '';
+    $email  = $_SESSION['email'] ?? '';
+
+    // 2) Cargar datos para selects, etc.
+    $tiendas = Tienda::all();
+    $ciudad  = Ciudad::all();
+    $paises  = Pais::all();
+    $marca   = Marca::all();
+
+    // 3) Info relacionada a la nota
+    $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota_pedido);
+
+    $tiendaNota  = new TiendaNota;
+    $tiendaNotas = TiendaNota::wherenuevo('Codigo_Nota_Pedido', $id_nota_pedido);
+
+    // 4) Recuperar flash (alertas y old) si vienes de un redirect por error
+    $alertas = $_SESSION['alertas'] ?? [];
+    $old     = $_SESSION['old'] ?? [];
+
+    // Limpiar flash para que no quede pegado
+    unset($_SESSION['alertas'], $_SESSION['old']);
+
+    // 5) Procesar POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        // Crear instancia con POST
+        $tiendaNota = new TiendaNota($_POST);
+
+        // Asegurar el ID desde POST (y volver a sanitizar)
+        $id_post = $_POST['id_nota_pedido'] ?? $id_nota_pedido;
+        $id_post = filter_var($id_post, FILTER_SANITIZE_NUMBER_INT);
+
+        $tiendaNota->Codigo_Nota_Pedido = $id_post;
+
+        // Sincronizar
+        $tiendaNota->sincronizar($_POST);
+
+        // Validar
+        $alertas = $tiendaNota->validar();
+
+        // Si hay errores: guardar en sesión y REDIRIGIR manteniendo ?id=
+        if (!empty($alertas)) {
+            $_SESSION['alertas'] = $alertas;
+            $_SESSION['old'] = $_POST; // opcional para repoblar campos
+
+            header('Location: /admin/notaPedido/crearTienda?id=' . $id_post);
+            exit;
         }
 
-        // Renderizar la vista
-        $router->render('admin/notapedido/crearTienda', [
-            'titulo' => 'Crear Tienda para Nota de Pedido',
-            'nombre' => $nombre,
-            'email' => $email,
-            'alertas' => $alertas,
-            'tiendaNota' => $tiendaNota,
-            'id_nota_pedido' => $id_nota_pedido,
-            'tiendaNotas' => $tiendaNotas,
-            'informacionNota' => $informacionNota,
-            'tiendas' => $tiendas,
-            'ciudad' => $ciudad,
-            'paises' => $paises,
-            'marca' => $marca,
-        ]);
+        // Guardar si no hay errores
+        $resultado = $tiendaNota->guardar();
+
+        if ($resultado) {
+            header('Location: /admin/notaPedido/crearTienda?id=' . $id_post . '&exito=1');
+            exit;
+        }
+
+        // Si guardar falla por alguna razón, puedes setear una alerta genérica
+        $_SESSION['alertas'] = ['error' => ['No se pudo guardar. Intenta de nuevo.']];
+        $_SESSION['old'] = $_POST;
+        header('Location: /admin/notaPedido/crearTienda?id=' . $id_post);
+        exit;
     }
+
+    // 6) Renderizar vista
+    $router->render('admin/notapedido/crearTienda', [
+        'titulo' => 'Crear Tienda para Nota de Pedido',
+        'nombre' => $nombre,
+        'email' => $email,
+        'alertas' => $alertas,
+        'old' => $old, // para repoblar inputs en la vista si quieres
+        'tiendaNota' => $tiendaNota,
+        'id_nota_pedido' => $id_nota_pedido,
+        'tiendaNotas' => $tiendaNotas,
+        'informacionNota' => $informacionNota,
+        'tiendas' => $tiendas,
+        'ciudad' => $ciudad,
+        'paises' => $paises,
+        'marca' => $marca,
+    ]);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
     // REGISTRAR UNA NOTA PEDIDO
