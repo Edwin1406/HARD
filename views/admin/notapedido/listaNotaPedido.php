@@ -140,9 +140,9 @@
         </div>
     </div>
 </section>
-
-
-
+<!-- COLOR bg-pink-100 PONER EN UN BOTON     -->
+                        <!-- Boton color rosa: class="bg-pink-100" -->
+                        <button class="bg-pink-100">dsds</button>
 
 
 
