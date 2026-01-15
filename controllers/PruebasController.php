@@ -522,107 +522,107 @@ class PruebasController
 
 
 
-public static function crearPruebasAjax()
-{
-    session_start();
-    header('Content-Type: application/json; charset=utf-8');
+    public static function crearPruebasAjax()
+    {
+        session_start();
+        header('Content-Type: application/json; charset=utf-8');
 
-    if (!isset($_SESSION['email'])) {
-        echo json_encode(['ok' => false, 'error' => 'no-auth'], JSON_UNESCAPED_UNICODE);
-        return;
+        if (!isset($_SESSION['email'])) {
+            echo json_encode(['ok' => false, 'error' => 'no-auth'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['ok' => false, 'error' => 'bad-method'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // --------- Inputs ----------
+        $idNota    = $_POST['id_nota'] ?? null;
+        $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
+
+        $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
+        $prenda    = trim((string)($_POST['prenda'] ?? ''));
+        $cantidad  = (float)($_POST['cantidad'] ?? 0);
+        $precioU   = (float)($_POST['precio_unitario'] ?? 0);
+
+        // ✅ Solo evita filas vacías (basura)
+        $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
+
+        if (!$idNota || $id_tienda <= 0 || $isEmpty) {
+            echo json_encode(['ok' => false, 'error' => 'empty-or-missing'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // --------- Modelo ----------
+        $carrito = new Carrito2();
+
+        $carrito->Codigo_Nota_Pedido = $idNota;
+        $carrito->id_tienda          = $id_tienda;
+
+        $carrito->etiqueta           = $etiqueta;
+        $carrito->prenda             = $prenda;
+
+        // ✅ saldo NO debe restar etiqueta (texto). Ajusta si tu negocio requiere otra lógica.
+        // Por defecto lo dejamos igual a la cantidad (o usa 0 si aplica)
+        $carrito->saldo              = $cantidad;
+
+        $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
+        $carrito->cantidad           = $cantidad;
+        $carrito->precio_unitario    = $precioU;
+        $carrito->total              = (float)($cantidad * $precioU);
+
+        // Otros campos
+        $carrito->num_factura        = trim((string)($_POST['num_factura'] ?? ''));
+        $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
+        $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
+        $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
+        $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
+        $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
+
+        // --------- Validación ----------
+        $alertas = $carrito->validar();
+        if (!empty($alertas)) {
+            http_response_code(422);
+            echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // --------- Duplicado: SOLO si TODOS los campos coinciden ----------
+        // Incluye Codigo_Nota_Pedido para que NO compare contra otras notas.
+        $duplicados = Carrito2::whereArray([
+            'Codigo_Nota_Pedido' => $carrito->Codigo_Nota_Pedido,
+            'id_tienda'          => $carrito->id_tienda,
+            'etiqueta'           => $carrito->etiqueta,
+            'prenda'             => $carrito->prenda,
+            'composicion'        => $carrito->composicion,
+            'cantidad'           => $carrito->cantidad,
+            'precio_unitario'    => $carrito->precio_unitario,
+            'num_caja'           => $carrito->num_caja,
+            'bodega'             => $carrito->bodega,
+            // Si quieres que tienda/marca/pais también cuenten como “idéntico”, descomenta:
+            'tienda'          => $carrito->tienda,
+            'marca'           => $carrito->marca,
+            'pais'            => $carrito->pais,
+            'num_factura'     => $carrito->num_factura,
+        ]);
+
+        // ✅ Si existe IDENTICO → NO guardar
+        if (!empty($duplicados)) {
+            echo json_encode(['ok' => false, 'error' => 'duplicate-row'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // ✅ Si NO existe → guardar
+        $ok = $carrito->guardar();
+
+        if (!$ok) {
+            echo json_encode(['ok' => false, 'error' => 'db-save-failed'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
     }
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        echo json_encode(['ok' => false, 'error' => 'bad-method'], JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
-    // --------- Inputs ----------
-    $idNota    = $_POST['id_nota'] ?? null;
-    $id_tienda = isset($_POST['id_tienda']) ? (int)$_POST['id_tienda'] : 0;
-
-    $etiqueta  = trim((string)($_POST['etiqueta'] ?? ''));
-    $prenda    = trim((string)($_POST['prenda'] ?? ''));
-    $cantidad  = (float)($_POST['cantidad'] ?? 0);
-    $precioU   = (float)($_POST['precio_unitario'] ?? 0);
-
-    // ✅ Solo evita filas vacías (basura)
-    $isEmpty = ($etiqueta === '' && $prenda === '' && $cantidad == 0 && $precioU == 0);
-
-    if (!$idNota || $id_tienda <= 0 || $isEmpty) {
-        echo json_encode(['ok' => false, 'error' => 'empty-or-missing'], JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
-    // --------- Modelo ----------
-    $carrito = new Carrito2();
-
-    $carrito->Codigo_Nota_Pedido = $idNota;
-    $carrito->id_tienda          = $id_tienda;
-
-    $carrito->etiqueta           = $etiqueta;
-    $carrito->prenda             = $prenda;
-
-    // ✅ saldo NO debe restar etiqueta (texto). Ajusta si tu negocio requiere otra lógica.
-    // Por defecto lo dejamos igual a la cantidad (o usa 0 si aplica)
-    $carrito->saldo              = $cantidad;
-
-    $carrito->composicion        = trim((string)($_POST['composicion'] ?? ''));
-    $carrito->cantidad           = $cantidad;
-    $carrito->precio_unitario    = $precioU;
-    $carrito->total              = (float)($cantidad * $precioU);
-
-    // Otros campos
-    $carrito->num_factura        = trim((string)($_POST['num_factura'] ?? ''));
-    $carrito->tienda             = trim((string)($_POST['tienda'] ?? ''));
-    $carrito->marca              = trim((string)($_POST['marca'] ?? ''));
-    $carrito->pais               = trim((string)($_POST['pais'] ?? ''));
-    $carrito->num_caja           = (int)($_POST['num_caja'] ?? 0);
-    $carrito->bodega             = trim((string)($_POST['bodega'] ?? ''));
-
-    // --------- Validación ----------
-    $alertas = $carrito->validar();
-    if (!empty($alertas)) {
-        http_response_code(422);
-        echo json_encode(['ok' => false, 'errors' => $alertas], JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
-    // --------- Duplicado: SOLO si TODOS los campos coinciden ----------
-    // Incluye Codigo_Nota_Pedido para que NO compare contra otras notas.
-    $duplicados = Carrito2::whereArray([
-        'Codigo_Nota_Pedido' => $carrito->Codigo_Nota_Pedido,
-        'id_tienda'          => $carrito->id_tienda,
-        'etiqueta'           => $carrito->etiqueta,
-        'prenda'             => $carrito->prenda,
-        'composicion'        => $carrito->composicion,
-        'cantidad'           => $carrito->cantidad,
-        'precio_unitario'    => $carrito->precio_unitario,
-        'num_caja'           => $carrito->num_caja,
-        'bodega'             => $carrito->bodega,
-        // Si quieres que tienda/marca/pais también cuenten como “idéntico”, descomenta:
-        'tienda'          => $carrito->tienda,
-        'marca'           => $carrito->marca,
-        'pais'            => $carrito->pais,
-        'num_factura'     => $carrito->num_factura,
-    ]);
-
-    // ✅ Si existe IDENTICO → NO guardar
-    if (!empty($duplicados)) {
-        echo json_encode(['ok' => false, 'error' => 'duplicate-row'], JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
-    // ✅ Si NO existe → guardar
-    $ok = $carrito->guardar();
-
-    if (!$ok) {
-        echo json_encode(['ok' => false, 'error' => 'db-save-failed'], JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
-    echo json_encode(['ok' => true, 'id' => $carrito->id], JSON_UNESCAPED_UNICODE);
-}
 
 
 
@@ -728,6 +728,209 @@ public static function crearPruebasAjax()
 
 
 
+    // public static function pdf(Router $router)
+    // {
+    //     session_start();
+    //     if (!isset($_SESSION['email'])) {
+    //         header('Location: /');
+    //         exit;
+    //     }
+
+    //     $id_nota = $_GET['id'] ?? null;
+    //     if (!$id_nota) {
+    //         http_response_code(400);
+    //         echo "Falta el id de la nota";
+    //         exit;
+    //     }
+
+    //     // Si tu TCPDF no está por composer, descomenta y ajusta:
+    //     // require_once __DIR__ . '/../tcpdf/tcpdf.php';
+
+    //     $nota  = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+    //     $items = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
+
+    //     if (!$nota) {
+    //         http_response_code(404);
+    //         echo "No existe la nota {$id_nota}";
+    //         exit;
+    //     }
+
+    //     // ====== PDF ======
+    //     $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+
+    //     // Info documento
+    //     $pdf->SetCreator('Sistema');
+    //     $pdf->SetAuthor('Importadora');
+    //     $pdf->SetTitle("Nota de Pedido {$id_nota}");
+
+    //     // Márgenes + saltos
+    //     $pdf->SetMargins(10, 10, 10);
+    //     $pdf->SetAutoPageBreak(true, 12);
+
+    //     // Quitar header/footer por defecto de TCPDF (para que no estorbe)
+    //     $pdf->setPrintHeader(false);
+    //     $pdf->setPrintFooter(false);
+
+    //     $pdf->AddPage();
+
+    //     // ====== HEADER BONITO (Logo + Título + Línea) ======
+    //     self::renderHeader($pdf, $nota);
+
+    //     // ====== BLOQUE DATOS (2 columnas alineadas) ======
+    //     self::renderMetaBox($pdf, $nota);
+
+    //     // ====== TABLA ITEMS + TOTAL ======
+    //     self::renderItemsTable($pdf, $items);
+
+    //     // Mostrar en navegador (I) o descargar (D)
+    //     $pdf->Output("nota_pedido_{$id_nota}.pdf", 'I');
+    //     exit;
+    // }
+
+    // private static function renderHeader(TCPDF $pdf, $nota): void
+    // {
+    //     // Línea superior (tipo documento)
+    //     $pdf->SetDrawColor(0, 0, 0);
+    //     $pdf->Line(10, 10, 287, 10);
+
+    //     // Logo (izquierda)
+    //     // AJUSTA ESTA RUTA:
+    //     $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // ejemplo: public/img/logo.png
+    //     if (file_exists($logoPath)) {
+    //         // x=10 y=12 w=58mm
+    //         $pdf->Image($logoPath, 20, 12, 58, 0, '', '', '', false, 300);
+    //     }
+
+    //     // Título centrado
+    //     $pdf->SetY(12);
+    //     $pdf->SetFont('helvetica', 'B', 16);
+    //     $pdf->Cell(0, 8, 'Importadora R M y Cia.', 0, 1, 'C');
+
+    //     $pdf->SetFont('helvetica', '', 10);
+    //     $pdf->Cell(0, 6, 'NOTA DE PEDIDO: ' . (string)$nota->Codigo_Nota_Pedido, 0, 1, 'C');
+
+    //     // Línea inferior del encabezado
+    //     $pdf->Ln(1);
+    //     $pdf->Line(10, $pdf->GetY(), 287, $pdf->GetY());
+    //     $pdf->Ln(4);
+    // }
+
+    // private static function renderMetaBox(TCPDF $pdf, $nota): void
+    // {
+    //     $leftW  = 190;
+    //     $rightW = 90;
+    //     $rowH   = 6;
+
+    //     $pdf->SetDrawColor(0, 0, 0);
+    //     $pdf->SetFillColor(245, 245, 245);
+
+    //     // Títulos de sección
+    //     $pdf->SetFont('helvetica', 'B', 9);
+    //     $pdf->Cell($leftW, 7, 'Datos principales', 1, 0, 'L', true);
+    //     $pdf->Cell($rightW, 7, 'Información', 1, 1, 'L', true);
+
+    //     $pdf->SetFont('helvetica', '', 9);
+
+    //     $pdf->Cell($leftW, $rowH, 'Importador: ' . (string)$nota->Codigo_Importador, 1, 0, 'L');
+    //     $pdf->Cell($rightW, $rowH, 'Fecha: ' . (string)$nota->Fecha_Nota_Pedido, 1, 1, 'L');
+
+    //     $pdf->Cell($leftW, $rowH, 'Exportador: ' . (string)$nota->Codigo_Exportador, 1, 0, 'L');
+    //     $pdf->Cell($rightW, $rowH, 'País / Origen: ' . (string)$nota->Pais_Nota_Pedido, 1, 1, 'L');
+
+    //     $pdf->Cell($leftW, $rowH, 'Remitir documentos a: ' . (string)$nota->Remitir_Nota_Pedido, 1, 0, 'L');
+    //     $pdf->Cell($rightW, $rowH, 'Forma de pago: ' . (string)$nota->Forma_Pago_Nota_Pedido, 1, 1, 'L');
+
+    //     $pdf->Cell($leftW, $rowH, 'Moneda: ' . (string)$nota->Moneda_Nota_Pedido, 1, 0, 'L');
+    //     $pdf->Cell($rightW, $rowH, 'Número Nota: ' . (string)$nota->Numero_Nota_Pedido, 1, 1, 'L');
+
+    //     $pdf->Ln(6);
+    // }
+
+    // private static function renderItemsTable(TCPDF $pdf, array $items): void
+    // {
+    //     // Anchos de columnas (suma aprox. <= 277)
+    //     $w = [
+    //         'etq'   => 12,
+    //         'sald'  => 14,
+    //         'prenda'=> 34,
+    //         'comp'  => 52,
+    //         'cant'  => 16,
+    //         'punit' => 22,
+    //         'total' => 22,
+    //         'fact'  => 28,
+    //         'marca' => 24,
+    //         'orig'  => 22,
+    //     ];
+
+    //     $pdf->SetDrawColor(0, 0, 0);
+
+    //     // Header tabla
+    //     $pdf->SetFont('helvetica', 'B', 9);
+    //     $pdf->SetFillColor(230, 230, 230);
+
+    //     $pdf->Cell($w['etq'], 7, 'ETQ', 1, 0, 'C', true);
+    //     $pdf->Cell($w['sald'], 7, 'SALD', 1, 0, 'C', true);
+    //     $pdf->Cell($w['prenda'], 7, 'PRENDA', 1, 0, 'C', true);
+    //     $pdf->Cell($w['comp'], 7, 'COMPOSICIÓN', 1, 0, 'C', true);
+    //     $pdf->Cell($w['cant'], 7, 'CANT', 1, 0, 'C', true);
+    //     $pdf->Cell($w['punit'], 7, 'P. UNIT', 1, 0, 'C', true);
+    //     $pdf->Cell($w['total'], 7, 'TOTAL', 1, 0, 'C', true);
+    //     $pdf->Cell($w['fact'], 7, 'FACTURA', 1, 0, 'C', true);
+    //     $pdf->Cell($w['marca'], 7, 'MARCA', 1, 0, 'C', true);
+    //     $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 0, 'C', true);
+    //     $pdf->Cell($w['caja'], 7, 'CAJA', 1, 1, 'C', true);
+
+    //     $pdf->SetFont('helvetica', '', 9);
+
+    //     $totalGeneral = 0.0;
+
+    //     foreach ($items as $it) {
+    //         // Si vienen como objetos, funciona igual:
+    //         $etq   = $it->etiqueta ?? '';
+    //         $sald  = $it->saldo ?? '';
+    //         $prend = $it->prenda ?? '';
+    //         $comp  = $it->composicion ?? '';
+    //         $cant  = $it->cantidad ?? 0;
+    //         $punit = (float)($it->precio_unitario ?? 0);
+    //         $tot   = (float)($it->total ?? ($punit * (float)$cant));
+    //         $fact  = $it->num_factura ?? '';
+    //         $marca = $it->marca ?? '';
+    //         $orig  = $it->pais ?? '';
+    //         $caja  = $it->caja ?? '';
+    //         $totalGeneral += $tot;
+
+    //         // filas
+    //         $pdf->Cell($w['etq'], 6, (string)$etq, 1, 0, 'C');
+    //         $pdf->Cell($w['sald'], 6, (string)$sald, 1, 0, 'C');
+    //         $pdf->Cell($w['prenda'], 6, (string)$prend, 1, 0, 'L');
+
+    //         // MultiCell para composición si es larga (manteniendo alineación)
+    //         $x = $pdf->GetX();
+    //         $y = $pdf->GetY();
+    //         $pdf->MultiCell($w['comp'], 6, (string)$comp, 1, 'L', false, 0, '', '', true, 0, false, true, 6, 'M');
+
+    //         $pdf->Cell($w['cant'], 6, (string)$cant, 1, 0, 'C'); 
+    //         $pdf->Cell($w['punit'], 6, number_format($punit, 2, '.', ''), 1, 0, 'R');
+    //         $pdf->Cell($w['total'], 6, number_format($tot, 2, '.', ''), 1, 0, 'R');
+    //         $pdf->Cell($w['fact'], 6, (string)$fact, 1, 0, 'C');
+    //         $pdf->Cell($w['marca'], 6, (string)$marca, 1, 0, 'C');
+    //         $pdf->Cell($w['orig'], 6, (string)$orig, 1, 0, 'C');
+    //         $pdf->Cell($w['caja'], 6, (string)$caja, 1, 1, 'C');
+    //     }
+
+    //     // Total general
+    //     $pdf->Ln(2);
+    //     $pdf->SetFont('helvetica', 'B', 10);
+    //     $pdf->SetFillColor(245,245,245);
+
+    //     $tableWidth = array_sum($w);
+    //     $labelW = $tableWidth - 30;
+
+    //     $pdf->Cell($labelW, 8, 'TOTAL GENERAL:', 1, 0, 'R', true);
+    //     $pdf->Cell(30, 8, number_format($totalGeneral, 2, '.', ''), 1, 1, 'R', true);
+    // }
+
+
     public static function pdf(Router $router)
     {
         session_start();
@@ -743,9 +946,6 @@ public static function crearPruebasAjax()
             exit;
         }
 
-        // Si tu TCPDF no está por composer, descomenta y ajusta:
-        // require_once __DIR__ . '/../tcpdf/tcpdf.php';
-
         $nota  = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
         $items = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
 
@@ -755,76 +955,69 @@ public static function crearPruebasAjax()
             exit;
         }
 
-        // ====== PDF ======
+        // ====== PDF VERTICAL ======
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 
-        // Info documento
         $pdf->SetCreator('Sistema');
         $pdf->SetAuthor('Importadora');
         $pdf->SetTitle("Nota de Pedido {$id_nota}");
 
-        // Márgenes + saltos
         $pdf->SetMargins(10, 10, 10);
         $pdf->SetAutoPageBreak(true, 12);
 
-        // Quitar header/footer por defecto de TCPDF (para que no estorbe)
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
 
         $pdf->AddPage();
 
-        // ====== HEADER BONITO (Logo + Título + Línea) ======
         self::renderHeader($pdf, $nota);
-
-        // ====== BLOQUE DATOS (2 columnas alineadas) ======
         self::renderMetaBox($pdf, $nota);
-
-        // ====== TABLA ITEMS + TOTAL ======
         self::renderItemsTable($pdf, $items);
 
-        // Mostrar en navegador (I) o descargar (D)
         $pdf->Output("nota_pedido_{$id_nota}.pdf", 'I');
         exit;
     }
 
     private static function renderHeader(TCPDF $pdf, $nota): void
     {
-        // Línea superior (tipo documento)
-        $pdf->SetDrawColor(0, 0, 0);
-        $pdf->Line(10, 10, 287, 10);
+        // Ancho útil en A4 vertical con márgenes 10/10 => 210 - 20 = 190
+        $xLeft  = 10;
+        $xRight = 200; // 10 + 190
 
-        // Logo (izquierda)
-        // AJUSTA ESTA RUTA:
-        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // ejemplo: public/img/logo.png
+        // Línea superior
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->Line($xLeft, 10, $xRight, 10);
+
+        // Logo (izq)
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/img/logo.png'; // AJUSTA
         if (file_exists($logoPath)) {
-            // x=10 y=12 w=58mm
-            $pdf->Image($logoPath, 20, 12, 58, 0, '', '', '', false, 300);
+            $pdf->Image($logoPath, 10, 12, 35, 0, '', '', '', false, 300);
         }
 
         // Título centrado
         $pdf->SetY(12);
-        $pdf->SetFont('helvetica', 'B', 16);
-        $pdf->Cell(0, 8, 'Importadora R M y Cia.', 0, 1, 'C');
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Cell(0, 7, 'Importadora R M y Cia.', 0, 1, 'C');
 
         $pdf->SetFont('helvetica', '', 10);
         $pdf->Cell(0, 6, 'NOTA DE PEDIDO: ' . (string)$nota->Codigo_Nota_Pedido, 0, 1, 'C');
 
-        // Línea inferior del encabezado
+        // Línea inferior
         $pdf->Ln(1);
-        $pdf->Line(10, $pdf->GetY(), 287, $pdf->GetY());
+        $pdf->Line($xLeft, $pdf->GetY(), $xRight, $pdf->GetY());
         $pdf->Ln(4);
     }
 
     private static function renderMetaBox(TCPDF $pdf, $nota): void
     {
-        $leftW  = 190;
-        $rightW = 90;
+        // En vertical: 190mm ancho útil. Divide 120 + 70
+        $leftW  = 120;
+        $rightW = 70;
         $rowH   = 6;
 
         $pdf->SetDrawColor(0, 0, 0);
         $pdf->SetFillColor(245, 245, 245);
 
-        // Títulos de sección
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell($leftW, 7, 'Datos principales', 1, 0, 'L', true);
         $pdf->Cell($rightW, 7, 'Información', 1, 1, 'L', true);
@@ -848,18 +1041,19 @@ public static function crearPruebasAjax()
 
     private static function renderItemsTable(TCPDF $pdf, array $items): void
     {
-        // Anchos de columnas (suma aprox. <= 277)
+        // Ajustado a 190mm total (A4 vertical con márgenes 10/10)
+        // Suma = 190
         $w = [
-            'etq'   => 12,
-            'sald'  => 14,
-            'prenda'=> 34,
-            'comp'  => 52,
-            'cant'  => 16,
-            'punit' => 22,
-            'total' => 22,
-            'fact'  => 28,
-            'marca' => 24,
-            'orig'  => 22,
+            'etq'   => 10,
+            'sald'  => 12,
+            'prenda' => 26,
+            'comp'  => 40,
+            'cant'  => 12,
+            'punit' => 18,
+            'total' => 18,
+            'fact'  => 22,
+            'marca' => 16,
+            'orig'  => 16,
         ];
 
         $pdf->SetDrawColor(0, 0, 0);
@@ -877,15 +1071,13 @@ public static function crearPruebasAjax()
         $pdf->Cell($w['total'], 7, 'TOTAL', 1, 0, 'C', true);
         $pdf->Cell($w['fact'], 7, 'FACTURA', 1, 0, 'C', true);
         $pdf->Cell($w['marca'], 7, 'MARCA', 1, 0, 'C', true);
-        $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 0, 'C', true);
-        $pdf->Cell($w['caja'], 7, 'CAJA', 1, 1, 'C', true);
-        
+        $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 1, 'C', true);
+
         $pdf->SetFont('helvetica', '', 9);
 
         $totalGeneral = 0.0;
 
         foreach ($items as $it) {
-            // Si vienen como objetos, funciona igual:
             $etq   = $it->etiqueta ?? '';
             $sald  = $it->saldo ?? '';
             $prend = $it->prenda ?? '';
@@ -896,55 +1088,35 @@ public static function crearPruebasAjax()
             $fact  = $it->num_factura ?? '';
             $marca = $it->marca ?? '';
             $orig  = $it->pais ?? '';
-            $caja  = $it->caja ?? '';
+
             $totalGeneral += $tot;
 
-            // filas
             $pdf->Cell($w['etq'], 6, (string)$etq, 1, 0, 'C');
             $pdf->Cell($w['sald'], 6, (string)$sald, 1, 0, 'C');
             $pdf->Cell($w['prenda'], 6, (string)$prend, 1, 0, 'L');
 
-            // MultiCell para composición si es larga (manteniendo alineación)
+            // Composición con MultiCell (sin romper fila)
             $x = $pdf->GetX();
             $y = $pdf->GetY();
             $pdf->MultiCell($w['comp'], 6, (string)$comp, 1, 'L', false, 0, '', '', true, 0, false, true, 6, 'M');
 
-            $pdf->Cell($w['cant'], 6, (string)$cant, 1, 0, 'C'); 
+            $pdf->Cell($w['cant'], 6, (string)$cant, 1, 0, 'C');
             $pdf->Cell($w['punit'], 6, number_format($punit, 2, '.', ''), 1, 0, 'R');
             $pdf->Cell($w['total'], 6, number_format($tot, 2, '.', ''), 1, 0, 'R');
             $pdf->Cell($w['fact'], 6, (string)$fact, 1, 0, 'C');
             $pdf->Cell($w['marca'], 6, (string)$marca, 1, 0, 'C');
-            $pdf->Cell($w['orig'], 6, (string)$orig, 1, 0, 'C');
-            $pdf->Cell($w['caja'], 6, (string)$caja, 1, 1, 'C');
+            $pdf->Cell($w['orig'], 6, (string)$orig, 1, 1, 'C');
         }
 
         // Total general
         $pdf->Ln(2);
         $pdf->SetFont('helvetica', 'B', 10);
-        $pdf->SetFillColor(245,245,245);
+        $pdf->SetFillColor(245, 245, 245);
 
-        $tableWidth = array_sum($w);
+        $tableWidth = array_sum($w); // 190
         $labelW = $tableWidth - 30;
 
         $pdf->Cell($labelW, 8, 'TOTAL GENERAL:', 1, 0, 'R', true);
         $pdf->Cell(30, 8, number_format($totalGeneral, 2, '.', ''), 1, 1, 'R', true);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
