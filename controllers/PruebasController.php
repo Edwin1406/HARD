@@ -741,7 +741,7 @@ public static function crearPruebasAjax()
         $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
         $carritoItems = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
 
-        debuguear($carritoItems);
+        debuguear($informacionNota);
         // debuguear($carritoItems);
 
         // Aquí iría la lógica para generar el PDF
