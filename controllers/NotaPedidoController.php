@@ -189,6 +189,8 @@ $ultimoCodigo = NotaPedido::ultimoCodigo();
                     header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido . '&exito=1');
                 }
             }else{
+                            $alertas = $tiendaNota->validar();
+
                  header('Location: /admin/notaPedido/crearTienda?id=' . $id_nota_pedido);
             }
         }
