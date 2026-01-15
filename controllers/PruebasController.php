@@ -16,7 +16,7 @@ use Model\Tienda;
 use Model\TiendaNota;
 use Model\Ventas;
 use MVC\Router;
-
+use TCPDF;
 
 class PruebasController
 {
@@ -728,29 +728,148 @@ public static function crearPruebasAjax()
 
 
     // pdf
-    public static function pdf(Router $router)
-    {
-        session_start();
-        if (!isset($_SESSION['email'])) {
-            header('Location: /');
-            exit;
-        }
+use TCPDF;
 
-        // Obtener datos necesarios para el PDF
-        $id_nota = $_GET['id'] ?? null;
-        $informacionNota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
-        $carritoItems = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
-
-        debuguear($informacionNota);
-        // debuguear($carritoItems);
-
-        // Aquí iría la lógica para generar el PDF
-        // Por simplicidad, solo renderizamos una vista de ejemplo
-
-        $router->render('admin/pruebas/pdf', [
-            'titulo' => 'PDF de Pruebas',
-        ]);
+public static function pdf(Router $router)
+{
+    session_start();
+    if (!isset($_SESSION['email'])) {
+        header('Location: /');
+        exit;
     }
+
+    $id_nota = $_GET['id'] ?? null;
+    if (!$id_nota) {
+        http_response_code(400);
+        echo "Falta el id";
+        exit;
+    }
+
+    $nota = NotaPedido::where('Codigo_Nota_Pedido', $id_nota);
+    $items = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
+
+    // IMPORTANTE: NO debuguear aquí (rompe el PDF)
+
+    // 1) Crear PDF
+    $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf->SetCreator('Sistema');
+    $pdf->SetAuthor('Importadora');
+    $pdf->SetTitle("Nota de Pedido {$id_nota}");
+    $pdf->SetMargins(8, 8, 8);
+    $pdf->SetAutoPageBreak(true, 10);
+    $pdf->AddPage();
+
+    // 2) Estilos básicos
+    $pdf->SetFont('helvetica', '', 9);
+
+    // 3) Construir HTML (encabezado + tabla)
+    $html = self::buildHtmlNotaPedido($nota, $items);
+
+    // 4) Pintar HTML
+    $pdf->writeHTML($html, true, false, true, false, '');
+
+    // 5) Mostrar en navegador (I) o descargar (D)
+    $pdf->Output("nota_pedido_{$id_nota}.pdf", 'I');
+    exit;
+}
+
+private static function buildHtmlNotaPedido($nota, $items): string
+{
+    // Helpers
+    $f = fn($v) => htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
+    $money = fn($v) => number_format((float)$v, 2, '.', '');
+
+    // Totales (si quieres recalcular desde items)
+    $totalGeneral = 0;
+    foreach ($items as $it) {
+        $totalGeneral += (float)$it->total;
+    }
+
+    $html = '
+    <style>
+        .title { font-size: 16px; font-weight: bold; text-align:center; }
+        .sub { font-size: 11px; text-align:center; margin-bottom:6px; }
+        .box { border:1px solid #000; padding:6px; }
+        .tbl { width:100%; border-collapse:collapse; }
+        .tbl th { border:1px solid #000; background:#f2f2f2; font-weight:bold; font-size:9px; padding:4px; }
+        .tbl td { border:1px solid #000; font-size:9px; padding:4px; }
+        .meta td { font-size:10px; padding:2px 4px; }
+        .right { text-align:right; }
+        .center { text-align:center; }
+    </style>
+
+    <div class="title">Importadora R M y Cia.</div>
+    <div class="sub">NOTA DE PEDIDO: <b>'.$f($nota->Codigo_Nota_Pedido).'</b></div>
+
+    <table class="tbl meta" cellpadding="2">
+        <tr>
+            <td width="55%"><b>Importador:</b> '.$f($nota->Codigo_Importador).'</td>
+            <td width="45%"><b>Fecha de pedido:</b> '.$f($nota->Fecha_Nota_Pedido).'</td>
+        </tr>
+        <tr>
+            <td width="55%"><b>Exportador:</b> '.$f($nota->Codigo_Exportador).'</td>
+            <td width="45%"><b>País / Origen:</b> '.$f($nota->Pais_Nota_Pedido).'</td>
+        </tr>
+        <tr>
+            <td width="55%"><b>Remitir documentos a:</b> '.$f($nota->Remitir_Nota_Pedido).'</td>
+            <td width="45%"><b>Forma de pago:</b> '.$f($nota->Forma_Pago_Nota_Pedido).'</td>
+        </tr>
+        <tr>
+            <td width="55%"><b>Moneda:</b> '.$f($nota->Moneda_Nota_Pedido).'</td>
+            <td width="45%"><b>Número Nota:</b> '.$f($nota->Numero_Nota_Pedido).'</td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table class="tbl" cellpadding="2">
+        <thead>
+            <tr>
+                <th width="6%" class="center">ETQ</th>
+                <th width="8%" class="center">SALD</th>
+                <th width="12%" class="center">PRENDA</th>
+                <th width="16%" class="center">COMPOSICIÓN</th>
+                <th width="8%" class="center">CANT</th>
+                <th width="10%" class="center">P. UNIT</th>
+                <th width="10%" class="center">TOTAL</th>
+                <th width="12%" class="center">FACTURA</th>
+                <th width="10%" class="center">MARCA</th>
+                <th width="8%" class="center">ORIGEN</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($items as $it) {
+        $html .= '
+        <tr>
+            <td class="center">'.$f($it->etiqueta).'</td>
+            <td class="center">'.$f($it->saldo).'</td>
+            <td>'.$f($it->prenda).'</td>
+            <td>'.$f($it->composicion).'</td>
+            <td class="center">'.$f($it->cantidad).'</td>
+            <td class="right">'.$money($it->precio_unitario).'</td>
+            <td class="right">'.$money($it->total).'</td>
+            <td class="center">'.$f($it->num_factura).'</td>
+            <td class="center">'.$f($it->marca).'</td>
+            <td class="center">'.$f($it->pais).'</td>
+        </tr>';
+    }
+
+    $html .= '
+        </tbody>
+    </table>
+
+    <br>
+    <table class="tbl" cellpadding="2">
+        <tr>
+            <td width="80%" class="right"><b>TOTAL GENERAL:</b></td>
+            <td width="20%" class="right"><b>'.$money($totalGeneral).'</b></td>
+        </tr>
+    </table>
+    ';
+
+    return $html;
+}
 
 
 
