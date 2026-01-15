@@ -300,20 +300,7 @@ public static function crearTienda(Router $router): void
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
     // REGISTRAR UNA NOTA PEDIDO
-
-
     public static function RegistrarNotaPedido()
     {
         session_start();

@@ -53,22 +53,22 @@ class TiendaNota extends ActiveRecord {
         }
 
         if(!$this->ciudad) {
-            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+            self::$alertas['error'][] = 'El Campo Ciudad es Obligatorio';
 
         }
 
         if(!$this->pais) {
-            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+            self::$alertas['error'][] = 'El Campo Pais es Obligatorio';
 
         }
 
-        if(!$this->tienda) {
-            self::$alertas['error'][] = 'El Campo Tienda es Obligatorio';
+        if(!$this->num_factura) {
+            self::$alertas['error'][] = 'El Campo Numero de Factura es Obligatorio';
 
         }
 
-        if(!$this->ciudad) {
-            self::$alertas['error'][] = 'El Campo Ciudad es Obligatorio';
+        if(!$this->marca) {
+            self::$alertas['error'][] = 'El Campo Marca es Obligatorio';
 
         }
 
