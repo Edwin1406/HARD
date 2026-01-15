@@ -725,4 +725,39 @@ public static function crearPruebasAjax()
             exit;
         }
     }
+
+
+    // pdf
+    public static function pdf(Router $router)
+    {
+        session_start();
+        if (!isset($_SESSION['email'])) {
+            header('Location: /');
+            exit;
+        }
+
+        // Aquí iría la lógica para generar el PDF
+        // Por simplicidad, solo renderizamos una vista de ejemplo
+
+        $router->render('admin/pruebas/pdf', [
+            'titulo' => 'PDF de Pruebas',
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
