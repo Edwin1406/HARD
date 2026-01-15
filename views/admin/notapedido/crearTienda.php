@@ -137,33 +137,6 @@
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
 
-                            <script>
-                                // Desaparecer alertas después de 5 segundos
-                                setTimeout(function() {
-                                    var alertList = document.querySelectorAll('.alert');
-                                    alertList.forEach(function(alert) {
-                                        var bsAlert = new bootstrap.Alert(alert);
-                                        bsAlert.close();
-                                        // urrl a otra pagina 
-                                        // window.location.href = "https://pamerval.net/admin/notaPedido/crearTienda?id=" + <?php echo $id_nota_pedido; ?>;
-                                    });
-                                }, 5000); // 5000 milisegundos = 5 segundos
-                                    
-
-                                    if (window.history.replaceState) {
-                                        window.history.replaceState(null, null, window.location.href.split('?')[0] + '?id=' + <?php echo $id_nota_pedido; ?>);
-                                    }
-
-
-
-
-
-
-                            </script>
-
-
-
-
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
