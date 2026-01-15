@@ -1053,7 +1053,7 @@ class PruebasController
             'total' => 18,
             'fact'  => 22,
             'marca' => 16,
-            'orig'  => 16,
+            'orig'  => 18,
             'caja'  => 16,
         ];
 
