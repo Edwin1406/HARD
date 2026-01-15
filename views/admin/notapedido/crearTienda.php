@@ -236,17 +236,24 @@
 
 
 
-                                    <!-- marca -->
+                           
 
-                                    <div class="col-md-3 col-12">
+                                      <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
-                                            <!-- select -->
+
+                                            <?php
+                                            // Prioridad: old (cuando hay redirect) -> tiendaNota (cuando renderizas sin redirect)
+                                            $marcaSeleccionada = $old['marca'] ?? ($tiendaNota->marca ?? '');
+                                            ?>
+
                                             <select id="marca" class="form-select" name="marca">
-                                                <option value="" selected disabled>Seleccione Marca</option>
+                                                <option value="" <?= empty($marcaSeleccionada) ? 'selected' : '' ?> disabled>Seleccione Marca</option>
                                                 <?php foreach ($marca as $marcaOption) : ?>
-                                                    <option value="<?php echo $marcaOption->Nombre_Marca; ?>">
-                                                        <?php echo $marcaOption->Nombre_Marca; ?>
+                                                    <?php $valor = $marcaOption->Nombre_Marca; ?>
+                                                    <option value="<?= htmlspecialchars($valor) ?>"
+                                                        <?= ($marcaSeleccionada === $valor) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($valor) ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
