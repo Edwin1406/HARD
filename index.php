@@ -2,8 +2,8 @@
     
 
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 
 
@@ -188,6 +188,8 @@ $router->post('/admin/pruebas/registrarVenta', [PruebasController::class, 'regis
 $router->post('/admin/pruebas/actualizarPruebas', [PruebasController::class, 'actualizarPruebas']);
 
 
+// ver pdf 
+$router->get('/admin/pruebas/pdf', [PruebasController::class, 'pdf']);
 
 
 
