@@ -1046,8 +1046,8 @@ class PruebasController
         $w = [
             'etq'   => 10,
             'sald'  => 12,
-            'prenda' => 26,
-            'comp'  => 30,
+            'prenda' => 20,
+            'comp'  => 20,
             'cant'  => 12,
             'punit' => 18,
             'total' => 18,
