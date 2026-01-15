@@ -742,7 +742,7 @@ public static function crearPruebasAjax()
         $carritoItems = Carrito2::whereArray(['Codigo_Nota_Pedido' => $id_nota]);
 
         debuguear($informacionNota);
-        debuguear($carritoItems);
+        // debuguear($carritoItems);
 
         // Aquí iría la lógica para generar el PDF
         // Por simplicidad, solo renderizamos una vista de ejemplo
