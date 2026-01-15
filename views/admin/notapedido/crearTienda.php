@@ -145,10 +145,20 @@
                                         var bsAlert = new bootstrap.Alert(alert);
                                         bsAlert.close();
                                         // urrl a otra pagina 
-                                        window.location.href = "https://pamerval.net/admin/notaPedido/crearTienda?id=" + <?php echo $id_nota_pedido; ?>;
+                                        // window.location.href = "https://pamerval.net/admin/notaPedido/crearTienda?id=" + <?php echo $id_nota_pedido; ?>;
                                     });
                                 }, 5000); // 5000 milisegundos = 5 segundos
                                     
+
+                                    if (window.history.replaceState) {
+                                        window.history.replaceState(null, null, window.location.href.split('?')[0] + '?id=' + <?php echo $id_nota_pedido; ?>);
+                                    }
+
+
+
+
+
+
                             </script>
 
 
