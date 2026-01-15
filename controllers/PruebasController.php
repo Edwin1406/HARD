@@ -991,7 +991,7 @@ class PruebasController
         // Logo (izq)
         $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // AJUSTA
         if (file_exists($logoPath)) {
-            $pdf->Image($logoPath, 20, 12, 58, 0, '', '', '', false, 300);
+            $pdf->Image($logoPath, 20, 12, 48, 0, '', '', '', false, 300);
         }
 
         // Título centrado
