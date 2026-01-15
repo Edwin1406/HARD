@@ -173,39 +173,56 @@
                                     </div>
 
 
-                                    <div class="col-md-3 col-12">
+
+                                      <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="tienda">Tienda</label>
-                                            <!-- select -->
+
+                                            <?php
+                                            // Prioridad: old (cuando hay redirect) -> tiendaNota (cuando renderizas sin redirect)
+                                            $paisSeleccionado = $old['tienda'] ?? ($tiendaNota->tienda ?? '');
+                                            ?>
+
                                             <select id="tienda" class="form-select" name="tienda">
-                                                <option value="" selected disabled>Seleccione Tienda</option>
+                                                <option value="" <?= empty($paisSeleccionado) ? 'selected' : '' ?> disabled>Seleccione Tienda</option>
+
                                                 <?php foreach ($tiendas as $tiendaOption) : ?>
-                                                    <option value="<?php echo $tiendaOption->Nombre_Tienda; ?>">
-                                                        <?php echo $tiendaOption->Nombre_Tienda; ?>
+                                                    <?php $valor = $tiendaOption->Nombre_Tienda; ?>
+                                                    <option value="<?= htmlspecialchars($valor) ?>"
+                                                        <?= ($paisSeleccionado === $valor) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($valor) ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
+
+                              
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="ciudad">Ciudad</label>
-                                            <!-- select -->
+
+                                            <?php
+                                            // Prioridad: old (cuando hay redirect) -> tiendaNota (cuando renderizas sin redirect)
+                                            $paisSeleccionado = $old['ciudad'] ?? ($tiendaNota->pais ?? '');
+                                            ?>
+
                                             <select id="ciudad" class="form-select" name="ciudad">
-                                                <option value="" selected disabled>Seleccione Ciudad</option>
+                                                <option value="" <?= empty($paisSeleccionado) ? 'selected' : '' ?> disabled>Seleccione Ciudad</option>
+
                                                 <?php foreach ($ciudad as $ciudadOption) : ?>
-                                                    <option value="<?php echo $ciudadOption->Nombre_Ciudad; ?>">
-                                                        <?php echo $ciudadOption->Nombre_Ciudad; ?>
+                                                    <?php $valor = $ciudadOption->Nombre_Ciudad; ?>
+                                                    <option value="<?= htmlspecialchars($valor) ?>"
+                                                        <?= ($paisSeleccionado === $valor) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($valor) ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
-
-
                                         </div>
                                     </div>
 
-                         
+
 
 
                                     <div class="col-md-2 col-12">
@@ -236,9 +253,9 @@
 
 
 
-                           
 
-                                      <div class="col-md-2 col-12">
+
+                                    <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
 
