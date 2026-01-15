@@ -797,8 +797,8 @@ public static function crearPruebasAjax()
         // AJUSTA ESTA RUTA:
         $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // ejemplo: public/img/logo.png
         if (file_exists($logoPath)) {
-            // x=10 y=12 w=28mm
-            $pdf->Image($logoPath, 10, 12, 28, 0, '', '', '', false, 300);
+            // x=10 y=12 w=58mm
+            $pdf->Image($logoPath, 20, 12, 58, 0, '', '', '', false, 300);
         }
 
         // Título centrado
