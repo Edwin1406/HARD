@@ -43,7 +43,8 @@
     />
 
     <!-- Fonts and icons -->
-    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <!-- <script src="../../assets/js/plugin/webfont/webfont.min.js"></script> -->
+    <script src="<?php  include_once __DIR__ . "assets/js/plugin/webfont/webfont.min.js"  ?>"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
