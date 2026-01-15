@@ -123,7 +123,7 @@
                             <td>
 
                                 <div class="d-flex gap-1">
-                                    <a href="/admin/notaPedido/crearTienda?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="bg-pink-100 btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
+                                    <a href="/admin/notaPedido/crearTienda?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
                                     <a href="/admin/pruebas/pdf?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-secondary btn-sm"><i class="bi bi-file-earmark-pdf"></i></a>
                                     <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
@@ -140,9 +140,9 @@
         </div>
     </div>
 </section>
-<!-- COLOR bg-pink-100 PONER EN UN BOTON     -->
-                        <!-- Boton color rosa: class="bg-pink-100" -->
-                        <button class="bg-pink-100">dsds</button>
+
+
+
 
 
 
