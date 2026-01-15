@@ -1065,7 +1065,7 @@ class PruebasController
         $pdf->Cell($w['etq'], 7, 'ETQ', 1, 0, 'C', true);
         $pdf->Cell($w['sald'], 7, 'SALD', 1, 0, 'C', true);
         $pdf->Cell($w['prenda'], 7, 'PRENDA', 1, 0, 'C', true);
-        $pdf->Cell($w['comp'], 7, 'COMPOSICIÓN', 1, 0, 'C', true);
+        $pdf->Cell($w['comp'], 4, 'COMPOSICIÓN', 1, 0, 'C', true);
         $pdf->Cell($w['cant'], 7, 'CANT', 1, 0, 'C', true);
         $pdf->Cell($w['punit'], 7, 'P. UNIT', 1, 0, 'C', true);
         $pdf->Cell($w['total'], 7, 'TOTAL', 1, 0, 'C', true);
