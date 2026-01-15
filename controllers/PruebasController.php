@@ -756,7 +756,7 @@ public static function crearPruebasAjax()
         }
 
         // ====== PDF ======
-        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 
         // Info documento
         $pdf->SetCreator('Sistema');
