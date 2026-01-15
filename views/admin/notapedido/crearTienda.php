@@ -138,13 +138,8 @@
                             <?php endforeach; ?>
 
                             <script>
-                            //    mantener la url y evitar resubmission al recargar y quitar las alertas de error 
-                                 if (window.history.replaceState) {
-                                      window.history.replaceState(null, null, window.location.href.split('?')[0]);
-                                 }
+                            //    mantener la url y evitar resubmission al recargar
                                     
-                                 
-
                             </script>
 
 
