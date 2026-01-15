@@ -795,7 +795,7 @@ public static function crearPruebasAjax()
 
         // Logo (izquierda)
         // AJUSTA ESTA RUTA:
-        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/img/logo.png'; // ejemplo: public/img/logo.png
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // ejemplo: public/img/logo.png
         if (file_exists($logoPath)) {
             // x=10 y=12 w=28mm
             $pdf->Image($logoPath, 10, 12, 28, 0, '', '', '', false, 300);
