@@ -1089,7 +1089,7 @@ class PruebasController
             $fact  = $it->num_factura ?? '';
             $marca = $it->marca ?? '';
             $orig  = $it->pais ?? '';
-            $caja  = $it->caja ?? '';
+            $caja  = $it->num_caja ?? '';
             $totalGeneral += $tot;
 
             $pdf->Cell($w['etq'], 6, (string)$etq, 1, 0, 'C');
