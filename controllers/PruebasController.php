@@ -877,8 +877,9 @@ public static function crearPruebasAjax()
         $pdf->Cell($w['total'], 7, 'TOTAL', 1, 0, 'C', true);
         $pdf->Cell($w['fact'], 7, 'FACTURA', 1, 0, 'C', true);
         $pdf->Cell($w['marca'], 7, 'MARCA', 1, 0, 'C', true);
-        $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 1, 'C', true);
-
+        $pdf->Cell($w['orig'], 7, 'ORIGEN', 1, 0, 'C', true);
+        $pdf->Cell($w['caja'], 7, 'CAJA', 1, 1, 'C', true);
+        
         $pdf->SetFont('helvetica', '', 9);
 
         $totalGeneral = 0.0;
@@ -895,7 +896,7 @@ public static function crearPruebasAjax()
             $fact  = $it->num_factura ?? '';
             $marca = $it->marca ?? '';
             $orig  = $it->pais ?? '';
-
+            $caja  = $it->caja ?? '';
             $totalGeneral += $tot;
 
             // filas
@@ -913,7 +914,8 @@ public static function crearPruebasAjax()
             $pdf->Cell($w['total'], 6, number_format($tot, 2, '.', ''), 1, 0, 'R');
             $pdf->Cell($w['fact'], 6, (string)$fact, 1, 0, 'C');
             $pdf->Cell($w['marca'], 6, (string)$marca, 1, 0, 'C');
-            $pdf->Cell($w['orig'], 6, (string)$orig, 1, 1, 'C');
+            $pdf->Cell($w['orig'], 6, (string)$orig, 1, 0, 'C');
+            $pdf->Cell($w['caja'], 6, (string)$caja, 1, 1, 'C');
         }
 
         // Total general
