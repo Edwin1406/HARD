@@ -116,45 +116,45 @@
 
                     <div class="card-content">
                         <div class="card-body">
-                         <?php
-$mapa = [
-  'error'   => 'danger',
-  'exito'   => 'success',
-  'warning' => 'warning',
-  'info'    => 'info',
-];
-?>
+                            <?php
+                            $mapa = [
+                                'error'   => 'danger',
+                                'exito'   => 'success',
+                                'warning' => 'warning',
+                                'info'    => 'info',
+                            ];
+                            ?>
 
-<?php foreach ($alertas as $tipo => $mensajes) : ?>
-  <?php
-    $clase = $mapa[$tipo] ?? 'info';
-  ?>
-  <?php foreach ($mensajes as $mensaje) : ?>
-    <div class="alert alert-<?= $clase ?> alert-dismissible fade show" role="alert">
-      <?= htmlspecialchars($mensaje) ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <?php endforeach; ?>
-<?php endforeach; ?>
+                            <?php foreach ($alertas as $tipo => $mensajes) : ?>
+                                <?php
+                                $clase = $mapa[$tipo] ?? 'info';
+                                ?>
+                                <?php foreach ($mensajes as $mensaje) : ?>
+                                    <div class="alert alert-<?= $clase ?> alert-dismissible fade show" role="alert">
+                                        <?= htmlspecialchars($mensaje) ?>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
 
 
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-      document.querySelectorAll('.alert').forEach(function (el) {
-        // Si Bootstrap está cargado, usa su componente para cerrar con animación
-        if (window.bootstrap) {
-          const alert = bootstrap.Alert.getOrCreateInstance(el);
-          alert.close();
-        } else {
-          // Fallback si no está Bootstrap JS
-          el.remove();
-        }
-      });
-    }, 5000);
-  });
-</script>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    setTimeout(function() {
+                                        document.querySelectorAll('.alert').forEach(function(el) {
+                                            // Si Bootstrap está cargado, usa su componente para cerrar con animación
+                                            if (window.bootstrap) {
+                                                const alert = bootstrap.Alert.getOrCreateInstance(el);
+                                                alert.close();
+                                            } else {
+                                                // Fallback si no está Bootstrap JS
+                                                el.remove();
+                                            }
+                                        });
+                                    }, 5000);
+                                });
+                            </script>
 
                             <form class="form" method="POST" action="/admin/notaPedido/crearTienda" onsubmit="return bloquearBoton(this)">
 
@@ -201,25 +201,40 @@ $mapa = [
                                                 <?php endforeach; ?>
                                             </select>
 
-                                            
+
                                         </div>
                                     </div>
+
+                         
+
 
                                     <div class="col-md-2 col-12">
                                         <div class="form-group">
                                             <label for="pais">Pais</label>
-                                            <!-- select -->
+
+                                            <?php
+                                            // Prioridad: old (cuando hay redirect) -> tiendaNota (cuando renderizas sin redirect)
+                                            $paisSeleccionado = $old['pais'] ?? ($tiendaNota->pais ?? '');
+                                            ?>
+
                                             <select id="pais" class="form-select" name="pais">
-                                                <option value="" selected disabled>Seleccione Pais</option>
+                                                <option value="" <?= empty($paisSeleccionado) ? 'selected' : '' ?> disabled>Seleccione Pais</option>
+
                                                 <?php foreach ($paises as $paisOption) : ?>
-                                                    <option value="<?php echo $paisOption->Pais_Origen; ?>">
-                                                        <?php echo $paisOption->Pais_Origen; ?>
+                                                    <?php $valor = $paisOption->Pais_Origen; ?>
+                                                    <option value="<?= htmlspecialchars($valor) ?>"
+                                                        <?= ($paisSeleccionado === $valor) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($valor) ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
-
                                         </div>
                                     </div>
+
+
+
+
+
 
                                     <!-- marca -->
 
