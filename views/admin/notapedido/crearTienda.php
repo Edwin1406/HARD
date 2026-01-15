@@ -116,14 +116,27 @@
 
                     <div class="card-content">
                         <div class="card-body">
-                            <?php foreach ($alertas as $tipo => $mensajes) : ?>
-                                <?php foreach ($mensajes as $mensaje) : ?>
-                                    <div class="alert alert-<?= $tipo ?> alert-dismissible fade show" role="alert">
-                                        <?= $mensaje ?>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php endforeach; ?>
+                         <?php
+$mapa = [
+  'error'   => 'danger',
+  'exito'   => 'success',
+  'warning' => 'warning',
+  'info'    => 'info',
+];
+?>
+
+<?php foreach ($alertas as $tipo => $mensajes) : ?>
+  <?php
+    $clase = $mapa[$tipo] ?? 'info';
+  ?>
+  <?php foreach ($mensajes as $mensaje) : ?>
+    <div class="alert alert-<?= $clase ?> alert-dismissible fade show" role="alert">
+      <?= htmlspecialchars($mensaje) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endforeach; ?>
+<?php endforeach; ?>
+
 
 
 
