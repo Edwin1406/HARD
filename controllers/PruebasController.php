@@ -989,7 +989,7 @@ class PruebasController
         $pdf->Line($xLeft, 10, $xRight, 10);
 
         // Logo (izq)
-        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/img/logo.png'; // AJUSTA
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/src/img/PAMERVAL-LOGO.png'; // AJUSTA
         if (file_exists($logoPath)) {
             $pdf->Image($logoPath, 10, 12, 35, 0, '', '', '', false, 300);
         }
