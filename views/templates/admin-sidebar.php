@@ -232,8 +232,9 @@ if (strpos($currentPath, '/admin/index') !== false || strpos($currentPath, '/adm
           <i class="icon-settings"></i>
         </div>
       </div>
+      </div>
       <!-- End Custom template -->
-  
+    
     <!--   Core JS Files   -->
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
