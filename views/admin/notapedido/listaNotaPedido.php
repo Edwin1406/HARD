@@ -121,7 +121,7 @@
                             <td>
 
                                 <div class="d-flex gap-1">
-                                    <a href="/admin/pruebas/pdf?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-pdf"></i> </a>
+                                    <a href="/admin/pruebas/pdf?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-pdf"></i></a>
                                     <a href="/admin/notaPedido/crearTienda?id=<?= $notaItem->Codigo_Nota_Pedido ?>" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> </a>
                                     <!-- <form action="/admin/eliminarPruebas" method="POST">
                                             <input type="hidden" name="id" value="<?= $notaItem->id ?>">
